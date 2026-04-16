@@ -1093,6 +1093,74 @@
   };
 
   let pendingNavigationUrl = null;
+  const bookAvailabilityByUrl = {};
+  const MIN_BOOK_LINES = 200;
+
+  function extractBookUrlFromCard(card) {
+    const onclickText = card.getAttribute('onclick') || '';
+    const match = onclickText.match(/openBook\(\s*'[^']*'\s*,\s*'([^']+)'/);
+    return match ? match[1] : null;
+  }
+
+  async function hasBookContent(url) {
+    if (!url) {
+      return false;
+    }
+
+    if (url in bookAvailabilityByUrl) {
+      return bookAvailabilityByUrl[url];
+    }
+
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) {
+        bookAvailabilityByUrl[url] = false;
+        return false;
+      }
+
+      const htmlText = await response.text();
+      const lineCount = htmlText.split(/\r?\n/).length;
+      const available = lineCount > MIN_BOOK_LINES;
+      bookAvailabilityByUrl[url] = available;
+      return available;
+    } catch (error) {
+      bookAvailabilityByUrl[url] = false;
+      return false;
+    }
+  }
+
+  function setCardVisualState(card, available) {
+    card.classList.remove('status-done', 'status-none');
+    card.classList.add(available ? 'status-done' : 'status-none');
+
+    const iconEl = card.querySelector('.book-icon');
+    if (iconEl) {
+      iconEl.textContent = available ? '📗' : '📘';
+    }
+
+    const titleEl = card.querySelector('.medieval-title');
+    if (titleEl) {
+      titleEl.style.color = available ? '#1a0a00' : '#5070a0';
+    }
+
+    const buttonEl = card.querySelector('button');
+    if (buttonEl) {
+      buttonEl.classList.remove('btn-access', 'btn-unavailable');
+      buttonEl.classList.add(available ? 'btn-access' : 'btn-unavailable');
+      buttonEl.textContent = available ? 'ACESSAR' : 'INDISPONÍVEL';
+    }
+  }
+
+  async function updateBooksAvailability() {
+    const cards = document.querySelectorAll('.bimestre-card');
+    const checks = Array.from(cards).map(async (card) => {
+      const url = extractBookUrlFromCard(card);
+      const available = await hasBookContent(url);
+      setCardVisualState(card, available);
+    });
+
+    await Promise.all(checks);
+  }
 
   function openModal(title, statusText, type, url) {
     const msg = modalMessages[type] || modalMessages.none;
@@ -1107,7 +1175,11 @@
   }
 
   function openBook(title, url, type) {
-    openModal(title, '', type, url);
+    const isAvailable = Boolean(bookAvailabilityByUrl[url]);
+    const statusType = isAvailable ? 'done' : 'none';
+
+    openModal(title, '', statusType, url);
+    if (!isAvailable) return;
     if (!url) return;
     window.setTimeout(() => {
       window.location.href = url;
@@ -1148,6 +1220,7 @@
     if (initialContent) {
       initialContent.classList.add('show');
     }
+    updateBooksAvailability();
     setTimeout(triggerAnimations, 200);
   });
 </script>
