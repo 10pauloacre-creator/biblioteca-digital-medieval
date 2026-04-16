@@ -1,16 +1,2508 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3ª Série • Trilhas de C. Humanas • 1º Bimestre</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Amazônia: Identidades, Narrativas e Conhecimentos | Ciências Humanas | 3ª Série | 1º Bim 2026</title>
+<style>
+/* ===== CSS VARIABLES / THEMES ===== */
+:root {
+  --bg: #f0faf4;
+  --bg2: #e6f7ee;
+  --bg3: #d1f0df;
+  --card: #ffffff;
+  --txt: #0d2318;
+  --txt2: #1e4a30;
+  --muted: #5a7a65;
+  --border: #b8dcc8;
+  --acc1: #1a6b3a;
+  --acc2: #2e8b57;
+  --acc3: #e8a020;
+  --acc4: #1a7fb5;
+  --shadow: rgba(26,107,58,.14);
+  --hl-bg: #d4edda;
+  --hl-txt: #145a2e;
+  --card-hover: #eafaf0;
+  --river: #1a7fb5;
+}
+[data-theme="dark"] {
+  --bg: #071410;
+  --bg2: #0d1f16;
+  --bg3: #122a1c;
+  --card: #0f2018;
+  --txt: #d4f0de;
+  --txt2: #8ecfa8;
+  --muted: #4d7a5e;
+  --border: #1c3d2a;
+  --acc1: #4ade80;
+  --acc2: #34d399;
+  --acc3: #fbbf24;
+  --acc4: #38bdf8;
+  --shadow: rgba(74,222,128,.15);
+  --hl-bg: #0f2d1a;
+  --hl-txt: #86efac;
+  --card-hover: #142b1e;
+  --river: #38bdf8;
+}
+[data-theme="reading"] {
+  --bg: #fdf6e3;
+  --bg2: #fef3c7;
+  --bg3: #fde68a33;
+  --card: #fef9ec;
+  --txt: #292117;
+  --txt2: #5c4033;
+  --muted: #a07850;
+  --border: #e7d5b0;
+  --acc1: #7a4a10;
+  --acc2: #a35c14;
+  --acc3: #c47a0a;
+  --acc4: #0369a1;
+  --shadow: rgba(122,74,16,.12);
+  --hl-bg: #fef3c7;
+  --hl-txt: #78350f;
+  --card-hover: #fef9ec;
+  --river: #0369a1;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  transition: background .35s, color .35s;
+  overflow-x: hidden;
+  line-height: 1.78;
+}
+
+/* ===== PROGRESS BAR ===== */
+#prog {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
+  background: linear-gradient(90deg, #1a6b3a, #2e8b57, #e8a020, #1a7fb5);
+  width: 0%; transition: width .1s linear;
+}
+
+/* ===== COVER ===== */
+#cover {
+  min-height: 100svh;
+  background: linear-gradient(165deg, #03100a 0%, #071f0f 20%, #0d3d1c 40%, #145a2e 60%, #1a7a40 80%, #23a35a 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.4rem 2rem;
+  overflow: hidden;
+}
+[data-theme="dark"] #cover {
+  background: linear-gradient(165deg, #000805 0%, #031208 20%, #071f0f 40%, #0d3d1c 60%, #145a2e 80%, #1a6b3a 100%);
+}
+[data-theme="reading"] #cover {
+  background: linear-gradient(165deg, #0d0800 0%, #2d1a04 20%, #5c3408 40%, #7a4a10 60%, #a35c14 80%, #c47a0a 100%);
+}
+#cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: .5; pointer-events: none; z-index: 0;
+}
+
+/* Floating nature elements */
+#floaters { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.flt {
+  position: absolute; opacity: 0;
+  color: rgba(255,255,255,.1);
+  font-size: clamp(.9rem, 3vw, 2rem);
+  animation: rise linear infinite; will-change: transform; user-select: none;
+}
+@keyframes rise {
+  0%   { transform: translateY(110vh) rotate(0deg) scale(.7); opacity: 0; }
+  8%   { opacity: .18; }
+  92%  { opacity: .18; }
+  100% { transform: translateY(-15vh) rotate(360deg) scale(1.1); opacity: 0; }
+}
+
+/* River wave animation at bottom of cover */
+.river-wave {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 60px; z-index: 2; overflow: hidden;
+}
+.river-wave svg { width: 100%; height: 100%; }
+
+.cover-inner {
+  position: relative; z-index: 3;
+  text-align: center; max-width: 600px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: .8rem;
+}
+
+.school-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.22);
+  color: rgba(255,255,255,.92);
+  padding: .35rem 1rem;
+  border-radius: 999px;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  cursor: pointer; text-decoration: none;
+  transition: all .2s;
+}
+.school-pill:hover { background: rgba(255,255,255,.2); }
+
+.disc-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(232,160,32,.18);
+  border: 1.5px solid rgba(232,160,32,.55);
+  color: #f9c85a;
+  padding: .3rem .9rem;
+  border-radius: 999px;
+  font-size: .7rem; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
+.cover-title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: clamp(2rem, 9vw, 4rem);
+  font-weight: 900; color: #fff;
+  line-height: 1.05; letter-spacing: -.02em;
+  text-shadow: 0 6px 32px rgba(0,0,0,.6);
+  margin-top: .2rem;
+}
+.cover-title em {
+  font-style: normal;
+  background: linear-gradient(90deg, #6ee7a0, #34d399, #a3e635, #86efac);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cover-sub {
+  font-size: clamp(.83rem, 2.5vw, 1rem);
+  color: rgba(255,255,255,.78);
+  font-style: italic;
+  line-height: 1.6;
+  max-width: 440px;
+}
+
+.meta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; }
+.meta-chip {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.18);
+  color: rgba(255,255,255,.9);
+  padding: .3rem .8rem;
+  border-radius: 999px;
+  font-size: .72rem; font-weight: 600;
+  backdrop-filter: blur(6px);
+}
+
+.prof-tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+  color: rgba(255,255,255,.88);
+  padding: .55rem 1.3rem;
+  border-radius: 999px;
+  font-size: .82rem;
+  backdrop-filter: blur(6px);
+}
+.prof-tag strong { color: #f9c85a; }
+
+.theme-row { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; }
+.tbtn {
+  padding: .45rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.9);
+  font-size: .73rem; font-weight: 700;
+  cursor: pointer; transition: all .2s;
+  letter-spacing: .03em; backdrop-filter: blur(6px);
+}
+.tbtn:hover, .tbtn.on { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.7); transform: scale(1.04); }
+
+.bncc-box {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 18px;
+  padding: 1.1rem 1.2rem;
+  max-width: 500px; width: 100%;
+  backdrop-filter: blur(10px);
+}
+.bncc-box h4 {
+  color: #f9c85a;
+  font-size: .68rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: .7rem; text-align: center;
+}
+.bncc-chips { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: center; }
+.bc {
+  background: rgba(249,200,90,.12);
+  border: 1.5px solid rgba(249,200,90,.45);
+  color: #f9c85a;
+  padding: .3rem .85rem;
+  border-radius: 10px;
+  font-size: .75rem; font-weight: 800;
+  cursor: pointer; transition: all .2s;
+  letter-spacing: .04em;
+}
+.bc:hover { background: rgba(249,200,90,.28); transform: scale(1.06); box-shadow: 0 4px 18px rgba(249,200,90,.25); }
+
+.start-btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  padding: .9rem 2rem;
+  border-radius: 999px;
+  font-size: 1rem; font-weight: 900;
+  border: none; cursor: pointer;
+  box-shadow: 0 8px 28px rgba(34,197,94,.35);
+  transition: all .22s; text-decoration: none;
+  letter-spacing: .01em;
+}
+.start-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(34,197,94,.5); }
+
+/* ===== DIVIDER ===== */
+.rainbow-div {
+  height: 4px;
+  background: linear-gradient(90deg, #1a6b3a, #2e8b57, #e8a020, #1a7fb5, #6ee7a0);
+  border: none;
+}
+
+/* ===== SECTION HEADER ===== */
+.sec-head {
+  padding: 2.8rem 1.5rem 2.2rem;
+  background: linear-gradient(135deg, var(--acc1) 0%, var(--acc2) 100%);
+  position: relative; overflow: hidden; text-align: center;
+}
+.sec-head::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.07) 0%, transparent 60%);
+}
+.sec-head h2 {
+  font-size: clamp(1.5rem, 5vw, 2.4rem);
+  font-weight: 900; color: #fff;
+  position: relative; z-index: 1;
+  letter-spacing: -.01em;
+}
+.sec-head p { color: rgba(255,255,255,.78); font-size: .88rem; margin-top: .4rem; position: relative; z-index: 1; }
+
+/* ===== BLOCK HEADER ===== */
+.blk-head {
+  padding: 2.2rem 1.5rem 1.8rem;
+  position: relative; overflow: hidden; text-align: center;
+}
+.blk-head h2 {
+  font-size: clamp(1.35rem, 4.5vw, 2.1rem);
+  font-weight: 900; color: var(--acc1);
+  letter-spacing: -.01em;
+}
+.blk-head p { color: var(--muted); font-size: .88rem; margin-top: .4rem; }
+
+/* ===== WRAP ===== */
+.wrap { max-width: 800px; margin: 0 auto; padding: 2rem 1.2rem 2.5rem; }
+
+/* ===== SUMÁRIO ===== */
+#sumario { background: var(--bg2); }
+.cat-label {
+  font-size: .65rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--muted);
+  padding: 1rem .3rem .4rem;
+  display: block;
+}
+.s-grid { display: flex; flex-direction: column; gap: .4rem; }
+@media(min-width:640px){ .s-grid { display: grid; grid-template-columns: 1fr 1fr; } }
+
+.s-item {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: .85rem 1rem;
+  cursor: pointer; text-decoration: none; color: var(--txt);
+  transition: all .2s;
+}
+.s-item:hover {
+  background: var(--card-hover);
+  border-color: var(--acc1);
+  transform: translateX(5px);
+  box-shadow: 0 4px 18px var(--shadow);
+}
+.s-num {
+  min-width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--acc1), var(--acc2));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 900; color: #fff; flex-shrink: 0;
+}
+.s-txt { flex: 1; min-width: 0; }
+.s-ttl { font-size: .87rem; font-weight: 700; line-height: 1.3; }
+.s-sub { font-size: .72rem; color: var(--muted); margin-top: .1rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-arr { color: var(--muted); font-size: .9rem; flex-shrink: 0; }
+
+.sbadge { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; padding: .15rem .5rem; border-radius: 999px; flex-shrink: 0; }
+.b-id  { background: #d1fae5; color: #065f46; }
+.b-nar { background: #fce7f3; color: #9d174d; }
+.b-sab { background: #fef3c7; color: #92400e; }
+.b-pol { background: #dbeafe; color: #1e3a8a; }
+.b-dig { background: #ede9fe; color: #5b21b6; }
+.b-rev { background: #fff7ed; color: #9a3412; }
+[data-theme="dark"] .b-id  { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .b-nar { background: #4a1530; color: #f9a8d4; }
+[data-theme="dark"] .b-sab { background: #451a03; color: #fde68a; }
+[data-theme="dark"] .b-pol { background: #1e3a5f; color: #93c5fd; }
+[data-theme="dark"] .b-dig { background: #2e1065; color: #c4b5fd; }
+[data-theme="dark"] .b-rev { background: #431407; color: #fed7aa; }
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin-bottom: 1.1rem;
+  box-shadow: 0 2px 14px var(--shadow);
+  transition: background .3s, border .3s;
+}
+.card h3 {
+  font-size: 1.05rem; font-weight: 800;
+  color: var(--acc1);
+  margin-bottom: .75rem;
+  display: flex; align-items: center; gap: .45rem;
+  line-height: 1.3;
+}
+.card p, .card li { font-size: .9rem; color: var(--txt2); line-height: 1.78; margin-bottom: .35rem; }
+.card ul { padding-left: 1.1rem; }
+.card ul li::marker { color: var(--acc1); }
+.card ol { padding-left: 1.1rem; }
+.card ol li::marker { color: var(--acc1); font-weight: 700; }
+
+.hero-card {
+  background: linear-gradient(135deg, var(--acc1) 0%, var(--acc2) 100%);
+  border: none; color: #fff;
+}
+.hero-card h3 { color: #f9c85a !important; }
+.hero-card p { color: rgba(255,255,255,.92) !important; }
+.hero-card strong { color: #f9c85a; }
+
+.concept-box {
+  background: var(--hl-bg);
+  border: 1.5px solid var(--acc1);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  margin: .8rem 0;
+}
+.concept-box .cb-title {
+  font-size: .72rem; font-weight: 900;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--acc1); margin-bottom: .4rem;
+}
+.concept-box p { font-size: .88rem; color: var(--txt2); line-height: 1.72; }
+
+.highlight-box {
+  background: linear-gradient(135deg, rgba(26,107,58,.07), rgba(46,139,87,.05));
+  border-left: 4px solid var(--acc1);
+  border-radius: 0 14px 14px 0;
+  padding: .9rem 1.1rem;
+  margin: .8rem 0;
+}
+.highlight-box p { font-size: .88rem; color: var(--txt2); line-height: 1.72; font-style: italic; }
+
+.warn-box {
+  background: rgba(232,160,32,.1);
+  border-left: 4px solid var(--acc3);
+  border-radius: 0 14px 14px 0;
+  padding: .9rem 1.1rem;
+  margin: .8rem 0;
+}
+.warn-box p { font-size: .88rem; color: var(--txt2); line-height: 1.72; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: .8rem; }
+@media(max-width:480px){ .info-grid { grid-template-columns: 1fr; } }
+.info-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: .9rem;
+}
+.info-card .ic-label { font-size: .65rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .35rem; display: block; }
+.info-card .ic-val { font-size: .88rem; font-weight: 700; color: var(--txt); line-height: 1.4; }
+
+.tab-wrap { overflow: hidden; border-radius: 16px; border: 1px solid var(--border); margin: .8rem 0; }
+.tab-btns { display: flex; background: var(--bg2); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.tab-btn {
+  padding: .65rem 1.1rem;
+  border: none; background: transparent;
+  color: var(--muted); font-size: .8rem; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  transition: all .2s; flex-shrink: 0;
+}
+.tab-btn.on { background: var(--card); color: var(--acc1); border-bottom: 2px solid var(--acc1); }
+.tab-pane { display: none; padding: 1.1rem; background: var(--card); }
+.tab-pane.on { display: block; }
+.tab-pane p { font-size: .88rem; color: var(--txt2); line-height: 1.78; margin-bottom: .5rem; }
+.tab-pane ul { padding-left: 1.1rem; }
+.tab-pane ul li { font-size: .88rem; color: var(--txt2); line-height: 1.7; margin-bottom: .3rem; }
+.tab-pane ul li::marker { color: var(--acc1); }
+
+.quote-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--acc1);
+  border-radius: 0 18px 18px 0;
+  padding: 1.4rem;
+  margin-bottom: 1.1rem;
+}
+.quote-card blockquote { font-size: .93rem; color: var(--txt2); font-style: italic; line-height: 1.8; margin-bottom: .5rem; }
+.quote-attr { font-size: .8rem; font-weight: 800; color: var(--acc1); }
+
+/* ===== VIDEO LINKS ===== */
+.video-section { margin: 1rem 0; }
+.video-section h4 { font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .6rem; }
+.video-link {
+  display: flex; align-items: center; gap: .6rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: .65rem .9rem;
+  font-size: .83rem; color: var(--acc4);
+  cursor: pointer; text-decoration: none;
+  transition: all .2s; margin-bottom: .4rem;
+  font-weight: 600;
+}
+.video-link:hover { background: var(--card-hover); border-color: var(--acc4); transform: translateX(4px); }
+.video-icon { font-size: 1rem; flex-shrink: 0; }
+
+/* ===== AI TIPS ===== */
+.ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: .85rem; }
+.ai-card { background: var(--hl-bg); border: 1px solid var(--border); border-radius: 12px; padding: .85rem .9rem; text-align: center; }
+.ai-name { font-weight: 800; font-size: .83rem; color: var(--hl-txt); }
+.ai-tip { font-size: .73rem; color: var(--muted); margin-top: .3rem; line-height: 1.45; }
+.ai-btn { display: inline-block; margin-top: .5rem; padding: .3rem .8rem; background: var(--acc1); color: #fff; border-radius: 999px; font-size: .7rem; font-weight: 700; cursor: pointer; text-decoration: none; transition: all .2s; }
+.ai-btn:hover { opacity: .85; }
+
+/* ===== ACTIVITIES ===== */
+.act-section { background: var(--bg2); border-radius: 20px; padding: 1.5rem; margin-top: 1.5rem; }
+.act-title { font-size: 1rem; font-weight: 900; color: var(--acc1); margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
+.act-q { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; margin-bottom: .8rem; }
+.act-q p { font-size: .88rem; color: var(--txt); line-height: 1.7; font-weight: 600; margin-bottom: .65rem; }
+.act-q .q-num { font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .3rem; display: block; }
+
+/* Multiple choice */
+.mc-opt {
+  display: flex; align-items: flex-start; gap: .55rem;
+  padding: .55rem .7rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .18s;
+  margin-bottom: .3rem;
+  border: 1.5px solid var(--border);
+  background: var(--bg2);
+  font-size: .85rem; color: var(--txt2);
+  line-height: 1.55;
+}
+.mc-opt:hover { background: var(--card-hover); border-color: var(--acc1); }
+.mc-opt.correct { background: #d1fae5 !important; border-color: #059669 !important; color: #065f46 !important; }
+.mc-opt.wrong   { background: #fee2e2 !important; border-color: #dc2626 !important; color: #7f1d1d !important; }
+[data-theme="dark"] .mc-opt.correct { background: #064e3b !important; border-color: #34d399 !important; color: #6ee7b7 !important; }
+[data-theme="dark"] .mc-opt.wrong   { background: #450a0a !important; border-color: #f87171 !important; color: #fca5a5 !important; }
+.mc-letter { font-weight: 900; min-width: 22px; color: var(--acc1); flex-shrink: 0; }
+.mc-fb { display: none; margin-top: .6rem; padding: .6rem .8rem; border-radius: 10px; font-size: .82rem; font-weight: 700; line-height: 1.5; }
+.mc-fb.correct { background: #d1fae5; color: #065f46; display: block; }
+.mc-fb.wrong   { background: #fee2e2; color: #7f1d1d; display: block; }
+[data-theme="dark"] .mc-fb.correct { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .mc-fb.wrong   { background: #450a0a; color: #fca5a5; }
+
+/* ===== GLOSSARY ===== */
+.gloss-grid { display: flex; flex-direction: column; gap: .5rem; }
+.gloss-item {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: .8rem 1rem;
+  display: flex; gap: .7rem; align-items: flex-start;
+}
+.gloss-term { font-weight: 800; font-size: .85rem; color: var(--acc1); min-width: 110px; flex-shrink: 0; }
+.gloss-def { font-size: .83rem; color: var(--txt2); line-height: 1.65; }
+
+/* ===== LEGEND / MYTH CARDS ===== */
+.legend-card {
+  background: linear-gradient(135deg, rgba(26,107,58,.06), rgba(232,160,32,.06));
+  border: 1.5px solid var(--border);
+  border-radius: 16px; padding: 1.2rem;
+  margin-bottom: .8rem;
+  position: relative; overflow: hidden;
+}
+.legend-card::before {
+  content: attr(data-emoji);
+  position: absolute; top: .8rem; right: 1rem;
+  font-size: 2.5rem; opacity: .12;
+}
+.legend-card h4 { font-size: .95rem; font-weight: 800; color: var(--acc1); margin-bottom: .5rem; }
+.legend-card p { font-size: .87rem; color: var(--txt2); line-height: 1.75; }
+
+/* ===== DATA VIZ ===== */
+.bar-chart { margin: 1rem 0; }
+.bar-row { display: flex; align-items: center; gap: .7rem; margin-bottom: .6rem; }
+.bar-label { font-size: .78rem; color: var(--txt2); min-width: 90px; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; background: var(--bg3); border-radius: 999px; height: 24px; overflow: hidden; cursor: pointer; }
+.bar-fill { height: 100%; border-radius: 999px; transition: width 1.2s cubic-bezier(.25,.46,.45,.94); display: flex; align-items: center; padding-left: .6rem; }
+.bar-val { font-size: .72rem; font-weight: 800; color: #fff; white-space: nowrap; }
+
+/* ===== TIMELINE ===== */
+.timeline { position: relative; padding-left: 2rem; margin: 1rem 0; }
+.timeline::before { content: ''; position: absolute; left: .7rem; top: 0; bottom: 0; width: 2px; background: var(--acc1); border-radius: 2px; }
+.tl-item { position: relative; margin-bottom: 1.1rem; }
+.tl-dot {
+  position: absolute; left: -1.7rem; top: .3rem;
+  width: 14px; height: 14px;
+  background: var(--acc1); border-radius: 50%;
+  border: 3px solid var(--bg);
+}
+.tl-year { font-size: .72rem; font-weight: 900; color: var(--acc1); text-transform: uppercase; letter-spacing: .08em; }
+.tl-desc { font-size: .87rem; color: var(--txt2); line-height: 1.65; margin-top: .15rem; }
+
+/* ===== ACCORDION ===== */
+.accordion { margin: .8rem 0; }
+.acc-item { border: 1px solid var(--border); border-radius: 13px; margin-bottom: .45rem; overflow: hidden; }
+.acc-btn {
+  width: 100%; text-align: left; padding: .9rem 1rem;
+  background: var(--card); border: none; cursor: pointer;
+  font-size: .88rem; font-weight: 700; color: var(--txt);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background .2s;
+}
+.acc-btn:hover { background: var(--card-hover); }
+.acc-btn .acc-icon { font-size: .8rem; transition: transform .25s; color: var(--muted); flex-shrink: 0; margin-left: .5rem; }
+.acc-btn.open .acc-icon { transform: rotate(90deg); }
+.acc-content { display: none; padding: .8rem 1rem 1rem; background: var(--bg2); }
+.acc-content.open { display: block; }
+.acc-content p { font-size: .87rem; color: var(--txt2); line-height: 1.75; margin-bottom: .4rem; }
+.acc-content ul { padding-left: 1.1rem; }
+.acc-content ul li { font-size: .87rem; color: var(--txt2); line-height: 1.7; margin-bottom: .25rem; }
+.acc-content ul li::marker { color: var(--acc1); }
+
+/* ===== SECTION BG EFFECTS ===== */
+.section-forest { background: var(--bg); position: relative; }
+.section-river  { background: var(--bg2); position: relative; }
+.section-city   { background: var(--bg); position: relative; }
+
+/* ===== FIXED NAV ===== */
+.fnav { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 998; display: flex; flex-direction: column; gap: .5rem; }
+.fnav-btn {
+  width: 46px; height: 46px;
+  background: var(--acc1);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px var(--shadow);
+  transition: all .2s;
+}
+.fnav-btn:hover { transform: scale(1.12); }
+
+/* ===== MODAL ===== */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.65);
+  z-index: 2000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; pointer-events: none; transition: opacity .22s;
+}
+.modal-bg.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--card);
+  border-radius: 22px;
+  padding: 2rem 1.7rem;
+  max-width: 500px; width: 100%;
+  position: relative;
+  transform: scale(.92); transition: transform .22s;
+  max-height: 88vh; overflow-y: auto;
+}
+.modal-bg.show .modal { transform: scale(1); }
+.modal-x {
+  position: absolute; top: .9rem; right: .9rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 50%; width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: .85rem; color: var(--txt); font-weight: 700;
+}
+.modal-label { font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: .35rem; }
+.modal-code { font-size: 1.25rem; font-weight: 900; color: var(--acc1); margin-bottom: .9rem; }
+.modal-desc { font-size: .88rem; color: var(--txt2); line-height: 1.78; }
+
+/* ===== FADE IN ===== */
+.fi { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+.fi.in { opacity: 1; transform: none; }
+
+/* ===== FOOTER ===== */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center; }
+footer p { font-size: .77rem; color: var(--muted); line-height: 1.7; }
+footer strong { color: var(--acc1); }
+
+/* ===== PAULO AVATAR ===== */
+#paulo-wrap {
+  position: fixed; bottom: 1.1rem; left: 1.1rem;
+  z-index: 997; display: flex; flex-direction: column; align-items: center; gap: .3rem;
+}
+#paulo-bubble {
+  background: var(--card);
+  border: 1.5px solid var(--acc1);
+  border-radius: 18px 18px 18px 4px;
+  padding: 1rem 1.1rem;
+  max-width: 230px; min-width: 180px;
+  box-shadow: 0 8px 28px var(--shadow);
+  display: none; position: relative;
+  animation: popIn .25s ease;
+}
+@keyframes popIn { from { transform: scale(.85) translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+#paulo-close {
+  position: absolute; top: .4rem; right: .5rem;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 50%; width: 22px; height: 22px;
+  font-size: .65rem; cursor: pointer; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+}
+#paulo-msg { font-size: .8rem; color: var(--txt2); line-height: 1.6; display: block; margin-bottom: .6rem; }
+#paulo-next {
+  background: var(--acc1); color: #fff; border: none;
+  border-radius: 999px; padding: .3rem .8rem;
+  font-size: .72rem; font-weight: 700; cursor: pointer;
+  transition: all .2s; width: 100%;
+}
+#paulo-next:hover { opacity: .85; }
+#paulo-avatar { width: 70px; height: 70px; cursor: pointer; transition: transform .3s ease; }
+#paulo-avatar:hover { transform: scale(1.15); }
+#paulo-face { filter: drop-shadow(0 6px 16px rgba(0,0,0,.3)); }
+#mouth { transition: d 0.4s cubic-bezier(0.4,0,0.2,1); }
+.paulo-speaking #mouth { animation: talking 0.75s infinite alternate ease-in-out; }
+@keyframes talking { from { d: path("M25 49 Q36 53 47 49"); } to { d: path("M25 49 Q36 59 47 49"); } }
+.paulo-speaking #paulo-avatar { animation: subtle-nod 1.1s infinite alternate ease-in-out; }
+@keyframes subtle-nod { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+#paulo-label { font-size: .68rem; font-weight: 700; color: var(--muted); }
+
+/* Gossip buttons */
+.gossip-btns { display: flex; gap: .4rem; margin-top: .5rem; }
+.gossip-btn { flex: 1; padding: .3rem; border: none; border-radius: 8px; font-size: .75rem; font-weight: 700; cursor: pointer; transition: all .2s; }
+.gossip-yes { background: var(--acc1); color: #fff; }
+.gossip-no  { background: var(--bg3); color: var(--txt2); }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:400px){
+  .info-grid { grid-template-columns: 1fr; }
+  .ai-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
-  <p><a href="../../../../index.html">↩ Voltar para a Biblioteca</a></p>
-  <h1>3ª Série — Trilhas de C. Humanas — 1º Bimestre</h1>
-  <hr />
 
-  <!-- COLE_AQUI_O_HTML_DO_LIVRO -->
+<div id="prog"></div>
 
+<!-- ============================== CAPA ============================== -->
+<section id="capa">
+<div id="cover">
+  <div id="floaters"></div>
+
+  <div class="river-wave">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z" fill="rgba(16,120,80,.25)" />
+      <path d="M0,40 C300,20 700,55 1100,35 C1280,25 1400,45 1440,40 L1440,60 L0,60 Z" fill="rgba(26,107,58,.18)" />
+    </svg>
+  </div>
+
+  <div class="cover-inner">
+    <a class="school-pill" href="https://www.instagram.com/pe.carloscasavequia/" target="_blank" rel="noopener">
+      🏫 E.E. Padre Carlos Casavequia
+    </a>
+
+    <div class="disc-pill">🌿 Trilhas de Ciências Humanas</div>
+
+    <h1 class="cover-title">
+      <em>Amazônia</em><br>Identidades, Narrativas<br>e Conhecimentos
+    </h1>
+
+    <p class="cover-sub">
+      "A floresta não é apenas natureza. É memória, resistência, sabedoria e identidade de milhões de vozes."
+    </p>
+
+    <div class="meta-row">
+      <span class="meta-chip">🎓 3ª Série · Ensino Médio</span>
+      <span class="meta-chip">📅 1º Bimestre · 2026</span>
+    </div>
+
+    <div class="prof-tag">
+      👨‍🏫 Prof. <strong>Paulo Roberto R. Magalhães</strong>
+    </div>
+
+    <div class="theme-row">
+      <button class="tbtn on" id="tb-def" onclick="setTheme('default')">☀️ Normal</button>
+      <button class="tbtn" id="tb-read" onclick="setTheme('reading')">📖 Leitura</button>
+      <button class="tbtn" id="tb-dark" onclick="setTheme('dark')">🌙 Escuro</button>
+    </div>
+
+    <div class="bncc-box">
+      <h4>📋 Habilidades BNCC — clique para ver</h4>
+      <div class="bncc-chips">
+        <span class="bc" onclick="openModal('CHSOA1C1')">CHSOA1C1</span>
+        <span class="bc" onclick="openModal('CHSOA1C2')">CHSOA1C2</span>
+        <span class="bc" onclick="openModal('CHSOA1C3')">CHSOA1C3</span>
+        <span class="bc" onclick="openModal('CHSOA1C4')">CHSOA1C4</span>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="goTo('sumario')">Ver Sumário 🌿</button>
+  </div>
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== SUMÁRIO ============================== -->
+<section id="sumario">
+<div class="sec-head">
+  <h2>🗺️ Sumário</h2>
+  <p>Clique em qualquer tópico para navegar até o conteúdo</p>
+</div>
+<div class="wrap">
+
+  <span class="cat-label">🌎 Bloco 1 · Identidades e Imaginários — Tópicos 1–2</span>
+  <div class="s-grid">
+    <a class="s-item" href="#b1" onclick="goTo('b1',event)">
+      <div class="s-num">01</div>
+      <div class="s-txt">
+        <div class="s-ttl">Amazônia: construção social e imaginários</div>
+        <div class="s-sub">Visões de dentro e de fora · subjetividades</div>
+      </div>
+      <span class="sbadge b-id">Identidade</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#b1" onclick="goTo('b1',event)">
+      <div class="s-num">02</div>
+      <div class="s-txt">
+        <div class="s-ttl">Amazônia e Amazônias</div>
+        <div class="s-sub">Legal, internacional, urbana e rural · pluralidade</div>
+      </div>
+      <span class="sbadge b-id">Identidade</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <span class="cat-label">📣 Bloco 2 · Narrativas e Cultura Oral — Tópicos 3–4</span>
+  <div class="s-grid">
+    <a class="s-item" href="#b2" onclick="goTo('b2',event)">
+      <div class="s-num">03</div>
+      <div class="s-txt">
+        <div class="s-ttl">Tradição oral amazônica</div>
+        <div class="s-sub">Oralidade como conhecimento · história oral</div>
+      </div>
+      <span class="sbadge b-nar">Narrativa</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#b2" onclick="goTo('b2',event)">
+      <div class="s-num">04</div>
+      <div class="s-txt">
+        <div class="s-ttl">Lendas, mitos e literatura regional</div>
+        <div class="s-sub">Boto, Iara, Cobra Grande · análise cultural</div>
+      </div>
+      <span class="sbadge b-nar">Narrativa</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <span class="cat-label">🌐 Bloco 3 · Tecnologia, Saberes e Bioeconomia — Tópicos 5–7</span>
+  <div class="s-grid">
+    <a class="s-item" href="#b3" onclick="goTo('b3',event)">
+      <div class="s-num">05</div>
+      <div class="s-txt">
+        <div class="s-ttl">Culturas digitais na Amazônia</div>
+        <div class="s-sub">Conectividade, exclusão digital, identidade e tecnologia</div>
+      </div>
+      <span class="sbadge b-dig">Digital</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#b3" onclick="goTo('b3',event)">
+      <div class="s-num">06</div>
+      <div class="s-txt">
+        <div class="s-ttl">Saberes tradicionais e etnobotânica</div>
+        <div class="s-sub">Medicina indígena · biopirataria · bioprospecção</div>
+      </div>
+      <span class="sbadge b-sab">Saberes</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#b3" onclick="goTo('b3',event)">
+      <div class="s-num">07</div>
+      <div class="s-txt">
+        <div class="s-ttl">Bioeconomia amazônica</div>
+        <div class="s-sub">Açaí, castanha, madeira certificada · mercados verdes</div>
+      </div>
+      <span class="sbadge b-sab">Saberes</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <span class="cat-label">📋 Bloco 4 · Políticas e Fontes Críticas — Tópicos 8–9</span>
+  <div class="s-grid">
+    <a class="s-item" href="#b4" onclick="goTo('b4',event)">
+      <div class="s-num">08</div>
+      <div class="s-txt">
+        <div class="s-ttl">Políticas públicas e legislação ambiental</div>
+        <div class="s-sub">SNUC, Código Florestal, REDD+ · análise crítica</div>
+      </div>
+      <span class="sbadge b-pol">Política</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#b4" onclick="goTo('b4',event)">
+      <div class="s-num">09</div>
+      <div class="s-txt">
+        <div class="s-ttl">Análise crítica de fontes sobre a Amazônia</div>
+        <div class="s-sub">Desinformação · dados reais vs. mitos</div>
+      </div>
+      <span class="sbadge b-pol">Política</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <span class="cat-label">⭐ Bloco 5 · Revisão e Avaliação — Tópico 10</span>
+  <div class="s-grid">
+    <a class="s-item" href="#b5" onclick="goTo('b5',event)" style="border-color: var(--acc3);">
+      <div class="s-num" style="background:linear-gradient(135deg,#92400e,#d97706);">10</div>
+      <div class="s-txt">
+        <div class="s-ttl">⭐ Sistematização e Avaliação Bimestral</div>
+        <div class="s-sub">Revisão integrada · mapa conceitual · avaliação</div>
+      </div>
+      <span class="sbadge b-rev">Aval.</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== APRESENTAÇÃO ============================== -->
+<section id="apresentacao">
+<div class="sec-head">
+  <h2>🌿 Apresentação</h2>
+  <p>Antes de começar, leia com atenção</p>
+</div>
+<div class="wrap">
+
+  <div class="card hero-card fi">
+    <h3>🌳 Sobre este material</h3>
+    <p>
+      Bem-vindo(a) ao livro digital do <strong>1º Bimestre de 2026</strong> de Trilhas de Ciências Humanas!
+      Neste bimestre vamos explorar a Amazônia de um jeito que vai te surpreender: não como cenário de natureza distante,
+      mas como um espaço vivo de <strong>identidades, conflitos, saberes e narrativas</strong>.
+    </p>
+    <p style="margin-top:.6rem;">
+      Você vai perceber que existe uma Amazônia que você conhece, e muitas outras que nunca imaginou.
+      Bora descobrir juntos? 🌿
+    </p>
+  </div>
+
+  <div class="card fi">
+    <h3>🎯 Objetivos de aprendizagem do bimestre</h3>
+    <ul class="obj-list" style="list-style:none;padding:0;">
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);"><span style="flex-shrink:0;">🔍</span><span>Avaliar fontes variadas e confiáveis, combatendo a desinformação sobre a Amazônia com verificação crítica de dados e imagens</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);"><span style="flex-shrink:0;">📊</span><span>Analisar dados quantitativos e qualitativos para compreender processos locais, regionais, nacionais e globais relacionados à Amazônia</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border);"><span style="flex-shrink:0;">🗣️</span><span>Construir argumentos fundamentados integrando saberes científicos, históricos, culturais e indígenas, valorizando perspectivas marginalizadas</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;"><span style="flex-shrink:0;">🌎</span><span>Relacionar análises científicas às dinâmicas sociais, políticas e ambientais, refletindo sobre sua própria atuação como agente transformador</span></li>
+    </ul>
+  </div>
+
+  <div class="card fi">
+    <h3>🗂 Organização do bimestre</h3>
+    <p>São <strong>10 tópicos</strong> organizados em <strong>5 blocos temáticos</strong>:</p>
+    <div class="info-grid" style="margin-top:.8rem;">
+      <div class="info-card"><span class="ic-label">Bloco 1</span><div class="ic-val">🌎 Identidades e Imaginários (Tópicos 1–2)</div></div>
+      <div class="info-card"><span class="ic-label">Bloco 2</span><div class="ic-val">📣 Narrativas e Cultura Oral (Tópicos 3–4)</div></div>
+      <div class="info-card"><span class="ic-label">Bloco 3</span><div class="ic-val">🌿 Tecnologia, Saberes e Bioeconomia (Tópicos 5–7)</div></div>
+      <div class="info-card"><span class="ic-label">Bloco 4</span><div class="ic-val">📋 Políticas e Fontes Críticas (Tópicos 8–9)</div></div>
+      <div class="info-card"><span class="ic-label">Bloco 5</span><div class="ic-val">⭐ Revisão e Avaliação (Tópico 10)</div></div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>📱 Como usar este material</h3>
+    <ul>
+      <li>🗺️ Use o <strong>Sumário</strong> para navegar diretamente ao bloco desejado</li>
+      <li>🌙 Alterne entre <strong>Modo Escuro</strong>, <strong>Modo Leitura</strong> e <strong>Normal</strong> na capa</li>
+      <li>🧩 Responda os quizzes interativos diretamente no livro</li>
+      <li>📝 As questões discursivas devem ser respondidas no caderno</li>
+      <li>🤖 Use as dicas de IA para aprofundar seus estudos</li>
+      <li>💾 Salve este arquivo no celular para acessar <strong>offline</strong></li>
+      <li>👨‍🏫 Clique no <strong>Prof. Paulo</strong> (canto inferior esquerdo) para dicas e curiosidades!</li>
+    </ul>
+  </div>
+
+  <div class="card fi">
+    <h3>🤖 Estudando com Inteligências Artificiais</h3>
+    <p>As IAs são aliadas poderosas, mas use-as com <strong>senso crítico</strong>. Sempre compare com fontes científicas.</p>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <div class="ai-name">🎵 NotebookLM</div>
+        <div class="ai-tip">Cole o conteúdo aqui e peça um podcast ou resumo em áudio sobre a Amazônia</div>
+        <a class="ai-btn" href="https://notebooklm.google.com/" target="_blank">Acessar</a>
+      </div>
+      <div class="ai-card">
+        <div class="ai-name">💬 ChatGPT</div>
+        <div class="ai-tip">Peça comparações entre perspectivas indígenas e científicas sobre a floresta</div>
+        <a class="ai-btn" href="https://chat.openai.com/" target="_blank">Acessar</a>
+      </div>
+      <div class="ai-card">
+        <div class="ai-name">✨ Gemini</div>
+        <div class="ai-tip">Pesquise dados atualizados sobre desmatamento, bioeconomia e legislação ambiental</div>
+        <a class="ai-btn" href="https://gemini.google.com/" target="_blank">Acessar</a>
+      </div>
+      <div class="ai-card">
+        <div class="ai-name">🔮 Grok</div>
+        <div class="ai-tip">Explore como a Amazônia aparece nas redes sociais e nos debates políticos atuais</div>
+        <a class="ai-btn" href="https://grok.com/" target="_blank">Acessar</a>
+      </div>
+    </div>
+    <div class="warn-box" style="margin-top:1rem;">
+      <p>💡 <strong>Dica:</strong> Qualquer informação gerada por IA sobre a Amazônia deve ser checada em fontes como INPE, IBGE, ISA e FUNAI. A Amazônia é alvo de muita desinformação!</p>
+    </div>
+  </div>
+
+  <div class="quote-card fi">
+    <blockquote>
+      "A Amazônia não é um problema a ser resolvido. É um mundo a ser compreendido, respeitado e, sobretudo, ouvido, especialmente pelas vozes que nela habitam há milênios."
+    </blockquote>
+    <div class="quote-attr">Prof. Paulo Roberto R. Magalhães</div>
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== BLOCO 1 ============================== -->
+<section id="b1" class="section-forest">
+<div class="blk-head">
+  <h2>🌎 Bloco 1 · Identidades e Imaginários</h2>
+  <p>Tópicos 1 e 2 · O que é a Amazônia? Construção, subjetividades e pluralidade</p>
+</div>
+<div class="wrap">
+
+  <!-- TÓPICO 1 -->
+  <div class="card fi">
+    <h3>🌿 Tópico 1 · Amazônia: Construção Social e Imaginários</h3>
+    <p>
+      Antes de qualquer dado ou mapa, a Amazônia existe como <strong>imaginário</strong>: uma ideia construída por diferentes olhares ao longo de séculos.
+      Mas o que é um imaginário social? É o conjunto de imagens, representações, mitos e narrativas que uma sociedade produz sobre algo ou alguém.
+    </p>
+    <div class="concept-box">
+      <div class="cb-title">Conceito fundamental</div>
+      <p><strong>Imaginário social</strong> é o conjunto de representações coletivas, crenças e símbolos que uma sociedade constrói para interpretar e dar sentido à realidade. Ele molda comportamentos, políticas e identidades.</p>
+    </div>
+    <p>
+      O imaginário sobre a Amazônia é plural e muitas vezes <strong>contraditório</strong>. Enquanto para povos indígenas a floresta é casa, território sagrado e fonte de vida, para muitos governantes do século XIX ela era um "vazio a ser ocupado". Para investidores estrangeiros, é um "pulmão do mundo" a ser preservado (mas raramente consultando quem vive nela). Para garimpeiros, é oportunidade. Para ribeirinhos, é lar e modo de vida.
+    </p>
+
+    <div class="tab-wrap fi">
+      <div class="tab-btns">
+        <button class="tab-btn on" onclick="showTab('t1','vis1')">🌿 Olhar indígena</button>
+        <button class="tab-btn" onclick="showTab('t1','vis2')">🏛️ Olhar do Estado</button>
+        <button class="tab-btn" onclick="showTab('t1','vis3')">🌎 Olhar global</button>
+        <button class="tab-btn" onclick="showTab('t1','vis4')">🏙️ Olhar midiático</button>
+      </div>
+      <div id="t1-vis1" class="tab-pane on">
+        <p><strong>Para os povos originários</strong>, a Amazônia é território ancestral, cosmologia e identidade. Ela não é "natureza separada da cultura", mas parte inseparável da existência. A floresta tem nomes, histórias, espíritos e leis próprias. Povos como os Yanomami, Kayapó, Munduruku e centenas de outros grupos vivem nela e com ela há milênios.</p>
+        <ul>
+          <li>A terra não pertence aos humanos: os humanos pertencem à terra</li>
+          <li>O conhecimento ecológico é transmitido oralmente por gerações</li>
+          <li>A demarcação de terras é uma questão de sobrevivência cultural</li>
+        </ul>
+      </div>
+      <div id="t1-vis2" class="tab-pane">
+        <p><strong>O Estado brasileiro</strong> historicamente enxergou a Amazônia como <em>espaço vazio</em> a ser "desenvolvido". A ditadura militar (1964–1985) promoveu projetos como a Transamazônica, a Usina de Balbina e grandes assentamentos, ignorando populações locais.</p>
+        <ul>
+          <li>"Integrar para não entregar" era o slogan da política amazônica militar</li>
+          <li>Projetos de colonização levaram conflitos fundiários que duram até hoje</li>
+          <li>O Estado raramente consultou indígenas ou ribeirinhos sobre decisões que afetavam suas vidas</li>
+        </ul>
+      </div>
+      <div id="t1-vis3" class="tab-pane">
+        <p><strong>O olhar internacional</strong> sobre a Amazônia é frequentemente marcado pela contradição: países que já destruíram suas próprias florestas cobram o Brasil pela preservação. A Amazônia é vista como "patrimônio da humanidade", o que muitas vezes ignora a soberania nacional e os direitos dos povos que lá vivem.</p>
+        <ul>
+          <li>O conceito de "pulmão do mundo" é popular mas cientificamente simplificado</li>
+          <li>ONGs internacionais têm influência ambígua: podem proteger, mas também colonizar decisões</li>
+          <li>Debates sobre soberania vs. conservação global são permanentes</li>
+        </ul>
+      </div>
+      <div id="t1-vis4" class="tab-pane">
+        <p><strong>A mídia</strong> constrói uma Amazônia de extremos: ou é paraíso intocado ou é chamas e desmatamento. Raramente mostra as cidades amazônicas, a cultura ribeirinha, a diversidade humana. Isso cria estereótipos que prejudicam tanto a conservação quanto as populações locais.</p>
+        <ul>
+          <li>Manaus tem mais de 2 milhões de habitantes e shopping centers com pista de gelo</li>
+          <li>A floresta aparece mais no noticiário em chamas do que em vida cotidiana</li>
+          <li>A representação da amazônia influencia políticas públicas e financiamentos internacionais</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <p>Reflexão: Quando você pensa em Amazônia, qual imagem vem primeiro à sua cabeça? Essa imagem foi construída por você ou para você?</p>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=amazônia+imaginário+social+povos+indígenas')">
+        <span class="video-icon">▶</span> Amazônia: perspectivas e imaginários sociais
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Ailton+Krenak+Amazônia')">
+        <span class="video-icon">▶</span> Ailton Krenak: voz indígena sobre identidade e floresta
+      </span>
+    </div>
+  </div>
+
+  <!-- TÓPICO 2 -->
+  <div class="card fi">
+    <h3>🗺️ Tópico 2 · Amazônia e Amazônias: a pluralidade do conceito</h3>
+    <p>
+      Não existe <em>uma</em> Amazônia, existe <em>muitas</em> Amazônias. O conceito varia conforme o critério usado para definir o território.
+      Compreender essa distinção é fundamental para qualquer análise crítica.
+    </p>
+
+    <div class="accordion fi">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🗺️ Amazônia Legal <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>Conceito político-administrativo criado em 1953 para fins de planejamento governamental. Abrange 9 estados brasileiros: Acre, Amapá, Amazonas, Mato Grosso, Pará, Rondônia, Roraima, Tocantins e parte do Maranhão.</p>
+          <p>Área: aproximadamente 5,2 milhões de km², o que representa cerca de 61% do território brasileiro. É utilizada pelo INPE para monitorar o desmatamento.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌍 Amazônia Internacional (Pan-Amazônia) <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>A bacia hidrográfica amazônica se estende por 9 países: Brasil, Bolívia, Peru, Equador, Colômbia, Venezuela, Guiana, Suriname e Guiana Francesa. A área total é de aproximadamente 7,4 milhões de km².</p>
+          <p>Cada país tem sua própria política amazônica, o que torna a cooperação internacional complexa e fundamental ao mesmo tempo.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌆 Amazônia Urbana <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>Surpreende muita gente, mas mais de 70% da população amazônica vive em cidades. Manaus, Belém, Santarém, Porto Velho e Macapá são centros urbanos com dinâmicas próprias. A Amazônia urbana enfrenta problemas como falta de saneamento, violência, exclusão digital e falta de infraestrutura básica.</p>
+          <p>A cidade de Manaus, por exemplo, tem polo industrial (Zona Franca), shoppings, universidades federais e uma história de colonização complexa que mistura cultura indígena, ribeirinha, nordestina e estrangeira.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌳 Amazônia Rural e Florestal <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>É a imagem mais conhecida: comunidades ribeirinhas, povos indígenas, assentamentos de reforma agrária, reservas extrativistas. Mas também abrange fazendas de gado, plantações de soja, garimpos ilegais e frentes de expansão da fronteira agrícola.</p>
+          <p>O chamado "arco do desmatamento" concentra os principais conflitos fundiários e ambientais da região, indo do Mato Grosso ao Pará e Rondônia.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA VIZ: Amazônia por tipo -->
+    <div class="card fi" style="margin-top:1rem;">
+      <h3 style="font-size:.9rem;">📊 Cobertura florestal da Amazônia Legal (dados INPE/2023)</h3>
+      <div class="bar-chart" id="bchart1"></div>
+      <p style="font-size:.75rem; color:var(--muted); margin-top:.5rem;">Clique nas barras para mais detalhes</p>
+    </div>
+
+    <div class="warn-box">
+      <p>⚠️ <strong>Atenção crítica:</strong> Quando alguém fala "vou preservar a Amazônia", questione: qual Amazônia? Quem decide? Quem é consultado? Os povos que lá vivem têm voz nessa decisão?</p>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Amazônia+legal+bioma+diferença+explicação')">
+        <span class="video-icon">▶</span> Amazônia Legal x Bioma Amazônico: qual a diferença?
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Manaus+amazônia+urbana+cidade+polo+industrial')">
+        <span class="video-icon">▶</span> Manaus: a metrópole escondida na floresta
+      </span>
+    </div>
+  </div>
+
+  <!-- Glossário Bloco 1 -->
+  <div class="card fi">
+    <h3>📖 Glossário do Bloco 1</h3>
+    <div class="gloss-grid">
+      <div class="gloss-item"><span class="gloss-term">Imaginário social</span><span class="gloss-def">Conjunto de representações, crenças e narrativas compartilhadas por uma sociedade sobre algo ou alguém, influenciando comportamentos e políticas.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Subjetividade</span><span class="gloss-def">Conjunto de experiências, percepções e valores individuais ou coletivos que moldam a forma como alguém vê o mundo.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Amazônia Legal</span><span class="gloss-def">Região político-administrativa de 5,2 milhões de km² criada em 1953 abrangendo 9 estados brasileiros, usada como referência para políticas públicas e monitoramento ambiental.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Pan-Amazônia</span><span class="gloss-def">Toda a bacia hidrográfica amazônica, que se estende por 9 países da América do Sul, totalizando cerca de 7,4 milhões de km².</span></div>
+      <div class="gloss-item"><span class="gloss-term">Perspectiva decolonial</span><span class="gloss-def">Abordagem que questiona as visões impostas pelo colonialismo, valorizando os saberes e cosmovisões dos povos originários e marginalizados.</span></div>
+    </div>
+  </div>
+
+  <!-- Atividades Bloco 1 -->
+  <div class="act-section fi" id="act-b1">
+    <div class="act-title">✍️ Atividades de Fixação — Bloco 1</div>
+
+    <div class="card" style="background:var(--hl-bg);border-color:var(--acc1);margin-bottom:1rem;">
+      <h3 style="font-size:.88rem;">📝 Questões Discursivas (responda no caderno)</h3>
+      <ol style="padding-left:1.2rem;margin-top:.5rem;">
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Como o imaginário social sobre a Amazônia pode influenciar decisões políticas sobre a região? Dê um exemplo concreto.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Qual a diferença entre "Amazônia Legal" e "Bioma Amazônico"? Por que essa distinção importa para as políticas ambientais?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Compare a visão indígena sobre a floresta com a visão histórica do Estado brasileiro. Quais valores e interesses estão em conflito?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">A afirmação de que a Amazônia é "o pulmão do mundo" é cientificamente precisa? Pesquise e argumente.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">De que forma a mídia contribui para construir ou desconstruir imaginários sobre a Amazônia? Traga exemplos de notícias reais.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">O que é perspectiva decolonial e como ela pode mudar a forma de estudar a Amazônia?</li>
+        <li style="font-size:.87rem;color:var(--txt2);">Por que mais de 70% da população amazônica vive em cidades? Quais os principais desafios dessas cidades?</li>
+      </ol>
+    </div>
+
+    <div class="act-title" style="margin-top:1rem;">🧩 Questões de Múltipla Escolha — interativas</div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 1 de 5</span>
+      <p>O conceito de "Amazônia Legal" foi criado principalmente com que finalidade?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Delimitar os territórios indígenas para fins de demarcação</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Proteger a biodiversidade por meio de acordos internacionais</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Organizar o planejamento governamental e as políticas de desenvolvimento regional</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Definir os limites do bioma para controle do desmatamento pelo INPE</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 2 de 5</span>
+      <p>Qual das afirmativas representa MELHOR uma perspectiva decolonial sobre a Amazônia?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> A floresta deve ser preservada porque tem valor econômico para o turismo internacional</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> Os povos originários devem ser protagonistas nas decisões sobre seus territórios, pois detêm saberes ancestrais que o Estado ignora</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> O Estado brasileiro tem o direito soberano de explorar seus recursos naturais sem interferência</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> A Amazônia deve ser tutelada por organismos internacionais, pois pertence à humanidade</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 3 de 5</span>
+      <p>Sobre a Amazônia urbana, é CORRETO afirmar que:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Menos de 20% da população amazônica vive em cidades</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> As cidades amazônicas não apresentam problemas de desigualdade social</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> A Zona Franca de Manaus foi criada para incentivar o garimpo na região</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">D</span> Mais de 70% da população amazônica vive em cidades, onde há desafios de infraestrutura, saneamento e exclusão digital</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 4 de 5</span>
+      <p>O imaginário de que a Amazônia é um "vazio demográfico" historicamente serviu para justificar:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> A criação de reservas indígenas de grande extensão</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> Projetos de colonização e infraestrutura que ignoravam populações já existentes</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> A proteção integral da biodiversidade amazônica pelo Código Florestal</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> O reconhecimento da soberania dos povos indígenas sobre seus territórios</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 5 de 5</span>
+      <p>A Pan-Amazônia se distingue da Amazônia Legal principalmente porque:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> A Pan-Amazônia é um conceito exclusivamente ambiental, sem fronteiras políticas definidas</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> A Amazônia Legal é maior e abrange mais países do que a Pan-Amazônia</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> A Pan-Amazônia abrange a bacia hidrográfica em 9 países, enquanto a Amazônia Legal é um conceito político-administrativo restrito ao Brasil</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> A Pan-Amazônia é usada pelo INPE para monitorar o desmatamento em toda a América do Sul</div>
+      <div class="mc-fb"></div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== BLOCO 2 ============================== -->
+<section id="b2" class="section-river">
+<div class="blk-head">
+  <h2>📣 Bloco 2 · Narrativas e Cultura Oral</h2>
+  <p>Tópicos 3 e 4 · Oralidade, lendas, mitos e literatura regional</p>
+</div>
+<div class="wrap">
+
+  <!-- TÓPICO 3 -->
+  <div class="card fi">
+    <h3>🗣️ Tópico 3 · Tradição Oral e Metodologia da História Oral</h3>
+    <p>
+      Antes da escrita, havia a voz. E mesmo depois que a escrita chegou, a oralidade continuou sendo a principal forma de transmitir conhecimento em grande parte do mundo, incluindo a Amazônia.
+      A <strong>tradição oral</strong> não é um conhecimento menor ou primitivo: é uma tecnologia sofisticada de memória, identidade e educação.
+    </p>
+    <div class="concept-box">
+      <div class="cb-title">Oralidade como forma de conhecimento</div>
+      <p>Walter Ong, pesquisador das culturas orais, mostrou que sociedades com tradição oral pensam de forma diferente das sociedades letradas, mas não de forma inferior. O conhecimento oral é contextual, relacional, performático e vivo: muda a cada vez que é contado, adaptando-se ao presente.</p>
+    </div>
+    <p>
+      Na Amazônia, a tradição oral cumpre funções vitais. Mapeia territórios, transmite práticas medicinais, explica fenômenos naturais, regula relações sociais e mantém viva a memória coletiva dos povos.
+    </p>
+
+    <h4 style="font-size:.9rem;font-weight:800;color:var(--acc1);margin:1rem 0 .5rem;">🔬 Metodologia da História Oral</h4>
+    <p>
+      A <strong>história oral</strong> é uma metodologia científica que utiliza entrevistas e narrativas de pessoas como fonte primária de pesquisa histórica e social. Foi sistematizada a partir dos anos 1940 em universidades americanas e tornou-se fundamental para recuperar histórias de grupos marginalizados que não aparecem nos documentos oficiais.
+    </p>
+    <div class="info-grid">
+      <div class="info-card"><span class="ic-label">O que é</span><div class="ic-val">Metodologia de pesquisa baseada em entrevistas e depoimentos como fontes históricas</div></div>
+      <div class="info-card"><span class="ic-label">Para que serve</span><div class="ic-val">Recuperar vozes silenciadas pela história oficial: indígenas, mulheres, ribeirinhos, quilombolas</div></div>
+      <div class="info-card"><span class="ic-label">Cuidados éticos</span><div class="ic-val">Consentimento, devolutiva para a comunidade, não retirar a narrativa do seu contexto</div></div>
+      <div class="info-card"><span class="ic-label">Limitações</span><div class="ic-val">Memória é seletiva e pode ser influenciada pelo presente. Não substitui outras fontes, complementa.</div></div>
+    </div>
+
+    <div class="highlight-box">
+      <p>Exercício prático: Entreviste um familiar mais velho sobre alguma história, crença ou costume da sua família ou da sua cidade. Registre, reflita: o que essa narrativa revela sobre a identidade daquele grupo?</p>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=história+oral+metodologia+pesquisa+social')">
+        <span class="video-icon">▶</span> Metodologia da história oral: como funciona na prática
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=oralidade+amazônia+saberes+indígenas')">
+        <span class="video-icon">▶</span> Oralidade e saberes na Amazônia
+      </span>
+    </div>
+  </div>
+
+  <!-- TÓPICO 4 -->
+  <div class="card fi">
+    <h3>🐬 Tópico 4 · Lendas, Mitos e Literatura Regional Amazônica</h3>
+    <p>
+      As narrativas míticas e lendárias amazônicas não são apenas "histórias bonitas". São <strong>sistemas de explicação do mundo</strong>,
+      formas de regular comportamentos sociais, de marcar o território e de estabelecer fronteiras entre o humano e o não humano.
+    </p>
+    <p>Ao analisar uma lenda, o cientista social pergunta: <em>o que essa história diz sobre os medos, os desejos e os valores do povo que a conta?</em></p>
+
+    <div class="legend-card" data-emoji="🐬" style="margin-top:1rem;">
+      <h4>🐬 O Boto</h4>
+      <p>Na mitologia amazônica, o boto cor-de-rosa se transforma em homem bonito na noite de São João, seduz mulheres jovens e, ao amanhecer, volta ao rio. A narrativa é contada para "explicar" gravidez fora do casamento, mas também para regular comportamentos sociais e criar uma relação afetiva com o animal. O boto, de predador, vira protagonista romantic. Isso diz muito sobre como a cultura amazônica negocia sua relação com a natureza.</p>
+    </div>
+    <div class="legend-card" data-emoji="🌊">
+      <h4>🌊 A Iara (Mãe d'Água)</h4>
+      <p>A Iara é uma sereia dos rios amazônicos que atrai pescadores e os leva para o fundo das águas. Diferente da sereia europeia, a Iara tem origem indígena e foi influenciada também por narrativas africanas trazidas pela diáspora. Ela representa o rio como entidade feminina poderosa, território que deve ser respeitado. A Iara avisa: não subestime a floresta, não subestime a água.</p>
+    </div>
+    <div class="legend-card" data-emoji="🐍">
+      <h4>🐍 A Cobra Grande (Boitatá)</h4>
+      <p>A Cobra Grande habita o fundo dos grandes rios amazônicos e pode criar tempestades, afundar barcos e destruir aldeias quando perturbada. Em muitas versões, ela é a própria entidade do rio. Para os povos da região, ela funciona como sistema de regulação: não explore os rios além do necessário, pois há forças maiores que a vontade humana. Ecologicamente, a narrativa opera como proteção dos ecossistemas aquáticos.</p>
+    </div>
+
+    <div class="concept-box">
+      <div class="cb-title">Análise cultural e literária</div>
+      <p>Quando analisamos lendas como textos culturais, percebemos que elas sempre carregam:</p>
+      <ul style="padding-left:1.1rem;margin-top:.5rem;">
+        <li><strong>Funções sociais:</strong> regulam comportamentos, criam tabus, ensinam limites</li>
+        <li><strong>Funções ecológicas:</strong> protegem espécies e ambientes ao criar reverência por eles</li>
+        <li><strong>Funções identitárias:</strong> criam pertencimento, diferenciando "os de dentro" dos "de fora"</li>
+        <li><strong>Funções psicológicas:</strong> elaboram medos, desejos e angústias coletivas</li>
+      </ul>
+    </div>
+
+    <h4 style="font-size:.9rem;font-weight:800;color:var(--acc1);margin:1rem 0 .5rem;">📚 Literatura Regional Amazônica</h4>
+    <p>
+      A literatura produzida na e sobre a Amazônia é rica e diversa. Autores como <strong>Milton Hatoum</strong> (Dois Irmãos, Relato de um certo Oriente) retratam Manaus com complexidade, narrando encontros de culturas e identidades. <strong>Inglês de Sousa</strong>, no século XIX, foi pioneiro em retratar a vida ribeirinha. Autoras indígenas contemporâneas como <strong>Eliane Potiguara</strong> e <strong>Graça Graúna</strong> trazem a voz feminina e originária para a literatura brasileira.
+    </p>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=lendas+amazônicas+boto+iara+cobra+grande')">
+        <span class="video-icon">▶</span> Lendas amazônicas: origem e significados culturais
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Milton+Hatoum+literatura+amazônica')">
+        <span class="video-icon">▶</span> Milton Hatoum e a literatura da Amazônia
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=literatura+indígena+brasileira+escritores+indígenas')">
+        <span class="video-icon">▶</span> Escritoras indígenas que você precisa conhecer
+      </span>
+    </div>
+  </div>
+
+  <!-- Atividades Bloco 2 -->
+  <div class="act-section fi">
+    <div class="act-title">✍️ Atividades de Fixação — Bloco 2</div>
+
+    <div class="card" style="background:var(--hl-bg);border-color:var(--acc1);margin-bottom:1rem;">
+      <h3 style="font-size:.88rem;">📝 Questões Discursivas (responda no caderno)</h3>
+      <ol style="padding-left:1.2rem;margin-top:.5rem;">
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Explique por que a oralidade não é uma forma inferior de conhecimento em relação à escrita. Use exemplos da Amazônia.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Quais os cuidados éticos que um pesquisador deve ter ao usar a metodologia da história oral?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Escolha uma das três lendas estudadas (Boto, Iara ou Cobra Grande) e analise suas funções sociais e ecológicas.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Como as narrativas míticas podem funcionar como instrumentos de regulação ambiental nas comunidades amazônicas?</li>
+        <li style="font-size:.87rem;color:var(--txt2);">Por que é importante incluir escritores indígenas na lista de leituras da literatura brasileira?</li>
+      </ol>
+    </div>
+
+    <div class="act-title">🧩 Questões de Múltipla Escolha</div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 1 de 5</span>
+      <p>A metodologia da história oral é especialmente valiosa para as Ciências Humanas porque:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Substitui documentos escritos, sendo mais confiável que outras fontes históricas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> Permite recuperar histórias de grupos marginalizados que não aparecem nos registros oficiais</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> Elimina o risco de interpretações subjetivas por parte do pesquisador</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> É o único método aceito pela historiografia contemporânea para estudar povos indígenas</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 2 de 5</span>
+      <p>A lenda do Boto rosa, ao "explicar" gravidez fora do casamento, cumpre principalmente qual função social?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Promover o turismo ecológico na Amazônia</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Registrar historicamente os costumes dos povos do rio</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Regular comportamentos sociais e criar explicações culturalmente aceitas para situações socialmente tensas</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Alertar os pescadores sobre os perigos dos golfinhos amazônicos</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 3 de 5</span>
+      <p>Segundo a análise cultural estudada, as lendas amazônicas sobre seres das águas funcionam como:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Registros históricos da existência de criaturas sobrenaturais</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Entretenimento infantil sem função social ou ecológica</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> Evidência de atraso cultural das populações ribeirinhas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">D</span> Sistemas de regulação do comportamento humano em relação ao ambiente, criando reverência pelos ecossistemas aquáticos</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 4 de 5</span>
+      <p>Walter Ong, ao estudar culturas orais, concluiu que:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Culturas sem escrita são inferiores intelectualmente às culturas letradas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> Sociedades com tradição oral pensam de forma diferente, mas não inferior, desenvolvendo formas contextuais e relacionais de conhecimento</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> A oralidade deve ser substituída pela escrita o mais rápido possível para o desenvolvimento social</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> A tradição oral é incapaz de transmitir conhecimentos complexos como medicina ou ecologia</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 5 de 5</span>
+      <p>A narrativa da Cobra Grande nos rios amazônicos pode ser interpretada como:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Evidência de que os povos amazônicos acreditavam em dragões</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Uma lenda importada da Europa durante a colonização portuguesa</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Um mecanismo cultural de proteção ecológica que cria limites simbólicos à exploração dos rios</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Uma narrativa criada pelo governo para proteger a fauna aquática amazônica</div>
+      <div class="mc-fb"></div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== BLOCO 3 ============================== -->
+<section id="b3" class="section-forest">
+<div class="blk-head">
+  <h2>🌿 Bloco 3 · Tecnologia, Saberes e Bioeconomia</h2>
+  <p>Tópicos 5, 6 e 7 · Digital, etnobotânica e economia sustentável</p>
+</div>
+<div class="wrap">
+
+  <!-- TÓPICO 5 -->
+  <div class="card fi">
+    <h3>📱 Tópico 5 · Culturas Digitais na Amazônia</h3>
+    <p>
+      Enquanto debatemos metaverso e inteligência artificial, 30% dos municípios amazônicos ainda têm acesso precário à internet. A relação da Amazônia com as tecnologias digitais é marcada por uma profunda <strong>desigualdade</strong>, mas também por uma surpreendente criatividade.
+    </p>
+
+    <div class="tab-wrap fi">
+      <div class="tab-btns">
+        <button class="tab-btn on" onclick="showTab('t5','exc')">📵 Exclusão Digital</button>
+        <button class="tab-btn" onclick="showTab('t5','uso')">📲 Usos Criativos</button>
+        <button class="tab-btn" onclick="showTab('t5','id')">🌐 Identidade Online</button>
+      </div>
+      <div id="t5-exc" class="tab-pane on">
+        <p>A exclusão digital na Amazônia tem causas estruturais: território imenso e de difícil acesso, baixa densidade populacional em áreas rurais, falta de infraestrutura de energia elétrica, alto custo de equipamentos e planos de dados.</p>
+        <ul>
+          <li>Segundo dados da ANATEL (2023), comunidades ribeirinhas e indígenas remotas têm cobertura de internet móvel abaixo de 40%</li>
+          <li>A "Amazônia Digital" é uma iniciativa federal de expansão de fibra óptica, mas com implementação desigual</li>
+          <li>A pandemia de Covid-19 expôs drasticamente essa exclusão: estudantes sem acesso à internet ficaram sem aulas por meses</li>
+        </ul>
+      </div>
+      <div id="t5-uso" class="tab-pane">
+        <p>Onde há conectividade, os usos são criativos e politicamente poderosos. Indígenas usam smartphones e redes sociais para documentar invasões de território, denunciar garimpo ilegal e organizar resistências.</p>
+        <ul>
+          <li>O povo Kayapó é pioneiro no uso de câmeras para registrar e denunciar crimes ambientais desde os anos 1990</li>
+          <li>O coletivo Mídia Índia produz conteúdo informativo nas redes sociais a partir de perspectivas indígenas</li>
+          <li>Youtubers e criadores de conteúdo ribeirinhos estão criando audiências que recontam a Amazônia de dentro</li>
+        </ul>
+      </div>
+      <div id="t5-id" class="tab-pane">
+        <p>As redes sociais criam novas formas de construir e negociar identidades amazônicas. Jovens indígenas usam o TikTok para mostrar que ser indígena no século XXI não é contraditório com usar celular, ouvir funk ou estudar medicina.</p>
+        <ul>
+          <li>A identidade amazônica nas redes é simultaneamente local e global</li>
+          <li>Há tensão entre autenticidade cultural e pressão por representações folclorizadas</li>
+          <li>A visibilidade digital pode ser arma de resistência ou de espetacularização da cultura</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <p>🤔 <strong>Para pensar:</strong> Quando um jovem indígena posta um vídeo no TikTok usando cocar e ouvindo funk, ele está "perdendo a cultura" ou reinventando sua identidade? Quem tem o direito de definir o que é "autêntico"?</p>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=inclusão+digital+amazônia+indígenas+tecnologia')">
+        <span class="video-icon">▶</span> Indígenas e tecnologia digital na Amazônia
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Mídia+Índia+comunicação+indígena+redes+sociais')">
+        <span class="video-icon">▶</span> Comunicação indígena e redes sociais
+      </span>
+    </div>
+  </div>
+
+  <!-- TÓPICO 6 -->
+  <div class="card fi">
+    <h3>🌱 Tópico 6 · Saberes Tradicionais, Etnobotânica e Biopirataria</h3>
+    <p>
+      A floresta amazônica é um laboratório a céu aberto. Povos indígenas e comunidades tradicionais acumularam ao longo de milênios um conhecimento profundo sobre plantas medicinais, técnicas de cultivo, manejo de animais e relações ecológicas. Esse conhecimento é hoje chamado de <strong>saber tradicional</strong> ou <strong>conhecimento ecológico tradicional (CET)</strong>.
+    </p>
+    <div class="concept-box">
+      <div class="cb-title">Etnobotânica</div>
+      <p>Ciência que estuda as relações entre seres humanos e plantas, especialmente como diferentes culturas nomeiam, classificam e utilizam as plantas para alimentação, medicina, ritual e construção. Na Amazônia, essa área é especialmente rica: estima-se que mais de 2.000 espécies de plantas sejam usadas medicinalmente por povos indígenas.</p>
+    </div>
+
+    <div class="accordion fi">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🧪 Bioprospecção <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>A <strong>bioprospecção</strong> é a pesquisa científica e comercial de recursos biológicos em busca de compostos úteis para medicina, cosméticos, alimentos e outros produtos. Quando feita com ética e compartilhamento de benefícios com as comunidades locais, pode ser positiva.</p>
+          <p>O Brasil regulamenta a bioprospecção pela Lei 13.123/2015 (Lei da Biodiversidade), que exige repartição de benefícios com comunidades detentoras do conhecimento associado.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🚨 Biopirataria <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>A <strong>biopirataria</strong> ocorre quando recursos biológicos ou conhecimentos tradicionais são explorados comercialmente sem o consentimento das comunidades detentoras e sem repartição de benefícios. É crime no Brasil e viola a Convenção sobre Diversidade Biológica (CDB) da ONU.</p>
+          <p>Casos históricos: a patente do cupuaçu registrada por uma empresa japonesa nos anos 1990 (depois anulada após pressão do governo brasileiro) e disputas sobre o uso do óleo de andiroba em cosméticos europeus são exemplos documentados de tentativas de biopirataria.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          ⚖️ Direitos e proteção legal <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>A proteção dos conhecimentos tradicionais é um campo jurídico em desenvolvimento. A Lei 13.123/2015 e a Convenção de Nagoya (da qual o Brasil é signatário) estabelecem obrigações de consentimento prévio e repartição de benefícios. Mas a aplicação ainda é frágil, especialmente para comunidades sem acesso a assessoria jurídica.</p>
+          <p>Organizações como o Instituto Socioambiental (ISA) e a FUNAI trabalham para fortalecer a capacidade das comunidades de defender seus direitos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=etnobotânica+amazônica+plantas+medicinais+indígenas')">
+        <span class="video-icon">▶</span> Etnobotânica amazônica: plantas e saberes
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=biopirataria+amazônia+conhecimento+indígena+patente')">
+        <span class="video-icon">▶</span> Biopirataria: roubando o saber da floresta
+      </span>
+    </div>
+  </div>
+
+  <!-- TÓPICO 7 -->
+  <div class="card fi">
+    <h3>💚 Tópico 7 · Bioeconomia: do Extrativismo às Indústrias Sustentáveis</h3>
+    <p>
+      A <strong>bioeconomia</strong> é um modelo econômico baseado no uso sustentável da biodiversidade e dos recursos biológicos. Para a Amazônia, representa uma alternativa real ao modelo extrativista predatório. Mas não é simples nem isenta de contradições.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-card"><span class="ic-label">Açaí</span><div class="ic-val">De alimento ribeirinho a fenômeno global. O mercado do açaí movimenta bilhões e emprega milhares na região, mas o crescimento gera pressões sobre a floresta e comunidades tradicionais.</div></div>
+      <div class="info-card"><span class="ic-label">Castanha-do-Pará</span><div class="ic-val">Depende de floresta intacta para produzir. É o caso mais emblemático de produto que só existe se a floresta existir. Sustenta comunidades extrativistas em toda a região.</div></div>
+      <div class="info-card"><span class="ic-label">Madeira certificada</span><div class="ic-val">O FSC (Forest Stewardship Council) certifica madeireiras que manejam florestas de forma sustentável. Permite uso econômico com critérios ambientais e sociais rigorosos.</div></div>
+      <div class="info-card"><span class="ic-label">Fitoterápicos e cosméticos</span><div class="ic-val">Andiroba, copaíba, murumuru, buriti: ingredientes amazônicos em produtos globais. O desafio é garantir que as comunidades produtoras participem dos lucros.</div></div>
+    </div>
+
+    <!-- Interactive chart: bioeconomy data -->
+    <div class="card fi" style="margin-top:1rem;">
+      <h3 style="font-size:.9rem;">📊 Exportação de produtos da bioeconomia amazônica (valores ilustrativos baseados em tendências reais)</h3>
+      <div class="bar-chart" id="bchart2"></div>
+    </div>
+
+    <div class="concept-box">
+      <div class="cb-title">Contradições da bioeconomia</div>
+      <p>A bioeconomia não é automaticamente justa. Se as comunidades locais não controlam a cadeia produtiva, os benefícios podem ser capturados por grandes empresas. O açaí é um exemplo: produtores ribeirinhos recebem uma fração do valor final do produto exportado. <strong>Bioeconomia justa requer governança local, cooperativismo e políticas de repartição de benefícios.</strong></p>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=bioeconomia+amazônica+açaí+castanha+sustentabilidade')">
+        <span class="video-icon">▶</span> Bioeconomia na Amazônia: oportunidades e desafios
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=castanha+do+pará+extrativismo+floresta')">
+        <span class="video-icon">▶</span> A castanha que salva a floresta
+      </span>
+    </div>
+  </div>
+
+  <!-- Atividades Bloco 3 -->
+  <div class="act-section fi">
+    <div class="act-title">✍️ Atividades de Fixação — Bloco 3</div>
+
+    <div class="card" style="background:var(--hl-bg);border-color:var(--acc1);margin-bottom:1rem;">
+      <h3 style="font-size:.88rem;">📝 Questões Discursivas (responda no caderno)</h3>
+      <ol style="padding-left:1.2rem;margin-top:.5rem;">
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Explique a diferença entre bioprospecção e biopirataria, citando exemplos.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Por que a exclusão digital na Amazônia é uma questão de direitos humanos, e não apenas de infraestrutura?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Como os povos indígenas estão usando as tecnologias digitais para resistir e defender seus direitos?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">A bioeconomia é sempre sustentável e justa? Argumente, apresentando contradições e soluções possíveis.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Por que a castanha-do-pará é considerada um símbolo da bioeconomia sustentável?</li>
+        <li style="font-size:.87rem;color:var(--txt2);">O que é etnobotânica? Como esse conhecimento pode ser tanto protegido quanto explorado?</li>
+      </ol>
+    </div>
+
+    <div class="act-title">🧩 Questões de Múltipla Escolha</div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 1 de 5</span>
+      <p>A biopirataria ocorre quando:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Pesquisadores brasileiros estudam a biodiversidade amazônica com financiamento público</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Comunidades indígenas vendem artesanato baseado em plantas medicinais para turistas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Recursos biológicos ou conhecimentos tradicionais são explorados comercialmente sem consentimento das comunidades e sem repartição de benefícios</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Empresas certificadas pelo FSC exploram madeira de maneira sustentável na Amazônia</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 2 de 5</span>
+      <p>O uso de smartphones e redes sociais por povos indígenas amazônicos pode ser visto como:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Evidência de perda irreversível da cultura tradicional</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> Uma forma de resistência e afirmação de identidade no século XXI, usando novas ferramentas para fins de defesa territorial e cultural</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> Uma contradição que invalida suas reivindicações por terras tradicionais</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Um problema que os governos devem regular para preservar as culturas indígenas originais</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 3 de 5</span>
+      <p>Por que a castanha-do-pará é um símbolo da bioeconomia sustentável?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Porque pode ser cultivada em plantações que substituem a floresta nativa com eficiência</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Porque é o produto amazônico mais exportado e gera mais divisas para o Brasil</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Porque só produz em floresta nativa intacta, tornando a conservação da floresta economicamente vantajosa</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Porque foi certificada pela ONU como produto de zero impacto ambiental</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 4 de 5</span>
+      <p>A etnobotânica é a ciência que estuda:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> As técnicas de plantio de espécies nativas para recuperação de áreas degradadas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> As relações entre seres humanos e plantas, especialmente como diferentes culturas as nomeiam, classificam e utilizam</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> A genética das espécies vegetais da Amazônia para desenvolvimento de medicamentos</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Os impactos econômicos do uso de plantas na indústria farmacêutica global</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 5 de 5</span>
+      <p>A principal crítica à bioeconomia amazônica sem governança local é que:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Ela impede o desenvolvimento de tecnologias industriais na região</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Ela não gera nenhum emprego para as populações locais</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Os benefícios econômicos podem ser capturados por grandes empresas, sem retorno justo para as comunidades produtoras</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Ela aumenta o desmatamento porque incentiva a coleta intensiva de produtos florestais</div>
+      <div class="mc-fb"></div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== BLOCO 4 ============================== -->
+<section id="b4" class="section-river">
+<div class="blk-head">
+  <h2>📋 Bloco 4 · Políticas Públicas e Fontes Críticas</h2>
+  <p>Tópicos 8 e 9 · Legislação, sustentabilidade e combate à desinformação</p>
+</div>
+<div class="wrap">
+
+  <!-- TÓPICO 8 -->
+  <div class="card fi">
+    <h3>⚖️ Tópico 8 · Políticas Públicas, Legislações e Sustentabilidade</h3>
+    <p>
+      A Amazônia é o território mais disputado juridicamente do Brasil. Sobre ela incidem dezenas de leis, decretos, tratados internacionais e instrumentos de política pública que frequentemente entram em conflito entre si. Entender esse arcabouço legal é fundamental para o exercício da cidadania.
+    </p>
+
+    <div class="timeline fi">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1965</div>
+        <div class="tl-desc"><strong>Código Florestal</strong>: estabeleceu Áreas de Preservação Permanente (APPs) e Reserva Legal. Reformado controversamente em 2012.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">1988</div>
+        <div class="tl-desc"><strong>Constituição Federal</strong>: dedicou o artigo 231 aos direitos indígenas e o artigo 225 ao meio ambiente como "bem de uso comum do povo".</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2000</div>
+        <div class="tl-desc"><strong>SNUC (Sistema Nacional de Unidades de Conservação)</strong>: criou categorias de áreas protegidas, incluindo Reservas Extrativistas (RESEX) e Reservas de Desenvolvimento Sustentável (RDS).</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2005</div>
+        <div class="tl-desc"><strong>Plano de Ação para Prevenção e Controle do Desmatamento (PPCDAm)</strong>: reduziu o desmatamento em mais de 70% entre 2004 e 2012.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2012</div>
+        <div class="tl-desc"><strong>Novo Código Florestal</strong>: polêmico, anistiou desmatamentos ilegais anteriores a 2008 e flexibilizou APPs em pequenas propriedades.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2023</div>
+        <div class="tl-desc"><strong>Fundo Amazônia reativado</strong>: com aporte norueguês e alemão, retomou financiamento de projetos de conservação e comunidades tradicionais.</div>
+      </div>
+    </div>
+
+    <div class="accordion fi">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌲 SNUC: Sistema Nacional de Unidades de Conservação <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>O SNUC (Lei 9.985/2000) criou um sistema organizado de áreas protegidas no Brasil, divididas em dois grupos:</p>
+          <ul>
+            <li><strong>Proteção Integral</strong>: Parques Nacionais, Reservas Biológicas, Estações Ecológicas. Proibem qualquer uso humano direto.</li>
+            <li><strong>Uso Sustentável</strong>: Reservas Extrativistas, Reservas de Desenvolvimento Sustentável, Florestas Nacionais. Permitem uso pelos moradores tradicionais.</li>
+          </ul>
+          <p>As Reservas Extrativistas (RESEX) foram criadas a partir da luta de Chico Mendes e dos seringueiros no Acre, reconhecendo que populações tradicionais são aliadas da conservação.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌡️ REDD+: Redução de Emissões por Desmatamento e Degradação <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>O REDD+ é um mecanismo internacional que paga países e comunidades por manterem suas florestas em pé, com base na redução de emissões de carbono que o desmatamento causaria.</p>
+          <p>É controverso: críticos apontam que pode criar uma "commodificação" da floresta sem resolver as causas do desmatamento, e que comunidades locais nem sempre se beneficiam. Defensores argumentam que oferece incentivos concretos para conservação em países em desenvolvimento.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          📜 Código Florestal: a polêmica central <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p>O Código Florestal de 2012 gerou intenso debate. De um lado, ruralistas argumentaram que era necessário para viabilizar a agricultura. Do outro, cientistas e ambientalistas denunciaram a anistia a desmatadores e o enfraquecimento das APPs.</p>
+          <p>O STF julgou partes do código inconstitucionais em 2018, mas a disputa jurídica e política continua. O Código é um exemplo de como o Congresso Nacional traduz (ou distorce) os conflitos socioambientais em legislação.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=SNUC+unidades+de+conservação+amazônia+explicação')">
+        <span class="video-icon">▶</span> SNUC: como funciona o sistema de áreas protegidas
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=REDD+crédito+de+carbono+floresta+amazônica')">
+        <span class="video-icon">▶</span> REDD+ e créditos de carbono: o que significa?
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Chico+Mendes+reserva+extrativista+história')">
+        <span class="video-icon">▶</span> Chico Mendes e a luta pelas reservas extrativistas
+      </span>
+    </div>
+  </div>
+
+  <!-- TÓPICO 9 -->
+  <div class="card fi">
+    <h3>🔍 Tópico 9 · Análise Crítica de Fontes sobre a Amazônia</h3>
+    <p>
+      A Amazônia é um dos temas mais expostos à desinformação no Brasil. Números falsos, imagens fora de contexto, interpretações tendenciosas e narrativas ideológicas circulam em todas as direções. Saber distinguir informação confiável de fake news é uma habilidade fundamental de cidadania.
+    </p>
+
+    <div class="concept-box">
+      <div class="cb-title">Habilidade CHSOA1C1 em ação</div>
+      <p>A habilidade central deste tópico é exatamente a que a BNCC propõe: avaliar fontes variadas e confiáveis, verificar dados criticamente e combater a desinformação. Isso se aplica diretamente ao debate sobre a Amazônia.</p>
+    </div>
+
+    <h4 style="font-size:.9rem;font-weight:800;color:var(--acc1);margin:1rem 0 .5rem;">🚨 Mitos frequentes sobre a Amazônia</h4>
+
+    <div class="accordion fi">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          ❓ "A Amazônia produz 20% do oxigênio do mundo" <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p><strong>Mito simplificado.</strong> A Amazônia produz uma grande quantidade de oxigênio, mas também consome aproximadamente a mesma quantidade em respiração dos organismos da floresta. O saldo líquido de oxigênio para a atmosfera é próximo de zero.</p>
+          <p>O que é real: a floresta armazena imenso carbono (estimativas variam de 80 a 120 bilhões de toneladas), regula o ciclo hidrológico regional e global, e influencia padrões climáticos no continente. Esses são argumentos científicos mais precisos para sua importância do que "pulmão do mundo".</p>
+          <p><strong>Fonte confiável:</strong> INPE, IPAM (Instituto de Pesquisa Ambiental da Amazônia), Science Advances.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          ❓ "O desmatamento é exagerado pela mídia" <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p><strong>Falso.</strong> Os dados do INPE (Instituto Nacional de Pesquisas Espaciais) sobre desmatamento são baseados em monitoramento por satélite e são auditados internacionalmente. Em 2022, o desmatamento atingiu 11.568 km² na Amazônia Legal. A partir de 2023, houve queda significativa, mas o acumulado histórico é real e documentado.</p>
+          <p>Questionar os dados do INPE sem apresentar dados alternativos verificáveis é um exemplo de negacionismo científico.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          ❓ "ONGs internacionais querem dominar a Amazônia" <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <p><strong>Narrativa sem evidências.</strong> Embora seja legítimo questionar a atuação de organizações estrangeiras e defender a soberania nacional, a narrativa de "internacionalização" como conspiração não tem base factual documentada. As principais ameaças à Amazônia são internas: grilagem, garimpo ilegal e desmatamento para agropecuária.</p>
+          <p>Usar o medo de "internacionalização" para deslegitimar pesquisadores, povos indígenas e ambientalistas é uma estratégia retórica, não um argumento baseado em evidências.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="font-size:.9rem;font-weight:800;color:var(--acc1);margin:1rem 0 .5rem;">🔎 Como verificar fontes sobre a Amazônia</h4>
+    <div class="info-grid">
+      <div class="info-card"><span class="ic-label">Dados de desmatamento</span><div class="ic-val">INPE (inpe.br) e MapBiomas são as referências científicas. Para dados internacionais, use Global Forest Watch.</div></div>
+      <div class="info-card"><span class="ic-label">Dados sociais e demográficos</span><div class="ic-val">IBGE é a fonte oficial para censo, populações indígenas e socioeconômico. ISA (Instituto Socioambiental) para territórios indígenas.</div></div>
+      <div class="info-card"><span class="ic-label">Legislação</span><div class="ic-val">Portal da Legislação (planalto.gov.br) e Diário Oficial da União para textos oficiais de leis e decretos.</div></div>
+      <div class="info-card"><span class="ic-label">Checagem de fatos</span><div class="ic-val">Agência Lupa, Aos Fatos e Comprova são agências especializadas em verificação de informações no Brasil.</div></div>
+    </div>
+
+    <div class="video-section">
+      <h4>🎬 Recursos complementares</h4>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=desinformação+amazônia+fake+news+desmatamento+dados')">
+        <span class="video-icon">▶</span> Fake news sobre a Amazônia: como identificar
+      </span>
+      <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=INPE+monitoramento+desmatamento+satélite+metodologia')">
+        <span class="video-icon">▶</span> Como o INPE monitora o desmatamento por satélite
+      </span>
+    </div>
+  </div>
+
+  <!-- Atividades Bloco 4 -->
+  <div class="act-section fi">
+    <div class="act-title">✍️ Atividades de Fixação — Bloco 4</div>
+
+    <div class="card" style="background:var(--hl-bg);border-color:var(--acc1);margin-bottom:1rem;">
+      <h3 style="font-size:.88rem;">📝 Questões Discursivas (responda no caderno)</h3>
+      <ol style="padding-left:1.2rem;margin-top:.5rem;">
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">O que é o SNUC e quais as diferenças entre unidades de proteção integral e de uso sustentável? Por que essa distinção é relevante para comunidades tradicionais?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Explique o mecanismo REDD+ e apresente um argumento favorável e um crítico sobre sua aplicação na Amazônia.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Por que afirmar que "a Amazônia produz 20% do oxigênio do mundo" é cientificamente impreciso? Qual é o argumento correto para justificar sua importância climática?</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Cite três fontes confiáveis para pesquisar sobre desmatamento na Amazônia e explique por que cada uma delas é considerada confiável.</li>
+        <li style="margin-bottom:.6rem;font-size:.87rem;color:var(--txt2);">Como a criação das Reservas Extrativistas relaciona a luta de Chico Mendes com a política ambiental brasileira?</li>
+        <li style="font-size:.87rem;color:var(--txt2);">Analise criticamente o argumento "ONGs internacionais querem dominar a Amazônia". Quais são os elementos de verdade, exagero e desinformação nessa narrativa?</li>
+      </ol>
+    </div>
+
+    <div class="act-title">🧩 Questões de Múltipla Escolha</div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 1 de 5</span>
+      <p>O SNUC (Sistema Nacional de Unidades de Conservação) permite que populações tradicionais residam e usem os recursos em qual categoria?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Parques Nacionais e Reservas Biológicas</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Estações Ecológicas e Reservas Biológicas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Reservas Extrativistas e Reservas de Desenvolvimento Sustentável</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Monumentos Naturais e Refúgios de Vida Silvestre</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 2 de 5</span>
+      <p>A principal fonte oficial de dados sobre desmatamento na Amazônia brasileira é:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> FUNAI (Fundação Nacional dos Povos Indígenas)</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> IBGE (Instituto Brasileiro de Geografia e Estatística)</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> INPE (Instituto Nacional de Pesquisas Espaciais), via sistema PRODES e DETER</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Agência Brasileira de Inteligência (ABIN)</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 3 de 5</span>
+      <p>A afirmação de que "a Amazônia é o pulmão do mundo, produzindo 20% do oxigênio global" é considerada cientificamente imprecisa porque:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> A floresta não produz oxigênio, apenas armazena carbono</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">B</span> A floresta produz oxigênio, mas também consome quantidade similar em respiração, resultando em saldo líquido próximo de zero</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> O percentual correto seria 5%, não 20%</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Somente os oceanos produzem oxigênio em escala global relevante</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 4 de 5</span>
+      <p>O mecanismo REDD+ é um instrumento que:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Proíbe o desmatamento em toda a Amazônia Legal brasileira</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Financia projetos de reflorestamento com espécies exóticas</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Paga países e comunidades por reduzir emissões de carbono ao manter florestas em pé</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Transfere a gestão de florestas tropicais para organismos internacionais da ONU</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Questão 5 de 5</span>
+      <p>Ao encontrar uma notícia afirmando que "o desmatamento na Amazônia é falso e inventado por ONGs estrangeiras", qual seria a atitude mais adequada de uma pessoa com pensamento crítico?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Compartilhar imediatamente, pois questiona o poder das ONGs internacionais</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Ignorar, pois qualquer questionamento ao desmatamento é necessariamente falso</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> Acreditar, pois dados do governo nunca são manipulados</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">D</span> Verificar os dados em fontes científicas como INPE e MapBiomas, comparar metodologias e checar a autoria e intenção da notícia</div>
+      <div class="mc-fb"></div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ============================== BLOCO 5 ============================== -->
+<section id="b5" class="section-forest">
+<div class="blk-head">
+  <h2>⭐ Bloco 5 · Revisão e Sistematização</h2>
+  <p>Tópico 10 · Conectando tudo que estudamos</p>
+</div>
+<div class="wrap">
+
+  <div class="card hero-card fi">
+    <h3>🗺️ Mapa Conceitual do Bimestre</h3>
+    <p>
+      A Amazônia deste bimestre foi explorada em quatro dimensões interligadas. Cada bloco conecta-se aos outros: os imaginários moldam políticas, as políticas afetam saberes, os saberes são transmitidos pela oralidade, a oralidade constrói identidades.
+    </p>
+  </div>
+
+  <!-- Mind map visual -->
+  <div class="card fi" style="overflow-x:auto;">
+    <h3 style="font-size:.9rem;margin-bottom:.8rem;">🌿 Conexões entre os temas</h3>
+    <div id="mindmap-container" style="min-width:300px;"></div>
+  </div>
+
+  <div class="card fi">
+    <h3>📝 Síntese dos quatro eixos temáticos</h3>
+
+    <div class="accordion">
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌎 Eixo 1: Identidades e Imaginários <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <ul>
+            <li>A Amazônia é uma construção social: diferentes grupos produzem diferentes "Amazônias"</li>
+            <li>Existem múltiplas Amazônias: Legal, Pan-Amazônia, urbana, rural</li>
+            <li>O imaginário sobre a floresta influencia políticas, investimentos e conflitos</li>
+            <li>A perspectiva decolonial exige ouvir os povos da floresta, não apenas falar sobre eles</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          📣 Eixo 2: Narrativas e Oralidade <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <ul>
+            <li>A oralidade é uma forma legítima e sofisticada de produzir e transmitir conhecimento</li>
+            <li>A história oral é uma metodologia científica que recupera vozes silenciadas</li>
+            <li>Lendas e mitos são sistemas culturais de explicação do mundo com funções sociais e ecológicas reais</li>
+            <li>A literatura amazônica é diversa e inclui vozes indígenas, ribeirinhas e urbanas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          🌿 Eixo 3: Tecnologia, Saberes e Bioeconomia <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <ul>
+            <li>A exclusão digital na Amazônia é uma questão de direitos, não apenas de infraestrutura</li>
+            <li>Indígenas usam tecnologia como ferramenta de resistência e afirmação identitária</li>
+            <li>Saberes tradicionais têm valor científico, econômico e cultural, e precisam de proteção legal</li>
+            <li>A bioeconomia pode ser justa ou exploratória, dependendo de quem controla a cadeia produtiva</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          📋 Eixo 4: Políticas e Pensamento Crítico <span class="acc-icon">›</span>
+        </button>
+        <div class="acc-content">
+          <ul>
+            <li>O arcabouço legal sobre a Amazônia é complexo, disputado e historicamente desigual</li>
+            <li>SNUC, Código Florestal, REDD+ e o Fundo Amazônia são instrumentos com virtudes e limitações</li>
+            <li>A Amazônia é alvo de intensa desinformação: verificar fontes é um ato político e cidadão</li>
+            <li>Fontes confiáveis: INPE, IBGE, ISA, MapBiomas, agências de checagem</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>🎯 Atividade Integradora: Mapa Conceitual Manual</h3>
+    <p>No caderno, construa um <strong>mapa conceitual</strong> conectando os seguintes elementos. Não existe resposta única: use criatividade e mostre como os temas se relacionam.</p>
+    <div class="info-grid" style="margin-top:.8rem;">
+      <div class="info-card"><span class="ic-label">Conceitos centrais</span><div class="ic-val">Amazônia, Identidade, Narrativa, Conhecimento, Sustentabilidade</div></div>
+      <div class="info-card"><span class="ic-label">Conceitos de apoio</span><div class="ic-val">Oralidade, Imaginário, Bioeconomia, Desinformação, Direitos indígenas</div></div>
+      <div class="info-card"><span class="ic-label">Atores sociais</span><div class="ic-val">Povos indígenas, ribeirinhos, Estado, empresas, mídia, ONGs</div></div>
+      <div class="info-card"><span class="ic-label">Instrumentos</span><div class="ic-val">SNUC, REDD+, Código Florestal, história oral, redes sociais</div></div>
+    </div>
+    <div class="warn-box" style="margin-top:.8rem;">
+      <p>💡 <strong>Dica:</strong> Use cores diferentes para cada eixo temático. Conecte com setas e escreva o tipo de relação em cada conexão (ex: "causa", "protege", "ameaça", "transmite").</p>
+    </div>
+  </div>
+
+  <!-- Final activity -->
+  <div class="act-section fi">
+    <div class="act-title">⭐ Simulado de Avaliação Bimestral — Questões Integradas</div>
+
+    <div class="card" style="background:var(--hl-bg);border-color:var(--acc3);margin-bottom:1rem;border-left:4px solid var(--acc3);">
+      <h3 style="font-size:.88rem;">📝 Questões Dissertativas Integradas (responda no caderno)</h3>
+      <ol style="padding-left:1.2rem;margin-top:.5rem;">
+        <li style="margin-bottom:.7rem;font-size:.87rem;color:var(--txt2);">"Estudar a Amazônia é estudar o Brasil." Desenvolva essa afirmação relacionando pelo menos três dos temas estudados no bimestre.</li>
+        <li style="margin-bottom:.7rem;font-size:.87rem;color:var(--txt2);">Um investidor estrangeiro propõe comprar terras na Amazônia para "preservar e valorizar economicamente a floresta". Com base nos conteúdos do bimestre, que perguntas críticas você faria antes de avaliar essa proposta?</li>
+        <li style="margin-bottom:.7rem;font-size:.87rem;color:var(--txt2);">Como você, como estudante do Acre, se relaciona com a Amazônia? Que identidades e saberes amazônicos fazem parte da sua vida cotidiana?</li>
+        <li style="font-size:.87rem;color:var(--txt2);">Elabore um argumento fundamentado, de no mínimo 15 linhas, sobre a seguinte questão: os saberes tradicionais dos povos amazônicos devem ter o mesmo status que o conhecimento científico nas tomadas de decisão sobre a floresta?</li>
+      </ol>
+    </div>
+
+    <div class="act-title">🧩 Simulado de Múltipla Escolha — Bimestral</div>
+
+    <div class="act-q">
+      <span class="q-num">Simulado 1 de 5</span>
+      <p>Considerando todos os temas estudados, a perspectiva decolonial sobre a Amazônia propõe principalmente:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Retornar ao isolamento dos povos indígenas, sem contato com a sociedade moderna</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Transferir a gestão da Amazônia para organismos internacionais neutros</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Questionar as visões impostas pelo colonialismo, dar protagonismo às vozes dos povos da floresta e valorizar saberes historicamente marginalizados nas decisões sobre o território</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Proibir qualquer desenvolvimento econômico na Amazônia em favor da preservação total</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Simulado 2 de 5</span>
+      <p>A lenda do Boto rosa, o sistema SNUC e a biopirataria têm em comum o fato de:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Serem fenômenos exclusivamente folclóricos sem impacto nas políticas públicas</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Serem instrumentos criados pelo Estado brasileiro para proteger a Amazônia</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Envolverem disputas sobre quem tem o direito de usar, nomear e controlar os recursos e narrativas da Amazônia</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Serem conceitos estrangeiros aplicados à realidade amazônica sem adaptação</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Simulado 3 de 5</span>
+      <p>Um pesquisador usa entrevistas com ribeirinhos para entender como o aumento das cheias do rio afetou suas vidas nos últimos 20 anos. Ele está usando:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Análise quantitativa de dados hidrológicos</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Bioprospecção de conhecimentos ambientais tradicionais</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Metodologia da história oral, recolhendo dados qualitativos a partir de narrativas de vida</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Etnobotânica aplicada ao estudo de mudanças climáticas</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Simulado 4 de 5</span>
+      <p>A afirmação "os indígenas devem escolher: ou vivem na floresta sem tecnologia, ou saem para a cidade e deixam de ser índios" é um exemplo de:</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Perspectiva decolonial aplicada à questão indígena</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Argumento favorável à bioeconomia indígena sustentável</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">C</span> Pensamento colonial que nega a contemporaneidade e a auto-identificação dos povos indígenas</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">D</span> Interpretação correta da Constituição Federal sobre direitos indígenas</div>
+      <div class="mc-fb"></div>
+    </div>
+
+    <div class="act-q">
+      <span class="q-num">Simulado 5 de 5</span>
+      <p>Qual das seguintes combinações de fontes seria a mais adequada para uma pesquisa escolar sobre o desmatamento na Amazônia nos últimos 5 anos?</p>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">A</span> Postagens de influenciadores no Instagram + artigos de opinião de parlamentares</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">B</span> Vídeos do YouTube sem identificação de autoria + dados de sites de notícias sem referência</div>
+      <div class="mc-opt" onclick="checkMC(this,'wrong')"><span class="mc-letter">C</span> Apenas a Constituição Federal e o Código Florestal</div>
+      <div class="mc-opt" onclick="checkMC(this,'correct')"><span class="mc-letter">D</span> Dados do INPE + relatórios do IPAM + reportagens de agências de notícias com identificação de fontes primárias</div>
+      <div class="mc-fb"></div>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong>Amazônia: Identidades, Narrativas e Conhecimentos</strong><br>
+    Trilhas de Ciências Humanas · 3ª Série · 1º Bimestre · 2026<br>
+    <a href="https://www.instagram.com/pe.carloscasavequia/" target="_blank" rel="noopener" style="color:var(--acc1);font-weight:700;">E.E. Padre Carlos Casavequia</a> · Prof. <strong>Paulo Roberto R. Magalhães</strong><br>
+    <span>Material pedagógico de uso exclusivo dos alunos. Proibida reprodução sem autorização.</span>
+  </p>
+</footer>
+
+<!-- Fixed nav -->
+<div class="fnav">
+  <button class="fnav-btn" title="Ir ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂</button>
+  <button class="fnav-btn" title="Sumário" onclick="goTo('sumario')">☰</button>
+</div>
+
+<!-- BNCC Modal -->
+<div class="modal-bg" id="bnccMod" onclick="closeMod(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="document.getElementById('bnccMod').classList.remove('show')">✕</button>
+    <span class="modal-label">Habilidade BNCC — Trilhas de Ciências Humanas · Ensino Médio</span>
+    <div class="modal-code" id="mCode"></div>
+    <p class="modal-desc" id="mDesc"></p>
+  </div>
+</div>
+
+<!-- PAULO AVATAR -->
+<div id="paulo-wrap">
+  <div id="paulo-bubble">
+    <button id="paulo-close" onclick="closePaulo()">✕</button>
+    <span id="paulo-mood" style="font-size:1.4rem;display:block;margin-bottom:.3rem;">🌿</span>
+    <span id="paulo-msg">Olá! Seja bem-vindo(a) à Amazônia mais rica de todas: a do conhecimento. Clique em mim para dicas!</span>
+    <button id="paulo-next" onclick="nextTip()">Próxima dica 💡</button>
+    <div id="paulo-gossip" style="display:none;">
+      <p style="font-size:.78rem;color:var(--txt2);margin-bottom:.4rem;">Quer saber uma curiosidade desse tema? 👀</p>
+      <div class="gossip-btns">
+        <button class="gossip-btn gossip-yes" onclick="showGossip()">Sim! 🤩</button>
+        <button class="gossip-btn gossip-no" onclick="noGossip()">Não 😑</button>
+      </div>
+    </div>
+  </div>
+  <div id="paulo-avatar" onclick="pauloClick()">
+    <svg id="paulo-face" width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+      <circle id="head" cx="36" cy="36" r="32" fill="#f4c430" stroke="#2c3e50" stroke-width="5"/>
+      <ellipse id="eye-left" cx="24" cy="29" rx="8.5" ry="11" fill="#fff" stroke="#2c3e50" stroke-width="3"/>
+      <ellipse id="eye-right" cx="48" cy="29" rx="8.5" ry="11" fill="#fff" stroke="#2c3e50" stroke-width="3"/>
+      <circle id="pupil-left" cx="24" cy="29" r="4.2" fill="#1e3a8a"/>
+      <circle id="pupil-right" cx="48" cy="29" r="4.2" fill="#1e3a8a"/>
+      <path id="brow-left" d="M16 19 Q24 15 31 19" fill="none" stroke="#1e3a8a" stroke-width="4.5" stroke-linecap="round"/>
+      <path id="brow-right" d="M41 19 Q49 15 56 19" fill="none" stroke="#1e3a8a" stroke-width="4.5" stroke-linecap="round"/>
+      <path id="mouth" d="M25 49 Q36 54 47 49" fill="none" stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span id="paulo-label">Prof. Paulo</span>
+</div>
+
+<script>
+/* ==================== THEME ==================== */
+function setTheme(t){
+  document.body.removeAttribute('data-theme');
+  if(t!=='default') document.body.setAttribute('data-theme',t);
+  ['default','reading','dark'].forEach(k=>{
+    const map={'default':'tb-def','reading':'tb-read','dark':'tb-dark'};
+    document.getElementById(map[k]).classList.toggle('on',k===t);
+  });
+  try{ localStorage.setItem('ch3b1-theme',t); }catch(e){}
+}
+(function(){ try{ const s=localStorage.getItem('ch3b1-theme'); if(s) setTheme(s); }catch(e){} })();
+
+/* ==================== SMOOTH NAV ==================== */
+function goTo(id,e){
+  if(e) e.preventDefault();
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ==================== PROGRESS BAR ==================== */
+window.addEventListener('scroll',()=>{
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  if(max>0) document.getElementById('prog').style.width=(window.scrollY/max*100)+'%';
+});
+
+/* ==================== BNCC DATA ==================== */
+const bncc={
+  'CHSOA1C1':'Avaliar fontes confiáveis e variadas para analisar processos históricos, políticos, econômicos, sociais, ambientais e culturais, considerando diferentes perspectivas, inclusive a feminina, assegurando a diversidade epistemológica no estudo de fenômenos sociais, promovendo o combate à desinformação por meio da verificação crítica e da disseminação responsável do conhecimento.',
+  'CHSOA1C2':'Analisar dados e evidências provenientes de diferentes métodos científicos, como análises quantitativas e qualitativas, utilizando-os para compreender fenômenos locais, regionais, nacionais e globais em diferentes contextos temporais.',
+  'CHSOA1C3':'Construir argumentos fundamentados e coerentes, integrando conhecimentos científicos, históricos e culturais, contemplando a valorização da produção científica de grupos marginalizados, para posicionar-se criticamente sobre questões sociais e propor soluções para problemas contemporâneos de maneira ética e embasada.',
+  'CHSOA1C4':'Relacionar os resultados das análises científicas às dinâmicas sociais e culturais, avaliando os impactos políticos, econômicos e ambientais de decisões humanas e refletindo sobre sua própria atuação como agente transformador na sociedade.'
+};
+function openModal(code){
+  document.getElementById('mCode').textContent=code;
+  document.getElementById('mDesc').textContent=bncc[code]||'';
+  document.getElementById('bnccMod').classList.add('show');
+}
+function closeMod(e){
+  if(e.target===document.getElementById('bnccMod'))
+    document.getElementById('bnccMod').classList.remove('show');
+}
+
+/* ==================== TABS ==================== */
+function showTab(group,id){
+  document.querySelectorAll('[id^="'+group+'-"]').forEach(p=>p.classList.remove('on'));
+  document.getElementById(group+'-'+id).classList.add('on');
+  const btns=document.getElementById(group+'-'+id).closest('.tab-wrap').querySelectorAll('.tab-btn');
+  btns.forEach(b=>b.classList.remove('on'));
+  event.target.classList.add('on');
+}
+
+/* ==================== ACCORDION ==================== */
+function toggleAcc(btn){
+  const content=btn.nextElementSibling;
+  const isOpen=btn.classList.contains('open');
+  btn.classList.toggle('open',!isOpen);
+  content.classList.toggle('open',!isOpen);
+}
+
+/* ==================== MULTIPLE CHOICE ==================== */
+function checkMC(el,result){
+  const q=el.closest('.act-q');
+  if(q.dataset.answered) return;
+  q.dataset.answered='1';
+  const opts=q.querySelectorAll('.mc-opt');
+  opts.forEach(o=>o.style.cursor='default');
+  const fb=q.querySelector('.mc-fb');
+  if(result==='correct'){
+    el.classList.add('correct');
+    fb.classList.add('correct');
+    fb.textContent=pauloCorrect();
+    pauloReact('happy');
+  } else {
+    el.classList.add('wrong');
+    fb.classList.add('wrong');
+    fb.textContent=pauloWrong();
+    pauloReact('thinking');
+    opts.forEach(o=>{
+      if(o.onclick && o.getAttribute('onclick') && o.getAttribute('onclick').includes("'correct'")){
+        o.classList.add('correct');
+      }
+    });
+  }
+}
+const correctPhrases=[
+  'Acertou! Você leu o conteúdo com atenção, hein? 🌿',
+  'Isso aí! Nem o Boto te enganou dessa vez 🐬',
+  'Correto! A floresta aprova sua resposta 🌳',
+  'Muito bem! Você tem futuro nas Ciências Humanas 🎓',
+  'Perfeito! Mais uma e você já pode dar aula pra mim 😄'
+];
+const wrongPhrases=[
+  'Errou, mas tudo bem. A floresta tem paciência. Relê o conteúdo! 🌿',
+  'Hmm, não foi dessa vez. Nem a Cobra Grande acreditou nessa resposta 🐍',
+  'Quase! Mas "quase" no ENEM não vale ponto. Revise! 📚',
+  'Ops! Foi mal, chefe. Dá uma relida no bloco correspondente 🔍',
+  'Essa não! Mas errar faz parte de aprender. Bora de novo! 💪'
+];
+function pauloCorrect(){ return correctPhrases[Math.floor(Math.random()*correctPhrases.length)]; }
+function pauloWrong(){ return wrongPhrases[Math.floor(Math.random()*wrongPhrases.length)]; }
+
+/* ==================== BAR CHARTS ==================== */
+const chart1Data=[
+  {label:'Floresta nativa',val:80,color:'#1a6b3a'},
+  {label:'Desmatada',val:17,color:'#dc2626'},
+  {label:'Outros usos',val:3,color:'#e8a020'},
+];
+const chart2Data=[
+  {label:'Açaí',val:90,color:'#7c3aed'},
+  {label:'Castanha',val:65,color:'#1a6b3a'},
+  {label:'Madeira cert.',val:45,color:'#0369a1'},
+  {label:'Óleos veg.',val:38,color:'#d97706'},
+];
+function buildChart(id,data){
+  const c=document.getElementById(id);
+  if(!c) return;
+  data.forEach(d=>{
+    const row=document.createElement('div');
+    row.className='bar-row';
+    row.innerHTML=`<div class="bar-label">${d.label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:0%;background:${d.color}" data-val="${d.val}">
+      <span class="bar-val">${d.val}%</span></div></div>`;
+    c.appendChild(row);
+  });
+  setTimeout(()=>{
+    c.querySelectorAll('.bar-fill').forEach(b=>{
+      b.style.width=b.dataset.val+'%';
+    });
+  },300);
+}
+buildChart('bchart1',chart1Data);
+buildChart('bchart2',chart2Data);
+
+/* ==================== MIND MAP ==================== */
+function buildMindmap(){
+  const c=document.getElementById('mindmap-container');
+  if(!c) return;
+  const nodes=[
+    {id:'am',label:'🌿 AMAZÔNIA',x:140,y:80,main:true},
+    {id:'id',label:'🌎 Identidades',x:20,y:20,color:'#1a6b3a'},
+    {id:'nar',label:'📣 Narrativas',x:260,y:20,color:'#9d174d'},
+    {id:'sab',label:'🌱 Saberes',x:20,y:140,color:'#92400e'},
+    {id:'pol',label:'📋 Políticas',x:260,y:140,color:'#1e3a8a'},
+  ];
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 300 180');
+  svg.setAttribute('width','100%');
+  svg.setAttribute('style','max-width:400px;display:block;margin:0 auto;');
+  const lines=[['am','id'],['am','nar'],['am','sab'],['am','pol'],['id','nar'],['sab','pol']];
+  lines.forEach(([a,b])=>{
+    const na=nodes.find(n=>n.id===a), nb=nodes.find(n=>n.id===b);
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',na.x+40); line.setAttribute('y1',na.y+15);
+    line.setAttribute('x2',nb.x+40); line.setAttribute('y2',nb.y+15);
+    line.setAttribute('stroke','var(--border)'); line.setAttribute('stroke-width','1.5');
+    svg.appendChild(line);
+  });
+  nodes.forEach(n=>{
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    const rect=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x',n.x); rect.setAttribute('y',n.y);
+    rect.setAttribute('width','80'); rect.setAttribute('height','30');
+    rect.setAttribute('rx','8');
+    rect.setAttribute('fill',n.main?'var(--acc1)':(n.color||'var(--acc2)'));
+    rect.setAttribute('opacity',n.main?'1':'0.85');
+    const text=document.createElementNS('http://www.w3.org/2000/svg','text');
+    text.setAttribute('x',n.x+40); text.setAttribute('y',n.y+19);
+    text.setAttribute('text-anchor','middle');
+    text.setAttribute('font-size','8'); text.setAttribute('fill','#fff');
+    text.setAttribute('font-weight','700');
+    text.textContent=n.label;
+    g.appendChild(rect); g.appendChild(text);
+    svg.appendChild(g);
+  });
+  c.appendChild(svg);
+}
+buildMindmap();
+
+/* ==================== FLOATERS ==================== */
+const syms=['🌿','🌳','🐬','🌊','🐍','🦜','🌺','🍃','🌱','🦋','🐊','🦅','💧','🌴','🌾','🌙','⭐','🔥'];
+function spawnFlt(){
+  const el=document.createElement('span');
+  el.className='flt';
+  el.textContent=syms[Math.floor(Math.random()*syms.length)];
+  el.style.left=(Math.random()*96)+'%';
+  el.style.fontSize=(Math.random()*2+.8)+'rem';
+  const d=Math.random()*16+9;
+  el.style.animationDuration=d+'s';
+  el.style.animationDelay=(Math.random()*5)+'s';
+  document.getElementById('floaters').appendChild(el);
+  setTimeout(()=>el.remove(),(d+6)*1000);
+}
+for(let i=0;i<10;i++) spawnFlt();
+setInterval(spawnFlt,1100);
+
+/* ==================== GYROSCOPE ==================== */
+window.addEventListener('deviceorientation',e=>{
+  const fx=document.getElementById('floaters');
+  if(fx) fx.style.transform=`translate(${(e.gamma||0)/3}px,${(e.beta||0)/6}px)`;
+});
+
+/* ==================== FADE IN ==================== */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* ==================== PAULO AVATAR INTELLIGENCE ==================== */
+const svg_el=document.getElementById('paulo-face');
+const pupilL=document.getElementById('pupil-left');
+const pupilR=document.getElementById('pupil-right');
+const browL=document.getElementById('brow-left');
+const browR=document.getElementById('brow-right');
+const mouthPath=document.getElementById('mouth');
+const pauloWrap=document.getElementById('paulo-wrap');
+const pauloMsg=document.getElementById('paulo-msg');
+const pauloBubble=document.getElementById('paulo-bubble');
+let isSpeaking=false;
+let pauloVisible=false;
+let lastSection='';
+
+const gossips={
+  b1:['Sabia que o rio Amazonas descarrega 20% de toda a água doce que vai para os oceanos do mundo? É tanta água que conseguimos ver a pluma no oceano Atlântico do espaço! 🛰️',
+      'A cidade de Manaus fica bem no meio da floresta e tem um teatro de ópera histórico do século XIX. Bizarro né? 🎭',
+      'O nome "Amazônia" provavelmente vem de um relato do conquistador espanhol Francisco de Orellana, que descreveu guerreiras indígenas e fez referência às amazonas da mitologia grega. Fake news do século XVI! 😂'],
+  b2:['A lenda do Boto é tão forte culturalmente que, se alguém tem um filho sem pai assumido, é comum alguém brincar "ah, foi o Boto". E ninguém julga! 🐬',
+      'O povo Yanomami tem um sistema de comunicação oral tão preciso que consegue descrever a localização de recursos na floresta para pessoas que nunca estiveram lá. GPS humano! 🗺️',
+      'O escritor Milton Hatoum nunca mora na Amazônia há décadas, mas é considerado o maior autor contemporâneo da região. A saudade também faz literatura! ✍️'],
+  b3:['A empresa japonesa que tentou patentear o cupuaçu chamou o produto de "cupulate". Imagina chegar na padaria pedindo "um cupulate, por favor" 😅',
+      'O açaí era tão desconhecido fora da Amazônia que no Rio de Janeiro dos anos 90 era considerado comida de pobre. Hoje é fenômeno global. A ironia da história! 🫐',
+      'O povo Kayapó filmou a construção não autorizada de barragens em seus territórios nos anos 1980. Com câmera de VHS. E ganhou! 📹'],
+  b4:['O Fundo Amazônia recebeu mais de R$ 3 bilhões em doações antes de ser paralisado em 2019. É o maior fundo de conservação do mundo. E ficou parado por 4 anos! 💰',
+      'O sistema PRODES do INPE usa imagens de satélite com resolução de 30 metros. Isso significa que eles conseguem detectar um campo de futebol desmatado do espaço! 🛰️',
+      'O Código Florestal foi o projeto de lei mais emendado da história do Congresso Nacional, com mais de 70 versões diferentes antes de ser aprovado. E ainda é polêmico! 📜'],
+  b5:['Neste bimestre você aprendeu sobre 5 habilidades que a BNCC considera essenciais para o ensino médio. Parabéns, você tá mais preparado pro ENEM do que imagina! 🎓',
+      'O conceito de "floresta viva" dos povos amazônicos é tão avançado que cientistas do mundo todo estudam o manejo indígena como modelo de conservação. A ciência aprendendo com a tradição! 🌿']
+};
+
+let usedGossips={};
+function getGossip(section){
+  const arr=gossips[section]||gossips['b1'];
+  if(!usedGossips[section]) usedGossips[section]=[];
+  const available=arr.filter((_,i)=>!usedGossips[section].includes(i));
+  if(available.length===0){ usedGossips[section]=[]; return arr[0]; }
+  const idx=arr.indexOf(available[Math.floor(Math.random()*available.length)]);
+  usedGossips[section].push(idx);
+  return arr[idx];
+}
+
+const tips=[
+  'Use o Sumário para navegar entre os blocos sem se perder na floresta! 🗺️',
+  'Cada bloco tem atividades discursivas e de múltipla escolha. Não pule! 📝',
+  'Clique nas habilidades BNCC na capa para ver o que cada código significa.',
+  'Os acordeons (faixas clicáveis) escondem conteúdo extra. Vale abrir todos! 🔍',
+  'As abas dentro dos cards mostram perspectivas diferentes sobre o mesmo tema.',
+  'Modo Leitura (📖) é ótimo para estudar à noite sem cansar os olhos!',
+  'Anote as questões discursivas no caderno ANTES de ver o gabarito das múltiplas escolhas.',
+  'Use o NotebookLM: cole este conteúdo lá e peça um podcast de revisão! 🎧',
+  'As lendas amazônicas têm funções sociais reais. Pense nisso além do folclore! 🐬',
+  'Fontes confiáveis sobre a Amazônia: INPE, IBGE, ISA e MapBiomas. Guarda aí! 🔖',
+];
+let tipIdx=0;
+
+function showMsg(msg){
+  pauloMsg.textContent=msg;
+  pauloBubble.style.display='block';
+  pauloVisible=true;
+  startSpeaking();
+}
+
+function pauloClick(){
+  if(!pauloVisible){
+    showMsg(tips[tipIdx%tips.length]);
+    tipIdx++;
+  } else {
+    pauloBubble.style.display='none';
+    pauloVisible=false;
+  }
+  setExpression('happy');
+  setTimeout(()=>setExpression(detectEmotion(pauloMsg.textContent)),2000);
+}
+
+function nextTip(){
+  showMsg(tips[tipIdx%tips.length]);
+  tipIdx++;
+}
+
+function closePaulo(){
+  pauloBubble.style.display='none';
+  pauloVisible=false;
+}
+
+// Section detection for gossip
+const sections=['b1','b2','b3','b4','b5','apresentacao'];
+function detectCurrentSection(){
+  let current='apresentacao';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      const rect=el.getBoundingClientRect();
+      if(rect.top < window.innerHeight/2) current=id;
+    }
+  });
+  return current;
+}
+
+let gossipTimer=null;
+window.addEventListener('scroll',()=>{
+  const sec=detectCurrentSection();
+  if(sec!==lastSection && sec!=='apresentacao'){
+    lastSection=sec;
+    clearTimeout(gossipTimer);
+    gossipTimer=setTimeout(()=>{
+      const gossipEl=document.getElementById('paulo-gossip');
+      gossipEl.style.display='block';
+      pauloMsg.textContent='Ei! Chegou num tema novo! Quer saber uma curiosidade? 👀';
+      pauloBubble.style.display='block';
+      pauloVisible=true;
+      setExpression('surprised');
+    },1500);
+  }
+});
+
+function showGossip(){
+  const sec=lastSection||'b1';
+  const g=getGossip(sec);
+  pauloMsg.textContent=g;
+  document.getElementById('paulo-gossip').style.display='none';
+  setExpression('happy');
+  startSpeaking();
+}
+function noGossip(){
+  pauloMsg.textContent='Tá bom, tá bom... 🙄 Mas você tá perdendo a melhor parte! Vai lá estudar então!';
+  document.getElementById('paulo-gossip').style.display='none';
+  setExpression('thinking');
+}
+
+// Welcome message
+setTimeout(()=>{
+  showMsg('Olá! Sou o Prof. Paulo 👋 Bem-vindo(a) ao estudo da Amazônia! Role a página para começar ou clique no Sumário. Clique em mim para dicas!');
+  setExpression('happy');
+  startSpeaking();
+},1200);
+
+/* ==================== AVATAR INTELLIGENCE ==================== */
+function detectEmotion(text){
+  const lower=(text||'').toLowerCase();
+  if(/parabéns|acertou|excelente|perfeito|ótimo|incrível|correto|muito bem|genial|bom|boa/.test(lower)) return 'happy';
+  if(/atenção|cuidado|lembre|reflita|importante|observe|note|verifique|desinformação|fake|cuidados/.test(lower)) return 'thinking';
+  if(/surpreendente|olha|veja|incrível|espantoso|curioso|sabia|sabia que|impressionante/.test(lower)) return 'surprised';
+  if(/errou|ops|não foi|errado|incorreto|ainda não|tente/.test(lower)) return 'thinking';
+  return 'neutral';
+}
+
+function pauloReact(emotion){
+  setExpression(emotion);
+  startSpeaking();
+  setTimeout(()=>setExpression('neutral'),3000);
+}
+
+function setExpression(expr){
+  switch(expr){
+    case 'happy':
+      mouthPath.setAttribute('d','M25 49 Q36 57 47 49');
+      mouthPath.setAttribute('stroke','#27ae60');
+      browL.setAttribute('d','M16 17 Q24 13 31 18');
+      browR.setAttribute('d','M41 17 Q49 13 56 18');
+      pupilL.setAttribute('r','4.2'); pupilR.setAttribute('r','4.2');
+      break;
+    case 'thinking':
+      mouthPath.setAttribute('d','M26 50 Q36 48 46 50');
+      mouthPath.setAttribute('stroke','#f39c12');
+      browL.setAttribute('d','M16 16 Q24 18 31 16');
+      browR.setAttribute('d','M41 16 Q49 18 56 16');
+      break;
+    case 'surprised':
+      mouthPath.setAttribute('d','M30 52 Q36 58 42 52');
+      mouthPath.setAttribute('stroke','#e74c3c');
+      browL.setAttribute('d','M17 14 Q24 11 31 15');
+      browR.setAttribute('d','M41 14 Q48 11 55 15');
+      pupilL.setAttribute('r','5.5'); pupilR.setAttribute('r','5.5');
+      break;
+    case 'speaking':
+      mouthPath.setAttribute('d','M25 49 Q36 59 47 49');
+      mouthPath.setAttribute('stroke','#e74c3c');
+      browL.setAttribute('d','M16 17 Q24 14 31 18');
+      browR.setAttribute('d','M41 17 Q49 14 56 18');
+      break;
+    default:
+      mouthPath.setAttribute('d','M25 49 Q36 54 47 49');
+      mouthPath.setAttribute('stroke','#e74c3c');
+      browL.setAttribute('d','M16 19 Q24 15 31 19');
+      browR.setAttribute('d','M41 19 Q49 15 56 19');
+      pupilL.setAttribute('r','4.2'); pupilR.setAttribute('r','4.2');
+  }
+}
+
+function trackEyes(e){
+  const rect=svg_el.getBoundingClientRect();
+  const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+  const clientX=e.clientX||(e.touches&&e.touches[0].clientX);
+  const clientY=e.clientY||(e.touches&&e.touches[0].clientY);
+  if(!clientX||!clientY) return;
+  let dx=Math.max(-4.2,Math.min(4.2,(clientX-cx)*0.09));
+  let dy=Math.max(-4.2,Math.min(4.2,(clientY-cy)*0.09));
+  pupilL.setAttribute('cx',24+dx); pupilL.setAttribute('cy',29+dy);
+  pupilR.setAttribute('cx',48+dx); pupilR.setAttribute('cy',29+dy);
+}
+document.addEventListener('mousemove',trackEyes);
+document.addEventListener('touchmove',trackEyes,{passive:true});
+
+function startSpeaking(){
+  if(isSpeaking) return;
+  isSpeaking=true;
+  pauloWrap.classList.add('paulo-speaking');
+  setExpression('speaking');
+  setTimeout(()=>{
+    isSpeaking=false;
+    pauloWrap.classList.remove('paulo-speaking');
+    setExpression(detectEmotion(pauloMsg.textContent));
+  },2800);
+}
+
+function blink(){
+  if(isSpeaking) return;
+  const eyeL=document.getElementById('eye-left');
+  const eyeR=document.getElementById('eye-right');
+  if(eyeL){ eyeL.setAttribute('ry','2'); eyeR.setAttribute('ry','2'); }
+  setTimeout(()=>{
+    if(eyeL){ eyeL.setAttribute('ry','11'); eyeR.setAttribute('ry','11'); }
+  },160);
+}
+setInterval(()=>{ if(Math.random()>.6) blink(); },4500);
+setTimeout(()=>setExpression('neutral'),400);
+</script>
 </body>
 </html>
