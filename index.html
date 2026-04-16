@@ -455,6 +455,27 @@
     pointer-events: none;
   }
 
+  /* Modal magic states */
+  .modal-content.modal-available #modal-heading {
+    color: #f0d060;
+    text-shadow: 0 0 18px rgba(240,208,96,0.9), 0 0 32px rgba(240,208,96,0.7);
+  }
+
+  .modal-content.modal-available #modal-book-icon {
+    filter: drop-shadow(0 0 14px rgba(240,208,96,0.9));
+    animation: pageFloat 4s ease-in-out infinite, glow 2s ease-in-out infinite;
+  }
+
+  .modal-content.modal-unavailable #modal-heading {
+    color: #9a8060;
+    text-shadow: 0 0 4px rgba(0,0,0,0.6);
+  }
+
+  .modal-content.modal-unavailable #modal-book-icon {
+    filter: grayscale(0.6) brightness(0.8);
+    animation: pageFloat 4s ease-in-out infinite;
+  }
+
   /* Corner ornaments */
   .corner-ornament {
     position: absolute;
@@ -577,7 +598,7 @@
     <div class="corner-ornament bl"></div>
     <div class="corner-ornament br"></div>
     <div class="text-5xl mb-4 animate-pageFloat" id="modal-book-icon">📜</div>
-    <h2 class="gothic-title text-2xl mb-3" style="color:#f0d060;">Abrindo Tomo Antigo…</h2>
+    <h2 id="modal-heading" class="gothic-title text-2xl mb-3" style="color:#f0d060;">Abrindo o pergaminho do conhecimento</h2>
     <div class="ornament-divider mb-4"><span style="color:#c9a84c;">✦ ✦ ✦</span></div>
     <p class="text-lg mb-2" style="color:#e8d5a3;font-family:'IM Fell English',serif;font-style:italic;" id="modal-title">Carregando o manuscrito…</p>
     <p class="text-sm mt-3" style="color:#9a8060;font-family:'Cinzel',serif;letter-spacing:0.1em;" id="modal-status">✦ ACESSANDO O ACERVO SAGRADO ✦</p>
@@ -1088,8 +1109,20 @@
 
   // ===== MODAL =====
   const modalMessages = {
-    done: { icon: '📗', status: '✦ MANUSCRITO DISPONÍVEL NO ACERVO ✦', color: '#7ddc6e' },
-    none: { icon: '📘', status: '✦ TOMO AINDA NÃO CATALOGADO ✦', color: '#5070a0' },
+    done: {
+      icon: '📗',
+      status: '✦ A MÁGIA DO CONHECIMENTO ESTÁ SENDO DESPERTADA ✦',
+      color: '#7ddc6e',
+      heading: 'Abrindo o pergaminho do conhecimento',
+      modeClass: 'modal-available',
+    },
+    none: {
+      icon: '📘',
+      status: '✦ ESSE PERGAMINHO AINDA NÃO RECEBEU A MÁGIA DO CONHECIMENTO ✦',
+      color: '#5070a0',
+      heading: 'Esse pergaminho ainda não recebeu a mágia do conhecimento',
+      modeClass: 'modal-unavailable',
+    },
   };
 
   let pendingNavigationUrl = null;
@@ -1129,6 +1162,26 @@
     }
   }
 
+  // Checagem em tempo real, sem depender do cache interno
+  async function checkBookAvailabilityRealtime(url) {
+    if (!url) {
+      return false;
+    }
+
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) {
+        return false;
+      }
+
+      const htmlText = await response.text();
+      const lineCount = htmlText.split(/\r?\n/).length;
+      return lineCount > MIN_BOOK_LINES;
+    } catch (error) {
+      return false;
+    }
+  }
+
   function setCardVisualState(card, available) {
     card.classList.remove('status-done', 'status-none');
     card.classList.add(available ? 'status-done' : 'status-none');
@@ -1164,7 +1217,17 @@
 
   function openModal(title, statusText, type, url) {
     const msg = modalMessages[type] || modalMessages.none;
+    const modalEl = document.querySelector('.modal-content');
+
+    if (modalEl) {
+      modalEl.classList.remove('modal-available', 'modal-unavailable');
+      if (msg.modeClass) {
+        modalEl.classList.add(msg.modeClass);
+      }
+    }
+
     document.getElementById('modal-book-icon').textContent = msg.icon;
+    document.getElementById('modal-heading').textContent = msg.heading || 'Abrindo o pergaminho do conhecimento';
     document.getElementById('modal-title').textContent = title;
     const statusEl = document.getElementById('modal-status');
     statusEl.textContent = msg.status;
@@ -1174,8 +1237,9 @@
     document.body.style.overflow = 'hidden';
   }
 
-  function openBook(title, url, type) {
-    const isAvailable = Boolean(bookAvailabilityByUrl[url]);
+  async function openBook(title, url, type) {
+    // Checa em tempo real se o livro está disponível
+    const isAvailable = await checkBookAvailabilityRealtime(url);
     const statusType = isAvailable ? 'done' : 'none';
 
     openModal(title, '', statusType, url);
