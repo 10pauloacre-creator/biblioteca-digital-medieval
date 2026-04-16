@@ -1059,8 +1059,54 @@
     document.documentElement.classList.add('dark');
   }
 
+  // ===== USER PROFILE / DEVICE MEMORY =====
+  function updateUserProfile(partial) {
+    try {
+      const key = 'bdm-user-profile';
+      let profile = null;
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        try {
+          profile = JSON.parse(raw);
+        } catch (e) {
+          profile = null;
+        }
+      }
+      if (!profile) {
+        profile = { firstVisit: new Date().toISOString() };
+      }
+
+      profile.lastVisit = new Date().toISOString();
+      if (partial && typeof partial === 'object') {
+        Object.assign(profile, partial);
+      }
+
+      localStorage.setItem(key, JSON.stringify(profile));
+
+      // Tenta descobrir e salvar o IP público uma única vez
+      if (!profile.ip) {
+        fetch('https://api.ipify.org?format=json')
+          .then(r => r.ok ? r.json() : null)
+          .then(data => {
+            if (!data || !data.ip) return;
+            try {
+              const raw2 = localStorage.getItem(key);
+              const p2 = raw2 ? JSON.parse(raw2) : profile;
+              p2.ip = data.ip;
+              localStorage.setItem(key, JSON.stringify(p2));
+            } catch (e) {}
+          })
+          .catch(() => {});
+      }
+    } catch (e) {
+      // falha silenciosa para não quebrar navegação
+    }
+  }
+
   // Init theme
   applyTheme();
+  // Inicializa memória básica do dispositivo
+  updateUserProfile({});
 
   // ===== TABS =====
   let currentTab = 1;
@@ -1081,6 +1127,12 @@
     btn.style.color = '#f0d060';
     btn.style.background = 'linear-gradient(135deg,#2a1500,#1a0c00)';
     currentTab = num;
+
+    // Memoriza a série atual no dispositivo
+    try {
+      localStorage.setItem('bdm-current-series', String(num));
+    } catch (e) {}
+    updateUserProfile({ lastSeries: num });
 
     if (isSame) return;
 
@@ -1281,6 +1333,14 @@
   // Initial load animation
   window.addEventListener('DOMContentLoaded', () => {
     const initialContent = document.querySelector('.tab-content.active');
+    // Restaura a última série acessada neste dispositivo
+    try {
+      const stored = localStorage.getItem('bdm-current-series');
+      const num = stored ? parseInt(stored, 10) : 1;
+      if (num && num !== currentTab && document.getElementById('content-' + num)) {
+        switchTab(num);
+      }
+    } catch (e) {}
     if (initialContent) {
       initialContent.classList.add('show');
     }

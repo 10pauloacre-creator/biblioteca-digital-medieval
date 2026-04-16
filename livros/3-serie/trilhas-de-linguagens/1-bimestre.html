@@ -1737,13 +1737,82 @@ function setTheme(t){
   ['def','read','dark'].forEach(k=>{const el=document.getElementById('tf-'+k);if(el)el.classList.toggle('on',k===t.replace('default','def').replace('reading','read'))});
   try{localStorage.setItem('tl3-theme',t)}catch(e){}
 }
-(function(){try{const s=localStorage.getItem('tl3-theme');if(s)setTheme(s)}catch(e){}})();
+
+// ==================== MEMÓRIA LOCAL DO LIVRO ====================
+const BOOK_KEY_BASE='bdm-book-'+window.location.pathname;
+function saveBookData(key,val){
+  try{localStorage.setItem(BOOK_KEY_BASE+'-'+key,JSON.stringify(val));}catch(e){}
+}
+function loadBookData(key){
+  try{
+    const raw=localStorage.getItem(BOOK_KEY_BASE+'-'+key);
+    return raw?JSON.parse(raw):null;
+  }catch(e){return null;}
+}
+
+// Inicializa tema salvo e registra livro no perfil do usuário
+(function(){
+  try{
+    const s=localStorage.getItem('tl3-theme');if(s)setTheme(s);
+  }catch(e){}
+  try{
+    const key='bdm-user-profile';
+    let profile=null;
+    const raw=localStorage.getItem(key);
+    if(raw){
+      try{profile=JSON.parse(raw);}catch(e){profile=null;}
+    }
+    if(!profile){profile={firstVisit:new Date().toISOString()};}
+    profile.lastVisit=new Date().toISOString();
+    profile.lastBook=window.location.pathname;
+    localStorage.setItem(key,JSON.stringify(profile));
+  }catch(e){}
+})();
 
 /* ==================== NAV ==================== */
 function goTo(id,e){if(e)e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
 
-/* ==================== PROGRESS BAR ==================== */
-window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight;if(max>0)document.getElementById('prog').style.width=(window.scrollY/max*100)+'%'});
+/* ==================== PROGRESS BAR + SEÇÃO ATUAL ==================== */
+let lastSectionId=null;
+let sectionSaveRaf=null;
+function handleScroll(){
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  if(max>0){
+    const p=document.getElementById('prog');
+    if(p)p.style.width=(window.scrollY/max*100)+'%';
+  }
+
+  if(sectionSaveRaf)cancelAnimationFrame(sectionSaveRaf);
+  sectionSaveRaf=requestAnimationFrame(()=>{
+    const sections=document.querySelectorAll('section[id]');
+    let currentId=null;
+    let minOffset=Infinity;
+    sections.forEach(sec=>{
+      const rect=sec.getBoundingClientRect();
+      const offset=Math.abs(rect.top-120);
+      if(rect.top<window.innerHeight-120 && offset<minOffset){
+        minOffset=offset;
+        currentId=sec.id;
+      }
+    });
+    if(currentId && currentId!==lastSectionId){
+      lastSectionId=currentId;
+      saveBookData('last-section',{id:currentId});
+    }
+  });
+}
+window.addEventListener('scroll',handleScroll);
+
+// Restaura última seção visitada neste livro
+(function(){
+  const data=loadBookData('last-section');
+  if(data && data.id){
+    const el=document.getElementById(data.id);
+    if(el){
+      setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'start'});},700);
+    }
+  }
+})();
 
 /* ==================== TABS ==================== */
 function switchTab(groupId,activeId){
@@ -1754,6 +1823,50 @@ function switchTab(groupId,activeId){
 }
 
 /* ==================== MC QUESTIONS ==================== */
+function saveMCState(qEl,optEl,correct,feedback){
+  try{
+    const allQs=Array.from(document.querySelectorAll('.mc-q'));
+    const qIndex=allQs.indexOf(qEl);
+    if(qIndex===-1)return;
+    const opts=Array.from(qEl.querySelectorAll('.mc-opt'));
+    const optIndex=opts.indexOf(optEl);
+    if(optIndex===-1)return;
+    const fbEl=qEl.querySelector('.mc-fb');
+    const state={
+      optIndex,
+      correct:!!correct,
+      feedback:feedback||(fbEl?fbEl.textContent:'')
+    };
+    localStorage.setItem(BOOK_KEY_BASE+'-mc-'+qIndex,JSON.stringify(state));
+  }catch(e){}
+}
+
+function restoreMCStates(){
+  try{
+    const allQs=Array.from(document.querySelectorAll('.mc-q'));
+    allQs.forEach((qEl,qIndex)=>{
+      const raw=localStorage.getItem(BOOK_KEY_BASE+'-mc-'+qIndex);
+      if(!raw)return;
+      let state=null;
+      try{state=JSON.parse(raw);}catch(e){state=null;}
+      if(!state || typeof state.optIndex!=='number')return;
+      const opts=Array.from(qEl.querySelectorAll('.mc-opt'));
+      const selected=opts[state.optIndex];
+      if(!selected)return;
+      qEl.dataset.answered='1';
+      opts.forEach(o=>{o.style.cursor='default';o.style.pointerEvents='none';});
+      selected.classList.add(state.correct?'sel-right':'sel-wrong');
+      const fbEl=qEl.querySelector('.mc-fb');
+      if(fbEl){
+        fbEl.textContent=state.feedback||fbEl.textContent;
+        fbEl.classList.add('show');
+        fbEl.classList.toggle('right-fb',!!state.correct);
+        fbEl.classList.toggle('wrong-fb',!state.correct);
+      }
+    });
+  }catch(e){}
+}
+
 function checkMC(el,correct,feedback){
   const q=el.closest('.mc-q');if(q.dataset.answered)return;
   q.dataset.answered='1';
@@ -1762,6 +1875,7 @@ function checkMC(el,correct,feedback){
   const fb=q.querySelector('.mc-fb');
   if(fb){fb.textContent=(correct?'✅ ':' ❌ ')+feedback;fb.classList.add('show','right-fb');if(!correct){fb.classList.remove('right-fb');fb.classList.add('wrong-fb')}}
   if(correct)pauloRight();else pauloWrong();
+  saveMCState(q,el,correct,(correct?'✅ ':' ❌ ')+feedback);
 }
 
 /* ==================== FADE-IN ==================== */
@@ -2112,6 +2226,9 @@ Object.entries(sfDataExtra).forEach(([id,icons])=>{
   g4.innerHTML=`<a class="s-item" href="#c10" onclick="goTo('c10',event)" style="border-color:var(--acc3)"><div class="s-num" style="background:linear-gradient(135deg,#b45309,#f59e0b)">10</div><div class="s-txt"><div class="s-ttl">⭐ Portfólio, Diário Digital ou Canal</div><div class="s-sub">Projeto autoral de registro da jornada criativa e intelectual</div></div><span class="sbadge b-prod">Prod.</span><span class="s-arr">›</span></a>`;
   wrap.appendChild(cat2);wrap.appendChild(g2);wrap.appendChild(cat3);wrap.appendChild(g3);wrap.appendChild(cat4);wrap.appendChild(g4);
 })();
+
+// Restaura estados dos quizzes (MC) após construção da página
+restoreMCStates();
 
 
 </script>
