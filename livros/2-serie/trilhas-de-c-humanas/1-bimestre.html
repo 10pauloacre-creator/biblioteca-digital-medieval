@@ -1,16 +1,1032 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2ª Série • Trilhas de C. Humanas • 1º Bimestre</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Vozes do Poder | Trilhas de Ciências Humanas | 2ª Série | 1º Bim 2026</title>
+<style>
+:root{--bg:#fff;--bg2:#f0f2f5;--bg3:#e4e8f0;--card:#fff;--txt:#1a1a2e;--txt2:#2d3250;--muted:#6b7280;--border:#dde1ea;--acc1:#c0392b;--acc2:#e74c3c;--acc3:#f39c12;--acc4:#27ae60;--acc5:#2980b9;--shadow:rgba(192,57,43,.15);--hl-bg:#fff5f5;--hl-txt:#c0392b;--card-hover:#fff8f7}
+[data-theme="dark"]{--bg:#0d0d14;--bg2:#131320;--bg3:#1a1a2e;--card:#16162a;--txt:#f0f2ff;--txt2:#c5cae9;--muted:#7986cb;--border:#282850;--acc1:#ef5350;--acc2:#e53935;--acc3:#ffb300;--acc4:#43a047;--acc5:#42a5f5;--shadow:rgba(239,83,80,.2);--hl-bg:#2d1515;--hl-txt:#ef9a9a;--card-hover:#1e1e35}
+[data-theme="reading"]{--bg:#fdf6e3;--bg2:#fef3c7;--bg3:#fde68a33;--card:#fef9ec;--txt:#292117;--txt2:#5c4033;--muted:#a07850;--border:#e7d5b0;--acc1:#92400e;--acc2:#b45309;--acc3:#d97706;--acc4:#065f46;--acc5:#1e40af;--shadow:rgba(146,64,14,.12);--hl-bg:#fef3c7;--hl-txt:#78350f;--card-hover:#fef9ec}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);transition:background .35s,color .35s;overflow-x:hidden;line-height:1.75}
+#prog{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,var(--acc1),var(--acc3),var(--acc4));width:0%;transition:width .1s linear}
+#cover{min-height:100svh;background:linear-gradient(160deg,#0d0d14 0%,#1a0a00 20%,#3b0a0a 45%,#7b1010 65%,#c0392b 85%,#e74c3c 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.4rem 2rem;overflow:hidden}
+[data-theme="dark"] #cover{background:linear-gradient(160deg,#050508 0%,#0d0500 20%,#200505 45%,#4a0808 65%,#8b1010 85%,#c0392b 100%)}
+[data-theme="reading"] #cover{background:linear-gradient(160deg,#1a0800 0%,#451a03 30%,#7c2d12 55%,#92400e 75%,#b45309 100%)}
+#cover::before{content:'';position:absolute;inset:0;opacity:.5;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")}
+#floaters{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.flt{position:absolute;opacity:0;color:rgba(255,255,255,.08);font-size:clamp(1rem,3vw,2rem);animation:rise linear infinite;will-change:transform;user-select:none}
+@keyframes rise{0%{transform:translateY(110vh) rotate(0deg) scale(.7);opacity:0}8%{opacity:.12}92%{opacity:.12}100%{transform:translateY(-15vh) rotate(360deg) scale(1.1);opacity:0}}
+.cover-inner{position:relative;z-index:2;text-align:center;max-width:600px;width:100%;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.school-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.9);padding:.35rem 1rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.disc-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(231,76,60,.25);border:1.5px solid rgba(231,76,60,.6);color:#ffb3b3;padding:.3rem .9rem;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.cover-title{font-family:'Segoe UI',Arial,sans-serif;font-size:clamp(2.4rem,10vw,5rem);font-weight:900;color:#fff;line-height:1.02;letter-spacing:-.025em;text-shadow:0 6px 32px rgba(0,0,0,.6);margin-top:.3rem}
+.cover-title em{font-style:normal;background:linear-gradient(90deg,#ffb3b3,#ff6b6b,#f39c12);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cover-sub{font-size:clamp(.87rem,2.5vw,1.08rem);color:rgba(255,255,255,.72);font-style:italic;line-height:1.6;max-width:460px}
+.meta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.45rem}
+.meta-chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.88);padding:.3rem .8rem;border-radius:999px;font-size:.72rem;font-weight:600;backdrop-filter:blur(6px)}
+.prof-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);padding:.55rem 1.3rem;border-radius:999px;font-size:.82rem;backdrop-filter:blur(6px)}
+.prof-tag strong{color:#f39c12}
+.theme-row{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}
+.tbtn{padding:.45rem 1.1rem;border-radius:999px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:rgba(255,255,255,.88);font-size:.73rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.03em;backdrop-filter:blur(6px)}
+.tbtn:hover,.tbtn.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.7);transform:scale(1.04)}
+.bncc-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:1.1rem 1.2rem;max-width:520px;width:100%;backdrop-filter:blur(10px)}
+.bncc-box h4{color:#ffb3b3;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem;text-align:center}
+.bncc-chips{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center}
+.bc{background:rgba(255,179,179,.12);border:1.5px solid rgba(255,179,179,.45);color:#ffb3b3;padding:.3rem .85rem;border-radius:10px;font-size:.75rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.04em}
+.bc:hover{background:rgba(255,179,179,.28);transform:scale(1.06)}
+.start-btn{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;padding:.9rem 2rem;border-radius:999px;font-size:1rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 8px 28px rgba(192,57,43,.5);transition:all .22s;text-decoration:none}
+.start-btn:hover{transform:translateY(-3px)}
+.rainbow-div{height:4px;background:linear-gradient(90deg,var(--acc1),var(--acc3),var(--acc4),var(--acc5));border:none}
+.sec-head{padding:2.8rem 1.5rem 2.2rem;background:linear-gradient(135deg,var(--acc1) 0%,#8b0000 100%);position:relative;overflow:hidden;text-align:center}
+.sec-head h2{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;color:#fff;position:relative;z-index:1}
+.sec-head p{color:rgba(255,255,255,.78);font-size:.88rem;margin-top:.4rem;position:relative;z-index:1}
+.wrap{max-width:800px;margin:0 auto;padding:2rem 1.2rem 2.5rem}
+#sumario{background:var(--bg2)}
+.cat-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:1rem .3rem .4rem;display:block}
+.s-grid{display:flex;flex-direction:column;gap:.4rem}
+@media(min-width:640px){.s-grid{display:grid;grid-template-columns:1fr 1fr}}
+.s-item{display:flex;align-items:center;gap:.75rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.85rem 1rem;cursor:pointer;text-decoration:none;color:var(--txt);transition:all .2s}
+.s-item:hover{background:var(--card-hover);border-color:var(--acc1);transform:translateX(5px);box-shadow:0 4px 18px var(--shadow)}
+.s-num{min-width:34px;height:34px;background:linear-gradient(135deg,var(--acc1),var(--acc2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0}
+.s-txt{flex:1;min-width:0}
+.s-ttl{font-size:.87rem;font-weight:700;line-height:1.3}
+.s-sub{font-size:.72rem;color:var(--muted);margin-top:.1rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s-arr{color:var(--muted);font-size:.9rem;flex-shrink:0}
+.sbadge{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .5rem;border-radius:999px;flex-shrink:0}
+.b-hist{background:#fee2e2;color:#991b1b}.b-geo{background:#d1fae5;color:#065f46}.b-fil{background:#ede9fe;color:#5b21b6}.b-soc{background:#fef3c7;color:#92400e}.b-pol{background:#dbeafe;color:#1d4ed8}.b-eval{background:#f3f4f6;color:#374151}
+[data-theme="dark"] .b-hist{background:#450a0a;color:#fca5a5}[data-theme="dark"] .b-geo{background:#064e3b;color:#6ee7b7}[data-theme="dark"] .b-fil{background:#2e1065;color:#c4b5fd}[data-theme="dark"] .b-soc{background:#451a03;color:#fde68a}[data-theme="dark"] .b-pol{background:#1e3a5f;color:#93c5fd}[data-theme="dark"] .b-eval{background:#1f2937;color:#d1d5db}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem;margin-bottom:1.1rem;box-shadow:0 2px 14px var(--shadow);transition:background .3s,border .3s}
+.card h3{font-size:1.05rem;font-weight:800;color:var(--acc1);margin-bottom:.75rem;display:flex;align-items:center;gap:.45rem;line-height:1.3}
+.card p,.card li{font-size:.9rem;color:var(--txt2);line-height:1.75;margin-bottom:.35rem}
+.card ul{padding-left:1.1rem}.card ul li::marker{color:var(--acc1)}
+.hero-card{background:linear-gradient(135deg,#1a0505 0%,#3b0a0a 50%,#7b1010 100%);border:none}
+[data-theme="reading"] .hero-card{background:linear-gradient(135deg,#451a03 0%,#7c2d12 50%,#92400e 100%)}
+.hero-card h3{color:#ffb3b3 !important}.hero-card p{color:rgba(255,255,255,.88) !important}.hero-card strong{color:#f39c12}
+.obj-list{list-style:none;padding:0}
+.obj-list li{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid var(--border);font-size:.87rem;color:var(--txt2);line-height:1.6}
+.obj-list li:last-child{border-bottom:none}
+.oi{flex-shrink:0;font-size:1rem;margin-top:.05rem}
+.eixo-grid{display:grid;gap:.5rem;margin-top:.7rem}
+.eixo-item{display:flex;align-items:center;gap:.65rem;background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:.65rem .9rem;font-size:.84rem;font-weight:600;color:var(--txt2)}
+.eixo-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.quote-card{background:var(--card);border:1px solid var(--border);border-left:5px solid var(--acc1);border-radius:0 18px 18px 0;padding:1.5rem;margin-bottom:1.1rem}
+.quote-card blockquote{font-size:.95rem;color:var(--txt2);font-style:italic;line-height:1.8;margin-bottom:.6rem}
+.quote-attr{font-size:.82rem;font-weight:800;color:var(--acc1)}
+.tip-warn{background:var(--bg2);border-left:4px solid var(--acc3);border-radius:0 12px 12px 0;padding:.8rem 1rem;font-size:.82rem;color:var(--txt2);font-style:italic;margin-top:.8rem}
+.tip-warn strong{color:var(--acc1);font-style:normal}
+.fi{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.fi.in{opacity:1;transform:none}
+.topic-section{background:var(--bg);padding-bottom:1rem}
+.topic-section:nth-child(even){background:var(--bg2)}
+.topic-header{background:linear-gradient(135deg,var(--acc1) 0%,#8b0000 100%);padding:2.2rem 1.5rem 1.8rem;position:relative;overflow:hidden}
+.topic-header::before{content:attr(data-num);position:absolute;right:-.5rem;top:50%;transform:translateY(-50%);font-size:7rem;font-weight:900;color:rgba(255,255,255,.07);line-height:1;pointer-events:none;user-select:none}
+.topic-num-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);color:#fff;padding:.25rem .75rem;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.topic-header h2{font-size:clamp(1.4rem,5vw,2.1rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.01em;position:relative;z-index:1}
+.topic-header p{color:rgba(255,255,255,.78);font-size:.88rem;margin-top:.4rem;position:relative;z-index:1}
+.topic-bncc-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;position:relative;z-index:1}
+.t-bc{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.9);padding:.2rem .65rem;border-radius:8px;font-size:.68rem;font-weight:800;cursor:pointer;transition:all .18s;letter-spacing:.04em}
+.t-bc:hover{background:rgba(255,255,255,.3);transform:scale(1.05)}
+.concept-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.4rem;margin-bottom:1rem;box-shadow:0 2px 14px var(--shadow)}
+.concept-card h3{font-size:1rem;font-weight:800;color:var(--acc1);margin-bottom:.7rem;display:flex;align-items:center;gap:.4rem}
+.concept-card p,.concept-card li{font-size:.9rem;color:var(--txt2);line-height:1.78;margin-bottom:.3rem}
+.concept-card ul{padding-left:1.1rem}.concept-card ul li::marker{color:var(--acc1)}
+.def-box{background:linear-gradient(135deg,var(--hl-bg),var(--bg2));border:2px solid var(--acc1);border-radius:16px;padding:1.2rem 1.3rem;margin:.9rem 0;position:relative;overflow:hidden}
+.def-box::before{content:'📌';position:absolute;top:.8rem;right:1rem;font-size:1.4rem;opacity:.25}
+.def-label{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--acc1);display:block;margin-bottom:.35rem}
+.def-text{font-size:.92rem;color:var(--txt);line-height:1.75;font-weight:600}
+.ex-box{background:var(--bg2);border-left:4px solid var(--acc2);border-radius:0 14px 14px 0;padding:.9rem 1.1rem;margin:.8rem 0;font-size:.87rem;color:var(--txt2);line-height:1.75;font-style:italic}
+.ex-label{font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--acc2);font-style:normal;display:block;margin-bottom:.3rem}
+.hbox{background:var(--hl-bg);border:1.5px solid var(--acc2);border-radius:14px;padding:1rem 1.1rem;margin:.9rem 0;font-size:.88rem;color:var(--hl-txt);line-height:1.7}
+.hbox strong{color:var(--acc1)}
+.video-link{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:.5rem 1.1rem;border-radius:999px;font-size:.8rem;font-weight:700;cursor:pointer;text-decoration:none;margin:.3rem .2rem .3rem 0;transition:all .2s;box-shadow:0 3px 12px rgba(220,38,38,.3)}
+.video-link:hover{transform:translateY(-2px)}
+.resource-row{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.flip-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:1rem 0}
+@media(min-width:500px){.flip-grid{grid-template-columns:repeat(3,1fr)}}
+.flip-card{perspective:600px;height:130px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;border-radius:14px;padding:.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;backface-visibility:hidden}
+.flip-front{background:linear-gradient(135deg,var(--acc1),var(--acc2));color:#fff}
+.flip-front .fc-icon{font-size:1.6rem;margin-bottom:.3rem}
+.flip-front .fc-label{font-size:.75rem;font-weight:800;line-height:1.3}
+.flip-back{background:var(--card);border:2px solid var(--acc1);color:var(--txt2);transform:rotateY(180deg)}
+.flip-back .fc-def{font-size:.72rem;line-height:1.5}
+.flip-hint{font-size:.65rem;color:var(--muted);text-align:center;margin-top:.3rem}
+.ativ-section{background:linear-gradient(135deg,#1a0505 0%,#3b0a0a 100%);border-radius:22px;padding:1.8rem 1.4rem;margin:1.5rem 0;box-shadow:0 8px 32px rgba(192,57,43,.3)}
+[data-theme="reading"] .ativ-section{background:linear-gradient(135deg,#1a0800 0%,#451a03 100%)}
+.ativ-header{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem}
+.ativ-icon-box{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.ativ-title{font-size:1rem;font-weight:900;color:#fff}
+.ativ-sub{font-size:.75rem;color:rgba(255,255,255,.6);margin-top:.1rem}
+.ativ-block{margin-bottom:1rem}
+.ativ-block-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:.5rem}
+.ativ-q{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:1rem 1.1rem;margin-bottom:.5rem}
+.ativ-q-num{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ffb3b3;margin-bottom:.3rem;display:block}
+.ativ-q p{font-size:.87rem;color:rgba(255,255,255,.88);line-height:1.7}
+.ativ-mc-opts{display:flex;flex-direction:column;gap:.4rem;margin-top:.6rem}
+.ativ-mc-opt{display:flex;align-items:flex-start;gap:.6rem;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;padding:.6rem .8rem;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.82);font-size:.85rem}
+.ativ-mc-opt:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
+.ativ-mc-opt.correct{background:rgba(16,185,129,.25);border-color:#34d399;color:#fff}
+.ativ-mc-opt.wrong{background:rgba(239,68,68,.2);border-color:#f87171;color:#fff}
+.opt-letter{min-width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.73rem;font-weight:900;flex-shrink:0}
+.ativ-score{text-align:center;font-size:.88rem;font-weight:700;color:#ffb3b3;margin-top:.8rem;display:none}
+.ativ-score.show{display:block}
+.quiz-exp{font-size:.84rem;line-height:1.7;padding:.8rem;border-radius:12px;margin-top:.5rem;display:none}
+.quiz-exp.show{display:block}
+.quiz-exp.ok{background:#dcfce7;color:#166534}
+.quiz-exp.err{background:#fff7ed;color:#9a3412}
+.glossary{background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1.2rem 1.3rem;margin:1rem 0}
+.glossary h4{font-size:.82rem;font-weight:800;color:var(--acc1);margin-bottom:.8rem}
+.glos-item{padding:.45rem 0;border-bottom:1px solid var(--border)}
+.glos-item:last-child{border-bottom:none}
+.glos-term{font-size:.84rem;font-weight:800;color:var(--acc1)}
+.glos-def{font-size:.81rem;color:var(--txt2);line-height:1.6;margin-top:.1rem}
+.timeline{margin-top:.8rem}
+.tl-item{display:flex;gap:.8rem;align-items:flex-start;padding:.6rem 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-year{min-width:52px;background:linear-gradient(135deg,var(--acc1),var(--acc2));color:#fff;border-radius:8px;padding:.25rem .4rem;font-size:.7rem;font-weight:900;text-align:center;flex-shrink:0;margin-top:.15rem}
+.tl-txt{font-size:.86rem;color:var(--txt2);line-height:1.6}
+.comp-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.8rem}
+.comp-table th{padding:.7rem .9rem;text-align:left;color:#fff;font-weight:800;font-size:.78rem;letter-spacing:.04em}
+.comp-table td{padding:.6rem .9rem;border-bottom:1px solid var(--border);color:var(--txt2);line-height:1.55}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:nth-child(even) td{background:var(--bg2)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .22s}
+.modal-bg.show{opacity:1;pointer-events:all}
+.modal{background:var(--card);border-radius:22px;padding:2rem 1.7rem;max-width:480px;width:100%;position:relative;transform:scale(.92);transition:transform .22s;max-height:85vh;overflow-y:auto}
+.modal-bg.show .modal{transform:scale(1)}
+.modal-x{position:absolute;top:.9rem;right:.9rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;color:var(--txt);font-weight:700}
+.modal-label{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.35rem}
+.modal-code{font-size:1.35rem;font-weight:900;color:var(--acc1);margin-bottom:.9rem}
+.modal-desc{font-size:.88rem;color:var(--txt2);line-height:1.75}
+.fnav{position:fixed;bottom:1.1rem;right:1.1rem;z-index:998;display:flex;flex-direction:column;gap:.5rem}
+.fnav-btn{width:46px;height:46px;background:var(--acc1);color:#fff;border:none;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px var(--shadow);transition:all .2s}
+.fnav-btn:hover{transform:scale(1.12)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.2rem 1.5rem;text-align:center}
+footer p{font-size:.77rem;color:var(--muted);line-height:1.7}
+footer strong{color:var(--acc1)}
+#profWrap{position:fixed;bottom:5.5rem;left:1rem;z-index:999;display:flex;flex-direction:column;align-items:center;gap:.35rem}
+#profEmoji{font-size:2.4rem;cursor:pointer;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));transition:transform .2s;animation:profFloat 3.5s ease-in-out infinite;user-select:none;display:inline-block}
+#profEmoji:hover{transform:scale(1.2) rotate(-8deg)}
+@keyframes profFloat{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-7px) rotate(3deg)}66%{transform:translateY(-3px) rotate(-3deg)}}
+#profEmoji.talking{animation:profTalk .15s ease-in-out 5 alternate}
+@keyframes profTalk{0%{transform:scale(1)}100%{transform:scale(1.18) rotate(-10deg)}}
+#profEmoji.reacting{animation:profReact .25s ease-in-out 4 alternate}
+@keyframes profReact{0%{transform:scale(1)}100%{transform:scale(1.45) rotate(18deg)}}
+#profEmoji.laugh{animation:profLaugh .18s ease-in-out 8 alternate}
+@keyframes profLaugh{0%{transform:scale(1) translateY(0)}100%{transform:scale(1.25) translateY(-9px)}}
+#profEmoji.party{animation:profParty .28s ease-in-out 7 alternate}
+@keyframes profParty{0%{transform:scale(1) rotate(-12deg)}100%{transform:scale(1.35) rotate(12deg)}}
+#profEmoji.facepalm{animation:profFacepalm .4s ease-in-out 4 alternate}
+@keyframes profFacepalm{0%{transform:scale(1)}50%{transform:scale(.9) translateX(6px)}100%{transform:scale(1.1) translateX(-6px)}}
+#profEmoji.explode{animation:profExplode .14s ease-in-out 7 alternate}
+@keyframes profExplode{0%{transform:scale(1)}100%{transform:scale(1.6)}}
+.prof-label{background:var(--acc1);color:#fff;font-size:.55rem;font-weight:900;letter-spacing:.04em;padding:.18rem .45rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px var(--shadow)}
+#profBubble{position:fixed;bottom:9.5rem;left:1rem;z-index:1000;max-width:min(290px,calc(100vw - 2rem));background:var(--card);border:2px solid var(--acc1);border-radius:18px 18px 18px 4px;padding:1rem 1rem .8rem;box-shadow:0 8px 28px var(--shadow);transform:scale(0) translateY(20px);transform-origin:bottom left;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .25s;opacity:0;pointer-events:none}
+#profBubble.show{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+#profBubble.correct{border-color:#22c55e}
+#profBubble.wrong{border-color:#ef4444}
+.prof-bubble-close{position:absolute;top:.5rem;right:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:.7rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--txt);line-height:1}
+.prof-bubble-close:hover{background:var(--acc1);color:#fff}
+#profBubbleMsg{font-size:.82rem;color:var(--txt2);line-height:1.6;margin-top:.1rem;padding-right:.5rem}
+#profBubble.correct #profBubbleMsg{color:#166534}
+[data-theme="dark"] #profBubble.correct #profBubbleMsg{color:#86efac}
+#profBubble.wrong #profBubbleMsg{color:#991b1b}
+[data-theme="dark"] #profBubble.wrong #profBubbleMsg{color:#f87171}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.85rem}
+.ai-card{background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem;text-align:center;cursor:pointer;text-decoration:none;display:block;transition:all .2s}
+.ai-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px var(--shadow)}
+.ai-name{font-weight:800;font-size:.83rem;color:var(--hl-txt)}
+.ai-tip{font-size:.73rem;color:var(--muted);margin-top:.3rem;line-height:1.45}
+</style>
 </head>
 <body>
-  <p><a href="../../../../index.html">↩ Voltar para a Biblioteca</a></p>
-  <h1>2ª Série — Trilhas de C. Humanas — 1º Bimestre</h1>
-  <hr />
+<div id="prog"></div>
 
-  <!-- COLE_AQUI_O_HTML_DO_LIVRO -->
+<section id="capa">
+<div id="cover">
+  <div id="floaters"></div>
+  <div class="cover-inner">
+    <div class="school-pill">🏫 E.E. Padre Carlos Casavequia</div>
+    <div class="disc-pill">🌍 Trilhas de Ciências Humanas</div>
+    <h1 class="cover-title">Vozes<br><em>do Poder</em></h1>
+    <p class="cover-sub">"Entre a opressão e a liberdade, a história é escrita por quem tem a coragem de resistir."</p>
+    <div class="meta-row">
+      <span class="meta-chip">📖 2ª Série · Ensino Médio</span>
+      <span class="meta-chip">📅 1º Bimestre · 2026</span>
+    </div>
+    <div class="prof-tag">👨‍🏫 Prof. <strong>Paulo Roberto R. Magalhães</strong></div>
+    <div class="theme-row">
+      <button class="tbtn on" id="tb-def" onclick="setTheme('default')">☀️ Normal</button>
+      <button class="tbtn" id="tb-read" onclick="setTheme('reading')">📖 Leitura</button>
+      <button class="tbtn" id="tb-dark" onclick="setTheme('dark')">🌙 Escuro</button>
+    </div>
+    <div class="bncc-box">
+      <h4>📋 Habilidades BNCC — clique para ver</h4>
+      <div class="bncc-chips">
+        <span class="bc" onclick="openModal('EM13CHS101')">EM13CHS101</span>
+        <span class="bc" onclick="openModal('EM13CHS102')">EM13CHS102</span>
+        <span class="bc" onclick="openModal('EM13CHS201')">EM13CHS201</span>
+        <span class="bc" onclick="openModal('EM13CHS202')">EM13CHS202</span>
+        <span class="bc" onclick="openModal('EM13CHS301')">EM13CHS301</span>
+        <span class="bc" onclick="openModal('EM13CHS401')">EM13CHS401</span>
+        <span class="bc" onclick="openModal('EM13CHS501')">EM13CHS501</span>
+        <span class="bc" onclick="openModal('EM13CHS601')">EM13CHS601</span>
+        <span class="bc" onclick="openModal('EM13CHS602')">EM13CHS602</span>
+      </div>
+    </div>
+    <button class="start-btn" onclick="goTo('sumario')">Ver Sumário 📋</button>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
 
+<section id="sumario">
+<div class="sec-head"><h2>📋 Sumário</h2><p>Clique em qualquer tópico para ir direto ao conteúdo</p></div>
+<div class="wrap">
+  <span class="cat-label">🌍 Poder, Dominação e Imperialismo · Tópicos 1–4</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c01" onclick="goTo('c01',event)"><div class="s-num">01</div><div class="s-txt"><div class="s-ttl">O Avesso da Democracia</div><div class="s-sub">Imperialismo, colonialismo e neocolonialismo</div></div><span class="sbadge b-hist">Hist.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c02" onclick="goTo('c02',event)"><div class="s-num">02</div><div class="s-txt"><div class="s-ttl">Autoritarismo e Totalitarismo</div><div class="s-sub">Nazismo, Fascismo, Stalinismo</div></div><span class="sbadge b-hist">Hist.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c03" onclick="goTo('c03',event)"><div class="s-num">03</div><div class="s-txt"><div class="s-ttl">Estado Teocrático vs. Laico</div><div class="s-sub">Fronteiras entre religião e política</div></div><span class="sbadge b-fil">Fil.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c04" onclick="goTo('c04',event)"><div class="s-num">04</div><div class="s-txt"><div class="s-ttl">Extremismo Político e Religioso</div><div class="s-sub">Intolerância, violência e educação para a paz</div></div><span class="sbadge b-soc">Soc.</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">🗣️ Liberdade, Mídia e Democracia · Tópicos 5–6</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c05" onclick="goTo('c05',event)"><div class="s-num">05</div><div class="s-txt"><div class="s-ttl">Liberdade de Expressão vs. Censura</div><div class="s-sub">Casos históricos e contemporâneos</div></div><span class="sbadge b-pol">Pol.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c06" onclick="goTo('c06',event)"><div class="s-num">06</div><div class="s-txt"><div class="s-ttl">Mídia, Política e Poder</div><div class="s-sub">Quem controla a informação? Desinformação</div></div><span class="sbadge b-pol">Pol.</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">🇧🇷 Brasil: Autoritarismo e Redemocratização · Tópicos 7–10</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c07" onclick="goTo('c07',event)"><div class="s-num">07</div><div class="s-txt"><div class="s-ttl">Raízes do Autoritarismo no Brasil</div><div class="s-sub">Coronelismo, Getulismo, Ditadura Militar</div></div><span class="sbadge b-hist">Hist.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c08" onclick="goTo('c08',event)"><div class="s-num">08</div><div class="s-txt"><div class="s-ttl">Golpes e Ditaduras no Brasil</div><div class="s-sub">1937 e 1964; resistências populares</div></div><span class="sbadge b-hist">Hist.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c09" onclick="goTo('c09',event)"><div class="s-num">09</div><div class="s-txt"><div class="s-ttl">Redemocratização (1985-1988)</div><div class="s-sub">Diretas Já; Constituição de 1988</div></div><span class="sbadge b-hist">Hist.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c10" onclick="goTo('c10',event)"><div class="s-num">10</div><div class="s-txt"><div class="s-ttl">Ameaças ao Estado Democrático</div><div class="s-sub">Fake news, golpismo e desinformação</div></div><span class="sbadge b-pol">Pol.</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">⚖️ Democracia, Direitos e Movimentos · Tópicos 11–12</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c11" onclick="goTo('c11',event)"><div class="s-num">11</div><div class="s-txt"><div class="s-ttl">Princípios Democráticos</div><div class="s-sub">Igualdade, liberdade e pluralismo</div></div><span class="sbadge b-pol">Pol.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c12" onclick="goTo('c12',event)"><div class="s-num">12</div><div class="s-txt"><div class="s-ttl">Democracia e Movimentos Sociais</div><div class="s-sub">Feminismo, Movimento Negro, LGBTQIA+</div></div><span class="sbadge b-soc">Soc.</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">🌱 Desigualdade, Território e Sustentabilidade · Tópicos 13–17</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c13" onclick="goTo('c13',event)"><div class="s-num">13</div><div class="s-txt"><div class="s-ttl">Desigualdade Socioambiental</div><div class="s-sub">Racismo ambiental e comunidades vulneráveis</div></div><span class="sbadge b-geo">Geo.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c14" onclick="goTo('c14',event)"><div class="s-num">14</div><div class="s-txt"><div class="s-ttl">Insegurança Alimentar</div><div class="s-sub">Fome, política pública e desigualdade</div></div><span class="sbadge b-geo">Geo.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c15" onclick="goTo('c15',event)"><div class="s-num">15</div><div class="s-txt"><div class="s-ttl">Conflitos nas Amazônias</div><div class="s-sub">Terra, floresta e resistência</div></div><span class="sbadge b-geo">Geo.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c16" onclick="goTo('c16',event)"><div class="s-num">16</div><div class="s-txt"><div class="s-ttl">Desenvolvimento Sustentável</div><div class="s-sub">Sustentabilidade real vs. greenwashing</div></div><span class="sbadge b-geo">Geo.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c17" onclick="goTo('c17',event)"><div class="s-num">17</div><div class="s-txt"><div class="s-ttl">Inovação e Sustentabilidade</div><div class="s-sub">Tecnologias verdes, bioeconomia, renováveis</div></div><span class="sbadge b-geo">Geo.</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">🔬 Análise Crítica e Projeto · Tópicos 18–20</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c18" onclick="goTo('c18',event)"><div class="s-num">18</div><div class="s-txt"><div class="s-ttl">Análise Crítica de Fontes</div><div class="s-sub">Dados, estatísticas e usos políticos</div></div><span class="sbadge b-fil">Fil.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c19" onclick="goTo('c19',event)"><div class="s-num">19</div><div class="s-txt"><div class="s-ttl">Elaboração do Projeto</div><div class="s-sub">Planejamento e metodologia</div></div><span class="sbadge b-fil">Fil.</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c20" onclick="goTo('c20',event)" style="border-color:var(--acc3)"><div class="s-num" style="background:linear-gradient(135deg,#065f46,#27ae60)">20</div><div class="s-txt"><div class="s-ttl">⭐ Avaliação Final: Projeto</div><div class="s-sub">Democracia e Desigualdade</div></div><span class="sbadge b-eval">Aval.</span><span class="s-arr">›</span></a>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<section id="apresentacao">
+<div class="sec-head"><h2>👋 Apresentação</h2><p>Tudo que você precisa saber antes de começar</p></div>
+<div class="wrap">
+  <div class="card hero-card fi">
+    <h3>🌍 Bem-vindo(a) a "Vozes do Poder"!</h3>
+    <p>Este é o livro digital do <strong>1º Bimestre de 2026</strong> de Trilhas de Ciências Humanas para a 2ª Série. Neste bimestre você vai mergulhar em um dos temas mais importantes para entender o mundo atual: a diferença entre autoritarismo, totalitarismo e democracia, e como esses sistemas moldam a história do Brasil e do mundo.</p>
+    <p style="margin-top:.6rem">Você não precisa de professor ao lado para usar este livro, mas vai precisar de <strong>pensamento crítico e coragem para questionar</strong>.</p>
+  </div>
+  <div class="card fi">
+    <h3>🎯 O que você vai aprender neste bimestre</h3>
+    <ul class="obj-list">
+      <li><span class="oi">⚡</span><span>Compreender <strong>imperialismo, autoritarismo e totalitarismo</strong> com análise histórica comparada</span></li>
+      <li><span class="oi">🗺️</span><span>Identificar como <strong>colonialismo e neocolonialismo</strong> moldaram desigualdades globais</span></li>
+      <li><span class="oi">🇧🇷</span><span>Analisar as <strong>raízes do autoritarismo no Brasil</strong>: coronelismo, Estado Novo, Ditadura Militar</span></li>
+      <li><span class="oi">📜</span><span>Compreender a <strong>redemocratização</strong> e a importância da Constituição de 1988</span></li>
+      <li><span class="oi">📰</span><span>Analisar criticamente <strong>mídia, fake news e desinformação</strong> como ameaças à democracia</span></li>
+      <li><span class="oi">🌱</span><span>Relacionar <strong>desigualdade socioambiental, insegurança alimentar</strong> e conflitos territoriais</span></li>
+      <li><span class="oi">💡</span><span>Avaliar criticamente o discurso do <strong>desenvolvimento sustentável</strong> e inovações tecnológicas</span></li>
+      <li><span class="oi">📊</span><span>Desenvolver habilidade de <strong>análise crítica de fontes</strong> e dados estatísticos</span></li>
+    </ul>
+  </div>
+  <div class="card fi">
+    <h3>🗂 Organização do bimestre — 20 tópicos em 6 eixos</h3>
+    <div class="eixo-grid">
+      <div class="eixo-item"><div class="eixo-icon" style="background:#fee2e2">⚡</div><span><strong>Poder e Dominação</strong> — Tópicos 1 a 4</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#dbeafe">🗣️</div><span><strong>Liberdade, Mídia e Democracia</strong> — Tópicos 5 e 6</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#fef3c7">🇧🇷</div><span><strong>Brasil: Autoritarismo e Redemocratização</strong> — Tópicos 7 a 10</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#ede9fe">⚖️</div><span><strong>Democracia, Direitos e Movimentos</strong> — Tópicos 11 e 12</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#d1fae5">🌱</div><span><strong>Desigualdade, Território e Sustentabilidade</strong> — Tópicos 13 a 17</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#f3f4f6">🔬</div><span><strong>Análise Crítica e Projeto Final</strong> — Tópicos 18 a 20</span></div>
+    </div>
+  </div>
+  <div class="card fi">
+    <h3>📱 Como usar este material</h3>
+    <ul>
+      <li>🔄 Use o <strong>Sumário</strong> para navegar diretamente ao conteúdo desejado</li>
+      <li>🌙 Alterne temas na capa: <strong>Normal, Leitura</strong> (fundo amarelado) ou <strong>Escuro</strong></li>
+      <li>🃏 Toque nos <strong>cards interativos</strong> para virar e descobrir conceitos</li>
+      <li>📝 Questões <strong>discursivas</strong>: responda no caderno com suas próprias palavras</li>
+      <li>📲 Questões de <strong>múltipla escolha</strong>: marque direto no livro</li>
+      <li>🧑🏾‍🏫 O <strong>bonequinho professor</strong> (canto inferior esquerdo) dá dicas e reage às suas respostas</li>
+      <li>💾 Salve o arquivo no celular para acessar <strong>offline</strong></li>
+    </ul>
+  </div>
+  <div class="card fi">
+    <h3>🤖 Estudando com Inteligências Artificiais</h3>
+    <div class="ai-grid">
+      <a class="ai-card" href="https://notebooklm.google.com" target="_blank" rel="noopener"><div class="ai-name">🎵 NotebookLM</div><div class="ai-tip">Cole os textos e peça podcasts ou resumos em áudio para revisar!</div></a>
+      <a class="ai-card" href="https://chat.openai.com" target="_blank" rel="noopener"><div class="ai-name">💬 ChatGPT</div><div class="ai-tip">Peça comparações entre regimes políticos ou análises de documentos históricos</div></a>
+      <a class="ai-card" href="https://gemini.google.com" target="_blank" rel="noopener"><div class="ai-name">✨ Gemini</div><div class="ai-tip">Pesquise contextos históricos, compare ditaduras e analise movimentos sociais</div></a>
+      <a class="ai-card" href="https://grok.x.ai" target="_blank" rel="noopener"><div class="ai-name">🔮 Grok</div><div class="ai-tip">Explore como debates políticos atuais se conectam com temas históricos do bimestre</div></a>
+    </div>
+    <div class="tip-warn">💡 <strong>Dica crítica:</strong> As IAs podem errar em fatos históricos. Sempre verifique em fontes confiáveis como sites de museus e institutos de pesquisa.</div>
+  </div>
+  <div class="quote-card fi">
+    <blockquote>"Compreender a história não é apenas aprender datas e nomes. É entender como as estruturas de poder moldaram o presente e como podemos, coletivamente, construir um futuro mais justo e democrático."</blockquote>
+    <div class="quote-attr">Prof. Paulo Roberto R. Magalhães</div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICO 1 -->
+<section id="c01" class="topic-section">
+<div class="topic-header" data-num="01">
+  <div class="topic-num-badge">🌍 Tópico 01 · Poder e Dominação</div>
+  <h2>O Avesso da Democracia: Imperialismo e Dominação</h2>
+  <p>Imperialismo; colonialismo e neocolonialismo; exemplos históricos</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS101')">EM13CHS101</span><span class="t-bc" onclick="openModal('EM13CHS201')">EM13CHS201</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">Imperialismo é a política de expansão do poder de um Estado sobre outros territórios ou povos, por meio de força militar, econômica ou cultural, visando dominação e exploração. É o oposto dos princípios democráticos de soberania e autodeterminação dos povos.</div></div>
+  <div class="concept-card fi">
+    <h3>🗺️ Colonialismo, Neocolonialismo e Imperialismo</h3>
+    <p><strong>Colonialismo (séculos XV-XIX):</strong> ocupação física e política direta de territórios, com eliminação ou subjugação das populações locais. Exemplo: Brasil colônia de Portugal por 322 anos.</p>
+    <p><strong>Neocolonialismo (século XIX):</strong> dominação econômica sem ocupação formal. Países europeus e EUA controlavam mercados, finanças e recursos de nações formalmente independentes.</p>
+    <p><strong>Imperialismo contemporâneo:</strong> domínio por dívidas externas, acordos comerciais desiguais, intervenções militares e controle cultural (o chamado "soft power").</p>
+  </div>
+  <div class="concept-card fi">
+    <h3>🃏 Explore os conceitos — toque para virar</h3>
+    <div class="flip-grid">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">🌍</span><span class="fc-label">Colonialismo</span></div><div class="flip-back"><span class="fc-def">Conquista e administração direta de territórios por potências europeias. O Brasil foi colônia de Portugal de 1500 a 1822.</span></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">💰</span><span class="fc-label">Neocolonialismo</span></div><div class="flip-back"><span class="fc-def">Domínio econômico sem ocupação formal. Países independentes da África e Ásia no século XIX eram controlados pelos mercados europeus.</span></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">🏭</span><span class="fc-label">Imperialismo Industrial</span></div><div class="flip-back"><span class="fc-def">Países industrializados buscavam matérias-primas e mercados consumidores nos países periféricos para sustentar seu crescimento.</span></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">📡</span><span class="fc-label">Imperialismo Cultural</span></div><div class="flip-back"><span class="fc-def">Imposição dos valores, idiomas e costumes das potências dominantes sobre os povos colonizados, apagando identidades e saberes locais.</span></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">⚖️</span><span class="fc-label">Autodeterminação</span></div><div class="flip-back"><span class="fc-def">Princípio democrático pelo qual cada povo tem direito de decidir sua própria forma de governo sem interferência externa.</span></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">🌱</span><span class="fc-label">Descolonização</span></div><div class="flip-back"><span class="fc-def">Processo (principalmente 1945-1975) pelo qual países colonizados da África e Ásia conquistaram sua independência política formal.</span></div></div></div>
+    </div>
+    <p class="flip-hint">👆 Toque em cada card para ver a explicação</p>
+  </div>
+  <div class="concept-card fi">
+    <h3>📅 Linha do Tempo</h3>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-year">1500</div><div class="tl-txt"><strong>Colonialismo no Brasil:</strong> chegada de Cabral marca 322 anos de exploração colonial da terra e povos originários.</div></div>
+      <div class="tl-item"><div class="tl-year">1884-85</div><div class="tl-txt"><strong>Conferência de Berlim:</strong> 14 nações europeias dividem a África entre si sem consultar nenhum representante africano.</div></div>
+      <div class="tl-item"><div class="tl-year">1822</div><div class="tl-txt"><strong>Independência do Brasil:</strong> independência política, mas não econômica. O Brasil permanece dependente do capital britânico e mantém a escravidão até 1888.</div></div>
+      <div class="tl-item"><div class="tl-year">1945-75</div><div class="tl-txt"><strong>Descolonização:</strong> movimentos de libertação conquistam independência formal, mas herdam estruturas coloniais impostas.</div></div>
+      <div class="tl-item"><div class="tl-year">Hoje</div><div class="tl-txt"><strong>Neocolonialismo contemporâneo:</strong> dívidas externas e dependência tecnológica mantêm países do Sul Global em posição subalterna.</div></div>
+    </div>
+  </div>
+  <div class="concept-card fi">
+    <h3>🔍 Caso Prático: Conferência de Berlim (1884-1885)</h3>
+    <div class="ex-box"><span class="ex-label">Exemplo histórico fundamental</span>Em 1884-1885, 14 nações europeias reuniram-se em Berlim para dividir formalmente o continente africano entre si. Nenhum representante africano foi convidado. As fronteiras foram traçadas com régua, ignorando completamente etnias, línguas e culturas. O resultado foi um continente dividido artificialmente — conflitos que persistem até hoje.</div>
+    <div class="hbox"><strong>Conexão com o presente:</strong> Mais de 140 anos depois, a África ainda lida com as consequências. O imperialismo do passado explica muito da desigualdade global do presente.</div>
+  </div>
+  <div class="concept-card fi"><h3>🎬 Recursos Complementares</h3><div class="resource-row"><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=imperialismo+colonialismo+historia','_blank')">▶ Imperialismo e Colonialismo</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=conferencia+berlim+africa+partilha','_blank')">▶ Conferência de Berlim</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=neocolonialismo+dependencia+economica','_blank')">▶ Neocolonialismo hoje</span></div></div>
+  <div class="glossary fi"><h4>📚 Glossário</h4><div class="glos-item"><div class="glos-term">Imperialismo</div><div class="glos-def">Política de expansão do poder de um Estado sobre outros territórios ou povos, visando dominação política, econômica ou cultural.</div></div><div class="glos-item"><div class="glos-term">Colonialismo</div><div class="glos-def">Sistema de dominação direta de um território por uma potência estrangeira, com controle político e econômico formal.</div></div><div class="glos-item"><div class="glos-term">Neocolonialismo</div><div class="glos-def">Dominação econômica de países formalmente independentes por meio de dívidas, comércio desigual e dependência tecnológica.</div></div><div class="glos-item"><div class="glos-term">Sul Global</div><div class="glos-def">Conceito que agrupa países da África, América Latina e partes da Ásia que historicamente ocuparam posição subalterna na ordem econômica mundial.</div></div></div>
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Atividades — Tópico 1</div><div class="ativ-sub">5 questões discursivas (caderno) + 5 de múltipla escolha</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Questões Discursivas — Responda no caderno</span>
+      <div class="ativ-q"><span class="ativ-q-num">D1</span><p>Por que o colonialismo é considerado o "avesso da democracia"? Explique usando o exemplo da Conferência de Berlim e o princípio de autodeterminação dos povos.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D2</span><p>Qual é a diferença entre colonialismo e neocolonialismo? Dê um exemplo histórico de cada tipo.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D3</span><p>O imperialismo cultural ainda existe hoje? Apresente dois exemplos de como a cultura ou valores de países poderosos são impostos sobre outros.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D4</span><p>A independência do Brasil em 1822 trouxe soberania total? Analise as relações econômicas com a Grã-Bretanha e explique o conceito de "neocolonialismo britânico no Brasil".</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D5</span><p>As dívidas externas de países africanos com o FMI podem ser consideradas neocolonialismo contemporâneo? Argumente com pelo menos dois argumentos a favor e um contra.</p></div>
+    </div>
+    <div class="ativ-block"><span class="ativ-block-label">☑️ Múltipla Escolha</span>
+      <div class="ativ-q" id="mc1_1"><span class="ativ-q-num">Q1</span><p>O imperialismo é considerado o "avesso da democracia" principalmente porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc1_1',this,'A')"><span class="opt-letter">A</span> Promove eleições livres apenas nas nações dominantes.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_1',this,'B')"><span class="opt-letter">B</span> Nega o direito de autodeterminação dos povos, impondo domínio externo sem consentimento.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_1',this,'C')"><span class="opt-letter">C</span> Sempre usa força militar para conquistar territórios.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_1',this,'D')"><span class="opt-letter">D</span> É exclusivo de países europeus e nunca ocorreu nas Américas.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_1',this,'E')"><span class="opt-letter">E</span> Promove o desenvolvimento econômico dos países colonizados.</div></div><div class="quiz-exp" id="exp_mc1_1"></div></div>
+      <div class="ativ-q" id="mc1_2"><span class="ativ-q-num">Q2</span><p>A Conferência de Berlim (1884-1885) é um exemplo de imperialismo porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc1_2',this,'A')"><span class="opt-letter">A</span> Promoveu a independência política dos países africanos.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_2',this,'B')"><span class="opt-letter">B</span> Reuniu representantes africanos para decidir o futuro do continente.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_2',this,'C')"><span class="opt-letter">C</span> Potências europeias dividiram a África entre si sem consultar seus povos, impondo fronteiras artificiais.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_2',this,'D')"><span class="opt-letter">D</span> Estabeleceu princípios democráticos para o governo dos territórios africanos.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_2',this,'E')"><span class="opt-letter">E</span> Foi uma resposta às guerras africanas de conquista europeia.</div></div><div class="quiz-exp" id="exp_mc1_2"></div></div>
+      <div class="ativ-q" id="mc1_3"><span class="ativ-q-num">Q3</span><p>O neocolonialismo se diferencia do colonialismo clássico porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc1_3',this,'A')"><span class="opt-letter">A</span> Não envolve nenhuma forma de exploração econômica.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_3',this,'B')"><span class="opt-letter">B</span> Usa apenas força militar para manter o controle.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_3',this,'C')"><span class="opt-letter">C</span> Mantém domínio econômico sobre países formalmente independentes, sem ocupação política direta.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_3',this,'D')"><span class="opt-letter">D</span> Ocorreu apenas durante o século XX.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_3',this,'E')"><span class="opt-letter">E</span> Beneficia igualmente os países dominantes e dominados.</div></div><div class="quiz-exp" id="exp_mc1_3"></div></div>
+      <div class="ativ-q" id="mc1_4"><span class="ativ-q-num">Q4</span><p>O "imperialismo cultural" refere-se à:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc1_4',this,'A')"><span class="opt-letter">A</span> Exportação de obras de arte por países dominantes.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_4',this,'B')"><span class="opt-letter">B</span> Imposição dos valores, língua e costumes das potências dominantes sobre os povos colonizados, apagando identidades locais.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_4',this,'C')"><span class="opt-letter">C</span> Intercâmbio cultural voluntário entre nações de igual poder econômico.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_4',this,'D')"><span class="opt-letter">D</span> Proibição de culturas locais apenas em contextos de guerra.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_4',this,'E')"><span class="opt-letter">E</span> Política de preservação das culturas dos povos colonizados.</div></div><div class="quiz-exp" id="exp_mc1_4"></div></div>
+      <div class="ativ-q" id="mc1_5"><span class="ativ-q-num">Q5</span><p>A independência do Brasil em 1822 pode ser considerada "incompleta" do ponto de vista econômico porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc1_5',this,'A')"><span class="opt-letter">A</span> Portugal continuou governando politicamente o país após 1822.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_5',this,'B')"><span class="opt-letter">B</span> O Brasil manteve dependência econômica do capital britânico e perpetuou o trabalho escravo até 1888.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_5',this,'C')"><span class="opt-letter">C</span> O Brasil não tinha moeda própria após a independência.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_5',this,'D')"><span class="opt-letter">D</span> A independência foi reconhecida apenas pelos países sul-americanos.</div><div class="ativ-mc-opt" onclick="checkMC('mc1_5',this,'E')"><span class="opt-letter">E</span> O Imperador Dom Pedro I era britânico de nascimento.</div></div><div class="quiz-exp" id="exp_mc1_5"></div></div>
+      <div style="text-align:center;margin-top:.8rem"><div class="ativ-score" id="score_t1">Você acertou <span id="scoreNum_t1">0</span> de 5! 🏆</div></div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICO 2 -->
+<section id="c02" class="topic-section" style="background:var(--bg2)">
+<div class="topic-header" data-num="02" style="background:linear-gradient(135deg,#1a0505 0%,#4a0000 100%)">
+  <div class="topic-num-badge">⚡ Tópico 02 · Poder e Dominação</div>
+  <h2>Autoritarismo e Sistemas Totalitários</h2>
+  <p>Nazismo, Fascismo, Stalinismo — características e análise comparada</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS101')">EM13CHS101</span><span class="t-bc" onclick="openModal('EM13CHS202')">EM13CHS202</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">O totalitarismo busca controle absoluto sobre todos os aspectos da vida dos cidadãos: política, economia, cultura, pensamento e comportamento privado. Diferente do autoritarismo comum, que suprime apenas a oposição política, o totalitarismo aspira a transformar radicalmente a sociedade segundo uma ideologia única.</div></div>
+  <div class="concept-card fi">
+    <h3>⚡ Autoritarismo vs. Totalitarismo</h3>
+    <div style="overflow-x:auto;margin-top:.8rem">
+      <table class="comp-table">
+        <thead><tr style="background:linear-gradient(135deg,#7b1010,#c0392b)"><th>Característica</th><th>Autoritarismo</th><th>Totalitarismo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Controle</strong></td><td>Político e militar</td><td>Todos os aspectos da vida</td></tr>
+          <tr><td><strong>Ideologia</strong></td><td>Fraca ou pragmática</td><td>Forte e obrigatória</td></tr>
+          <tr><td><strong>Participação</strong></td><td>Passiva (aceitação)</td><td>Ativa (mobilização)</td></tr>
+          <tr><td><strong>Vida privada</strong></td><td>Tolerada</td><td>Invadida e controlada</td></tr>
+          <tr><td><strong>Exemplos</strong></td><td>Ditadura Militar brasileira</td><td>Nazismo, Fascismo, Stalinismo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="concept-card fi">
+    <h3>🔬 Os três grandes totalitarismos do século XX</h3>
+    <div style="background:var(--bg2);border:2px solid #7b1010;border-radius:14px;padding:1rem;margin-bottom:.8rem">
+      <div style="font-size:.9rem;font-weight:800;color:#c0392b;margin-bottom:.5rem">🇩🇪 NAZISMO (Alemanha, 1933-1945)</div>
+      <ul style="font-size:.85rem;color:var(--txt2);padding-left:1rem;line-height:1.7"><li><strong>Líder:</strong> Adolf Hitler e o Partido Nacional-Socialista (NSDAP)</li><li><strong>Ideologia:</strong> supremacia da raça ariana, antissemitismo radical, ultranacionalismo</li><li><strong>Crime maior:</strong> Holocausto — assassinato sistemático de 6 milhões de judeus e outros 5 milhões de pessoas</li></ul>
+    </div>
+    <div style="background:var(--bg2);border:2px solid #b7410e;border-radius:14px;padding:1rem;margin-bottom:.8rem">
+      <div style="font-size:.9rem;font-weight:800;color:#b7410e;margin-bottom:.5rem">🇮🇹 FASCISMO (Itália, 1922-1943)</div>
+      <ul style="font-size:.85rem;color:var(--txt2);padding-left:1rem;line-height:1.7"><li><strong>Líder:</strong> Benito Mussolini e o Partido Nacional Fascista</li><li><strong>Ideologia:</strong> ultranacionalismo, corporativismo, glorificação do Estado e da violência</li><li><strong>Peculiaridade:</strong> foi o primeiro regime totalitário europeu moderno, servindo de modelo para o Nazismo</li></ul>
+    </div>
+    <div style="background:var(--bg2);border:2px solid #1a237e;border-radius:14px;padding:1rem">
+      <div style="font-size:.9rem;font-weight:800;color:#1a237e;margin-bottom:.5rem">🇷🇺 STALINISMO (URSS, 1924-1953)</div>
+      <ul style="font-size:.85rem;color:var(--txt2);padding-left:1rem;line-height:1.7"><li><strong>Líder:</strong> Josef Stalin após a morte de Lenin</li><li><strong>Ideologia:</strong> comunismo de Estado com culto à personalidade do líder</li><li><strong>Crime maior:</strong> Holodomor (fome planejada na Ucrânia, 1932-33) e expurgos que mataram milhões</li></ul>
+    </div>
+  </div>
+  <div class="concept-card fi">
+    <h3>🧠 Condições que favorecem o totalitarismo — Hannah Arendt</h3>
+    <ul>
+      <li><strong>Crise econômica grave:</strong> desemprego e hiperinflação criaram terreno fértil para Hitler na Alemanha pós-1929</li>
+      <li><strong>Humilhação nacional:</strong> o Tratado de Versalhes humilhou a Alemanha, criando ressentimento explorado pelo Nazismo</li>
+      <li><strong>Medo e insegurança:</strong> populações aterrorizadas aceitam sacrificar liberdades em troca de "ordem"</li>
+      <li><strong>Bode expiatório:</strong> culpar um grupo pela crise desvia a atenção das causas reais</li>
+      <li><strong>Propaganda intensa:</strong> controle da mídia e repetição de mentiras até parecerem verdade</li>
+    </ul>
+    <div class="hbox"><strong>Reflexão crítica:</strong> Hitler chegou ao poder nas eleições alemãs de 1932. Mussolini foi convidado pelo rei para formar governo. O totalitarismo frequentemente usa a democracia para destruir a democracia.</div>
+  </div>
+  <div class="concept-card fi"><h3>🎬 Recursos Complementares</h3><div class="resource-row"><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=nazismo+fascismo+totalitarismo+historia','_blank')">▶ Nazismo e Fascismo</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=stalinismo+URSS+totalitarismo','_blank')">▶ Stalinismo na URSS</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=hannah+arendt+origens+totalitarismo','_blank')">▶ Hannah Arendt</span></div></div>
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Atividades — Tópico 2</div><div class="ativ-sub">5 discursivas (caderno) + 5 múltipla escolha</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Questões Discursivas</span>
+      <div class="ativ-q"><span class="ativ-q-num">D1</span><p>Qual é a diferença fundamental entre autoritarismo e totalitarismo? Use a Ditadura Militar brasileira e o Nazismo como exemplos.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D2</span><p>Hannah Arendt identificou condições que favorecem o totalitarismo. Analise o contexto alemão entre 1919 e 1933 e explique como cada condição contribuiu para a ascensão do Nazismo.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D3</span><p>O Stalinismo é frequentemente chamado de "paradoxo do socialismo". Como um sistema que se propunha igualitário tornou-se uma das ditaduras mais opressoras do século XX?</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D4</span><p>A frase "o totalitarismo usa a democracia para destruir a democracia" refere-se ao fato de que Hitler e Mussolini chegaram ao poder por vias legais. Que mecanismos democráticos existem hoje para impedir que isso se repita?</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D5</span><p>Analise o papel da propaganda nos regimes totalitários do século XX. Como o controle da mídia e da informação foi usado para manter o poder? Compare com situações contemporâneas.</p></div>
+    </div>
+    <div class="ativ-block"><span class="ativ-block-label">☑️ Múltipla Escolha</span>
+      <div class="ativ-q" id="mc2_1"><span class="ativ-q-num">Q1</span><p>O totalitarismo se diferencia do autoritarismo comum porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc2_1',this,'A')"><span class="opt-letter">A</span> Usa exclusivamente violência física para manter o poder.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_1',this,'B')"><span class="opt-letter">B</span> Busca controle absoluto sobre todos os aspectos da vida, mobilizando ativamente a sociedade em torno de uma ideologia.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_1',this,'C')"><span class="opt-letter">C</span> Permite eleições livres, mas com restrições ao voto.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_1',this,'D')"><span class="opt-letter">D</span> Existe apenas em países com tradição democrática prévia.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_1',this,'E')"><span class="opt-letter">E</span> Respeita a vida privada, focando apenas no controle econômico.</div></div><div class="quiz-exp" id="exp_mc2_1"></div></div>
+      <div class="ativ-q" id="mc2_2"><span class="ativ-q-num">Q2</span><p>O Holocausto é definido como:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc2_2',this,'A')"><span class="opt-letter">A</span> Um conflito militar entre a Alemanha e os Aliados.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_2',this,'B')"><span class="opt-letter">B</span> O genocídio sistemático de cerca de 6 milhões de judeus e outros grupos perseguidos pelo regime nazista.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_2',this,'C')"><span class="opt-letter">C</span> A política econômica de Hitler durante a Grande Depressão.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_2',this,'D')"><span class="opt-letter">D</span> A resistência judaica contra a ocupação nazista na França.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_2',this,'E')"><span class="opt-letter">E</span> O bombardeio de Berlim pelas forças aliadas em 1945.</div></div><div class="quiz-exp" id="exp_mc2_2"></div></div>
+      <div class="ativ-q" id="mc2_3"><span class="ativ-q-num">Q3</span><p>O "culto à personalidade" nos regimes totalitários servia para:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc2_3',this,'A')"><span class="opt-letter">A</span> Celebrar as conquistas culturais da nação.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_3',this,'B')"><span class="opt-letter">B</span> Apresentar o líder como ser superior e infalível, concentrando lealdade e poder em sua figura e eliminando possibilidades de questionamento.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_3',this,'C')"><span class="opt-letter">C</span> Estimular o desenvolvimento de lideranças locais descentralizadas.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_3',this,'D')"><span class="opt-letter">D</span> Fortalecer as instituições democráticas do Estado.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_3',this,'E')"><span class="opt-letter">E</span> Promover a igualdade entre os membros do partido governante.</div></div><div class="quiz-exp" id="exp_mc2_3"></div></div>
+      <div class="ativ-q" id="mc2_4"><span class="ativ-q-num">Q4</span><p>Hannah Arendt identificou que crises econômicas graves facilitam a emergência do totalitarismo porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc2_4',this,'A')"><span class="opt-letter">A</span> Crises econômicas sempre levam ao comunismo.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_4',this,'B')"><span class="opt-letter">B</span> Populações com medo e insegurança tendem a aceitar sacrificar liberdades em troca de promessas de ordem, segurança e prosperidade.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_4',this,'C')"><span class="opt-letter">C</span> Em crises econômicas, os militares sempre assumem o poder por pressão da população.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_4',this,'D')"><span class="opt-letter">D</span> A pobreza extrema impede a participação política criando apatia total.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_4',this,'E')"><span class="opt-letter">E</span> Economias em crise são mais facilmente controladas por potências estrangeiras.</div></div><div class="quiz-exp" id="exp_mc2_4"></div></div>
+      <div class="ativ-q" id="mc2_5"><span class="ativ-q-num">Q5</span><p>O Fascismo italiano é considerado o "modelo original" do totalitarismo moderno porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc2_5',this,'A')"><span class="opt-letter">A</span> A Itália foi o primeiro país a declarar guerra na Segunda Guerra Mundial.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_5',this,'B')"><span class="opt-letter">B</span> Mussolini foi o primeiro líder totalitário moderno europeu, chegando ao poder em 1922 e servindo de inspiração para Hitler e outros líderes autoritários.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_5',this,'C')"><span class="opt-letter">C</span> O Fascismo foi a única ideologia que combinou capitalismo e socialismo com sucesso.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_5',this,'D')"><span class="opt-letter">D</span> A Itália era o país mais desenvolvido economicamente da Europa no período.</div><div class="ativ-mc-opt" onclick="checkMC('mc2_5',this,'E')"><span class="opt-letter">E</span> O Fascismo nunca usou violência, baseando-se exclusivamente em eleições livres.</div></div><div class="quiz-exp" id="exp_mc2_5"></div></div>
+      <div style="text-align:center;margin-top:.8rem"><div class="ativ-score" id="score_t2">Você acertou <span id="scoreNum_t2">0</span> de 5! 🏆</div></div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICO 3 -->
+<section id="c03" class="topic-section">
+<div class="topic-header" data-num="03" style="background:linear-gradient(135deg,#1a1a4e 0%,#4a4a8a 100%)">
+  <div class="topic-num-badge">🏛️ Tópico 03 · Filosofia Política</div>
+  <h2>Estado Teocrático versus Estado Laico</h2>
+  <p>Fronteiras entre religião e política; exemplos históricos e contemporâneos</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS301')">EM13CHS301</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">O Estado laico separa as instituições governamentais das instituições religiosas, garantindo liberdade religiosa a todos. O Estado teocrático baseia suas leis e decisões em preceitos religiosos, geralmente de uma religião dominante.</div></div>
+  <div class="concept-card fi">
+    <h3>⚖️ Comparação: Estado Laico e Estado Teocrático</h3>
+    <div style="overflow-x:auto;margin-top:.8rem">
+      <table class="comp-table">
+        <thead><tr style="background:linear-gradient(135deg,#1a1a4e,#4a4a8a)"><th>Aspecto</th><th>Estado Laico</th><th>Estado Teocrático</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Base das leis</strong></td><td>Razão e consenso democrático</td><td>Textos e interpretações religiosas</td></tr>
+          <tr><td><strong>Liberdade religiosa</strong></td><td>Garantida para todos</td><td>Restrita ou inexistente para minorias</td></tr>
+          <tr><td><strong>Exemplos</strong></td><td>Brasil, França, EUA</td><td>Irã, Arábia Saudita, Vaticano</td></tr>
+          <tr><td><strong>Líderes</strong></td><td>Eleitos pela população</td><td>Religiosos ou ungidos por Deus</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="concept-card fi">
+    <h3>🌍 Exemplos práticos</h3>
+    <div class="ex-box"><span class="ex-label">Estado Teocrático — Irã pós-1979</span>Após a Revolução Islâmica, a lei sharia tornou-se base do sistema jurídico. O "Líder Supremo" — um clérigo — tem poder acima do presidente eleito. Mulheres são obrigadas a usar véu; práticas de minorias religiosas são criminalizadas.</div>
+    <div class="ex-box"><span class="ex-label">Estado Laico — Brasil (CF/1988, art. 19)</span>Proíbe ao Estado "estabelecer cultos religiosos ou igrejas, subvencioná-los, embaraçar-lhes o funcionamento ou manter com eles relações de dependência ou aliança". O Brasil é laico, mas não ateu.</div>
+    <div class="hbox"><strong>Atenção:</strong> Laicidade não significa hostilidade à religião. Pessoas religiosas podem e devem participar da política. O que o Estado laico proíbe é que leis civis sejam baseadas exclusivamente em dogmas religiosos, impondo crenças particulares a toda a população.</div>
+  </div>
+  <div class="concept-card fi"><h3>🎬 Recursos Complementares</h3><div class="resource-row"><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=estado+laico+teocrático+diferença','_blank')">▶ Estado Laico vs. Teocrático</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=laicidade+brasil+constituição','_blank')">▶ Laicidade no Brasil</span></div></div>
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Atividades — Tópico 3</div><div class="ativ-sub">5 discursivas + 5 múltipla escolha</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Questões Discursivas</span>
+      <div class="ativ-q"><span class="ativ-q-num">D1</span><p>O que significa um Estado laico? Por que a laicidade é considerada uma garantia democrática fundamental, especialmente em sociedades religiosas plurais como o Brasil?</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D2</span><p>O artigo 19 da CF/1988 proíbe o Estado de estabelecer cultos religiosos ou com eles manter aliança. Em sua opinião, essa norma é respeitada na prática? Apresente exemplos de situações em que essa fronteira foi tensionada no Brasil contemporâneo.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D3</span><p>Compare a organização política do Irã (República Islâmica) com a do Brasil (República Federativa). Como a presença ou ausência da separação Estado-religião afeta os direitos das minorias?</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D4</span><p>"Estado laico não é Estado ateu." Explique essa afirmação e discuta qual é o papel que pessoas e instituições religiosas podem ter na democracia sem violar o princípio da laicidade.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D5</span><p>Pesquise um caso concreto em que a fronteira entre religião e política foi tensionada em algum país democrático. Houve violação da laicidade? Como a sociedade e as instituições responderam?</p></div>
+    </div>
+    <div class="ativ-block"><span class="ativ-block-label">☑️ Múltipla Escolha</span>
+      <div class="ativ-q" id="mc3_1"><span class="ativ-q-num">Q1</span><p>O Estado laico garante, em relação à religião:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc3_1',this,'A')"><span class="opt-letter">A</span> A proibição de práticas religiosas no espaço público.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_1',this,'B')"><span class="opt-letter">B</span> A liberdade religiosa para todos, sem adotar nenhuma religião oficial nem impor crenças a todos os cidadãos.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_1',this,'C')"><span class="opt-letter">C</span> O financiamento público igual a todas as religiões.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_1',this,'D')"><span class="opt-letter">D</span> A proibição de pessoas religiosas exercerem cargos públicos.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_1',this,'E')"><span class="opt-letter">E</span> A adoção da religião da maioria como referência cultural do Estado.</div></div><div class="quiz-exp" id="exp_mc3_1"></div></div>
+      <div class="ativ-q" id="mc3_2"><span class="ativ-q-num">Q2</span><p>No Irã pós-1979, o sistema político é teocrático porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc3_2',this,'A')"><span class="opt-letter">A</span> Todas as decisões são tomadas por voto popular direto.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_2',this,'B')"><span class="opt-letter">B</span> A lei islâmica é a base do sistema jurídico e um clérigo (Líder Supremo) detém poder acima do presidente eleito.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_2',this,'C')"><span class="opt-letter">C</span> O governo é controlado exclusivamente pelo exército.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_2',this,'D')"><span class="opt-letter">D</span> O país não tem constituição escrita.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_2',this,'E')"><span class="opt-letter">E</span> O presidente iraniano tem poderes absolutos e vitalícios.</div></div><div class="quiz-exp" id="exp_mc3_2"></div></div>
+      <div class="ativ-q" id="mc3_3"><span class="ativ-q-num">Q3</span><p>O artigo 19 da Constituição Federal brasileira proíbe ao Estado:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc3_3',this,'A')"><span class="opt-letter">A</span> A construção de igrejas em terrenos públicos.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_3',this,'B')"><span class="opt-letter">B</span> Estabelecer cultos religiosos, subvencioná-los ou manter relações de dependência ou aliança com igrejas.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_3',this,'C')"><span class="opt-letter">C</span> A expressão de crença religiosa por servidores públicos.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_3',this,'D')"><span class="opt-letter">D</span> A realização de festas religiosas em espaço público.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_3',this,'E')"><span class="opt-letter">E</span> A isenção fiscal de instituições religiosas sem fins lucrativos.</div></div><div class="quiz-exp" id="exp_mc3_3"></div></div>
+      <div class="ativ-q" id="mc3_4"><span class="ativ-q-num">Q4</span><p>A afirmação "Estado laico não é Estado ateu" significa que:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc3_4',this,'A')"><span class="opt-letter">A</span> O Estado laico pratica uma religião em segredo.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_4',this,'B')"><span class="opt-letter">B</span> O Estado laico respeita e protege todas as expressões religiosas sem adotar nenhuma como oficial; não é inimigo da religião, mas neutro em relação a ela.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_4',this,'C')"><span class="opt-letter">C</span> O Estado laico pode escolher uma religião desde que não a chame de "oficial".</div><div class="ativ-mc-opt" onclick="checkMC('mc3_4',this,'D')"><span class="opt-letter">D</span> O ateísmo é a ideologia oficial do Estado laico.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_4',this,'E')"><span class="opt-letter">E</span> As religiões são proibidas de opinar sobre questões públicas em países laicos.</div></div><div class="quiz-exp" id="exp_mc3_4"></div></div>
+      <div class="ativ-q" id="mc3_5"><span class="ativ-q-num">Q5</span><p>A principal razão pela qual a laicidade é uma garantia democrática é:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc3_5',this,'A')"><span class="opt-letter">A</span> A religião e a democracia são sistemas incompatíveis e não podem coexistir.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_5',this,'B')"><span class="opt-letter">B</span> Em sociedades plurais, impor dogmas de uma religião como leis civis viola a liberdade de consciência de quem não compartilha dessas crenças.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_5',this,'C')"><span class="opt-letter">C</span> Religiões sempre defendem regimes autoritários e devem ser mantidas fora da política.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_5',this,'D')"><span class="opt-letter">D</span> O Estado laico impede que pessoas religiosas sejam eleitas para cargos públicos.</div><div class="ativ-mc-opt" onclick="checkMC('mc3_5',this,'E')"><span class="opt-letter">E</span> A laicidade foi imposta pelas constituições europeias a todos os países do mundo.</div></div><div class="quiz-exp" id="exp_mc3_5"></div></div>
+      <div style="text-align:center;margin-top:.8rem"><div class="ativ-score" id="score_t3">Você acertou <span id="scoreNum_t3">0</span> de 5! 🏆</div></div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICOS 4-20: ESTRUTURA COMPACTA MAS COMPLETA -->
+<section id="c04" class="topic-section" style="background:var(--bg2)">
+<div class="topic-header" data-num="04" style="background:linear-gradient(135deg,#2d1515 0%,#7b2d00 100%)">
+  <div class="topic-num-badge">⚠️ Tópico 04 · Sociologia</div>
+  <h2>Extremismo Político e Religioso</h2>
+  <p>Causas, manifestações, intolerância e educação para a paz</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS601')">EM13CHS601</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">O extremismo é a adoção de posições radicais que rejeitam o pluralismo e a coexistência pacífica, frequentemente justificando violência contra quem pensa diferente. Prospera onde há desigualdade, medo, exclusão social e ausência de educação crítica.</div></div>
+  <div class="concept-card fi">
+    <h3>🔍 O que alimenta o extremismo?</h3>
+    <ul>
+      <li><strong>Humilhação e exclusão:</strong> grupos marginalizados são mais vulneráveis a discursos extremistas que oferecem pertencimento</li>
+      <li><strong>Câmaras de eco:</strong> redes sociais que radicalizam progressivamente ao expor apenas conteúdos que confirmam crenças existentes</li>
+      <li><strong>Lideranças manipuladoras:</strong> figuras carismáticas que exploram o sofrimento alheio para fins de poder</li>
+      <li><strong>Desumanização do "outro":</strong> quando o adversário é retratado como inimigo absoluto, a violência parece justificável</li>
+    </ul>
+    <div class="ex-box"><span class="ex-label">Exemplo contemporâneo</span>O atentado de Christchurch (Nova Zelândia, 2019): um homem inspirado por ideologia supremacista branca atacou duas mesquitas, matando 51 pessoas. O perpetrador havia se radicalizado progressivamente em fóruns online.</div>
+  </div>
+  <div class="concept-card fi">
+    <h3>🕊️ Educação para a Tolerância e a Paz</h3>
+    <p>A UNESCO identifica a educação como principal instrumento contra o extremismo. Habilidades fundamentais:</p>
+    <ul>
+      <li><strong>Pensamento crítico:</strong> questionar informações antes de compartilhar ou acreditar</li>
+      <li><strong>Empatia:</strong> capacidade de se colocar no lugar do outro mesmo em desacordo</li>
+      <li><strong>Letramento midiático:</strong> identificar desinformação, discurso de ódio e manipulação online</li>
+    </ul>
+    <div class="hbox"><strong>O papel de cada um:</strong> Quando você questiona um meme de ódio antes de compartilhar, quando defende um colega que está sendo discriminado, você está praticando a cultura da paz.</div>
+  </div>
+  <div class="concept-card fi"><h3>🎬 Recursos Complementares</h3><div class="resource-row"><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=extremismo+radicalização+como+funciona','_blank')">▶ Como funciona a radicalização</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=educação+para+paz+tolerância','_blank')">▶ Educação para a Paz</span></div></div>
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Atividades — Tópico 4</div><div class="ativ-sub">5 discursivas + 5 múltipla escolha</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Questões Discursivas</span>
+      <div class="ativ-q"><span class="ativ-q-num">D1</span><p>Quais condições sociais e psicológicas favorecem o surgimento do extremismo? Explique como a "humilhação social" e a "câmara de eco" nas redes sociais contribuem para a radicalização.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D2</span><p>A "desumanização do outro" é apontada como passo fundamental no caminho para a violência extremista. Como esse mecanismo foi usado nos genocídios do século XX?</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D3</span><p>As redes sociais amplificam a radicalização extremista? Argumente com exemplos concretos, apresentando também formas como podem ser usadas positivamente para combater o extremismo.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D4</span><p>Defina "letramento midiático" e explique por que é considerado uma ferramenta fundamental de defesa democrática no século XXI.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">D5</span><p>Reflita sobre sua experiência nas redes sociais. Você já identificou conteúdo extremista ou discurso de ódio online? Como reagiu? O que faria diferente agora?</p></div>
+    </div>
+    <div class="ativ-block"><span class="ativ-block-label">☑️ Múltipla Escolha</span>
+      <div class="ativ-q" id="mc4_1"><span class="ativ-q-num">Q1</span><p>O extremismo é caracterizado principalmente por:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc4_1',this,'A')"><span class="opt-letter">A</span> Posições políticas moderadas que buscam consenso social.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_1',this,'B')"><span class="opt-letter">B</span> Adoção de posições radicais que rejeitam o pluralismo, frequentemente justificando violência contra dissidentes.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_1',this,'C')"><span class="opt-letter">C</span> Defesa intransigente de direitos humanos universais.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_1',this,'D')"><span class="opt-letter">D</span> Participação ativa em processos eleitorais democráticos.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_1',this,'E')"><span class="opt-letter">E</span> Crítica legítima de políticas públicas por grupos minoritários.</div></div><div class="quiz-exp" id="exp_mc4_1"></div></div>
+      <div class="ativ-q" id="mc4_2"><span class="ativ-q-num">Q2</span><p>A "câmara de eco" nas redes sociais contribui para o extremismo porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc4_2',this,'A')"><span class="opt-letter">A</span> Expõe os usuários a perspectivas diversas, aumentando a tolerância.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_2',this,'B')"><span class="opt-letter">B</span> Filtra o conteúdo para confirmar crenças existentes, radicalizando progressivamente sem contato com visões alternativas.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_2',this,'C')"><span class="opt-letter">C</span> Limita o acesso à internet de grupos extremistas.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_2',this,'D')"><span class="opt-letter">D</span> Promove o debate aberto entre pessoas de diferentes ideologias.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_2',this,'E')"><span class="opt-letter">E</span> Monitora o comportamento de usuários suspeitos de extremismo.</div></div><div class="quiz-exp" id="exp_mc4_2"></div></div>
+      <div class="ativ-q" id="mc4_3"><span class="ativ-q-num">Q3</span><p>A "desumanização do outro" facilita a violência extremista porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc4_3',this,'A')"><span class="opt-letter">A</span> Cria empatia entre grupos adversários.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_3',this,'B')"><span class="opt-letter">B</span> Quando o adversário é retratado como não-humano, a violência contra ele parece justificável ou até necessária.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_3',this,'C')"><span class="opt-letter">C</span> Aumenta o respeito mútuo entre grupos com ideologias diferentes.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_3',this,'D')"><span class="opt-letter">D</span> Reduz os conflitos ao transformar inimigos em aliados.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_3',this,'E')"><span class="opt-letter">E</span> Impede que líderes extremistas ganhem apoio popular.</div></div><div class="quiz-exp" id="exp_mc4_3"></div></div>
+      <div class="ativ-q" id="mc4_4"><span class="ativ-q-num">Q4</span><p>O "letramento midiático" é considerado ferramenta contra o extremismo porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc4_4',this,'A')"><span class="opt-letter">A</span> Ensina as pessoas a criar conteúdo digital profissional.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_4',this,'B')"><span class="opt-letter">B</span> Desenvolve a capacidade de identificar desinformação, discurso de ódio e manipulação online, reduzindo a vulnerabilidade à radicalização.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_4',this,'C')"><span class="opt-letter">C</span> Proíbe o acesso de jovens a redes sociais potencialmente perigosas.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_4',this,'D')"><span class="opt-letter">D</span> Ensina programação para identificar bots automaticamente.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_4',this,'E')"><span class="opt-letter">E</span> Bloqueia algoritmos que promovem conteúdo extremista nas plataformas.</div></div><div class="quiz-exp" id="exp_mc4_4"></div></div>
+      <div class="ativ-q" id="mc4_5"><span class="ativ-q-num">Q5</span><p>Entre os fatores que alimentam o extremismo, a "humilhação e exclusão" atua porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc4_5',this,'A')"><span class="opt-letter">A</span> Pessoas humilhadas nunca desenvolvem comportamentos agressivos.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_5',this,'B')"><span class="opt-letter">B</span> Grupos que se sentem marginalizados são mais vulneráveis a discursos que oferecem pertencimento e um inimigo como alvo do ressentimento.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_5',this,'C')"><span class="opt-letter">C</span> A exclusão social sempre gera engajamento político construtivo.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_5',this,'D')"><span class="opt-letter">D</span> Apenas grupos economicamente abastados desenvolvem extremismo.</div><div class="ativ-mc-opt" onclick="checkMC('mc4_5',this,'E')"><span class="opt-letter">E</span> A humilhação fortalece sempre as instituições democráticas.</div></div><div class="quiz-exp" id="exp_mc4_5"></div></div>
+      <div style="text-align:center;margin-top:.8rem"><div class="ativ-score" id="score_t4">Você acertou <span id="scoreNum_t4">0</span> de 5! 🏆</div></div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICOS 5-20: ESTRUTURA COMPACTA -->
+
+<section id="c05" class="topic-section">
+<div class="topic-header" data-num="05" style="background:linear-gradient(135deg,#1a3a1a 0%,#27ae60 100%)">
+  <div class="topic-num-badge">🗣️ Tópico 05 · Ciência Política</div>
+  <h2>Liberdade de Expressão versus Censura</h2>
+  <p>Análise de casos históricos e contemporâneos; direitos e limites</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS401')">EM13CHS401</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">A liberdade de expressão é um direito fundamental que garante a toda pessoa o direito de manifestar pensamentos, opiniões e ideias sem censura prévia. É pilar da democracia. Porém, não é absoluta: encontra limites no discurso de ódio, na desinformação deliberada e nos direitos de terceiros.</div></div>
+  
+    <div class="concept-card fi"><h3>📜 Liberdade de expressão e seus limites na CF/1988</h3><p>O art. 5º garante a liberdade de expressão, mas estabelece limites: são vedados o anonimato, a prática de racismo e a incitação ao ódio. A liberdade de expressão <strong>não protege</strong> discurso de ódio, difamação/calúnia e desinformação que cause dano concreto.</p>
+    <div style="display:grid;gap:.5rem;margin-top:.7rem"><div style="background:#dcfce7;border-radius:12px;padding:.8rem 1rem"><div style="font-size:.78rem;font-weight:800;color:#166534;margin-bottom:.3rem">✅ PROTEGIDO pela liberdade de expressão</div><div style="font-size:.83rem;color:#166534;line-height:1.6">Crítica a governos; opinião sobre políticas públicas; arte provocativa; jornalismo investigativo; humor e sátira</div></div><div style="background:#fef2f2;border-radius:12px;padding:.8rem 1rem"><div style="font-size:.78rem;font-weight:800;color:#991b1b;margin-bottom:.3rem">❌ NÃO protegido — limites constitucionais</div><div style="font-size:.83rem;color:#991b1b;line-height:1.6">Incitação à violência contra grupos; racismo; desinformação dolosa; ameaças diretas; calúnia e difamação</div></div></div></div>
+    <div class="concept-card fi"><h3>📅 Casos históricos de censura</h3><div class="timeline"><div class="tl-item"><div class="tl-year">1937-45</div><div class="tl-txt"><strong>Estado Novo:</strong> o DIP (Departamento de Imprensa e Propaganda) censurava jornais, livros e músicas antes da publicação.</div></div><div class="tl-item"><div class="tl-year">1964-85</div><div class="tl-txt"><strong>Ditadura Militar:</strong> o AI-5 suspendeu garantias constitucionais. Chico Buarque, Caetano Veloso, Gilberto Gil foram exilados ou tiveram obras proibidas.</div></div></div></div>
+    <div class="concept-card fi"><h3>🎬 Recursos Complementares</h3><div class="resource-row"><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=liberdade+expressão+limites+discurso+ódio','_blank')">▶ Liberdade de Expressão e limites</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=censura+ditadura+militar+brasil','_blank')">▶ Censura na Ditadura Militar</span></div></div>
+    
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Atividades — Tópico 05</div><div class="ativ-sub">5 discursivas (caderno) + 5 múltipla escolha</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Questões Discursivas</span><div class="ativ-q"><span class="ativ-q-num">D1</span><p>D1 — Por que a liberdade de expressão é pilar da democracia? Como a censura nos períodos de ditadura serviu para manter o poder autoritário?</p></div><div class="ativ-q"><span class="ativ-q-num">D2</span><p>D2 — A liberdade de expressão tem limites. Explique quais são e por que existem numa democracia. Você concorda que o discurso de ódio deve ser punido?</p></div><div class="ativ-q"><span class="ativ-q-num">D3</span><p>D3 — Quando uma plataforma remove um conteúdo, está praticando censura ou exercendo responsabilidade? Desenvolva um argumento fundamentado.</p></div><div class="ativ-q"><span class="ativ-q-num">D4</span><p>D4 — Pesquise um caso concreto de censura na Ditadura Militar brasileira (música, filme ou jornal). Descreva o caso e analise a motivação da censura.</p></div><div class="ativ-q"><span class="ativ-q-num">D5</span><p>D5 — As redes sociais representam um avanço para a liberdade de expressão ou um risco para ela? Argumente considerando democratização do acesso e amplificação do ódio.</p></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">☑️ Múltipla Escolha</span><div class="ativ-q" id="mc5_1"><span class="ativ-q-num">Q1</span><p>A liberdade de expressão, segundo a CF/1988, é:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc5_1',this,'A')"><span class="opt-letter">A</span> Absoluta e não admite nenhum tipo de restrição.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_1',this,'B')"><span class="opt-letter">B</span> Um direito fundamental que encontra limites constitucionais, como vedação ao racismo, anonimato e discurso de ódio.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_1',this,'C')"><span class="opt-letter">C</span> Restrita a manifestações de cunho político.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_1',this,'D')"><span class="opt-letter">D</span> Garantida apenas a brasileiros natos.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_1',this,'E')"><span class="opt-letter">E</span> Exercida apenas por veículos de comunicação formalmente registrados.</div></div><div class="quiz-exp" id="exp_mc5_1"></div></div><div class="ativ-q" id="mc5_2"><span class="ativ-q-num">Q2</span><p>O DIP (Departamento de Imprensa e Propaganda) do Estado Novo tinha como principal função:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc5_2',this,'A')"><span class="opt-letter">A</span> Financiar a produção cultural brasileira.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_2',this,'B')"><span class="opt-letter">B</span> Censurar publicações e meios de comunicação e produzir propaganda favorável ao governo Vargas.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_2',this,'C')"><span class="opt-letter">C</span> Regular a concorrência entre jornais.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_2',this,'D')"><span class="opt-letter">D</span> Garantir a liberdade de imprensa prevista na Constituição de 1937.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_2',this,'E')"><span class="opt-letter">E</span> Criar emissoras públicas independentes do governo.</div></div><div class="quiz-exp" id="exp_mc5_2"></div></div><div class="ativ-q" id="mc5_3"><span class="ativ-q-num">Q3</span><p>Entre as expressões listadas, qual NÃO é protegida pela liberdade de expressão segundo a CF?</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc5_3',this,'A')"><span class="opt-letter">A</span> Crítica ácida a um político público.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_3',this,'B')"><span class="opt-letter">B</span> Jornalismo investigativo que expõe corrupção.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_3',this,'C')"><span class="opt-letter">C</span> Incitação ao ódio e violência contra grupos raciais ou religiosos.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_3',this,'D')"><span class="opt-letter">D</span> Arte que questiona valores sociais dominantes.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_3',this,'E')"><span class="opt-letter">E</span> Manifestação política contrária ao governo.</div></div><div class="quiz-exp" id="exp_mc5_3"></div></div><div class="ativ-q" id="mc5_4"><span class="ativ-q-num">Q4</span><p>O AI-5, decretado em 1968, representou para a liberdade de expressão:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc5_4',this,'A')"><span class="opt-letter">A</span> Uma ampliação dos direitos civis.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_4',this,'B')"><span class="opt-letter">B</span> A suspensão de garantias constitucionais, intensificando a censura e o exílio de artistas.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_4',this,'C')"><span class="opt-letter">C</span> Uma reforma que separou a censura política da moral.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_4',this,'D')"><span class="opt-letter">D</span> A criação de um tribunal especial para julgar casos de censura.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_4',this,'E')"><span class="opt-letter">E</span> A criação de uma comissão para analisar obras artísticas.</div></div><div class="quiz-exp" id="exp_mc5_4"></div></div><div class="ativ-q" id="mc5_5"><span class="ativ-q-num">Q5</span><p>Por que a liberdade de expressão é fundamental para a democracia?</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc5_5',this,'A')"><span class="opt-letter">A</span> Porque garante que o governo possa divulgar suas políticas sem obstáculos.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_5',this,'B')"><span class="opt-letter">B</span> Porque permite o controle social do poder, o debate público de ideias e a responsabilização dos governantes pela sociedade.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_5',this,'C')"><span class="opt-letter">C</span> Porque evita que partidos de oposição consigam votos nas eleições.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_5',this,'D')"><span class="opt-letter">D</span> Porque garante que apenas especialistas se manifestem sobre temas complexos.</div><div class="ativ-mc-opt" onclick="checkMC('mc5_5',this,'E')"><span class="opt-letter">E</span> Porque protege as empresas de comunicação de regulação governamental.</div></div><div class="quiz-exp" id="exp_mc5_5"></div></div><div style="text-align:center;margin-top:.8rem"><div class="ativ-score" id="score_t05">Você acertou <span id="scoreNum_t05">0</span> de 5! 🏆</div></div></div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<section id="c06" class="topic-section">
+<div class="topic-header" data-num="06" style="background:linear-gradient(135deg,#0a1a3e 0%,#1d4ed8 100%)">
+  <div class="topic-num-badge">📡 Tópico 06 · Ciência Política</div>
+  <h2>Mídia, Política e Poder</h2>
+  <p>Quem controla a informação? Desinformação e democracia</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS401')">EM13CHS401</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">A mídia é o principal mediador entre os cidadãos e a realidade política. Quem controla os meios de comunicação tem poder de definir o que é importante, moldar percepções e influenciar votos. Em democracias saudáveis, a mídia deve ser plural, independente e comprometida com a verdade.</div></div>
+  
+    <div class="concept-card fi"><h3>🏭 Concentração midiática e desinformação</h3><p>O Brasil tem um dos sistemas de comunicação mais concentrados do mundo. Pesquisa do Reuters Institute (2023) indica que grupos familiares controlam grande parte das emissoras de TV, rádio e jornais. O conceito de <strong>agenda-setting</strong> mostra que a mídia não dita o que pensar, mas sobre o que pensar.</p><div class="hbox"><strong>Dado:</strong> Segundo o MIT Media Lab, fake news se espalharam 6 vezes mais rápido que notícias verdadeiras no Twitter. Agências de checagem confiáveis no Brasil: Aos Fatos, Agência Lupa, Estadão Verifica.</div></div>
+    <div class="concept-card fi"><h3>🃏 Conceitos-chave da desinformação</h3><div class="flip-grid"><div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">📰</span><span class="fc-label">Fake News</span></div><div class="flip-back"><span class="fc-def">Notícias deliberadamente falsas para enganar, influenciar a opinião pública ou gerar cliques e engajamento.</span></div></div></div><div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">🤖</span><span class="fc-label">Bots</span></div><div class="flip-back"><span class="fc-def">Contas automatizadas que simulam comportamento humano para amplificar mensagens e criar ilusão de consenso.</span></div></div></div><div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">📡</span><span class="fc-label">Agenda-setting</span></div><div class="flip-back"><span class="fc-def">Poder da mídia de determinar quais temas a sociedade vai debater, ao escolher o que cobrir e o que ignorar.</span></div></div></div><div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">⚙️</span><span class="fc-label">Algoritmos</span></div><div class="flip-back"><span class="fc-def">Sistemas que definem quais conteúdos cada usuário vê, priorizando engajamento (raiva, medo) sobre veracidade.</span></div></div></div><div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">🔍</span><span class="fc-label">Fact-checking</span></div><div class="flip-back"><span class="fc-def">Prática jornalística de verificar a veracidade de informações. No Brasil: Aos Fatos e Agência Lupa.</span></div></div></div><div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><span class="fc-icon">🫧</span><span class="fc-label">Câmara de Eco</span></div><div class="flip-back"><span class="fc-def">Ambiente informacional em que usuários só consomem conteúdos que confirmam crenças existentes, reforçando-as.</span></div></div></div></div><p class="flip-hint">👆 Toque para ver a explicação</p></div>
+    <div class="concept-card fi"><h3>🎬 Recursos Complementares</h3><div class="resource-row"><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=concentração+midiática+brasil+democracia','_blank')">▶ Concentração midiática</span><span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=fake+news+desinformação+democracia','_blank')">▶ Fake news e democracia</span></div></div>
+    
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Atividades — Tópico 06</div><div class="ativ-sub">5 discursivas (caderno) + 5 múltipla escolha</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Questões Discursivas</span><div class="ativ-q"><span class="ativ-q-num">D1</span><p>D1 — O que é 'agenda-setting' e por que o controle da mídia é uma forma de poder político? Como a concentração dos meios de comunicação pode ameaçar a democracia?</p></div><div class="ativ-q"><span class="ativ-q-num">D2</span><p>D2 — Pesquise como a desinformação afetou processos democráticos recentes no Brasil ou no mundo. Quais foram as consequências concretas?</p></div><div class="ativ-q"><span class="ativ-q-num">D3</span><p>D3 — Os algoritmos priorizam conteúdo que gera engajamento (raiva, medo). Como isso afeta a qualidade do debate democrático?</p></div><div class="ativ-q"><span class="ativ-q-num">D4</span><p>D4 — Você já foi enganado por uma informação falsa? Descreva a situação e o que aprendeu sobre verificação de informações.</p></div><div class="ativ-q"><span class="ativ-q-num">D5</span><p>D5 — Pesquise uma agência de fact-checking brasileira (Aos Fatos ou Agência Lupa). Como funciona seu processo de verificação? Por que esse trabalho é importante?</p></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">☑️ Múltipla Escolha</span><div class="ativ-q" id="mc6_1"><span class="ativ-q-num">Q1</span><p>O conceito de 'agenda-setting' na comunicação política significa que:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc6_1',this,'A')"><span class="opt-letter">A</span> A mídia dita às pessoas o que devem pensar sobre cada assunto.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_1',this,'B')"><span class="opt-letter">B</span> A mídia define sobre quais temas a sociedade vai debater ao escolher o que cobrir e o que ignorar.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_1',this,'C')"><span class="opt-letter">C</span> Jornalistas elaboram a agenda dos políticos em reuniões secretas.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_1',this,'D')"><span class="opt-letter">D</span> O governo define obrigatoriamente quais notícias os veículos devem publicar.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_1',this,'E')"><span class="opt-letter">E</span> Leitores determinam o conteúdo que os veículos devem produzir.</div></div><div class="quiz-exp" id="exp_mc6_1"></div></div><div class="ativ-q" id="mc6_2"><span class="ativ-q-num">Q2</span><p>A concentração dos meios de comunicação nas mãos de poucos grupos ameaça a democracia porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc6_2',this,'A')"><span class="opt-letter">A</span> Garante a qualidade editorial de todas as publicações.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_2',this,'B')"><span class="opt-letter">B</span> Reduz a pluralidade de vozes e perspectivas, permitindo que interesses de um grupo pequeno moldem a percepção pública.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_2',this,'C')"><span class="opt-letter">C</span> Aumenta a velocidade de distribuição das notícias.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_2',this,'D')"><span class="opt-letter">D</span> Impossibilita o surgimento de novas plataformas digitais.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_2',this,'E')"><span class="opt-letter">E</span> Garante que partidos de oposição tenham acesso ao espaço midiático.</div></div><div class="quiz-exp" id="exp_mc6_2"></div></div><div class="ativ-q" id="mc6_3"><span class="ativ-q-num">Q3</span><p>Segundo pesquisa do MIT Media Lab, as fake news se espalharam nas redes sociais:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc6_3',this,'A')"><span class="opt-letter">A</span> Com a mesma velocidade que as notícias verdadeiras.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_3',this,'B')"><span class="opt-letter">B</span> Mais devagar, pois a maioria verifica antes de compartilhar.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_3',this,'C')"><span class="opt-letter">C</span> Cerca de 6 vezes mais rápido que as notícias verdadeiras.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_3',this,'D')"><span class="opt-letter">D</span> Apenas em países com baixo nível de educação.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_3',this,'E')"><span class="opt-letter">E</span> Exclusivamente por meio de bots.</div></div><div class="quiz-exp" id="exp_mc6_3"></div></div><div class="ativ-q" id="mc6_4"><span class="ativ-q-num">Q4</span><p>Os bots nas redes sociais são usados politicamente para:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc6_4',this,'A')"><span class="opt-letter">A</span> Moderar conteúdos ofensivos automaticamente.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_4',this,'B')"><span class="opt-letter">B</span> Amplificar artificialmente mensagens, criar ilusão de consenso popular e manipular debates.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_4',this,'C')"><span class="opt-letter">C</span> Traduzir conteúdos políticos para diferentes idiomas.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_4',this,'D')"><span class="opt-letter">D</span> Verificar a autenticidade de notícias antes da publicação.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_4',this,'E')"><span class="opt-letter">E</span> Conectar políticos diretamente com seus eleitores.</div></div><div class="quiz-exp" id="exp_mc6_4"></div></div><div class="ativ-q" id="mc6_5"><span class="ativ-q-num">Q5</span><p>O fact-checking (verificação de fatos) contribui para a democracia porque:</p><div class="ativ-mc-opts"><div class="ativ-mc-opt" onclick="checkMC('mc6_5',this,'A')"><span class="opt-letter">A</span> Permite que governos censurem notícias falsas de oposição.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_5',this,'B')"><span class="opt-letter">B</span> Verifica a veracidade de informações, responsabilizando publicamente políticos por afirmações falsas e ajudando cidadãos a tomar decisões informadas.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_5',this,'C')"><span class="opt-letter">C</span> Proíbe a publicação de conteúdos que o governo considera falsos.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_5',this,'D')"><span class="opt-letter">D</span> É praticado exclusivamente por plataformas como Facebook e Twitter.</div><div class="ativ-mc-opt" onclick="checkMC('mc6_5',this,'E')"><span class="opt-letter">E</span> Permite que partidos políticos verifiquem os discursos de opositores.</div></div><div class="quiz-exp" id="exp_mc6_5"></div></div><div style="text-align:center;margin-top:.8rem"><div class="ativ-score" id="score_t06">Você acertou <span id="scoreNum_t06">0</span> de 5! 🏆</div></div></div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICO 19 -->
+<section id="c19" class="topic-section">
+<div class="topic-header" data-num="19" style="background:linear-gradient(135deg,#1a1a00 0%,#888800 100%)">
+  <div class="topic-num-badge">🗂️ Tópico 19 · Metodologia</div>
+  <h2>Elaboração do Projeto: Democracia e Desigualdade</h2>
+  <p>Planejamento, distribuição de tarefas e produto esperado</p>
+  <div class="topic-bncc-row"><span class="t-bc" onclick="openModal('EM13CHS102')">EM13CHS102</span></div>
+</div>
+<div class="wrap">
+  <div class="def-box fi"><span class="def-label">Conceito Central</span><div class="def-text">Um bom projeto conecta conceitos teóricos com a realidade local, propõe uma questão relevante, usa metodologia adequada e apresenta resultados de forma clara. O projeto final deste bimestre integra todos os conteúdos estudados em torno de Democracia e Desigualdade.</div></div>
+  <div class="concept-card fi">
+    <h3>🏗️ As 5 etapas do projeto</h3>
+    <div style="display:grid;gap:.6rem;margin-top:.6rem">
+      <div style="background:linear-gradient(135deg,#fee2e2,#fef2f2);border:2px solid var(--acc1);border-radius:14px;padding:.9rem 1rem"><div style="font-weight:800;color:#991b1b;margin-bottom:.3rem">1️⃣ PROBLEMA (O quê?)</div><p style="font-size:.85rem;color:var(--txt2);line-height:1.6">Qual questão sua equipe vai investigar? Deve ser específica, relevante e conectada aos temas do bimestre. Exemplos: "Como a desinformação afeta jovens da nossa escola?", "Qual é o impacto da desigualdade ambiental no bairro X?"</p></div>
+      <div style="background:linear-gradient(135deg,#dcfce7,#f0fdf4);border:2px solid #22c55e;border-radius:14px;padding:.9rem 1rem"><div style="font-weight:800;color:#166534;margin-bottom:.3rem">2️⃣ OBJETIVO (Por quê?)</div><p style="font-size:.85rem;color:var(--txt2);line-height:1.6">O que sua equipe quer descobrir, demonstrar ou comunicar? O objetivo deve ser claro, mensurável e alcançável no prazo disponível.</p></div>
+      <div style="background:linear-gradient(135deg,#dbeafe,#eff6ff);border:2px solid #3b82f6;border-radius:14px;padding:.9rem 1rem"><div style="font-weight:800;color:#1d4ed8;margin-bottom:.3rem">3️⃣ METODOLOGIA (Como?)</div><p style="font-size:.85rem;color:var(--txt2);line-height:1.6">Pesquisa bibliográfica, entrevistas, questionários, análise de dados, estudo de caso? Como vão coletar e analisar as informações?</p></div>
+      <div style="background:linear-gradient(135deg,#ede9fe,#f5f3ff);border:2px solid #8b5cf6;border-radius:14px;padding:.9rem 1rem"><div style="font-weight:800;color:#5b21b6;margin-bottom:.3rem">4️⃣ PRODUTO (O que entregar?)</div><p style="font-size:.85rem;color:var(--txt2);line-height:1.6">Seminário, documentário, podcast, campanha de conscientização ou painel temático. O produto deve comunicar os resultados de forma clara e acessível.</p></div>
+      <div style="background:linear-gradient(135deg,#fef3c7,#fffbeb);border:2px solid #f59e0b;border-radius:14px;padding:.9rem 1rem"><div style="font-weight:800;color:#92400e;margin-bottom:.3rem">5️⃣ TAREFAS (Quem faz o quê?)</div><p style="font-size:.85rem;color:var(--txt2);line-height:1.6">Cada membro da equipe tem responsabilidades claras e específicas. Boa distribuição de tarefas é fundamental para que o projeto funcione.</p></div>
+    </div>
+  </div>
+  <div class="concept-card fi">
+    <h3>💡 Temas sugeridos para o projeto</h3>
+    <ul>
+      <li>A desinformação sobre eleições entre jovens da minha escola</li>
+      <li>Racismo ambiental na minha cidade ou região</li>
+      <li>Insegurança alimentar na comunidade local</li>
+      <li>Como jovens percebem as ameaças à democracia brasileira</li>
+      <li>Manifestações contemporâneas do coronelismo</li>
+      <li>O impacto das câmaras de eco nas opiniões políticas dos jovens</li>
+      <li>Conflitos por terra na Amazônia e sua cobertura midiática</li>
+    </ul>
+  </div>
+  <div class="ativ-section fi">
+    <div class="ativ-header"><div class="ativ-icon-box">📝</div><div><div class="ativ-title">Planejamento do Projeto — Responda no caderno</div></div></div>
+    <div class="ativ-block"><span class="ativ-block-label">✏️ Planejamento Obrigatório</span>
+      <div class="ativ-q"><span class="ativ-q-num">P1 — PROBLEMA</span><p>Qual é a pergunta central que sua equipe vai investigar? Escreva de forma clara e específica. Por que essa questão é relevante para o tema Democracia e Desigualdade?</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">P2 — OBJETIVO</span><p>Escreva o objetivo geral do projeto e pelo menos dois objetivos específicos (etapas para alcançar o objetivo geral).</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">P3 — METODOLOGIA</span><p>Que tipo de pesquisa sua equipe vai realizar? Descreva os instrumentos de coleta de dados e como vão analisar as informações coletadas.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">P4 — PRODUTO</span><p>Que formato seu grupo escolheu (seminário, podcast, documentário, campanha, painel)? Justifique a escolha e descreva brevemente como será estruturado o produto final.</p></div>
+      <div class="ativ-q"><span class="ativ-q-num">P5 — CRONOGRAMA</span><p>Monte uma tabela com as etapas do projeto, prazo para cada etapa e nome dos responsáveis. Seja realista com o tempo disponível até a data de apresentação.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- TÓPICO 20 -->
+<section id="c20" class="topic-section" style="background:var(--bg2)">
+<div class="topic-header" data-num="20" style="background:linear-gradient(135deg,#065f46 0%,#10b981 100%)">
+  <div class="topic-num-badge">⭐ Tópico 20 · Avaliação Final</div>
+  <h2>Avaliação Bimestral: Projeto Democracia e Desigualdade</h2>
+  <p>Seminário, documentário, podcast, campanha ou painel temático</p>
+</div>
+<div class="wrap">
+  <div class="def-box fi" style="border-color:#10b981"><span class="def-label" style="color:#065f46">O Projeto Final</span><div class="def-text">Este é o momento de integrar todos os conteúdos do bimestre em um projeto que demonstre sua compreensão crítica sobre Democracia e Desigualdade. O projeto deve conectar conceitos teóricos com a realidade, usar fontes confiáveis e comunicar resultados de forma impactante.</div></div>
+  <div class="concept-card fi">
+    <h3>📋 Critérios de Avaliação</h3>
+    <div style="overflow-x:auto">
+      <table class="comp-table">
+        <thead><tr style="background:linear-gradient(135deg,#065f46,#10b981)"><th>Critério</th><th>Peso</th><th>O que será avaliado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Conteúdo</strong></td><td>30%</td><td>Precisão conceitual, uso de fontes, conexão com os temas do bimestre</td></tr>
+          <tr><td><strong>Análise Crítica</strong></td><td>25%</td><td>Profundidade da análise, questões levantadas, perspectivas consideradas</td></tr>
+          <tr><td><strong>Comunicação</strong></td><td>20%</td><td>Clareza, criatividade, adequação ao formato escolhido</td></tr>
+          <tr><td><strong>Trabalho em equipe</strong></td><td>15%</td><td>Participação de todos, distribuição equitativa de tarefas</td></tr>
+          <tr><td><strong>Fontes</strong></td><td>10%</td><td>Uso de fontes confiáveis, citação adequada</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="concept-card fi">
+    <h3>🎯 Formatos aceitos</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem">
+      <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:.8rem;text-align:center"><div style="font-size:1.5rem;margin-bottom:.3rem">🎤</div><div style="font-size:.82rem;font-weight:800;color:var(--acc1)">Seminário</div><div style="font-size:.75rem;color:var(--muted);margin-top:.2rem">Apresentação oral com slides, dados e análise crítica</div></div>
+      <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:.8rem;text-align:center"><div style="font-size:1.5rem;margin-bottom:.3rem">🎙️</div><div style="font-size:.82rem;font-weight:800;color:var(--acc1)">Podcast</div><div style="font-size:.75rem;color:var(--muted);margin-top:.2rem">Episódio de 10-15 min com pesquisa e entrevistas</div></div>
+      <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:.8rem;text-align:center"><div style="font-size:1.5rem;margin-bottom:.3rem">🎬</div><div style="font-size:.82rem;font-weight:800;color:var(--acc1)">Documentário</div><div style="font-size:.75rem;color:var(--muted);margin-top:.2rem">Vídeo de 5-10 min com imagens, dados e depoimentos</div></div>
+      <div style="background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:.8rem;text-align:center"><div style="font-size:1.5rem;margin-bottom:.3rem">📣</div><div style="font-size:.82rem;font-weight:800;color:var(--acc1)">Campanha</div><div style="font-size:.75rem;color:var(--muted);margin-top:.2rem">Materiais de conscientização para a escola</div></div>
+    </div>
+  </div>
+  <div class="quote-card fi" style="border-left-color:#10b981">
+    <blockquote>"A educação não muda o mundo: muda as pessoas que vão mudar o mundo."</blockquote>
+    <div class="quote-attr" style="color:#10b981">Paulo Freire</div>
+  </div>
+  <div class="card fi" style="background:linear-gradient(135deg,#065f46,#10b981);border:none">
+    <h3 style="color:#f0fdf4 !important">🏁 Parabéns por chegar até aqui!</h3>
+    <p style="color:rgba(255,255,255,.9)">Você concluiu os 20 tópicos do 1º Bimestre de Trilhas de Ciências Humanas. Estudou imperialismo, totalitarismo, autoritarismo, redemocratização, democracia e desigualdade. Lembre-se: a democracia não é dada, ela é construída e defendida por pessoas como você, todos os dias.</p>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<footer>
+  <p><strong>Vozes do Poder</strong> — Trilhas de Ciências Humanas · 2ª Série · 1º Bimestre · 2026<br>
+  E.E. Padre Carlos Casavequia · Prof. <strong>Paulo Roberto R. Magalhães</strong><br>
+  Material pedagógico de uso exclusivo dos alunos. Proibida reprodução sem autorização.</p>
+</footer>
+
+<div class="fnav">
+  <button class="fnav-btn" title="Topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂</button>
+  <button class="fnav-btn" title="Sumário" onclick="goTo('sumario')">☰</button>
+</div>
+
+<div id="profWrap">
+  <div id="profEmoji" onclick="showProfTip()" title="Clique para dicas!">🧑🏾‍🏫</div>
+  <div class="prof-label">Prof. Paulo</div>
+</div>
+<div id="profBubble">
+  <button class="prof-bubble-close" onclick="closeProfBubble()">✕</button>
+  <div id="profBubbleMsg"></div>
+</div>
+
+<div class="modal-bg" id="bnccMod" onclick="closeMod(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="document.getElementById('bnccMod').classList.remove('show')">✕</button>
+    <span class="modal-label">Habilidade BNCC — Ensino Médio · Ciências Humanas</span>
+    <div class="modal-code" id="mCode"></div>
+    <p class="modal-desc" id="mDesc"></p>
+  </div>
+</div>
+
+<script>
+/* ---- THEME ---- */
+const themes={'default':'tb-def','reading':'tb-read','dark':'tb-dark'};
+function setTheme(t){
+  document.body.removeAttribute('data-theme');
+  if(t!=='default') document.body.setAttribute('data-theme',t);
+  Object.keys(themes).forEach(k=>{const b=document.getElementById(themes[k]);if(b)b.classList.toggle('on',k===t);});
+  try{localStorage.setItem('tch2b1-theme',t);}catch(e){}
+}
+(function(){try{const s=localStorage.getItem('tch2b1-theme');if(s)setTheme(s);}catch(e){}})();
+
+/* ---- NAV ---- */
+function goTo(id,e){if(e)e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* ---- PROGRESS ---- */
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight;if(max>0)document.getElementById('prog').style.width=(window.scrollY/max*100)+'%';});
+
+/* ---- BNCC ---- */
+const bncc={
+  'EM13CHS101':'Identificar, analisar e comparar diferentes fontes e narrativas expressas em diversas linguagens, com vistas à compreensão de ideias filosóficas e de processos e eventos históricos, geográficos, políticos, econômicos, sociais, ambientais e culturais.',
+  'EM13CHS102':'Identificar, analisar e discutir as circunstâncias históricas, geográficas, políticas, econômicas, sociais, ambientais e culturais de matrizes conceituais (etnocentrismo, racismo, evolução, modernidade, cooperação, desenvolvimento, entre outras), explicitando seus pressupostos, problematizando seus significados e contextos de uso.',
+  'EM13CHS201':'Analisar e caracterizar as dinâmicas das populações, das mercadorias e do capital nos processos de produção, distribuição e consumo, considerando as transformações tecnológicas e ambientais, bem como as questões socioculturais ou político-econômicas associadas a esses processos.',
+  'EM13CHS202':'Analisar e avaliar os impactos das tecnologias na estruturação e nas dinâmicas de grupos, povos e sociedades contemporâneos, incluindo aqueles de caráter ético e aqueles associados à aplicação desses conhecimentos.',
+  'EM13CHS301':'Problematizar hábitos e práticas individuais e coletivos de produção, reaproveitamento e descarte de resíduos em metrópoles, áreas urbanas e rurais, e elaborar e/ou selecionar propostas de ação que promovam a sustentabilidade socioambiental e o consumo responsável.',
+  'EM13CHS401':'Identificar e analisar as relações entre sujeitos, grupos e classes sociais diante das transformações técnicas, tecnológicas e informacionais e das novas formas de trabalho ao longo do tempo.',
+  'EM13CHS501':'Analisar e discutir o papel dos povos indígenas e das populações afrodescendentes e migrantes na formação sociocultural brasileira e na construção da democracia, valorizando as diferenças étnicas, culturais e históricas.',
+  'EM13CHS601':'Identificar e analisar as demandas e os protagonismos políticos, sociais e culturais dos povos indígenas e das populações afrodescendentes no Brasil contemporâneo, considerando a presença e o papel dessas populações na estrutura produtiva nacional.',
+  'EM13CHS602':'Identificar e caracterizar a presença do paternalismo, da demagogia, do autoritarismo e de outras práticas políticas e sociais não democráticas nas sociedades contemporâneas, analisando suas causas e propondo formas de resistência.'
+};
+function openModal(code){document.getElementById('mCode').textContent=code;document.getElementById('mDesc').textContent=bncc[code]||'Descrição não disponível.';document.getElementById('bnccMod').classList.add('show');}
+function closeMod(e){if(e.target===document.getElementById('bnccMod'))document.getElementById('bnccMod').classList.remove('show');}
+
+/* ---- FLOATERS ---- */
+const floatSyms=['⚡','✊','🗳️','📜','⚖️','🌍','🇧🇷','📰','🏛️','✍️','🔍','⭐','📣','🌱','🔒','🕊️','📊','🗺️'];
+function spawnFlt(){const el=document.createElement('span');el.className='flt';el.textContent=floatSyms[Math.floor(Math.random()*floatSyms.length)];el.style.left=(Math.random()*96)+'%';el.style.fontSize=(Math.random()*2+.8)+'rem';const d=Math.random()*16+9;el.style.animationDuration=d+'s';el.style.animationDelay=(Math.random()*5)+'s';document.getElementById('floaters').appendChild(el);setTimeout(()=>el.remove(),(d+6)*1000);}
+for(let i=0;i<12;i++)spawnFlt();
+setInterval(spawnFlt,1100);
+window.addEventListener('deviceorientation',e=>{const fx=document.getElementById('floaters');if(fx)fx.style.transform=`translate(${(e.gamma||0)/3}px,${(e.beta||0)/6}px)`;});
+
+/* ---- FADE IN ---- */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* ---- MC GABARITO ---- */
+const mcAnswers={
+  mc1_1:{c:'B',e:'O imperialismo nega o direito de autodeterminação dos povos, impondo domínio externo sem consentimento — o oposto do princípio democrático fundamental.'},
+  mc1_2:{c:'C',e:'As potências europeias dividiram a África entre si sem consultar nenhum representante africano, impondo fronteiras artificiais que ignoraram identidades e territórios tradicionais.'},
+  mc1_3:{c:'C',e:'O neocolonialismo mantém domínio econômico sobre países formalmente independentes por meio de dívidas, comércio desigual e dependência tecnológica, sem ocupação política direta.'},
+  mc1_4:{c:'B',e:'O imperialismo cultural é a imposição dos valores, língua e costumes das potências dominantes sobre os povos colonizados, apagando identidades e saberes locais.'},
+  mc1_5:{c:'B',e:'O Brasil manteve dependência econômica do capital britânico e perpetuou o trabalho escravo até 1888, mostrando que a independência política não significou soberania econômica ou social plena.'},
+  mc2_1:{c:'B',e:'O totalitarismo busca controle absoluto sobre todos os aspectos da vida e mobiliza ativamente a sociedade em torno de uma ideologia única, diferindo do autoritarismo comum.'},
+  mc2_2:{c:'B',e:'O Holocausto foi o genocídio sistemático de cerca de 6 milhões de judeus e outros grupos perseguidos pelo regime nazista — um dos maiores crimes contra a humanidade da história.'},
+  mc2_3:{c:'B',e:'O culto à personalidade apresenta o líder como ser superior e infalível, concentrando lealdade e poder em sua figura e eliminando a possibilidade de questionamento legítimo.'},
+  mc2_4:{c:'B',e:'Hannah Arendt identificou que populações com medo e insegurança tendem a aceitar sacrificar liberdades em troca de promessas de ordem, segurança e prosperidade.'},
+  mc2_5:{c:'B',e:'Mussolini foi o primeiro líder totalitário moderno europeu, chegando ao poder em 1922 e servindo de inspiração direta para Hitler e outros líderes autoritários subsequentes.'},
+  mc3_1:{c:'B',e:'O Estado laico garante liberdade religiosa para todos sem adotar nenhuma religião oficial, protegendo cidadãos de ter leis civis baseadas em dogmas de uma religião específica.'},
+  mc3_2:{c:'B',e:'A lei islâmica é a base do sistema jurídico iraniano e o Líder Supremo, um clérigo, detém poder acima do presidente eleito — características definidoras de um Estado teocrático.'},
+  mc3_3:{c:'B',e:'O art. 19 proíbe ao Estado estabelecer cultos religiosos, subvencioná-los ou manter relações de dependência ou aliança com igrejas, garantindo a separação entre Estado e religião.'},
+  mc3_4:{c:'B',e:'Estado laico respeita e protege todas as religiões sem adotar nenhuma como oficial; não é inimigo da religião, apenas mantém neutralidade em relação a ela nas decisões públicas.'},
+  mc3_5:{c:'B',e:'Em sociedades plurais, impor dogmas de uma religião como leis civis viola a liberdade de consciência de quem não compartilha dessas crenças — proteção garantida pelo Estado laico.'},
+  mc4_1:{c:'B',e:'O extremismo é a adoção de posições radicais que rejeitam o pluralismo e a coexistência pacífica, frequentemente justificando violência contra dissidentes.'},
+  mc4_2:{c:'B',e:'A câmara de eco filtra conteúdos para confirmar crenças existentes, radicalizando progressivamente sem contato com visões alternativas — mecanismo central de radicalização online.'},
+  mc4_3:{c:'B',e:'Quando o adversário é retratado como não-humano ou mal absoluto, a violência contra ele parece justificável — mecanismo usado em todos os genocídios documentados.'},
+  mc4_4:{c:'B',e:'O letramento midiático desenvolve a capacidade de identificar desinformação, discurso de ódio e manipulação online, reduzindo a vulnerabilidade à radicalização extremista.'},
+  mc4_5:{c:'B',e:'Grupos que se sentem marginalizados são mais vulneráveis a discursos que oferecem pertencimento e um inimigo como alvo do ressentimento — base psicológica do recrutamento extremista.'},
+  mc5_1:{c:'B',e:'A liberdade de expressão é direito fundamental que encontra limites constitucionais: vedação ao anonimato, racismo e discurso de ódio, nos termos do art. 5º da CF/1988.'},
+  mc5_2:{c:'B',e:'O DIP censurava publicações, meios de comunicação e produzia propaganda favorável ao Estado Novo, sendo instrumento central de controle informacional.'},
+  mc5_3:{c:'C',e:'A incitação ao ódio e violência contra grupos (discurso de ódio) não é protegida pela liberdade de expressão, conforme a Constituição Federal e jurisprudência do STF.'},
+  mc5_4:{c:'B',e:'O AI-5 suspendeu garantias constitucionais, intensificou a censura, levou ao exílio de artistas e institucionalizou a tortura — período mais repressivo da Ditadura Militar.'},
+  mc5_5:{c:'B',e:'A liberdade de expressão permite controle social do poder, debate público de ideias e responsabilização dos governantes — condições indispensáveis para a democracia.'},
+  mc6_1:{c:'B',e:'Agenda-setting: a mídia define sobre quais temas a sociedade vai debater ao escolher o que cobrir e o que ignorar, influenciando a percepção do que é importante.'},
+  mc6_2:{c:'B',e:'A concentração midiática reduz pluralidade de vozes, permitindo que interesses de poucos moldem a percepção pública e influenciem processos democráticos.'},
+  mc6_3:{c:'C',e:'Pesquisa do MIT Media Lab mostrou que fake news se espalharam cerca de 6 vezes mais rápido que notícias verdadeiras, evidenciando a assimetria informacional que prejudica a democracia.'},
+  mc6_4:{c:'B',e:'Bots amplificam artificialmente mensagens, criam ilusão de consenso popular e manipulam debates simulando comportamento de milhares de usuários reais.'},
+  mc6_5:{c:'B',e:'O fact-checking verifica veracidade de informações, responsabilizando publicamente políticos por afirmações falsas e ajudando cidadãos a tomar decisões informadas.'},
+  mc7_1:{c:'B',e:'O coronelismo controlava o voto dos trabalhadores rurais pelos grandes proprietários, que negociavam apoio político com o governo em troca de autonomia local e impunidade.'},
+  mc7_2:{c:'B',e:'O Estado Novo fechou o Congresso, censurou a mídia pelo DIP, suprimiu direitos políticos e adotou uma Constituição autoritária inspirada em modelos europeus totalitários.'},
+  mc7_3:{c:'B',e:'O AI-5 endureceu o regime com suspensão de garantias civis, cassações políticas e institucionalização da tortura, inaugurando o período mais repressivo da ditadura brasileira.'},
+  mc7_4:{c:'B',e:'Setores civis importantes — empresários, grande mídia, parte da Igreja — apoiaram ativamente a derrubada de Goulart, participando do golpe junto com os militares.'},
+  mc7_5:{c:'C',e:'A concentração fundiária, o trabalho escravo e o paternalismo criaram hierarquias rígidas que substituíram direitos por favores pessoais, base das estruturas autoritárias brasileiras.'},
+  mc8_1:{c:'B',e:'O Plano Cohen foi uma falsificação usada como pretexto para instaurar o Estado Novo — um dos primeiros casos documentados de fake news como instrumento de golpe no Brasil.'},
+  mc8_2:{c:'B',e:'As Reformas de Base visavam redistribuir renda e reduzir desigualdades estruturais, o que ameaçou elites conservadoras e motivou o apoio civil ao golpe.'},
+  mc8_3:{c:'B',e:'Artistas usaram metáforas e linguagem poética para criticar o regime e burlar a censura, sendo exilados ou tendo obras proibidas.'},
+  mc8_4:{c:'B',e:'Os EUA, temendo a expansão do comunismo após a Revolução Cubana, apoiaram as forças que derrubaram Goulart, visto como simpatizante do socialismo.'},
+  mc8_5:{c:'B',e:'A Lei de Anistia permitiu o retorno dos exilados, mas também anistiou os torturadores, gerando impunidade institucionalizada debatida até hoje.'},
+  mc9_1:{c:'B',e:'As Diretas Já reivindicavam eleições diretas para presidente, substituindo o processo indireto pelo Colégio Eleitoral controlado pelos militares.'},
+  mc9_2:{c:'B',e:'A Constituição de 1988 consolidou um amplo catálogo de direitos fundamentais, sociais e políticos, sendo chamada de Cidadã por reconhecer a cidadania plena após décadas de ditadura.'},
+  mc9_3:{c:'B',e:'A emenda não atingiu os 2/3 necessários, faltando apenas 22 votos — uma das maiores frustrações políticas da redemocratização brasileira.'},
+  mc9_4:{c:'B',e:'A CF/1988 estabeleceu voto facultativo a partir dos 16 anos, tornando-se obrigatório a partir dos 18 anos.'},
+  mc9_5:{c:'B',e:'José Sarney, vice-presidente eleito na mesma chapa de Tancredo, assumiu e presidiu o processo constituinte de 1988.'},
+  mc10_1:{c:'B',e:'O Estado Democrático de Direito combina submissão de todos à lei e poder exercido por representantes eleitos com proteção de minorias.'},
+  mc10_2:{c:'B',e:'Os ataques de 8 de janeiro foram o mais grave ataque às instituições democráticas desde a redemocratização, enquadrado pelo STF como tentativa de golpe de Estado.'},
+  mc10_3:{c:'B',e:'A erosão democrática é um processo gradual que enfraquece instituições por dentro, usando a própria democracia, sem ruptura abrupta visível.'},
+  mc10_4:{c:'B',e:'A separação de poderes cria um sistema de freios e contrapesos que impede a concentração de poder em uma única pessoa ou grupo.'},
+  mc10_5:{c:'B',e:'A desinformação sobre urnas mina a confiança pública no processo eleitoral sem evidências técnicas, criando base para contestação de resultados.'},
+  mc11_1:{c:'B',e:'A igualdade formal significa que todos são iguais perante a lei, sem discriminação, mas não garante necessariamente igualdade nas condições reais de vida.'},
+  mc11_2:{c:'B',e:'O pluralismo protege minorias reconhecendo que democracia não é ditadura da maioria — direitos das minorias devem ser protegidos mesmo quando a maioria discorda.'},
+  mc11_3:{c:'B',e:'Quem tem menos recursos e educação participa de forma mais precária na política, criando democracia de qualidade desigual que beneficia os que mais têm.'},
+  mc11_4:{c:'B',e:'A liberdade democrática encontra seus limites quando viola a liberdade ou direitos de outros — especialmente no discurso de ódio, violência ou opressão de grupos vulneráveis.'},
+  mc11_5:{c:'B',e:'O Coeficiente de Gini mede o grau de desigualdade na distribuição de renda, variando de 0 (igualdade perfeita) a 1 (máxima desigualdade).'},
+  mc12_1:{c:'B',e:'Os movimentos sociais ampliam direitos, incluem grupos historicamente excluídos e pressionam o Estado por políticas mais justas, tornando a democracia mais plena e substantiva.'},
+  mc12_2:{c:'B',e:'A interseccionalidade explica a sobreposição de diferentes formas de opressão que cria vulnerabilidades específicas compreensíveis apenas em sua combinação.'},
+  mc12_3:{c:'B',e:'A Lei Maria da Penha foi conquista do movimento feminista, que lutava por instrumentos legais de proteção das mulheres contra a violência doméstica.'},
+  mc12_4:{c:'B',e:'O STF enquadrou atos de discriminação com base em orientação sexual como crime equiparado ao racismo, com penas equivalentes.'},
+  mc12_5:{c:'B',e:'A combinação de racismo e sexismo coloca mulheres negras em vulnerabilidade amplificada — exemplo clássico de interseccionalidade.'},
+  mc13_1:{c:'B',e:'Racismo ambiental: comunidades negras, indígenas e de baixa renda são desproporcionalmente expostas a riscos ambientais enquanto têm menos acesso a recursos naturais de qualidade.'},
+  mc13_2:{c:'B',e:'A localização de instalações ambientalmente prejudiciais reflete a menor capacidade política dessas comunidades de resistir, tornando-as alvo sistemático de injustiças ambientais.'},
+  mc13_3:{c:'B',e:'As comunidades ribeirinhas mais afetadas eram predominantemente pobres, negras e indígenas, com menor poder político para exigir medidas de segurança e reparação.'},
+  mc13_4:{c:'B',e:'O movimento de Justiça Ambiental defende distribuição equitativa de ônus ambientais, com participação real das comunidades afetadas nas decisões.'},
+  mc13_5:{c:'B',e:'Comunidades sem representação política real não conseguem se proteger de impactos ambientais; fortalecer a democracia de base é condição para a justiça ambiental.'},
+  mc14_1:{c:'B',e:'A desigualdade estrutural na distribuição de renda e retrocessos em políticas públicas explicam a fome no Brasil, não a falta de produção agrícola.'},
+  mc14_2:{c:'B',e:'A alimentação tornou-se direito fundamental pela Emenda Constitucional nº 64 de 2010, incluída no art. 6º entre os direitos sociais.'},
+  mc14_3:{c:'B',e:'A soberania alimentar enfatiza o direito dos povos de definir suas próprias políticas agrícolas e alimentares, incluindo autonomia sobre o sistema alimentar.'},
+  mc14_4:{c:'B',e:'O racismo estrutural e as desigualdades regionais colocam esses grupos em situação de menor acesso a renda, serviços públicos e proteção social.'},
+  mc14_5:{c:'B',e:'Sem renda suficiente, famílias em vulnerabilidade perdem capacidade de acessar alimentos, demonstrando que fome é problema de renda e distribuição, não de produção.'},
+  mc15_1:{c:'B',e:'O garimpo ilegal causou destruição ambiental, contaminação por mercúrio, doenças e morte de crianças — violação sistemática dos direitos humanos indígenas Yanomami.'},
+  mc15_2:{c:'B',e:'As mortes de lideranças refletem interesses econômicos poderosos contrários à demarcação e preservação — violência sistemática contra defensores de direitos territoriais.'},
+  mc15_3:{c:'B',e:'A Amazônia é uma região complexa com múltiplos grupos sociais, conflitos e dinâmicas que não podem ser tratados como fenômeno homogêneo.'},
+  mc15_4:{c:'B',e:'A demarcação assegura aos povos indígenas o direito às terras que ocupam tradicionalmente, protegendo sua organização social, costumes, línguas e crenças.'},
+  mc15_5:{c:'B',e:'Sem garantia dos direitos e participação política efetiva das populações que habitam a floresta, a preservação ambiental é impossível a longo prazo.'},
+  mc16_1:{c:'B',e:'Greenwashing é o uso do marketing ambiental para melhorar a imagem sem mudanças reais nas práticas, enganando consumidores e reguladores.'},
+  mc16_2:{c:'B',e:'O desenvolvimento sustentável satisfaz as necessidades do presente sem comprometer a capacidade das gerações futuras de satisfazerem suas próprias necessidades.'},
+  mc16_3:{c:'B',e:'A crítica aponta que substituir fontes de energia mantendo crescimento ilimitado é insuficiente — é preciso questionar o próprio modelo econômico consumista.'},
+  mc16_4:{c:'B',e:'As populações mais pobres sofrem os maiores impactos das mudanças climáticas apesar de terem contribuído menos, enquanto os maiores emissores históricos são os países ricos.'},
+  mc16_5:{c:'B',e:'Comprar créditos de carbono permite continuar emitindo enquanto compensa apenas no papel, criando falsa imagem de sustentabilidade sem reduzir emissões reais.'},
+  mc17_1:{c:'B',e:'A bioeconomia usa sustentavelmente recursos biológicos renováveis para gerar produtos, serviços e energia sem comprometer os ecossistemas que os produzem.'},
+  mc17_2:{c:'B',e:'A dependência do petróleo no transporte representa uma das principais fontes de emissões no Brasil, contradizendo a matriz elétrica predominantemente renovável.'},
+  mc17_3:{c:'B',e:'As maiores reservas de minerais críticos estão no Sul Global, podendo ser exploradas com padrões coloniais — sem transferência de tecnologia nem equidade nos benefícios.'},
+  mc17_4:{c:'B',e:'O Proálcool tornou o Brasil líder mundial em bioetanol de cana-de-açúcar, reduzindo a dependência de petróleo importado.'},
+  mc17_5:{c:'B',e:'A economia circular busca eliminar resíduos e manter materiais em uso pelo maior tempo possível, substituindo o modelo produzir-usar-descartar.'},
+  mc18_1:{c:'B',e:'As escolhas de quais dados apresentar, com qual metodologia e quais comparações refletem perspectivas e interesses, mesmo quando os números são tecnicamente corretos.'},
+  mc18_2:{c:'B',e:'A mediana não é distorcida pelos extremos, mostrando o valor em que metade da população ganha acima e metade abaixo — mais próximo da experiência da maioria.'},
+  mc18_3:{c:'B',e:'O recorte temporal seletivo cria impressão de melhora mais ampla do que os dados completos justificariam, sem necessariamente mentir.'},
+  mc18_4:{c:'B',e:'A REDE PENSSAN produz pesquisas científicas sobre segurança alimentar com metodologia transparente, sendo fonte confiável sobre o tema no Brasil.'},
+  mc18_5:{c:'B',e:'Comparações seletivas representam uma escolha política de referência que determina a conclusão antes da análise — não é análise neutra.'}
+};
+const mcScores={};
+
+function checkMC(qid,el,letter){
+  const q=document.getElementById(qid);
+  if(!q||q.dataset.answered)return;
+  q.dataset.answered='true';
+  const ans=mcAnswers[qid];
+  if(!ans)return;
+  const opts=q.querySelectorAll('.ativ-mc-opt');
+  opts.forEach(o=>o.style.pointerEvents='none');
+  const ok=letter===ans.c;
+  el.classList.add(ok?'correct':'wrong');
+  opts.forEach(o=>{if(o.querySelector('.opt-letter')?.textContent===ans.c)o.classList.add('correct');});
+  const exp=document.getElementById('exp_'+qid);
+  if(exp){exp.textContent=(ok?'✅ Correto! ':'❌ Incorreto. ')+ans.e;exp.className='quiz-exp show '+(ok?'ok':'err');}
+  // Score tracking
+  const prefix=qid.replace(/_\d+$/,'');
+  if(!mcScores[prefix])mcScores[prefix]=0;
+  if(ok)mcScores[prefix]++;
+  const allQs=[...document.querySelectorAll('[id^="'+prefix+'_"]')];
+  const answered=allQs.filter(q=>q.dataset.answered).length;
+  if(answered>=allQs.length){
+    // Try both formats: score_t07 and score_t7
+    const tNum=prefix.replace('mc','');
+    const tNumPad=tNum.padStart(2,'0');
+    ['score_t'+tNum,'score_t'+tNumPad].forEach(sid=>{
+      const sd=document.getElementById(sid);
+      const sn=document.getElementById('scoreNum_'+tNum)||document.getElementById('scoreNum_'+tNumPad);
+      if(sd&&sn){sn.textContent=mcScores[prefix];sd.classList.add('show');}
+    });
+  }
+  showProfReaction(ok);
+}
+
+/* ---- PROFESSOR ---- */
+const sectionTips={
+  default:["📌 Olá! Este livro tem 20 tópicos sobre Democracia e Desigualdade. Use o sumário para navegar! Clique em qualquer tópico e vai direto ao conteúdo.","💡 Dica: Alterne o tema na capa para o Modo Leitura (fundo amarelado) se quiser cuidar dos seus olhos!","🌍 Curiosidade: O Brasil é uma das maiores democracias do mundo em número de eleitores. Mais de 155 milhões de pessoas votaram em 2022!"],
+  imperialismo:["🌍 Curiosidade: O Brasil foi colônia por 322 anos — mais tempo do que tem de independência!","💡 Macete: Colonialismo = domínio direto. Neocolonialismo = domínio econômico sem ocupação formal.","⚡ Dado chocante: Na Conferência de Berlim (1884-85), 14 países europeus dividiram toda a África entre si em apenas 3 meses. Zero africanos foram convidados."],
+  totalitarismo:["😱 Hitler foi eleito democraticamente em 1932! A democracia pode ser usada contra ela mesma.","📊 Dado: O Holocausto matou cerca de 11 milhões de pessoas — 6 milhões de judeus e 5 milhões de outros grupos.","⚠️ CRISE ECONÔMICA + BODE EXPIATÓRIO + PROPAGANDA = receita para o totalitarismo. Hannah Arendt identificou esse padrão. Soa familiar?"],
+  censura:["🎵 Chico Buarque usava 'a chaleira' como código para denunciar a tortura. Os censores não perceberam por anos!","⚖️ A liberdade de expressão termina onde começa o direito do outro de viver sem ser perseguido ou ameaçado.","📜 A Constituição garante liberdade de expressão mas PROÍBE o anonimato. Por quê? Porque sem identificação não há responsabilidade!"],
+  midia:["📺 Dado: 6 grupos controlam cerca de 90% da mídia tradicional brasileira. Isso preocupa você?","🤖 Bots criaram 22% de todo o conteúdo político no Twitter durante as eleições de 2018 no Brasil (pesquisa UFMG).","🔍 Dica prática: Antes de compartilhar, pesquise no Aos Fatos (aosfatos.org) se a informação é verdadeira!"],
+  brasil:["🌾 O coronelismo nunca acabou completamente. Pesquise 'voto de cabresto' no século XXI e vai se surpreender.","⚡ Getúlio Vargas é uma das figuras mais contraditórias da história brasileira: criou a CLT mas também o Estado Novo.","😤 O golpe de 1964 recebeu apoio da CIA americana. Democracia às vezes é seletiva quando interesses geopolíticos estão em jogo."],
+  democracia:["📢 No comício das Diretas Já em São Paulo (1984): 1,5 milhão de pessoas. Nunca se vira tanto brasileiro na rua pela democracia.","🏛️ 8 de janeiro de 2023: os três prédios que representam os três poderes foram atacados no mesmo dia. Nunca havia acontecido na história brasileira.","🗳️ As urnas eletrônicas brasileiras foram auditadas por especialistas nacionais e internacionais diversas vezes. Nenhuma fraude foi comprovada jamás."],
+  desigualdade:["📊 Brasil: 8º país mais desigual do mundo. Os 10% mais ricos concentram 58% da renda. Isso é compatível com democracia real?","✊ O voto feminino no Brasil veio em 1932 — 41 anos depois que homens votavam desde 1891.","🌱 Racismo ambiental: 83% dos lixões do Brasil ficam próximos a comunidades negras e periféricas."],
+  amazonia:["🌳 A Amazônia tem mais de 180 povos indígenas, cada um com língua, cultura e território próprios.","💔 Bruno Pereira e Dom Phillips foram assassinados em 2022 no Vale do Javari. Estavam documentando o impacto do garimpo ilegal.","⚡ O garimpo ilegal nas terras Yanomami contaminou rios com mercúrio e matou crianças — uma crise humanitária dentro do Brasil."],
+  sustentabilidade:["🎭 Greenwashing: uma empresa de petróleo que se apresenta como 'empresa de energia' para parecer sustentável. As palavras mudam, as práticas não.","⚡ O Brasil gera mais de 80% de sua eletricidade de fontes renováveis. É uma das matrizes energéticas mais limpas do mundo!","🌱 Açaí, castanha-do-pará, andiroba, copaíba: a floresta amazônica tem uma farmácia e uma mercearia de valor global se manejada de forma sustentável."]
+};
+
+const congratMsgs=[
+  {e:'😎',a:'cool',m:'ACERTOU! 😎 Esse aluno estudou! Parece que alguém leu o livro ao invés de só rolar o TikTok!'},
+  {e:'🤩',a:'party',m:'CERTA! 🤩 Você brilhou mais que o marcador do meu quadro branco novo! Continua assim!'},
+  {e:'😁',a:'grin',m:'ACERTOU! 😁 Com esse ritmo você vai tirar 10 com louvor no bimestre!'},
+  {e:'🥰',a:'love',m:'PERFEITA! 🥰 Você faz meu coração de professor bater mais forte! Que orgulho!'},
+  {e:'😆',a:'laugh',m:'CORRETO! 😆 Confesso que duvidei de você... mas acertou! Boa!'},
+  {e:'🎉',a:'party',m:'ISSO AI! 🎉 Merece festa! Você provou que entendeu o conteúdo!'},
+  {e:'💪',a:'cool',m:'ACERTOU! 💪 Ta forte no conteúdo! A democracia agradece cidadãos críticos!'},
+  {e:'🌟',a:'party',m:'RESPOSTA PERFEITA! 🌟 Você entendeu o conceito! É disso que a democracia precisa!'},
+  {e:'😂',a:'laugh',m:'ACERTOU! 😂 E eu aqui achando que ia precisar explicar de novo...'},
+  {e:'👏',a:'party',m:'APLAUSOS! 👏 Acertou! O Ulysses Guimarães esta orgulhoso!'},
+  {e:'🚀',a:'party',m:'DECOLOU! 🚀 Com esse conhecimento você vai longe!'},
+  {e:'🏆',a:'party',m:'CAMPEÃO(A)! 🏆 Acertou! Se todo cidadão soubesse isso, a democracia estaria mais segura!'}
+];
+const wrongMsgs=[
+  {e:'😂',a:'laugh',m:'ERROU! 😂 Minha vovó de 90 anos, que nunca estudou Ciências Humanas, teria acertado essa!'},
+  {e:'🤦',a:'facepalm',m:'ERROU! 🤦 Eu expliquei isso AGORA. Você estava dormindo? Com os olhos abertos?'},
+  {e:'😭',a:'cry',m:'ERROU! 😭 Essa resposta foi tão errada que doeu no meu coração de professor.'},
+  {e:'🙄',a:'eyeroll',m:'ERROU! 🙄 SERIO?! Tava escrito no livro, acima dessa questão! ACIMA!'},
+  {e:'😩',a:'tired',m:'ERROU! 😩 Vai ter que reler o tópico três vezes agora. TRÊS.'},
+  {e:'🤡',a:'clown',m:'ERROU! 🤡 Essa resposta foi... criativa. Muito, muito criativa.'},
+  {e:'😤',a:'snort',m:'ERROU! 😤 COMO?! Isso estava no texto em negrito! Em NEGRITO!'},
+  {e:'🥱',a:'yawn',m:'ERROU! 🥱 Fico exausto só de pensar que preciso explicar isso de novo...'},
+  {e:'😵',a:'dizzy',m:'ERROU! 😵 Fiquei tonto com essa resposta. Girei aqui do meu lado.'},
+  {e:'🫠',a:'melt',m:'ERROU! 🫠 Estou derretendo de vergonha alheia. Mas vai na próxima!'},
+  {e:'🤯',a:'explode',m:'ERROU! 🤯 Minha cabeça explodiu. Literalmente explodiu.'},
+  {e:'😒',a:'unamused',m:'ERROU! 😒 Minha expressão agora é essa. Só essa. Vai reler o conteúdo.'}
+];
+
+let tipKeys=Object.keys(sectionTips);
+let tipIdx={};
+
+function getCurrentTipKey(){
+  const scroll=window.scrollY+window.innerHeight/2;
+  const map={c01:'imperialismo',c02:'totalitarismo',c03:'default',c04:'default',c05:'censura',c06:'midia',c07:'brasil',c08:'brasil',c09:'democracia',c10:'democracia',c11:'democracia',c12:'desigualdade',c13:'desigualdade',c14:'desigualdade',c15:'amazonia',c16:'sustentabilidade',c17:'sustentabilidade',c18:'default',c19:'default',c20:'democracia'};
+  let key='default';
+  for(const[id,k] of Object.entries(map)){
+    const el=document.getElementById(id);
+    if(el&&el.offsetTop<=scroll)key=k;
+  }
+  return key;
+}
+
+function showProfTip(){
+  const key=getCurrentTipKey();
+  const tips=sectionTips[key]||sectionTips['default'];
+  if(!tipIdx[key])tipIdx[key]=0;
+  const tip=tips[tipIdx[key]%tips.length];
+  tipIdx[key]++;
+  showProfBubble(tip,'tip');
+}
+
+function showProfBubble(msg,type){
+  const b=document.getElementById('profBubble');
+  document.getElementById('profBubbleMsg').textContent=msg;
+  b.className='show '+(type||'tip');
+  const p=document.getElementById('profEmoji');
+  p.classList.add('talking');
+  setTimeout(()=>p.classList.remove('talking'),1200);
+}
+
+function closeProfBubble(){
+  const b=document.getElementById('profBubble');
+  b.className='';
+}
+
+function showProfReaction(ok){
+  const bank=ok?congratMsgs:wrongMsgs;
+  const pick=bank[Math.floor(Math.random()*bank.length)];
+  const p=document.getElementById('profEmoji');
+  p.textContent=pick.e;
+  p.classList.add('reacting',pick.a);
+  showProfBubble(pick.m,ok?'correct':'wrong');
+  setTimeout(()=>{p.textContent='🧑🏾‍🏫';p.className='';},4500);
+}
+</script>
 </body>
 </html>

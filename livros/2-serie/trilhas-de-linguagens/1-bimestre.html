@@ -1,16 +1,1265 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2ª Série • Trilhas de Linguagens • 1º Bimestre</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Mundo Digital Amazônico | Trilha de Linguagens | 2ª Série | 1º Bim 2026</title>
+<style>
+:root{--bg:#ffffff;--bg2:#f0fdf4;--bg3:#dcfce7;--card:#ffffff;--txt:#18181b;--txt2:#3f3f46;--muted:#71717a;--border:#e4e4e7;--acc1:#15803d;--acc2:#0891b2;--acc3:#d97706;--acc4:#7c3aed;--shadow:rgba(21,128,61,.13);--hl-bg:#f0fdf4;--hl-txt:#166534;--card-hover:#f0fdf4;}
+[data-theme="dark"]{--bg:#070d0a;--bg2:#0d1a10;--bg3:#0f2416;--card:#111a13;--txt:#d1fae5;--txt2:#6ee7b7;--muted:#4ade80;--border:#1a3320;--acc1:#4ade80;--acc2:#22d3ee;--acc3:#fbbf24;--acc4:#a78bfa;--shadow:rgba(74,222,128,.18);--hl-bg:#052e16;--hl-txt:#4ade80;--card-hover:#0d2a14;}
+[data-theme="reading"]{--bg:#fdf6e3;--bg2:#fef3c7;--bg3:#fde68a33;--card:#fef9ec;--txt:#292117;--txt2:#5c4033;--muted:#a07850;--border:#e7d5b0;--acc1:#166534;--acc2:#0369a1;--acc3:#d97706;--acc4:#6d28d9;--shadow:rgba(22,101,52,.12);--hl-bg:#fef3c7;--hl-txt:#166534;--card-hover:#fef9ec;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;background:var(--bg);color:var(--txt);transition:background .35s,color .35s;overflow-x:hidden;line-height:1.75;}
+#prog{position:fixed;top:0;left:0;height:3px;z-index:9999;background:linear-gradient(90deg,var(--acc1),var(--acc2),var(--acc3));width:0%;transition:width .1s linear;}
+#cover{min-height:100svh;background:linear-gradient(160deg,#001a06 0%,#003311 25%,#005520 45%,#007730 60%,#0891b2 80%,#0e7490 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 1.4rem 2rem;overflow:hidden;}
+[data-theme="dark"] #cover{background:linear-gradient(160deg,#000800 0%,#001a08 25%,#002e0f 45%,#004a1a 60%,#065f46 80%,#0e7490 100%);}
+[data-theme="reading"] #cover{background:linear-gradient(160deg,#052e16 0%,#14532d 25%,#166534 45%,#15803d 60%,#0f766e 80%,#0369a1 100%);}
+#cover::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0;}
+#floaters{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.flt{position:absolute;opacity:0;color:rgba(255,255,255,.14);font-size:clamp(1rem,3vw,2.4rem);animation:rise linear infinite;will-change:transform;user-select:none;}
+@keyframes rise{0%{transform:translateY(110vh) rotate(0deg) scale(.7);opacity:0;}8%{opacity:.18;}92%{opacity:.18;}100%{transform:translateY(-15vh) rotate(360deg) scale(1.1);opacity:0;}}
+.cover-inner{position:relative;z-index:2;text-align:center;max-width:600px;width:100%;display:flex;flex-direction:column;align-items:center;gap:.8rem;}
+.school-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.9);padding:.35rem 1rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px);}
+.disc-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(34,211,238,.15);border:1.5px solid rgba(34,211,238,.5);color:#67e8f9;padding:.3rem .9rem;border-radius:999px;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;}
+.cover-title{font-family:'Segoe UI',Arial,sans-serif;font-size:clamp(2rem,8.5vw,4rem);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-.02em;text-shadow:0 6px 32px rgba(0,0,0,.5);margin-top:.2rem;}
+.cover-title em{font-style:normal;background:linear-gradient(90deg,#4ade80,#22d3ee,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cover-sub{font-size:clamp(.85rem,2.5vw,1.05rem);color:rgba(255,255,255,.75);font-style:italic;line-height:1.55;max-width:430px;}
+.meta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.45rem;}
+.meta-chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.88);padding:.3rem .8rem;border-radius:999px;font-size:.72rem;font-weight:600;backdrop-filter:blur(6px);}
+.prof-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);padding:.55rem 1.3rem;border-radius:999px;font-size:.82rem;backdrop-filter:blur(6px);}
+.prof-tag strong{color:#4ade80;}
+.theme-row{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;}
+.tbtn{padding:.45rem 1.1rem;border-radius:999px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:rgba(255,255,255,.88);font-size:.73rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.03em;backdrop-filter:blur(6px);}
+.tbtn:hover,.tbtn.on{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.7);transform:scale(1.04);}
+.bncc-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:1.1rem 1.2rem;max-width:500px;width:100%;backdrop-filter:blur(10px);}
+.bncc-box h4{color:#4ade80;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem;text-align:center;}
+.bncc-chips{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;}
+.bc{background:rgba(74,222,128,.12);border:1.5px solid rgba(74,222,128,.4);color:#4ade80;padding:.3rem .85rem;border-radius:10px;font-size:.75rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+.bc:hover{background:rgba(74,222,128,.28);transform:scale(1.06);box-shadow:0 4px 18px rgba(74,222,128,.25);}
+.start-btn{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#248848, #0f9fb5);color:#ffffff;padding:.9rem 2rem;border-radius:999px;font-size:1rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 8px 28px rgba(74,222,128,.4);transition:all .22s;text-decoration:none;letter-spacing:.01em;}
+.start-btn:hover{transform:translateY(-3px);box-shadow:0 14px 38px rgba(74,222,128,.5);}
+.rainbow-div{height:4px;background:linear-gradient(90deg,var(--acc1),var(--acc2),var(--acc3),var(--acc4));border:none;}
+.sec-head{padding:2.8rem 1.5rem 2.2rem;background:linear-gradient(135deg,var(--acc1) 0%,var(--acc2) 100%);position:relative;overflow:hidden;text-align:center;}
+.sec-head::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.08) 0%,transparent 60%);}
+.sec-head h2{font-family:'Segoe UI',Arial,sans-serif;font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;color:#fff;position:relative;z-index:1;letter-spacing:-.01em;}
+.sec-head p{color:rgba(255,255,255,.78);font-size:.88rem;margin-top:.4rem;position:relative;z-index:1;}
+.wrap{max-width:800px;margin:0 auto;padding:2rem 1.2rem 2.5rem;}
+#sumario{background:var(--bg2);}
+.cat-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:1rem .3rem .4rem;display:block;}
+.s-grid{display:flex;flex-direction:column;gap:.4rem;}
+@media(min-width:640px){.s-grid{display:grid;grid-template-columns:1fr 1fr;}}
+.s-item{display:flex;align-items:center;gap:.75rem;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:.85rem 1rem;cursor:pointer;text-decoration:none;color:var(--txt);transition:all .2s;}
+.s-item:hover{background:var(--card-hover);border-color:var(--acc1);transform:translateX(5px);box-shadow:0 4px 18px var(--shadow);}
+.s-num{min-width:34px;height:34px;background:linear-gradient(135deg,var(--acc1),var(--acc2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0;}
+.s-txt{flex:1;min-width:0;}
+.s-ttl{font-size:.87rem;font-weight:700;line-height:1.3;}
+.s-sub{font-size:.72rem;color:var(--muted);margin-top:.1rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.s-arr{color:var(--muted);font-size:.9rem;flex-shrink:0;}
+.sbadge{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .5rem;border-radius:999px;flex-shrink:0;}
+.b-dig{background:#dcfce7;color:#166534;}.b-lit{background:#e0f2fe;color:#0369a1;}.b-eth{background:#fce7f3;color:#9d174d;}.b-prod{background:#fef3c7;color:#92400e;}.b-priv{background:#f3e8ff;color:#5b21b6;}
+[data-theme="dark"] .b-dig{background:#052e16;color:#4ade80;}[data-theme="dark"] .b-lit{background:#0c2a3a;color:#7dd3fc;}[data-theme="dark"] .b-eth{background:#2d0a1e;color:#f9a8d4;}[data-theme="dark"] .b-prod{background:#1c1000;color:#fde68a;}[data-theme="dark"] .b-priv{background:#1e0a3a;color:#c4b5fd;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem;margin-bottom:1.1rem;box-shadow:0 2px 14px var(--shadow);transition:background .3s,border .3s;}
+.card h3{font-family:'Segoe UI',Arial,sans-serif;font-size:1.05rem;font-weight:800;color:var(--acc1);margin-bottom:.75rem;display:flex;align-items:center;gap:.45rem;line-height:1.3;}
+.card p,.card li{font-size:.9rem;color:var(--txt2);line-height:1.75;margin-bottom:.35rem;}
+.card ul{padding-left:1.1rem;}.card ul li::marker{color:var(--acc1);}
+.hero-card{background:linear-gradient(135deg,var(--acc1) 0%,var(--acc2) 100%);border:none;color:#fff;}
+.hero-card h3{color:#d1fae5 !important;}.hero-card p{color:rgba(255,255,255,.9) !important;}.hero-card strong{color:#d1fae5;}
+.content-section{background:var(--bg);padding:0 0 2rem;}
+.content-section:nth-child(even){background:var(--bg2);}
+.section-inner{max-width:800px;margin:0 auto;padding:2rem 1.2rem;}
+.topic-header{background:linear-gradient(135deg,var(--acc1),var(--acc2));border-radius:18px;padding:1.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+.topic-header::after{content:'';position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08);}
+.topic-num{font-size:.65rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:.3rem;}
+.topic-title{font-family:'Segoe UI',Arial,sans-serif;font-size:clamp(1.3rem,4vw,1.8rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:.5rem;}
+.topic-sub{font-size:.88rem;color:rgba(255,255,255,.8);font-style:italic;}
+.concept{background:var(--card);border:1px solid var(--border);border-left:5px solid var(--acc1);border-radius:0 14px 14px 0;padding:1.2rem 1.3rem;margin:1rem 0;}
+.concept h4{font-size:.9rem;font-weight:800;color:var(--acc1);margin-bottom:.5rem;}
+.concept p,.concept li{font-size:.88rem;color:var(--txt2);line-height:1.75;}.concept ul{padding-left:1rem;}
+.example{background:var(--hl-bg);border:1.5px solid var(--acc1);border-radius:14px;padding:1.1rem 1.3rem;margin:1rem 0;}
+.example-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--acc1);margin-bottom:.5rem;display:block;}
+.example p{font-size:.87rem;color:var(--txt2);line-height:1.7;}
+.quote-card{background:var(--card);border:1px solid var(--border);border-left:5px solid var(--acc2);border-radius:0 18px 18px 0;padding:1.5rem;margin-bottom:1.1rem;}
+.quote-card blockquote{font-size:.95rem;color:var(--txt2);font-style:italic;line-height:1.8;margin-bottom:.6rem;}
+.quote-attr{font-size:.82rem;font-weight:800;color:var(--acc2);}
+.video-link{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--acc1),var(--acc2));color:#fff;padding:.55rem 1.1rem;border-radius:10px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;margin:.25rem .15rem;text-decoration:none;border:none;}
+.video-link:hover{transform:scale(1.04);opacity:.9;}
+.resource-box{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.1rem;margin:1rem 0;}
+.resource-box h4{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;}
+.glossary{display:grid;gap:.5rem;margin:1rem 0;}
+.gterm{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;}
+.gterm strong{font-size:.87rem;color:var(--acc1);display:block;margin-bottom:.2rem;}
+.gterm span{font-size:.82rem;color:var(--txt2);line-height:1.6;}
+.activity-section{background:linear-gradient(135deg,var(--acc3),#f59e0b);border-radius:18px;padding:1.5rem;margin:1.5rem 0;}
+.activity-section h3{color:#1c1009;font-size:1.05rem;font-weight:900;margin-bottom:1rem;}
+.disc-q{background:rgba(255,255,255,.9);border-radius:12px;padding:1rem;margin-bottom:.7rem;}
+.disc-q .qnum{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#92400e;display:block;margin-bottom:.3rem;}
+.disc-q p{font-size:.87rem;color:#1c1009;line-height:1.7;}
+.mc-section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.3rem;margin:.8rem 0;}
+.mc-section h4{font-size:.82rem;font-weight:800;color:var(--acc4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem;}
+.mc-q{margin-bottom:1.2rem;}
+.mc-q .qn{font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:.5rem;line-height:1.6;}
+.mc-opt{display:flex;align-items:flex-start;gap:.55rem;padding:.4rem .2rem;border-radius:8px;cursor:pointer;transition:background .15s;}
+.mc-opt:hover{background:var(--bg2);}
+.mc-opt input[type=radio]{margin-top:.2rem;accent-color:var(--acc1);}
+.mc-opt label{font-size:.83rem;color:var(--txt2);cursor:pointer;line-height:1.55;}
+.check-btn{background:var(--acc4);color:#fff;border:none;border-radius:10px;padding:.6rem 1.4rem;font-size:.82rem;font-weight:800;cursor:pointer;margin-top:.5rem;transition:all .2s;}
+.check-btn:hover{opacity:.87;transform:scale(1.03);}
+.feedback{font-size:.8rem;font-weight:700;padding:.35rem .7rem;border-radius:8px;margin-top:.4rem;display:none;}
+.feedback.ok{background:#dcfce7;color:#166534;display:block;}
+.feedback.err{background:#fee2e2;color:#b91c1c;display:block;}
+.mascot-wrap{position:relative;min-height:38px;margin-bottom:.5rem;}
+.mascot-btn{position:absolute;top:-14px;right:8px;z-index:10;cursor:pointer;font-size:2rem;animation:mascot-bounce 2s ease-in-out infinite;user-select:none;}
+.mascot-btn:hover{transform:scale(1.15);}
+@keyframes mascot-bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.mascot-bubble{position:absolute;top:-8px;right:58px;background:var(--card);border:2px solid var(--acc1);border-radius:18px 18px 0 18px;padding:.75rem 1rem;max-width:250px;min-width:160px;z-index:11;box-shadow:0 6px 24px var(--shadow);font-size:.82rem;color:var(--txt);line-height:1.55;}
+.mascot-bubble.hidden{display:none;}
+.mascot-close{position:absolute;top:.3rem;right:.5rem;font-size:.75rem;color:var(--muted);cursor:pointer;font-weight:700;background:none;border:none;}
+.fi{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
+.fi.in{opacity:1;transform:none;}
+.fnav{position:fixed;bottom:1.1rem;right:1.1rem;z-index:998;display:flex;flex-direction:column;gap:.5rem;}
+.fnav-btn{width:46px;height:46px;background:var(--acc1);color:#fff;border:none;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px var(--shadow);transition:all .2s;}
+.fnav-btn:hover{transform:scale(1.12);}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .22s;}
+.modal-bg.show{opacity:1;pointer-events:all;}
+.modal{background:var(--card);border-radius:22px;padding:2rem 1.7rem;max-width:520px;width:100%;position:relative;transform:scale(.92);transition:transform .22s;max-height:90vh;overflow-y:auto;}
+.modal-bg.show .modal{transform:scale(1);}
+.modal-x{position:absolute;top:.9rem;right:.9rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;color:var(--txt);font-weight:700;}
+.modal-label{font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.35rem;}
+.modal-code{font-family:'Segoe UI',Arial,sans-serif;font-size:1.35rem;font-weight:900;color:var(--acc1);margin-bottom:.9rem;}
+.modal-desc{font-size:.88rem;color:var(--txt2);line-height:1.75;}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin:1rem 0;}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem .9rem;text-align:center;}
+.info-card .ic-icon{font-size:1.8rem;margin-bottom:.4rem;}
+.info-card .ic-val{font-size:1.4rem;font-weight:900;color:var(--acc1);line-height:1;}
+.info-card .ic-label{font-size:.72rem;color:var(--muted);margin-top:.3rem;line-height:1.35;}
+.tag-grid{display:flex;flex-wrap:wrap;gap:.4rem;margin:.7rem 0;}
+.tag{background:var(--hl-bg);color:var(--hl-txt);border:1px solid var(--acc1);border-radius:8px;padding:.2rem .6rem;font-size:.75rem;font-weight:700;}
+.tip-warn{background:var(--bg2);border-left:4px solid var(--acc3);border-radius:0 12px 12px 0;padding:.8rem 1rem;font-size:.82rem;color:var(--txt2);font-style:italic;margin-top:.8rem;}
+.tip-warn strong{color:var(--acc1);font-style:normal;}
+.timeline{position:relative;padding-left:1.8rem;margin:1rem 0;}
+.timeline::before{content:'';position:absolute;left:.55rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--acc1),var(--acc2));}
+.tl-item{position:relative;padding:.65rem 0 .65rem .6rem;margin-bottom:.2rem;}
+.tl-dot{position:absolute;left:-1.55rem;top:.9rem;width:12px;height:12px;border-radius:50%;background:var(--acc1);border:2px solid var(--bg);}
+.tl-title{font-size:.88rem;font-weight:800;color:var(--txt);line-height:1.35;}
+.tl-desc{font-size:.8rem;color:var(--txt2);line-height:1.55;margin-top:.2rem;}
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:.6rem;margin:1rem 0;}
+.step{display:flex;gap:.8rem;align-items:flex-start;padding:.8rem;background:var(--card);border:1px solid var(--border);border-radius:12px;}
+.step::before{counter-increment:step;content:counter(step);min-width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--acc1),var(--acc2));display:flex;align-items:center;justify-content:center;color:#fff;font-size:.72rem;font-weight:900;flex-shrink:0;}
+.step-txt{font-size:.87rem;color:var(--txt2);line-height:1.65;}.step-txt strong{color:var(--txt);}
+.dtable{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.83rem;}
+.dtable th{background:var(--acc1);color:#fff;padding:.6rem .8rem;text-align:left;font-weight:700;}
+.dtable td{padding:.55rem .8rem;border-bottom:1px solid var(--border);color:var(--txt2);}
+.dtable tr:hover td{background:var(--card-hover);}
+.pill{display:inline-block;padding:.2rem .6rem;border-radius:999px;font-size:.72rem;font-weight:700;}
+.pill-green{background:#dcfce7;color:#166534;}.pill-red{background:#fee2e2;color:#b91c1c;}.pill-yellow{background:#fef3c7;color:#92400e;}
+[data-theme="dark"] .pill-green{background:#052e16;color:#4ade80;}[data-theme="dark"] .pill-red{background:#2d0000;color:#fca5a5;}[data-theme="dark"] .pill-yellow{background:#1c0d00;color:#fde68a;}
+.fake-feed{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:1rem 0;}
+.feed-post{padding:1rem;border-bottom:1px solid var(--border);}.feed-post:last-child{border-bottom:none;}
+.feed-user{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem;}
+.feed-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--acc1),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;}
+.feed-name{font-size:.82rem;font-weight:800;color:var(--txt);}
+.feed-handle{font-size:.72rem;color:var(--muted);}
+.feed-text{font-size:.84rem;color:var(--txt2);line-height:1.6;margin-bottom:.5rem;}
+.feed-actions{display:flex;gap:.8rem;}.feed-act{font-size:.72rem;color:var(--muted);}
+.pbar-row{margin:.5rem 0;}
+.pbar-label{display:flex;justify-content:space-between;font-size:.8rem;color:var(--txt2);margin-bottom:.25rem;}
+.pbar-track{height:10px;background:var(--border);border-radius:99px;overflow:hidden;}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--acc1),var(--acc2));border-radius:99px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.priv-checker{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.3rem;margin:1rem 0;}
+.priv-app-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:.82rem;font-weight:700;color:var(--txt);margin:.25rem;transition:all .2s;}
+.priv-app-btn.active{background:var(--acc1);color:#fff;border-color:var(--acc1);}
+.priv-result{margin-top:.9rem;background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:1rem;display:none;}
+.priv-result.show{display:block;}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:.85rem;}
+.ai-card{background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem .9rem;text-align:center;}
+.ai-name{font-weight:800;font-size:.83rem;color:var(--hl-txt);}
+.ai-tip{font-size:.73rem;color:var(--muted);margin-top:.3rem;line-height:1.45;}
+.ai-link{display:block;margin-top:.5rem;font-size:.73rem;font-weight:700;color:var(--acc2);cursor:pointer;}
+.obj-list{list-style:none;padding:0;}
+.obj-list li{display:flex;gap:.6rem;align-items:flex-start;padding:.55rem 0;border-bottom:1px solid var(--border);font-size:.87rem;color:var(--txt2);line-height:1.6;}
+.obj-list li:last-child{border-bottom:none;}
+.oi{flex-shrink:0;font-size:1rem;margin-top:.05rem;}
+.eixo-grid{display:grid;gap:.5rem;margin-top:.7rem;}
+.eixo-item{display:flex;align-items:center;gap:.65rem;background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:.65rem .9rem;font-size:.84rem;font-weight:600;color:var(--txt2);}
+.eixo-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.checklist{list-style:none;padding:0;}
+.checklist li{display:flex;align-items:flex-start;gap:.55rem;padding:.4rem 0;font-size:.87rem;color:var(--txt2);line-height:1.6;}
+.checklist li::before{content:'✅';flex-shrink:0;margin-top:.05rem;}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2.2rem 1.5rem;text-align:center;}
+footer p{font-size:.77rem;color:var(--muted);line-height:1.7;}
+footer strong{color:var(--acc1);}
+@media(max-width:480px){.ai-grid{grid-template-columns:1fr;}.info-grid{grid-template-columns:1fr 1fr;}}
+</style>
 </head>
 <body>
-  <p><a href="../../../../index.html">↩ Voltar para a Biblioteca</a></p>
-  <h1>2ª Série — Trilhas de Linguagens — 1º Bimestre</h1>
-  <hr />
+<div id="prog"></div>
+<!-- CAPA -->
+<section id="capa">
+<div id="cover">
+  <div id="floaters"></div>
+  <div class="cover-inner">
+    <div class="school-pill">📚 E.E. Padre Carlos Casavequia</div>
+    <div class="disc-pill">🌐 Trilha de Linguagens</div>
+    <h1 class="cover-title">Mundo Digital<br><em>Amazônico</em></h1>
+    <p class="cover-sub">"Na floresta ou na internet, toda voz merece ser ouvida, entendida e respeitada."</p>
+    <div class="meta-row">
+      <span class="meta-chip">🏫 2ª Série · Ensino Médio</span>
+      <span class="meta-chip">📅 1º Bimestre · 2026</span>
+    </div>
+    <div class="prof-tag">👨‍🏫 Prof. <strong>Paulo Roberto R. Magalhães</strong></div>
+    <div class="theme-row">
+      <button class="tbtn on" id="tb-def" onclick="setTheme('default')">☀️ Normal</button>
+      <button class="tbtn" id="tb-read" onclick="setTheme('reading')">📖 Leitura</button>
+      <button class="tbtn" id="tb-dark" onclick="setTheme('dark')">🌙 Escuro</button>
+    </div>
+    <div class="bncc-box">
+      <h4>📋 Habilidades BNCC abordadas — clique para ver</h4>
+      <div class="bncc-chips">
+        <span class="bc" onclick="openModal('EM13LP07')">EM13LP07</span>
+        <span class="bc" onclick="openModal('EM13LP10')">EM13LP10</span>
+        <span class="bc" onclick="openModal('EM13LP19')">EM13LP19</span>
+        <span class="bc" onclick="openModal('EM13LP43')">EM13LP43</span>
+        <span class="bc" onclick="openModal('EM13LP46')">EM13LP46</span>
+        <span class="bc" onclick="openModal('EM13LP47')">EM13LP47</span>
+      </div>
+    </div>
+    <button class="start-btn" onclick="goTo('sumario')">Ver Sumário 📋</button>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
 
-  <!-- COLE_AQUI_O_HTML_DO_LIVRO -->
+<!-- SUMÁRIO -->
+<section id="sumario">
+<div class="sec-head"><h2>📋 Sumário</h2><p>Toque em qualquer tópico para ir direto ao conteúdo</p></div>
+<div class="wrap">
+  <span class="cat-label">🌿 Cultura e Identidade Digital · Tópicos 1–4</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c01" onclick="goTo('c01',event)"><div class="s-num">01</div><div class="s-txt"><div class="s-ttl">Cultura Digital Pan-Amazônica</div><div class="s-sub">Expressão e comunicação digital dos povos amazônicos</div></div><span class="sbadge b-dig">Cultura</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c02" onclick="goTo('c02',event)"><div class="s-num">02</div><div class="s-txt"><div class="s-ttl">Produtores de Conteúdo</div><div class="s-sub">Influenciadores: opiniões, estilos e comportamentos</div></div><span class="sbadge b-dig">Influência</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c03" onclick="goTo('c03',event)"><div class="s-num">03</div><div class="s-txt"><div class="s-ttl">Informação Digital</div><div class="s-sub">Circulação, veracidade e checagem de fatos</div></div><span class="sbadge b-dig">Info</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c04" onclick="goTo('c04',event)"><div class="s-num">04</div><div class="s-txt"><div class="s-ttl">Leitura e Análise de Memes</div><div class="s-sub">Humor, crítica social e responsabilidade</div></div><span class="sbadge b-dig">Memes</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">📖 Narrativa e Literatura · Tópicos 5–6</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c05" onclick="goTo('c05',event)"><div class="s-num">05</div><div class="s-txt"><div class="s-ttl">Threads e Narrativas Digitais</div><div class="s-sub">Como histórias são contadas nas redes sociais</div></div><span class="sbadge b-lit">Narrativa</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c06" onclick="goTo('c06',event)"><div class="s-num">06</div><div class="s-txt"><div class="s-ttl">Literatura Amazônica Digital</div><div class="s-sub">Autores da Amazônia e sua presença online</div></div><span class="sbadge b-lit">Lit.</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">🔒 Ética e Privacidade · Tópicos 7–8</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c07" onclick="goTo('c07',event)"><div class="s-num">07</div><div class="s-txt"><div class="s-ttl">Políticas de Privacidade</div><div class="s-sub">O que concordamos sem ler nos aplicativos</div></div><span class="sbadge b-priv">Privacidade</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c08" onclick="goTo('c08',event)"><div class="s-num">08</div><div class="s-txt"><div class="s-ttl">Corpos e Vozes Digitais</div><div class="s-sub">Avatares, filtros e construção de identidades</div></div><span class="sbadge b-eth">Identidade</span><span class="s-arr">›</span></a>
+  </div>
+  <span class="cat-label">✍️ Produção e Projeto · Tópicos 9–10</span>
+  <div class="s-grid">
+    <a class="s-item" href="#c09" onclick="goTo('c09',event)"><div class="s-num">09</div><div class="s-txt"><div class="s-ttl">Guia de Boas Práticas Digitais</div><div class="s-sub">Uso ético e saudável das redes sociais</div></div><span class="sbadge b-prod">Produção</span><span class="s-arr">›</span></a>
+    <a class="s-item" href="#c10" onclick="goTo('c10',event)"><div class="s-num">10</div><div class="s-txt"><div class="s-ttl">Produção Autoral</div><div class="s-sub">Documentário, tirinha ou podcast temático</div></div><span class="sbadge b-prod">Autoral</span><span class="s-arr">›</span></a>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
 
+<!-- APRESENTAÇÃO -->
+<section id="apresentacao">
+<div class="sec-head"><h2>👋 Apresentação</h2><p>Leia antes de começar: vai valer a pena!</p></div>
+<div class="wrap">
+  <div class="card hero-card fi">
+    <h3>🌏 Sobre este material</h3>
+    <p>Bem-vindo(a) ao livro digital do <strong>1º Bimestre de 2026</strong> da Trilha de Linguagens! Este bimestre vamos explorar um tema que faz parte da sua vida todo dia: o mundo digital. Mas vamos além das telas — vamos entender como a Amazônia, nossa casa, se expressa e resiste no ambiente digital, como as informações circulam (e como enganam), e como você pode ser um criador de conteúdo responsável e crítico.</p>
+    <p style="margin-top:.6rem;">Este material é autoexplicativo: leia, explore, clique, questione. Você vai aprender mais se parar e pensar do que se só rolar a tela. 😉</p>
+  </div>
+  <div class="card fi">
+    <h3>🎯 O que você vai aprender</h3>
+    <ul class="obj-list">
+      <li><span class="oi">🌿</span><span>Compreender como os <strong>povos amazônicos</strong> usam o ambiente digital para preservar e difundir sua cultura</span></li>
+      <li><span class="oi">📲</span><span>Analisar criticamente o papel dos <strong>influenciadores digitais</strong> na formação de opiniões e comportamentos</span></li>
+      <li><span class="oi">🔍</span><span>Identificar desinformação e aplicar <strong>técnicas de checagem de fatos</strong> em textos e imagens</span></li>
+      <li><span class="oi">😂</span><span>Ler e analisar <strong>memes</strong> como gênero textual com humor, crítica social e implicações éticas</span></li>
+      <li><span class="oi">📖</span><span>Conhecer <strong>autores e obras da literatura amazônica</strong> e sua relação com a identidade regional</span></li>
+      <li><span class="oi">🔒</span><span>Entender como funcionam as <strong>políticas de privacidade</strong> dos aplicativos que você usa</span></li>
+      <li><span class="oi">🪞</span><span>Refletir sobre como <strong>avatares e filtros</strong> constroem e distorcem identidades digitais</span></li>
+      <li><span class="oi">✍️</span><span>Produzir um <strong>documentário, tirinha ou podcast</strong> sobre cultura digital amazônica</span></li>
+    </ul>
+  </div>
+  <div class="card fi">
+    <h3>🗂 Eixos do bimestre</h3>
+    <div class="eixo-grid">
+      <div class="eixo-item"><div class="eixo-icon" style="background:#dcfce7;">🌿</div><span><strong>Cultura e Identidade Digital</strong> — Tópicos 1 a 4</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#e0f2fe;">📖</div><span><strong>Narrativa e Literatura</strong> — Tópicos 5 e 6</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#f3e8ff;">🔒</div><span><strong>Ética e Privacidade</strong> — Tópicos 7 e 8</span></div>
+      <div class="eixo-item"><div class="eixo-icon" style="background:#fef3c7;">✍️</div><span><strong>Produção e Projeto</strong> — Tópicos 9 e 10</span></div>
+    </div>
+  </div>
+  <div class="card fi">
+    <h3>📱 Como usar este material</h3>
+    <ul>
+      <li>🔄 Use o <strong>Sumário</strong> para navegar direto ao conteúdo desejado</li>
+      <li>🌙 Alterne temas na capa: <strong>Normal, Leitura</strong> (fundo amarelado) ou <strong>Escuro</strong></li>
+      <li>▶ Links de vídeo abrem direto no YouTube ou plataforma indicada</li>
+      <li>📝 Atividades discursivas: responda no <strong>caderno</strong></li>
+      <li>📲 Múltipla escolha: marque <strong>direto no livro</strong></li>
+      <li>💾 Salve no celular para acessar <strong>offline</strong></li>
+      <li>🧑‍🏫 O <strong>mascote</strong> (bonequinho pardo) aparece no início de cada tópico com curiosidades — clique nele!</li>
+    </ul>
+  </div>
+  <div class="card fi">
+    <h3>🤖 Estudando com Inteligências Artificiais</h3>
+    <p>As IAs são ótimas aliadas — use com responsabilidade! Elas explicam, resumem e praticam com você, mas não substituem o pensamento crítico.</p>
+    <div class="ai-grid">
+      <div class="ai-card"><div class="ai-name">🎵 NotebookLM</div><div class="ai-tip">Cole o conteúdo e peça um resumo em áudio para revisar no caminho!</div><span class="ai-link" onclick="window.open('https://notebooklm.google.com')">🔗 Acessar</span></div>
+      <div class="ai-card"><div class="ai-name">💬 ChatGPT</div><div class="ai-tip">Peça exemplos de desinformação amazônica real e como identificá-la</div><span class="ai-link" onclick="window.open('https://chat.openai.com')">🔗 Acessar</span></div>
+      <div class="ai-card"><div class="ai-name">✨ Gemini</div><div class="ai-tip">Pesquise autores da literatura amazônica e suas obras</div><span class="ai-link" onclick="window.open('https://gemini.google.com')">🔗 Acessar</span></div>
+      <div class="ai-card"><div class="ai-name">🔮 Grok</div><div class="ai-tip">Explore como memes amazônicos viralizam e o que dizem sobre nossa identidade</div><span class="ai-link" onclick="window.open('https://grok.com')">🔗 Acessar</span></div>
+    </div>
+    <div class="tip-warn">💡 <strong>Dica de ouro:</strong> Sempre questione as respostas das IAs. Se ela errar, você já aprendeu mais do que ela!</div>
+  </div>
+  <div class="quote-card fi">
+    <blockquote>"A Amazônia não é só floresta e rio — é também wi-fi, smartphone e TikTok. Entender como nos expressamos digitalmente é entender quem somos no século XXI. Bons estudos!"</blockquote>
+    <div class="quote-attr">— Prof. Paulo Roberto R. Magalhães</div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 01 -->
+<section class="content-section" id="c01">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m01" onclick="mascotClick('m01','b01')">🧑🏾</div><div class="mascot-bubble hidden" id="b01"><button class="mascot-close" onclick="closeMascot('b01')">✕</button><span id="b01-txt">🌳 Você sabia? A Amazônia abriga mais de 350 povos indígenas diferentes — cada um com sua língua e cultura únicas! Hoje, muitos já têm canais no YouTube!</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 01 · Cultura Digital</div><div class="topic-title">Cultura Digital Pan-Amazônica</div><div class="topic-sub">Como os povos amazônicos se expressam e se comunicam no ambiente digital</div></div>
+  <div class="card fi"><h3>🌿 O que é cultura digital?</h3><p>Cultura digital é o conjunto de práticas, valores e formas de expressão que surgem a partir do uso das tecnologias digitais — internet, redes sociais, celulares, plataformas de streaming e aplicativos.</p><p>Mas atenção: cultura digital não é neutra. Ela reflete quem tem acesso, quem faz conteúdo, quais línguas e visões de mundo dominam os algoritmos. Por isso, falar de <strong>cultura digital pan-amazônica</strong> é politicamente importante: é afirmar que os povos da Amazônia também têm voz, presença e protagonismo no mundo online.</p></div>
+  <div class="concept fi"><h4>📌 Conceito: Pan-Amazônia</h4><p>O termo <em>pan-amazônica</em> refere-se a tudo que abrange a região amazônica como um todo — não apenas o Brasil, mas também os territórios da Bolívia, Peru, Colômbia, Venezuela, Equador, Suriname, Guiana e Guiana Francesa que compartilham a floresta amazônica e suas culturas.</p></div>
+  <div class="card fi"><h3>📲 Povos Amazônicos no Digital</h3><p>Nos últimos anos, criadores de conteúdo indígenas e ribeirinhos passaram a usar plataformas digitais para preservar línguas, divulgar costumes, denunciar desmatamento e construir redes de solidariedade.</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-icon">📹</div><div class="ic-val">YouTube</div><div class="ic-label">Documentários sobre rituais e saberes tradicionais</div></div>
+      <div class="info-card"><div class="ic-icon">🎵</div><div class="ic-val">Música</div><div class="ic-label">Artistas que misturam ritmos tradicionais com eletrônica</div></div>
+      <div class="info-card"><div class="ic-icon">📸</div><div class="ic-val">Instagram</div><div class="ic-label">Fotografia de arte indígena e denúncias ambientais</div></div>
+      <div class="info-card"><div class="ic-icon">🎙</div><div class="ic-val">Podcasts</div><div class="ic-label">Narrativas orais em línguas originais e em português</div></div>
+    </div>
+  </div>
+  <div class="example fi"><span class="example-label">🔍 Exemplo real</span><p>O coletivo <strong>Mídia NINJA</strong> e iniciativas como o <strong>Coletivo de Comunicação Indígena do Alto Rio Negro</strong> mostram como comunidades amazônicas produzem jornalismo digital próprio. A fotógrafa e ativista Sônia Guajajara e o cineasta Takumã Kuikuro são exemplos de protagonismo cultural amazônico nas redes.</p></div>
+  <div class="card fi"><h3>⚡ Desafios da Inclusão Digital na Amazônia</h3>
+    <div class="steps">
+      <div class="step"><div class="step-txt"><strong>Conectividade:</strong> Muitas comunidades ribeirinhas e indígenas ainda não têm acesso à internet de qualidade — a infraestrutura de telecomunicações é precária na floresta.</div></div>
+      <div class="step"><div class="step-txt"><strong>Línguas e plataformas:</strong> A maioria das plataformas digitais funciona em inglês, português ou espanhol — línguas indígenas raramente têm suporte técnico.</div></div>
+      <div class="step"><div class="step-txt"><strong>Algoritmos e visibilidade:</strong> Os algoritmos das redes sociais tendem a favorecer conteúdos em inglês e com alto engajamento, dificultando a visibilidade de criadores amazônicos.</div></div>
+      <div class="step"><div class="step-txt"><strong>Pirataria cultural:</strong> Músicas, imagens e saberes tradicionais são frequentemente apropriados sem autorização ou crédito dos povos originários.</div></div>
+    </div>
+  </div>
+  <div class="glossary fi">
+    <div class="gterm"><strong>Multimodalidade</strong><span>Característica de textos que combinam diferentes linguagens: imagem, escrita, áudio e vídeo ao mesmo tempo.</span></div>
+    <div class="gterm"><strong>Protagonismo digital</strong><span>Capacidade de produzir e controlar a própria narrativa nas plataformas digitais, sem depender de intermediários.</span></div>
+    <div class="gterm"><strong>Algoritmo</strong><span>Conjunto de regras matemáticas que decide qual conteúdo aparece para quais usuários nas redes sociais.</span></div>
+  </div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=cultura+digital+indigena+amazonia')">▶ Cultura Digital Indígena Amazônia</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Takuma+Kuikuro+cinema+indigena')">▶ Takumã Kuikuro: cinema indígena</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=povos+indigenas+redes+sociais+brasil')">▶ Povos Indígenas nas redes sociais</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 01</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: responda no caderno, com suas próprias palavras e reflexões.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Com base no que estudou, explique por que a presença dos povos amazônicos nas redes sociais pode ser considerada um ato de resistência cultural. Cite pelo menos um exemplo que você conheça ou pesquise.</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Você mora em uma região próxima à Amazônia. Como a sua própria comunidade usa as redes sociais para preservar ou expressar sua cultura local? Reflita sobre isso e escreva um parágrafo.</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Os algoritmos das plataformas digitais tendem a favorecer conteúdos em inglês. Que consequências isso pode ter para as línguas indígenas brasileiras? Argumente com base no que leu.</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>O que é "pirataria cultural" no contexto digital? Você já observou alguma situação parecida com isso em relação à cultura amazônica ou indígena? Descreva e analise.</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Se você fosse criar um canal ou perfil para divulgar a cultura da sua cidade ou região, que tipo de conteúdo produziria? Por quê? Que desafios enfrentaria?</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 01</h4>
+      <div class="mc-q" id="q01_1"><div class="qn">1. O termo "pan-amazônica" no contexto da cultura digital refere-se a:</div>
+        <div class="mc-opt"><input type="radio" name="q01_1" value="a"><label>a) Apenas ao território brasileiro da Amazônia Legal</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_1" value="b"><label>b) À toda a região que compartilha a floresta amazônica, incluindo vários países sul-americanos</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_1" value="c"><label>c) Apenas aos países que assinaram o Tratado de Cooperação Amazônica</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_1" value="d"><label>d) Exclusivamente às comunidades indígenas do estado do Amazonas</label></div>
+        <button class="check-btn" onclick="checkMC('q01_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q01_1"></div>
+      </div>
+      <div class="mc-q" id="q01_2"><div class="qn">2. Qual das seguintes alternativas NÃO é um desafio da inclusão digital na Amazônia?</div>
+        <div class="mc-opt"><input type="radio" name="q01_2" value="a"><label>a) Falta de infraestrutura de telecomunicações em comunidades remotas</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_2" value="b"><label>b) Algoritmos que favorecem conteúdos em inglês</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_2" value="c"><label>c) O crescimento do número de smartphones no Brasil</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_2" value="d"><label>d) Pirataria de saberes e produções culturais indígenas</label></div>
+        <button class="check-btn" onclick="checkMC('q01_2','c',this)">Verificar ✓</button><div class="feedback" id="fb_q01_2"></div>
+      </div>
+      <div class="mc-q" id="q01_3"><div class="qn">3. O conceito de "multimodalidade" em textos digitais significa:</div>
+        <div class="mc-opt"><input type="radio" name="q01_3" value="a"><label>a) Que o texto pode ser lido de várias formas diferentes</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_3" value="b"><label>b) Que o texto combina imagem, escrita, áudio e vídeo</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_3" value="c"><label>c) Que o texto usa muitos sinônimos para ser compreendido</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_3" value="d"><label>d) Que o texto foi publicado em múltiplas plataformas</label></div>
+        <button class="check-btn" onclick="checkMC('q01_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q01_3"></div>
+      </div>
+      <div class="mc-q" id="q01_4"><div class="qn">4. Por que o protagonismo digital dos povos amazônicos é politicamente importante?</div>
+        <div class="mc-opt"><input type="radio" name="q01_4" value="a"><label>a) Porque garante mais seguidores do que influenciadores do sul do Brasil</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_4" value="b"><label>b) Porque permite que eles controlem suas próprias narrativas sem depender das grandes mídias</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_4" value="c"><label>c) Porque obriga as plataformas a traduzir seus termos para línguas indígenas</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_4" value="d"><label>d) Porque aumenta automaticamente o financiamento governamental para comunidades indígenas</label></div>
+        <button class="check-btn" onclick="checkMC('q01_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q01_4"></div>
+      </div>
+      <div class="mc-q" id="q01_5"><div class="qn">5. A cultura digital é considerada "não neutra" porque:</div>
+        <div class="mc-opt"><input type="radio" name="q01_5" value="a"><label>a) As plataformas digitais são sempre gratuitas para todos os usuários</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_5" value="b"><label>b) Ela reflete desigualdades de acesso, linguagem e poder presentes na sociedade</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_5" value="c"><label>c) Os conteúdos digitais não têm autoria definida</label></div>
+        <div class="mc-opt"><input type="radio" name="q01_5" value="d"><label>d) Toda informação na internet é verificada antes de ser publicada</label></div>
+        <button class="check-btn" onclick="checkMC('q01_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q01_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 02 -->
+<section class="content-section" id="c02">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m02" onclick="mascotClick('m02','b02')">🧑🏾</div><div class="mascot-bubble hidden" id="b02"><button class="mascot-close" onclick="closeMascot('b02')">✕</button><span id="b02-txt">📱 Um influenciador com 1 milhão de seguidores pode receber entre R$10.000 e R$100.000 por post patrocinado. E você nem percebe que é propaganda! 🤑</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 02 · Influência Digital</div><div class="topic-title">Produtores de Conteúdo e suas Influências</div><div class="topic-sub">Quem são os influenciadores? Como moldam opiniões, estilos e comportamentos</div></div>
+  <div class="card fi"><h3>🎙 Quem é um produtor de conteúdo?</h3><p>Um <strong>produtor de conteúdo</strong> (ou <em>creator</em>) é qualquer pessoa que cria e publica conteúdo de forma sistemática em plataformas digitais. Quando esse conteúdo alcança grande audiência e começa a impactar opiniões e comportamentos, essa pessoa passa a ser chamada de <strong>influenciador digital</strong>.</p><p>Todo influenciador é produtor de conteúdo, mas nem todo produtor é influenciador. A influência se mede não apenas em números, mas no impacto real sobre as decisões do público.</p></div>
+  <div class="info-grid fi">
+    <div class="info-card"><div class="ic-icon">👤</div><div class="ic-val">Nano</div><div class="ic-label">1k a 10k seguidores. Alta taxa de engajamento com comunidade específica</div></div>
+    <div class="info-card"><div class="ic-icon">👥</div><div class="ic-val">Micro</div><div class="ic-label">10k a 100k. Nicho definido, audiência fiel</div></div>
+    <div class="info-card"><div class="ic-icon">🌟</div><div class="ic-val">Macro</div><div class="ic-label">100k a 1M. Alcance amplo, vários nichos</div></div>
+    <div class="info-card"><div class="ic-icon">💎</div><div class="ic-val">Mega</div><div class="ic-label">Mais de 1M. Celebridades digitais com impacto massivo</div></div>
+  </div>
+  <div class="card fi"><h3>🧠 Como a influência funciona?</h3><p>Os influenciadores exercem <strong>poder simbólico</strong> — a capacidade de fazer com que suas escolhas, valores e perspectivas sejam percebidos como naturais e desejáveis pelo público.</p>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Identificação</div><div class="tl-desc">O seguidor se identifica com o estilo de vida ou valores do criador</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Confiança</div><div class="tl-desc">A relação de proximidade (mesmo que unilateral) gera credibilidade</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Engajamento</div><div class="tl-desc">Curtidas, comentários e compartilhamentos amplificam a mensagem</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-title">Mudança de comportamento</div><div class="tl-desc">Compras, opiniões, voto, estilo de vida: a influência se concretiza</div></div>
+    </div>
+  </div>
+  <div class="concept fi"><h4>📌 Parasociabilidade</h4><p>Quando você sente que conhece um influenciador, que é "amigo" dele, mesmo sem nunca ter se encontrado pessoalmente — isso se chama <em>relação parasocial</em>. É uma ilusão de intimidade criada pelos formatos de conteúdo digital (vlogs, stories, lives). Isso aumenta a influência, mas também pode tornar o consumidor mais vulnerável à manipulação.</p></div>
+  <div class="card fi"><h3>⚠️ Influência e Responsabilidade</h3><ul>
+    <li>Promover produtos sem disclosure adequado (publicidade oculta)</li>
+    <li>Disseminar informações falsas ou pseudocientíficas</li>
+    <li>Reforçar padrões de beleza irreais e prejudiciais à saúde mental</li>
+    <li>Mas também: mobilizar solidariedade, divulgar causas sociais e democratizar informação</li>
+  </ul><div class="tip-warn">💡 <strong>Para refletir:</strong> O CONAR e o próprio Instagram exigem que posts patrocinados sejam identificados com as tags #publi ou #ad. Você percebe quando um post é publicidade?</div></div>
+  <div class="fake-feed fi">
+    <div style="padding:.7rem 1rem;border-bottom:1px solid var(--border);font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">📲 Exemplo didático de feed</div>
+    <div class="feed-post"><div class="feed-user"><div class="feed-avatar">AC</div><div><div class="feed-name">Ana Criadora 🌿</div><div class="feed-handle">@anacriadora_am</div></div></div><div class="feed-text">Gente, esse suplemento mudou minha vida! Emagreci 5kg em 2 semanas. Link na bio! ✨ #parceria</div><div class="feed-actions"><span class="feed-act">❤️ 12.4k</span><span class="feed-act">💬 342</span><span class="feed-act">🔁 1.2k</span></div></div>
+    <div class="feed-post"><div class="feed-user"><div class="feed-avatar">ZG</div><div><div class="feed-name">Zé Guerreiro</div><div class="feed-handle">@zeguerreiroam</div></div></div><div class="feed-text">Aldeia Koatá-Laranjal está sem água potável há 3 dias. Compartilhem! Urgente. 🚨 #AmazoniaSOS</div><div class="feed-actions"><span class="feed-act">❤️ 45.2k</span><span class="feed-act">💬 2.1k</span><span class="feed-act">🔁 31k</span></div></div>
+  </div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+funciona+marketing+influenciadores+digitais')">▶ Marketing de influência explicado</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=influencer+publicidade+oculta+CONAR')">▶ Publicidade oculta e o CONAR</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=relacao+parasocial+influencer+psicologia')">▶ O que são relações parasociais?</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 02</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: responda no caderno com suas reflexões pessoais.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Escolha um influenciador que você acompanha. Como ele constrói a relação de confiança com o público? Identifique ao menos duas estratégias que ele usa para parecer "próximo" dos seguidores.</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>O que é publicidade oculta? Por que ela é problemática do ponto de vista ético? Você já foi influenciado a comprar algo por causa de um criador de conteúdo? Reflita honestamente.</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Compare os dois posts do "exemplo didático de feed" apresentado no livro. Qual deles você acha mais relevante para a sociedade? Justifique sua resposta argumentativamente.</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Explique, com suas palavras, o conceito de "parasociabilidade". Você já sentiu que tinha amizade com algum criador de conteúdo? Como isso afetou seu comportamento como consumidor?</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Existe algum influenciador da região amazônica que você conhece? Se sim, descreva o tipo de conteúdo que ele produz. Se não, pesquise e traga um exemplo para a aula.</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 02</h4>
+      <div class="mc-q"><div class="qn">1. A diferença entre "produtor de conteúdo" e "influenciador digital" está em:</div>
+        <div class="mc-opt"><input type="radio" name="q02_1" value="a"><label>a) O número mínimo de seguidores exigido pelas plataformas</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_1" value="b"><label>b) O impacto real do conteúdo sobre opiniões e comportamentos do público</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_1" value="c"><label>c) O tipo de equipamento usado para produzir o conteúdo</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_1" value="d"><label>d) A frequência com que publicam novos conteúdos</label></div>
+        <button class="check-btn" onclick="checkMC('q02_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q02_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. Uma relação parasocial com um influenciador se caracteriza por:</div>
+        <div class="mc-opt"><input type="radio" name="q02_2" value="a"><label>a) Um contrato de prestação de serviços entre seguidor e criador</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_2" value="b"><label>b) Uma amizade presencial que começa pelo ambiente digital</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_2" value="c"><label>c) A ilusão de intimidade criada pelo formato do conteúdo digital</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_2" value="d"><label>d) A troca de mensagens privadas frequentes entre seguidor e influenciador</label></div>
+        <button class="check-btn" onclick="checkMC('q02_2','c',this)">Verificar ✓</button><div class="feedback" id="fb_q02_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. Posts patrocinados devem ser identificados com:</div>
+        <div class="mc-opt"><input type="radio" name="q02_3" value="a"><label>a) Um logo oficial do governo federal</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_3" value="b"><label>b) Tags como #publi ou #ad</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_3" value="c"><label>c) Uma legenda em inglês indicando "sponsored"</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_3" value="d"><label>d) Um fundo amarelo obrigatório na imagem</label></div>
+        <button class="check-btn" onclick="checkMC('q02_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q02_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. O "poder simbólico" exercido pelos influenciadores é a capacidade de:</div>
+        <div class="mc-opt"><input type="radio" name="q02_4" value="a"><label>a) Usar símbolos e emojis para comunicar mensagens complexas</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_4" value="b"><label>b) Fazer com que seus valores e perspectivas pareçam naturais e desejáveis</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_4" value="c"><label>c) Criar personagens fictícios que representam símbolos culturais</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_4" value="d"><label>d) Monetizar conteúdo por meio de acordos com plataformas digitais</label></div>
+        <button class="check-btn" onclick="checkMC('q02_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q02_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. Um nano influenciador (1k a 10k seguidores) se caracteriza por:</div>
+        <div class="mc-opt"><input type="radio" name="q02_5" value="a"><label>a) Ter a menor taxa de engajamento entre todas as categorias</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_5" value="b"><label>b) Alta taxa de engajamento com uma comunidade específica e nicho definido</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_5" value="c"><label>c) Ser considerado menos relevante para campanhas de marketing</label></div>
+        <div class="mc-opt"><input type="radio" name="q02_5" value="d"><label>d) Não poder monetizar seu conteúdo nas plataformas</label></div>
+        <button class="check-btn" onclick="checkMC('q02_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q02_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 03 -->
+<section class="content-section" id="c03">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m03" onclick="mascotClick('m03','b03')">🧑🏾</div><div class="mascot-bubble hidden" id="b03"><button class="mascot-close" onclick="closeMascot('b03')">✕</button><span id="b03-txt">🚨 Fake news viajam 6 vezes mais rápido do que notícias verdadeiras nas redes sociais! Isso foi comprovado por pesquisadores do MIT em 2018. Assustador, né?</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 03 · Informação Digital</div><div class="topic-title">Informação Digital: Circulação e Veracidade</div><div class="topic-sub">Como uma informação se espalha e como verificar sua autenticidade</div></div>
+  <div class="card fi"><h3>📡 Como a informação circula na era digital?</h3><p>A velocidade com que uma informação se espalha nas redes sociais é sem precedentes na história da humanidade. Em segundos, um vídeo gravado numa aldeia no interior do Amazonas pode alcançar milhões de pessoas no mundo inteiro.</p><p>Mas essa velocidade tem um preço: a checagem de veracidade fica para trás. Compartilhamos antes de verificar, reagimos emocionalmente antes de pensar criticamente. Os algoritmos amplificam conteúdos que geram reação emocional forte — inclusive medo, raiva e indignação — porque essas emoções geram mais engajamento.</p></div>
+  <div class="card fi" id="speed-card"><h3>📊 Velocidade de Disseminação: Verdade x Mentira</h3>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:.9rem;">Baseado em pesquisa do MIT (Vosoughi, Roy e Aral, 2018, revista Science)</p>
+    <div class="pbar-row"><div class="pbar-label"><span>Fake news chegam a 1.500 pessoas</span><span>~10x mais rápido</span></div><div class="pbar-track"><div class="pbar-fill" id="pb1" style="width:0%"></div></div></div>
+    <div class="pbar-row"><div class="pbar-label"><span>Notícias verdadeiras chegam a 1.500 pessoas</span><span>referência</span></div><div class="pbar-track"><div class="pbar-fill" id="pb2" style="width:0%;background:var(--acc2)"></div></div></div>
+    <div class="pbar-row"><div class="pbar-label"><span>Taxa de retweet de fake news</span><span>70% maior</span></div><div class="pbar-track"><div class="pbar-fill" id="pb3" style="width:0%;background:var(--acc4)"></div></div></div>
+  </div>
+  <div class="card fi"><h3>🧐 Tipos de Desinformação</h3>
+    <table class="dtable">
+      <tr><th>Tipo</th><th>Definição</th><th>Intenção</th></tr>
+      <tr><td><span class="pill pill-red">Fake News</span></td><td>Notícia completamente fabricada para enganar</td><td>Manipular</td></tr>
+      <tr><td><span class="pill pill-yellow">Misinformation</span></td><td>Informação errada compartilhada sem intenção de enganar</td><td>Erro genuíno</td></tr>
+      <tr><td><span class="pill pill-red">Disinformation</span></td><td>Informação errada compartilhada intencionalmente</td><td>Prejudicar</td></tr>
+      <tr><td><span class="pill pill-yellow">Malinformation</span></td><td>Informação verdadeira usada fora de contexto para prejudicar</td><td>Distorcer</td></tr>
+    </table>
+  </div>
+  <div class="card fi"><h3>🔍 Como checar uma informação</h3>
+    <div class="steps">
+      <div class="step"><div class="step-txt"><strong>Pare antes de compartilhar.</strong> A urgência de repassar é o primeiro sinal de alarme. Informações verdadeiras não desaparecem se você esperar 2 minutos.</div></div>
+      <div class="step"><div class="step-txt"><strong>Verifique a fonte.</strong> Quem publicou? É um veículo jornalístico com CNPJ e equipe identificada? Ou um blog anônimo?</div></div>
+      <div class="step"><div class="step-txt"><strong>Busque a mesma notícia em outras fontes.</strong> Se só uma fonte fala sobre algo muito impactante, desconfie. Pesquise no G1, UOL ou BBC Brasil.</div></div>
+      <div class="step"><div class="step-txt"><strong>Cheque as imagens.</strong> Use a busca reversa de imagens do Google para ver se a foto foi tirada de outro contexto ou data.</div></div>
+      <div class="step"><div class="step-txt"><strong>Consulte agências de fact-checking.</strong> No Brasil: Agência Lupa, Aos Fatos e Comprova. Elas checam rumores em tempo real.</div></div>
+    </div>
+  </div>
+  <div class="concept fi"><h4>📌 Câmara de Eco</h4><p>Uma <em>câmara de eco</em> ocorre quando o algoritmo de uma plataforma passa a mostrar para você apenas conteúdos parecidos com os que você já consome, reforçando suas crenças e cortando informações que as questionam. Com o tempo, você passa a acreditar que "todo mundo pensa assim", o que aumenta a polarização social.</p></div>
+  <div class="resource-box fi"><h4>🎬 Recursos e Agências de Checagem</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+identificar+fake+news+brasil')">▶ Como identificar fake news</span>
+    <span class="video-link" onclick="window.open('https://lupa.uol.com.br')">🔍 Agência Lupa</span>
+    <span class="video-link" onclick="window.open('https://www.aosfatos.org')">🔍 Aos Fatos</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=camara+de+eco+redes+sociais+bolha+filtro')">▶ Câmaras de Eco explicadas</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 03</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: responda no caderno com sua análise crítica.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Por que os algoritmos das redes sociais amplificam mais conteúdos que geram emoções fortes como medo e raiva? Quais são as consequências disso para a qualidade do debate público?</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Explique a diferença entre "misinformation" e "disinformation". Por que essa distinção é importante do ponto de vista ético e legal?</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Você já recebeu pelo WhatsApp uma notícia que depois descobriu ser falsa? Descreva o caso e analise: que elementos tornavam a notícia convincente?</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>O que é uma "câmara de eco"? Como ela afeta nossa capacidade de dialogar com pessoas que pensam diferente? Proponha uma estratégia pessoal para sair de uma câmara de eco.</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Pesquise em uma agência de fact-checking brasileira uma notícia falsa relacionada à Amazônia. Descreva o caso e explique como foi desmentida.</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 03</h4>
+      <div class="mc-q"><div class="qn">1. Segundo pesquisa do MIT (2018), em relação às notícias verdadeiras, as fake news:</div>
+        <div class="mc-opt"><input type="radio" name="q03_1" value="a"><label>a) Se espalham na mesma velocidade</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_1" value="b"><label>b) São bloqueadas mais rapidamente pelos algoritmos</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_1" value="c"><label>c) Chegam a 1.500 pessoas cerca de 10 vezes mais rápido</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_1" value="d"><label>d) Têm alcance 70% menor porque são bloqueadas</label></div>
+        <button class="check-btn" onclick="checkMC('q03_1','c',this)">Verificar ✓</button><div class="feedback" id="fb_q03_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. A "malinformation" se diferencia das outras formas de desinformação porque:</div>
+        <div class="mc-opt"><input type="radio" name="q03_2" value="a"><label>a) É sempre inventada completamente sem base na realidade</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_2" value="b"><label>b) Usa informação verdadeira fora de contexto para prejudicar alguém</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_2" value="c"><label>c) É compartilhada apenas por robôs automáticos</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_2" value="d"><label>d) Só existe em países com pouca liberdade de imprensa</label></div>
+        <button class="check-btn" onclick="checkMC('q03_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q03_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. Uma boa prática ao receber uma notícia impactante pelo WhatsApp é:</div>
+        <div class="mc-opt"><input type="radio" name="q03_3" value="a"><label>a) Repassar imediatamente para alertar o máximo de pessoas</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_3" value="b"><label>b) Parar, verificar a fonte e buscar a mesma notícia em outros veículos antes de compartilhar</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_3" value="c"><label>c) Confiar se a mensagem veio de um familiar de confiança</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_3" value="d"><label>d) Perguntar para a IA sem pesquisar em outros lugares</label></div>
+        <button class="check-btn" onclick="checkMC('q03_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q03_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. Uma "câmara de eco" nas redes sociais ocorre quando:</div>
+        <div class="mc-opt"><input type="radio" name="q03_4" value="a"><label>a) O algoritmo mostra apenas conteúdos que reforçam as crenças já existentes do usuário</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_4" value="b"><label>b) O usuário bloqueia todas as pessoas com opiniões diferentes</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_4" value="c"><label>c) A plataforma proíbe debates políticos em seu feed</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_4" value="d"><label>d) Todas as pessoas da mesma família assistem ao mesmo conteúdo</label></div>
+        <button class="check-btn" onclick="checkMC('q03_4','a',this)">Verificar ✓</button><div class="feedback" id="fb_q03_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. Qual das opções é uma agência brasileira de verificação de fatos (fact-checking)?</div>
+        <div class="mc-opt"><input type="radio" name="q03_5" value="a"><label>a) Folha de São Paulo</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_5" value="b"><label>b) Agência Lupa</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_5" value="c"><label>c) Portal R7</label></div>
+        <div class="mc-opt"><input type="radio" name="q03_5" value="d"><label>d) Agência Brasil</label></div>
+        <button class="check-btn" onclick="checkMC('q03_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q03_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 04 -->
+<section class="content-section" id="c04">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m04" onclick="mascotClick('m04','b04')">🧑🏾</div><div class="mascot-bubble hidden" id="b04"><button class="mascot-close" onclick="closeMascot('b04')">✕</button><span id="b04-txt">😂 O meme mais antigo da internet é de 1996 — o "Dancing Baby" (bebê dançando em 3D). Mas os memes existem desde a Grécia Antiga! Qualquer imagem repetida com novo significado é um meme.</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 04 · Gêneros Digitais</div><div class="topic-title">Leitura e Análise de Memes</div><div class="topic-sub">O meme como gênero textual: humor, crítica social, viralização e responsabilidade</div></div>
+  <div class="card fi"><h3>🧬 O que é um meme?</h3><p>O termo <em>meme</em> foi criado pelo biólogo Richard Dawkins em 1976, no livro "O Gene Egoísta", para descrever unidades de cultura que se replicam e evoluem, assim como os genes. Derivou do grego <em>mimema</em> (aquilo que é imitado).</p><p>No contexto da internet, um meme é uma ideia, imagem, vídeo ou texto que se espalha rapidamente de pessoa para pessoa, geralmente com humor, e que sofre adaptações ao longo do caminho. O meme é um <strong>gênero textual</strong> com estrutura, convenções e funções específicas.</p></div>
+  <div class="concept fi"><h4>📌 Meme como Gênero Textual</h4><p>Na perspectiva da linguística, um meme de internet possui:</p><ul><li><strong>Estrutura:</strong> combina imagem com texto verbal</li><li><strong>Contexto de circulação:</strong> redes sociais e aplicativos de mensagem</li><li><strong>Função:</strong> humor, crítica, denúncia, afirmação de identidade grupal</li><li><strong>Intertextualidade:</strong> sempre referencia outros textos, situações ou figuras públicas</li><li><strong>Temporalidade:</strong> tem prazo de validade — o meme que não é entendido depois de alguns meses "morreu"</li></ul></div>
+  <div class="card fi"><h3>⚙️ Elementos do Meme</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-icon">🖼</div><div class="ic-val">Template</div><div class="ic-label">Imagem base que se repete com variações de texto</div></div>
+      <div class="info-card"><div class="ic-icon">📝</div><div class="ic-val">Legenda</div><div class="ic-label">Texto que ressignifica a imagem, criando o humor ou crítica</div></div>
+      <div class="info-card"><div class="ic-icon">🎯</div><div class="ic-val">Contexto</div><div class="ic-label">Situação ou evento que deu origem ou é alvo do meme</div></div>
+      <div class="info-card"><div class="ic-icon">🔁</div><div class="ic-val">Remix</div><div class="ic-label">Adaptação do template para novos contextos culturais</div></div>
+    </div>
+  </div>
+  <div class="card fi"><h3>⚠️ Memes e Responsabilidade Ética</h3><ul>
+    <li><strong>Crítica social legítima:</strong> questionar figuras de poder, denunciar injustiças, criar empatia</li>
+    <li><strong>Desinformação:</strong> espalhar mentiras de forma disfarçada de humor</li>
+    <li><strong>Discurso de ódio:</strong> reforçar preconceitos contra grupos étnicos, de gênero, religiosos</li>
+    <li><strong>Cyberbullying:</strong> humilhar, expor ou ridicularizar pessoas específicas sem consentimento</li>
+  </ul><div class="tip-warn">💡 <strong>Lembrete legal:</strong> No Brasil, memes que ofendam a honra de alguém podem ser enquadrados como calúnia, injúria ou difamação (Código Penal) e também podem gerar processos por danos morais (Código Civil).</div></div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=meme+genero+textual+enem+vestibular')">▶ Meme como gênero textual (ENEM)</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=meme+critica+social+exemplos+brasil')">▶ Memes como crítica social</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=richard+dawkins+meme+origem+explicado')">▶ A origem do conceito de meme</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 04</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: analise criticamente os memes como gênero textual.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Explique a origem do termo "meme" e como seu significado original (de Dawkins) se relaciona com o uso que fazemos da palavra hoje na internet.</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Escolha um meme que você conhece bem e analise-o como gênero textual: qual é o template? Qual a legenda? Qual o contexto? Qual a função predominante (humor, crítica, identidade)?</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Por que é mais difícil identificar desinformação quando ela está embrulhada em humor? Que estratégias de leitura crítica você pode usar para analisar um meme antes de compartilhá-lo?</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Você concorda que memes relacionados à Amazônia podem ser formas de afirmação identitária? Dê exemplos (positivos e negativos) e justifique sua análise.</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Um colega criou um meme usando a foto sem permissão de outro aluno da escola, causando humilhação pública. Que legislação brasileira pode ser aplicada nesse caso? Como a situação deveria ser resolvida?</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 04</h4>
+      <div class="mc-q"><div class="qn">1. O termo "meme" foi originalmente criado por Richard Dawkins para se referir a:</div>
+        <div class="mc-opt"><input type="radio" name="q04_1" value="a"><label>a) Imagens engraçadas criadas em fóruns de internet nos anos 1990</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_1" value="b"><label>b) Unidades de cultura que se replicam e evoluem, analogamente aos genes biológicos</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_1" value="c"><label>c) Um formato específico de propaganda política digital</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_1" value="d"><label>d) Textos curtos que combinam imagem e legenda em plataformas sociais</label></div>
+        <button class="check-btn" onclick="checkMC('q04_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q04_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. Na linguística, o meme de internet é classificado como:</div>
+        <div class="mc-opt"><input type="radio" name="q04_2" value="a"><label>a) Um subgênero jornalístico de curta duração</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_2" value="b"><label>b) Uma forma de arte digital sem valor textual</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_2" value="c"><label>c) Um gênero textual com estrutura, convenções e funções específicas</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_2" value="d"><label>d) Uma variação do editorial de opinião adaptado para o celular</label></div>
+        <button class="check-btn" onclick="checkMC('q04_2','c',this)">Verificar ✓</button><div class="feedback" id="fb_q04_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. A "temporalidade" como característica dos memes significa que:</div>
+        <div class="mc-opt"><input type="radio" name="q04_3" value="a"><label>a) Os memes sempre comentam acontecimentos históricos passados</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_3" value="b"><label>b) Os memes têm prazo de validade — deixam de ser compreendidos depois de algum tempo</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_3" value="c"><label>c) Os memes só funcionam quando usam imagens em tempo real</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_3" value="d"><label>d) A criação de memes leva muito mais tempo do que se imagina</label></div>
+        <button class="check-btn" onclick="checkMC('q04_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q04_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. Memes que ofendam a honra de uma pessoa podem ser enquadrados como:</div>
+        <div class="mc-opt"><input type="radio" name="q04_4" value="a"><label>a) Exercício legítimo da liberdade de expressão</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_4" value="b"><label>b) Calúnia, injúria ou difamação (Código Penal) e possível dano moral</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_4" value="c"><label>c) Cyberbullying apenas se a vítima for menor de 12 anos</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_4" value="d"><label>d) Infração administrativa punida exclusivamente pela plataforma digital</label></div>
+        <button class="check-btn" onclick="checkMC('q04_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q04_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. Um meme que usa a foto de uma pessoa sem permissão para ridicularizá-la pode violar:</div>
+        <div class="mc-opt"><input type="radio" name="q04_5" value="a"><label>a) Apenas regras internas das plataformas digitais</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_5" value="b"><label>b) O direito de imagem e a honra da pessoa, com implicações legais</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_5" value="c"><label>c) Somente leis de direitos autorais sobre a foto em si</label></div>
+        <div class="mc-opt"><input type="radio" name="q04_5" value="d"><label>d) Nenhuma lei, pois memes são considerados paródia protegida</label></div>
+        <button class="check-btn" onclick="checkMC('q04_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q04_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 05 -->
+<section class="content-section" id="c05">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m05" onclick="mascotClick('m05','b05')">🧑🏾</div><div class="mascot-bubble hidden" id="b05"><button class="mascot-close" onclick="closeMascot('b05')">✕</button><span id="b05-txt">🧵 Durante as secas históricas do Rio Amazonas, moradores relataram em threads no Twitter imagens e depoimentos em primeira pessoa — narrativas testemunhais que viraram história!</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 05 · Narrativa Digital</div><div class="topic-title">Threads e Narrativas em Redes Sociais</div><div class="topic-sub">Como histórias são contadas em ambientes digitais em tempo real</div></div>
+  <div class="card fi"><h3>🧵 O que é uma thread?</h3><p>Uma <em>thread</em> (fio, em inglês) é uma sequência encadeada de posts em uma rede social, especialmente no X (antigo Twitter) e no Bluesky, em que o autor conta uma história ou desenvolve um raciocínio dividido em várias mensagens conectadas.</p><p>A thread combina características da narrativa literária (sequência, suspense, personagens, desfecho) com as especificidades do meio digital (imediatismo, interação em tempo real, compartilhamento parcial).</p></div>
+  <div class="card fi"><h3>📖 Características das Narrativas Digitais</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-icon">⚡</div><div class="ic-val">Imediato</div><div class="ic-label">Contadas em tempo real, enquanto o evento acontece</div></div>
+      <div class="info-card"><div class="ic-icon">🔗</div><div class="ic-val">Encadeado</div><div class="ic-label">Cada post se conecta ao anterior criando sentido coletivo</div></div>
+      <div class="info-card"><div class="ic-icon">💬</div><div class="ic-val">Interativo</div><div class="ic-label">O público comenta, questiona e interfere na narrativa</div></div>
+      <div class="info-card"><div class="ic-icon">🌐</div><div class="ic-val">Viral</div><div class="ic-label">Pode ser replicada, editada e recontada por outros</div></div>
+    </div>
+  </div>
+  <div class="card fi"><h3>📚 Tipos de Narrativas Digitais</h3>
+    <table class="dtable">
+      <tr><th>Tipo</th><th>Plataforma Principal</th><th>Características</th></tr>
+      <tr><td>Thread</td><td>X / Bluesky</td><td>Sequência de posts, geralmente com enumeração (1/N)</td></tr>
+      <tr><td>Stories</td><td>Instagram / WhatsApp</td><td>Conteúdo efêmero, dura 24h, narrativa visual</td></tr>
+      <tr><td>Vídeo curto</td><td>TikTok / Reels</td><td>Narrativa em 15 a 90 segundos, alta edição</td></tr>
+      <tr><td>Live</td><td>YouTube / Instagram</td><td>Transmissão ao vivo, sem edição, espontânea</td></tr>
+      <tr><td>Newsletter</td><td>Substack / e-mail</td><td>Narrativa longa, relação direta com assinantes</td></tr>
+    </table>
+  </div>
+  <div class="concept fi"><h4>📌 História e Discurso</h4><p>Nas teorias literárias clássicas, o tempo narrativo é dividido em: <em>história</em> (o que aconteceu, na ordem cronológica dos fatos) e <em>discurso</em> (como o narrador organiza e conta esses fatos). Nas narrativas digitais em tempo real, história e discurso se confundem — o narrador conta enquanto vive, sem possibilidade de revisão, criando um poderoso efeito de autenticidade.</p></div>
+  <div class="example fi"><span class="example-label">🔍 Exemplo</span><p>Durante as secas históricas do Rio Amazonas e os incêndios na floresta, moradores e ativistas relataram em threads imagens, vídeos e depoimentos em primeira pessoa. Esses relatos, além de informativos, têm valor documental e literário — são narrativas testemunhais do nosso tempo.</p></div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+fazer+thread+twitter+x+conteudo')">▶ Como criar uma boa thread</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=storytelling+narrativa+digital+redes+sociais')">▶ Storytelling nas redes sociais</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=jornalismo+cidadao+redes+sociais+amazonia')">▶ Jornalismo digital na Amazônia</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 05</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: analise os formatos narrativos digitais.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Qual a diferença entre uma narrativa literária clássica e uma thread numa rede social? Identifique pelo menos três diferenças e comente as consequências para quem lê.</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Por que as narrativas em tempo real (threads, lives) têm tanto poder de persuasão e mobilização? Que riscos isso cria em termos de veracidade e emoção?</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Você já acompanhou uma thread ou live sobre algum evento importante? Descreva a experiência. O que prendeu sua atenção? Quais elementos narrativos você identificou?</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>As narrativas de moradores e ativistas amazônicos nas redes sociais têm valor jornalístico e/ou literário? Justifique com base nos conceitos estudados.</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Escreva o roteiro de uma thread de 5 posts sobre um tema importante para a sua comunidade local. Pense em como criar suspense, engajamento e conclusão dentro do formato.</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 05</h4>
+      <div class="mc-q"><div class="qn">1. Uma "thread" nas redes sociais é definida como:</div>
+        <div class="mc-opt"><input type="radio" name="q05_1" value="a"><label>a) Uma hashtag que conecta vários usuários a um tema comum</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_1" value="b"><label>b) Uma sequência encadeada de posts que conta uma história ou desenvolve um raciocínio</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_1" value="c"><label>c) Um formato de vídeo longo exclusivo do YouTube</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_1" value="d"><label>d) Um tipo de comentário que ancora outras respostas num post original</label></div>
+        <button class="check-btn" onclick="checkMC('q05_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q05_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. A diferença entre "história" e "discurso" nas teorias literárias é que:</div>
+        <div class="mc-opt"><input type="radio" name="q05_2" value="a"><label>a) A história é fictícia e o discurso é sempre baseado em fatos reais</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_2" value="b"><label>b) A história é a ordem cronológica dos fatos; o discurso é como o narrador os organiza e conta</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_2" value="c"><label>c) A história se refere ao conteúdo escrito; o discurso ao conteúdo oral</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_2" value="d"><label>d) A história só existe em narrativas literárias; o discurso é exclusivo das redes sociais</label></div>
+        <button class="check-btn" onclick="checkMC('q05_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q05_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. O formato "Stories" (Instagram/WhatsApp) se diferencia por:</div>
+        <div class="mc-opt"><input type="radio" name="q05_3" value="a"><label>a) Ser o único formato que permite legendas e texto escrito</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_3" value="b"><label>b) Ser um conteúdo efêmero — desaparece após 24 horas</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_3" value="c"><label>c) Só poder ser acessado por assinantes pagos</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_3" value="d"><label>d) Ser exclusivo para influenciadores com mais de 10 mil seguidores</label></div>
+        <button class="check-btn" onclick="checkMC('q05_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q05_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. A "autenticidade" como efeito das narrativas em tempo real ocorre porque:</div>
+        <div class="mc-opt"><input type="radio" name="q05_4" value="a"><label>a) O narrador tem tempo para revisar e editar tudo antes de publicar</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_4" value="b"><label>b) O narrador conta enquanto vive, sem possibilidade de revisão, gerando sensação de imediatismo</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_4" value="c"><label>c) As plataformas verificam a veracidade do conteúdo antes de publicar</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_4" value="d"><label>d) Os algoritmos amplificam conteúdos verdadeiros automaticamente</label></div>
+        <button class="check-btn" onclick="checkMC('q05_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q05_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. As narrativas de moradores amazônicos sobre secas e incêndios têm importância porque:</div>
+        <div class="mc-opt"><input type="radio" name="q05_5" value="a"><label>a) São mais confiáveis do que qualquer relatório científico sobre clima</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_5" value="b"><label>b) Têm poder de denúncia e valor documental que os meios tradicionais nem sempre alcançam com a mesma velocidade</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_5" value="c"><label>c) Substituem completamente o jornalismo profissional na Amazônia</label></div>
+        <div class="mc-opt"><input type="radio" name="q05_5" value="d"><label>d) São sempre verificadas por agências internacionais antes de viralizarem</label></div>
+        <button class="check-btn" onclick="checkMC('q05_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q05_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 06 -->
+<section class="content-section" id="c06">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m06" onclick="mascotClick('m06','b06')">🧑🏾</div><div class="mascot-bubble hidden" id="b06"><button class="mascot-close" onclick="closeMascot('b06')">✕</button><span id="b06-txt">📚 Milton Hatoum, um dos maiores escritores amazônicos, diz que escreve sobre Manaus para entender o Brasil. Sua obra "Relato de um Certo Oriente" ganhou o Prêmio Jabuti em 1990!</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 06 · Literatura Amazônica</div><div class="topic-title">Literatura Amazônica e Identidade Digital</div><div class="topic-sub">Leitura e debate de obras de autores da Amazônia e sua presença no mundo digital</div></div>
+  <div class="card fi"><h3>📚 O que é Literatura Amazônica?</h3><p>A expressão <em>literatura amazônica</em> reúne obras literárias produzidas por autores originários da região amazônica ou que tematizam de forma central a Amazônia — sua floresta, seus rios, seus povos, suas tensões históricas e seus mistérios culturais.</p><p>Essa literatura não é homogênea. Ela inclui desde narrativas indígenas tradicionais contadas oralmente, passando pela literatura regionalista do século XX, até produções contemporâneas que dialogam com a internet e os problemas ambientais do presente.</p></div>
+  <div class="card fi"><h3>✍️ Autores Amazônicos em Destaque</h3>
+    <div class="glossary">
+      <div class="gterm"><strong>Milton Hatoum (AM)</strong><span>Considerado um dos maiores escritores brasileiros contemporâneos. Seu romance "Dois Irmãos" (2000) narra a saga de uma família de imigrantes libaneses em Manaus. Temas: memória, identidade, mestiçagem cultural.</span></div>
+      <div class="gterm"><strong>Inglês de Sousa (PA)</strong><span>Pioneiro do Naturalismo brasileiro. Seu conto "O Coronel Sangrado" e o romance "O Missionário" (1888) exploram o interior da Amazônia com olhar crítico sobre poder e religião.</span></div>
+      <div class="gterm"><strong>Márcio Souza (AM)</strong><span>Dramaturgo e romancista. "Galvez, Imperador do Acre" (1976) é sátira histórica irreverente sobre o Brasil profundo. Presença constante no debate cultural amazônico.</span></div>
+      <div class="gterm"><strong>Eliane Brum (AM)</strong><span>Jornalista e escritora. "A Menina Quebrada" e seus textos sobre a Amazônia são obras fundamentais sobre crise ambiental e resistência. Presença digital expressiva no jornalismo internacional.</span></div>
+      <div class="gterm"><strong>Jaime Diakara (AM)</strong><span>Escritor e professor Desana do Alto Rio Negro. Produz literatura em língua indígena e em português, dialogando tradição oral e escrita contemporânea.</span></div>
+    </div>
+  </div>
+  <div class="concept fi"><h4>📌 Literatura e Identidade</h4><p>A literatura não apenas reflete a realidade — ela também a constrói. Ao ler um romance de Milton Hatoum, o leitor não encontra apenas "a Amazônia real", mas uma versão literária dela, moldada por escolhas estéticas, históricas e políticas do autor. Reconhecer isso é fundamental para uma leitura crítica e madura.</p></div>
+  <div class="card fi"><h3>🌐 Literatura Amazônica no Mundo Digital</h3><ul>
+    <li>Escritores publicam poemas e microcontos no Instagram (#microcontobr, #literaturamazonica)</li>
+    <li>Obras são discutidas em podcasts literários e clubes de leitura virtuais</li>
+    <li>Jovens escritores fazem lançamentos de livros ao vivo pelo YouTube</li>
+    <li>Plataformas como Wattpad permitem publicação de ficção ambientada na floresta</li>
+    <li>O BookTok (comunidade literária no TikTok) inclui cada vez mais literatura regional brasileira</li>
+  </ul><div class="tip-warn">💡 <strong>Para explorar:</strong> Pesquise no Instagram as hashtags #literaturamazonica e #literaturaindígena. Você vai se surpreender com a quantidade de criadores locais!</div></div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Milton+Hatoum+entrevista+dois+irmaos+manaus')">▶ Milton Hatoum fala sobre Dois Irmãos</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Eliane+Brum+escritora+jornalista+amazonia')">▶ Eliane Brum: a floresta como protagonista</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=literatura+amazonica+autores+indigenas+contemporaneos')">▶ Literatura Amazônica contemporânea</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 06</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: reflita sobre literatura e identidade regional.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>O que diferencia a literatura amazônica de outras literaturas regionais brasileiras? Quais elementos temáticos e culturais são recorrentes nessa tradição literária?</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Por que a literatura não apenas reflete, mas também constrói a realidade? Use o exemplo de algum autor amazônico para ilustrar sua resposta.</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Escolha um dos autores apresentados. Pesquise uma obra sua e escreva um parágrafo apresentando o livro e suas temáticas principais.</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Como as plataformas digitais estão mudando a forma como a literatura amazônica circula e alcança novos leitores? Isso é positivo ou negativo? Argumente.</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Escreva um microconto (máximo 150 palavras) ambientado na Amazônia. Use pelo menos um elemento cultural ou natural típico da região. Em que plataforma digital você publicaria esse texto?</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 06</h4>
+      <div class="mc-q"><div class="qn">1. A expressão "literatura amazônica" reúne:</div>
+        <div class="mc-opt"><input type="radio" name="q06_1" value="a"><label>a) Apenas obras publicadas por editoras sediadas em Belém ou Manaus</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_1" value="b"><label>b) Obras de autores originários da Amazônia ou que tematizam centralmente a região</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_1" value="c"><label>c) Somente narrativas indígenas contadas oralmente</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_1" value="d"><label>d) Qualquer obra publicada no Brasil que mencione a floresta amazônica</label></div>
+        <button class="check-btn" onclick="checkMC('q06_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q06_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. Milton Hatoum é conhecido principalmente pelo romance:</div>
+        <div class="mc-opt"><input type="radio" name="q06_2" value="a"><label>a) "O Cortiço"</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_2" value="b"><label>b) "Dois Irmãos"</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_2" value="c"><label>c) "Grande Sertão: Veredas"</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_2" value="d"><label>d) "Galvez, Imperador do Acre"</label></div>
+        <button class="check-btn" onclick="checkMC('q06_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q06_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. O "BookTok" é:</div>
+        <div class="mc-opt"><input type="radio" name="q06_3" value="a"><label>a) Um aplicativo de leitura digital exclusivo para jovens</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_3" value="b"><label>b) A comunidade literária que cresceu dentro do TikTok, discutindo e recomendando livros</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_3" value="c"><label>c) Uma editora digital especializada em literatura amazônica</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_3" value="d"><label>d) Um clube de leitura presencial que se encontra em livrarias parceiras</label></div>
+        <button class="check-btn" onclick="checkMC('q06_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q06_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. Jaime Diakara se destaca porque:</div>
+        <div class="mc-opt"><input type="radio" name="q06_4" value="a"><label>a) É o primeiro escritor amazônico traduzido para o inglês</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_4" value="b"><label>b) Produz literatura em língua indígena Desana e em português, dialogando tradição oral e escrita</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_4" value="c"><label>c) Escreveu exclusivamente sobre personagens não-indígenas para alcançar maior público</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_4" value="d"><label>d) Foi o primeiro vencedor do Prêmio Jabuti da categoria regional Norte</label></div>
+        <button class="check-btn" onclick="checkMC('q06_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q06_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. Quando dizemos que "a literatura constrói a realidade", queremos dizer que:</div>
+        <div class="mc-opt"><input type="radio" name="q06_5" value="a"><label>a) Os escritores inventam fatos históricos para criar ficção</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_5" value="b"><label>b) As escolhas estéticas e políticas do autor moldam como os leitores percebem um lugar ou grupo</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_5" value="c"><label>c) Os livros de ficção científica preveem o futuro com precisão</label></div>
+        <div class="mc-opt"><input type="radio" name="q06_5" value="d"><label>d) Toda literatura é, na verdade, autobiográfica</label></div>
+        <button class="check-btn" onclick="checkMC('q06_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q06_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 07 -->
+<section class="content-section" id="c07">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m07" onclick="mascotClick('m07','b07')">🧑🏾</div><div class="mascot-bubble hidden" id="b07"><button class="mascot-close" onclick="closeMascot('b07')">✕</button><span id="b07-txt">🔒 A política de privacidade do Instagram tem mais de 4.000 palavras. Você já leu? Ninguém lê! Por isso eles podem usar suas fotos pra treinar IAs sem precisar avisar muito. 😅</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 07 · Privacidade Digital</div><div class="topic-title">Políticas de Privacidade</div><div class="topic-sub">Estudo comparativo de aplicativos: o que concordamos sem ler?</div></div>
+  <div class="card fi"><h3>📋 O que são Políticas de Privacidade?</h3><p>Toda vez que você instala um aplicativo ou cria uma conta em um serviço digital, é solicitado que aceite os <strong>Termos de Uso</strong> e a <strong>Política de Privacidade</strong>. São documentos legais que descrevem:</p><ul><li>Quais dados o aplicativo coleta sobre você</li><li>Como esses dados são armazenados e protegidos</li><li>Com quem podem ser compartilhados (outras empresas, anunciantes, governos)</li><li>Quais são seus direitos como usuário</li></ul><p>O problema? Esses documentos são longos, escritos em linguagem jurídica complexa e ninguém os lê. Um estudo da Universidade Carnegie Mellon calculou que, se um usuário médio lesse todas as políticas de privacidade dos serviços que usa, levaria <strong>76 dias de trabalho por ano</strong> apenas nisso.</p></div>
+  <div class="priv-checker fi"><h3 style="font-size:.95rem;font-weight:800;color:var(--acc1);margin-bottom:.9rem;">🔍 Compare: O que os apps coletam</h3><p style="font-size:.82rem;color:var(--muted);margin-bottom:.7rem;">Toque em um aplicativo para ver o que ele tipicamente coleta:</p>
+    <div>
+      <button class="priv-app-btn" onclick="showPriv('whatsapp',this)">📱 WhatsApp</button>
+      <button class="priv-app-btn" onclick="showPriv('instagram',this)">📸 Instagram</button>
+      <button class="priv-app-btn" onclick="showPriv('tiktok',this)">🎵 TikTok</button>
+      <button class="priv-app-btn" onclick="showPriv('google',this)">🔍 Google</button>
+    </div>
+    <div class="priv-result" id="priv-result"><h4 id="priv-title" style="font-size:.88rem;font-weight:800;color:var(--acc1);margin-bottom:.6rem;"></h4><ul id="priv-list" style="font-size:.83rem;color:var(--txt2);padding-left:1.1rem;line-height:1.8;"></ul></div>
+  </div>
+  <div class="card fi"><h3>🇧🇷 LGPD: A Lei Geral de Proteção de Dados</h3><p>Em 2018, o Brasil promulgou a <strong>Lei Geral de Proteção de Dados (LGPD)</strong> — Lei 13.709/2018. A lei estabelece:</p>
+    <div class="steps">
+      <div class="step"><div class="step-txt"><strong>Consentimento informado:</strong> Você deve saber exatamente quais dados são coletados e para qual finalidade antes de autorizar</div></div>
+      <div class="step"><div class="step-txt"><strong>Direito de acesso:</strong> Você pode solicitar a qualquer empresa que informe quais dados seus ela possui</div></div>
+      <div class="step"><div class="step-txt"><strong>Direito de exclusão:</strong> Você pode pedir que seus dados sejam apagados (o "direito ao esquecimento")</div></div>
+      <div class="step"><div class="step-txt"><strong>Responsabilização:</strong> Empresas que vazarem dados podem ser multadas em até 2% do faturamento</div></div>
+    </div>
+  </div>
+  <div class="concept fi"><h4>📌 Dados como Moeda</h4><p>Os serviços "gratuitos" que você usa — Google, Instagram, TikTok — têm um preço: seus dados. Suas preferências, histórico de navegação, padrões de comportamento e localização são vendidos para anunciantes e usados para prever e influenciar seu comportamento. Como diz o ditado do mundo digital: <em>"Se o produto é grátis, o produto é você."</em></p></div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=LGPD+lei+protecao+dados+brasil+explicada+simples')">▶ LGPD explicada de forma simples</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=o+que+aplicativos+fazem+com+seus+dados+pessoais')">▶ O que os apps fazem com seus dados</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=o+dilema+das+redes+sociais+documentario+netflix')">▶ O Dilema das Redes (Netflix) — trailer</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 07</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: exercite seu pensamento crítico sobre privacidade digital.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>O que são políticas de privacidade e por que a maioria das pessoas não as lê? Quais são as consequências práticas disso para os usuários?</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Explique a afirmação: "Se o produto é grátis, o produto é você." Você concorda? Justifique com exemplos concretos de plataformas que você usa.</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Quais são os principais direitos garantidos pela LGPD aos cidadãos brasileiros? Por que essa lei é importante especialmente para jovens usuários de redes sociais?</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Compare a política de privacidade de dois aplicativos que você usa. O que eles têm em comum? O que é diferente? Você acha que os termos são justos?</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Escreva um texto de opinião (10 a 15 linhas) argumentando a favor ou contra a obrigatoriedade de uma "política de privacidade simplificada" em linguagem acessível para todos os usuários.</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 07</h4>
+      <div class="mc-q"><div class="qn">1. A LGPD (Lei Geral de Proteção de Dados) foi promulgada no Brasil em:</div>
+        <div class="mc-opt"><input type="radio" name="q07_1" value="a"><label>a) 2014</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_1" value="b"><label>b) 2018</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_1" value="c"><label>c) 2020</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_1" value="d"><label>d) 2022</label></div>
+        <button class="check-btn" onclick="checkMC('q07_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q07_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. O "direito ao esquecimento" garantido pela LGPD significa:</div>
+        <div class="mc-opt"><input type="radio" name="q07_2" value="a"><label>a) O direito de apagar seu histórico de visualizações nas plataformas</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_2" value="b"><label>b) O direito de solicitar que uma empresa apague seus dados pessoais</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_2" value="c"><label>c) O direito de não ser lembrado de aniversários nas redes sociais</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_2" value="d"><label>d) O direito de remover publicações antigas do próprio perfil</label></div>
+        <button class="check-btn" onclick="checkMC('q07_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q07_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. A frase "Se o produto é grátis, o produto é você" se refere a:</div>
+        <div class="mc-opt"><input type="radio" name="q07_3" value="a"><label>a) Empresas que oferecem produtos físicos sem cobrar entrega</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_3" value="b"><label>b) O fato de que os dados dos usuários são a moeda real dos serviços digitais gratuitos</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_3" value="c"><label>c) A política de plataformas que permitem que usuários participem como voluntários</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_3" value="d"><label>d) A ideia de que os usuários criam gratuitamente todo o conteúdo das redes</label></div>
+        <button class="check-btn" onclick="checkMC('q07_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q07_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. Segundo o estudo citado, se um usuário médio lesse todas as políticas de privacidade dos serviços que usa, levaria por ano aproximadamente:</div>
+        <div class="mc-opt"><input type="radio" name="q07_4" value="a"><label>a) 7 dias</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_4" value="b"><label>b) 30 dias</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_4" value="c"><label>c) 76 dias</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_4" value="d"><label>d) 200 dias</label></div>
+        <button class="check-btn" onclick="checkMC('q07_4','c',this)">Verificar ✓</button><div class="feedback" id="fb_q07_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. O "consentimento informado" exigido pela LGPD significa que:</div>
+        <div class="mc-opt"><input type="radio" name="q07_5" value="a"><label>a) O usuário deve aceitar qualquer coleta de dados desde que avisado em algum momento</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_5" value="b"><label>b) O usuário deve saber exatamente quais dados são coletados e para qual finalidade antes de autorizar</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_5" value="c"><label>c) Apenas o responsável legal de menores de 18 anos precisa dar consentimento</label></div>
+        <div class="mc-opt"><input type="radio" name="q07_5" value="d"><label>d) O consentimento verbal durante uma ligação de suporte já é suficiente legalmente</label></div>
+        <button class="check-btn" onclick="checkMC('q07_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q07_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 08 -->
+<section class="content-section" id="c08">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m08" onclick="mascotClick('m08','b08')">🧑🏾</div><div class="mascot-bubble hidden" id="b08"><button class="mascot-close" onclick="closeMascot('b08')">✕</button><span id="b08-txt">🪞 Filtros do Instagram podem clarear pele, afinar rosto e aumentar olhos automaticamente. Alguns países já estudam leis para obrigar a identificação de fotos editadas. E no Brasil, quando vai?</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 08 · Identidade Digital</div><div class="topic-title">Corpos e Vozes Digitais</div><div class="topic-sub">Como avatares, filtros e personagens online constroem e distorcem identidades</div></div>
+  <div class="card fi"><h3>🪞 O que é identidade digital?</h3><p>A <strong>identidade digital</strong> é a representação de si mesmo no ambiente virtual — o conjunto de informações, imagens, postagens e interações que constroem "quem você é" nas plataformas digitais.</p><p>Diferente da identidade física, a digital pode ser múltipla (você pode ter perfis diferentes em plataformas diferentes), editável (você escolhe o que mostra), assíncrona (você decide quando e como responder) e permanente (conteúdo publicado pode durar para sempre).</p></div>
+  <div class="card fi"><h3>🎭 Avatares e Personas Digitais</h3>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-icon">😊</div><div class="ic-val">Real</div><div class="ic-label">Foto verdadeira, nome real, conteúdo autêntico</div></div>
+      <div class="info-card"><div class="ic-icon">🎨</div><div class="ic-val">Editado</div><div class="ic-label">Foto real com filtros e iluminação idealizada</div></div>
+      <div class="info-card"><div class="ic-icon">🎭</div><div class="ic-val">Persona</div><div class="ic-label">Personagem com nome e estética diferentes do real</div></div>
+      <div class="info-card"><div class="ic-icon">👤</div><div class="ic-val">Anônimo</div><div class="ic-label">Nenhuma informação real revelada</div></div>
+    </div>
+  </div>
+  <div class="concept fi"><h4>📌 Filtros e Saúde Mental</h4><p>Os filtros de realidade aumentada usados em selfies e vídeos podem alterar significativamente a aparência — clarear a pele, afinar o rosto, aumentar olhos. Pesquisas em psicologia mostram que o uso excessivo está associado à <strong>dismorfobia digital</strong>: a dificuldade de aceitar a própria aparência real após contato prolongado com versões editadas de si mesmo. Isso afeta especialmente adolescentes e jovens adultos.</p></div>
+  <div class="card fi"><h3>🌿 Identidade e Pertencimento Amazônico</h3><p>Para jovens da Amazônia, a identidade digital carrega uma tensão particular: o desejo de pertencer a uma cultura global homogeneizante versus o orgulho e a valorização da identidade regional.</p><p>Essa tensão aparece nas escolhas de conteúdo publicado, nos filtros usados, nos personagens seguidos. Um jovem amazônico pode usar as redes para afirmar sua herança cultural — ou pode apagá-la para parecer "mais global". Ambas são escolhas identitárias com consequências culturais e psicológicas.</p></div>
+  <div class="card fi"><h3>🤖 Influenciadores Virtuais e IA</h3><p>Com a IA generativa, surgiram influenciadores virtuais — personagens digitais completamente gerados por computador, como Lu do Magalu. Eles têm "corpos perfeitos", falam múltiplos idiomas, nunca ficam doentes e nunca têm escândalos. Sua existência levanta questões filosóficas e éticas sobre autenticidade, representação e os limites da humanidade digital.</p></div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=filtros+instagram+saude+mental+adolescentes+autoestima')">▶ Filtros e saúde mental dos jovens</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=influenciadores+virtuais+inteligencia+artificial+exemplos')">▶ Influenciadores virtuais de IA</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=identidade+digital+redes+sociais+jovens+quem+somos+online')">▶ Identidade digital: quem somos online?</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 08</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas: reflita sobre sua própria identidade digital.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Quais são as diferenças entre identidade presencial e identidade digital? Quais possibilidades e quais riscos cada uma oferece?</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>O que é dismorfobia digital? Como o uso de filtros pode contribuir para problemas de autoestima e imagem corporal? Reflita sobre sua própria experiência ou de pessoas próximas.</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Analise sua própria identidade digital: como você se apresenta nas redes sociais? O que você escolhe mostrar e o que você esconde? Essa persona online é diferente de "você real"?</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Como um jovem amazônico pode usar as redes sociais para afirmar sua identidade regional sem abrir mão de participar da cultura digital global? Quais estratégias você sugere?</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Os influenciadores virtuais gerados por IA representam um avanço tecnológico ou uma ameaça à autenticidade humana? Construa um argumento estruturado defendendo seu ponto de vista.</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 08</h4>
+      <div class="mc-q"><div class="qn">1. A "dismorfobia digital" está associada a:</div>
+        <div class="mc-opt"><input type="radio" name="q08_1" value="a"><label>a) O medo irracional de ser fotografado em ambientes digitais</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_1" value="b"><label>b) A dificuldade de aceitar a própria aparência real após contato prolongado com versões editadas de si mesmo</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_1" value="c"><label>c) A compulsão por compartilhar selfies nas redes sociais</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_1" value="d"><label>d) O vício em filtros de beleza em aplicativos de edição</label></div>
+        <button class="check-btn" onclick="checkMC('q08_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q08_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. A característica da identidade digital que a diferencia da presencial é que ela pode ser:</div>
+        <div class="mc-opt"><input type="radio" name="q08_2" value="a"><label>a) Única e imutável por exigência das plataformas</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_2" value="b"><label>b) Múltipla, editável, assíncrona e potencialmente permanente</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_2" value="c"><label>c) Sempre verificada por documentos oficiais antes de criar uma conta</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_2" value="d"><label>d) Exclusivamente visual, sem possibilidade de texto ou voz</label></div>
+        <button class="check-btn" onclick="checkMC('q08_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q08_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. Influenciadores virtuais gerados por IA se diferenciam de influenciadores humanos por:</div>
+        <div class="mc-opt"><input type="radio" name="q08_3" value="a"><label>a) Terem muito mais seguidores do que qualquer humano</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_3" value="b"><label>b) Serem personagens completamente gerados por computador — sem existência física real</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_3" value="c"><label>c) Não poderem assinar contratos publicitários por falta de personalidade jurídica</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_3" value="d"><label>d) Publicarem conteúdo de forma completamente independente, sem equipe humana</label></div>
+        <button class="check-btn" onclick="checkMC('q08_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q08_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. Um "avatar" em ambientes digitais é definido como:</div>
+        <div class="mc-opt"><input type="radio" name="q08_4" value="a"><label>a) Um perfil falso criado para praticar cyberbullying</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_4" value="b"><label>b) A representação visual escolhida para si mesmo num ambiente digital</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_4" value="c"><label>c) Uma ferramenta de edição automática de fotos por IA</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_4" value="d"><label>d) Um tipo específico de influenciador virtual com menos de 10 mil seguidores</label></div>
+        <button class="check-btn" onclick="checkMC('q08_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q08_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. A tensão identitária dos jovens amazônicos nas redes sociais consiste em equilibrar:</div>
+        <div class="mc-opt"><input type="radio" name="q08_5" value="a"><label>a) O desejo de pertencimento à cultura global e o orgulho pela identidade regional</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_5" value="b"><label>b) A vontade de publicar muito conteúdo e a falta de tempo para produzi-los</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_5" value="c"><label>c) O acesso à internet e a ausência de smartphones acessíveis</label></div>
+        <div class="mc-opt"><input type="radio" name="q08_5" value="d"><label>d) A língua portuguesa e as línguas indígenas nos textos publicados</label></div>
+        <button class="check-btn" onclick="checkMC('q08_5','a',this)">Verificar ✓</button><div class="feedback" id="fb_q08_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 09 -->
+<section class="content-section" id="c09">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m09" onclick="mascotClick('m09','b09')">🧑🏾</div><div class="mascot-bubble hidden" id="b09"><button class="mascot-close" onclick="closeMascot('b09')">✕</button><span id="b09-txt">😤 Oi! Chegou até aqui? Então tá quase! Esse tópico é sobre como agir bem no digital — e eu vou te ajudar. Ou tirar sarro. Depende de você. 👀</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 09 · Ética Digital</div><div class="topic-title">Guia de Boas Práticas Digitais</div><div class="topic-sub">Construção coletiva de guia para uso ético e saudável das redes</div></div>
+  <div class="card fi"><h3>🌱 Por que precisamos de boas práticas digitais?</h3><p>O ambiente digital é relativamente novo — as grandes redes sociais têm, em sua maioria, menos de 20 anos de existência. Isso significa que as normas sociais, legais e éticas ainda estão sendo construídas. As consequências de comportamentos digitais irresponsáveis são reais e muitas vezes irreversíveis: reputações destruídas, traumas psicológicos, processos judiciais, prejuízos a comunidades inteiras.</p></div>
+  <div class="card fi"><h3>📋 Boas Práticas: Checklist Completo</h3>
+    <ul class="checklist">
+      <li>Verifique antes de compartilhar qualquer informação — cheque a fonte e busque em outras plataformas</li>
+      <li>Identifique conteúdo patrocinado quando for criador — use #publi ou #ad</li>
+      <li>Não publique fotos ou vídeos de terceiros sem permissão — respeite o direito de imagem</li>
+      <li>Use a função de denúncia das plataformas para conteúdo de ódio, violência ou desinformação</li>
+      <li>Crie senhas fortes e únicas para cada plataforma — ative a autenticação em dois fatores</li>
+      <li>Revise periodicamente as permissões concedidas aos aplicativos instalados no seu celular</li>
+      <li>Pratique o "detox digital" — períodos sem redes sociais para cuidar da saúde mental</li>
+      <li>Respeite opiniões divergentes — debata com argumentos, não com ataques pessoais</li>
+      <li>Proteja dados de menores de idade — nunca compartilhe informações que identifiquem crianças</li>
+      <li>Valorize o conteúdo local e amazônico — algoritmos precisam ser treinados com nossa cultura</li>
+    </ul>
+  </div>
+  <div class="concept fi"><h4>📌 Cidadania Digital</h4><p><em>Cidadania digital</em> é o conjunto de responsabilidades, direitos e habilidades necessários para participar de forma ética, segura e produtiva no ambiente digital. Assim como cidadania presencial implica respeitar leis e direitos alheios, cidadania digital implica respeitar pessoas, dados, direitos autorais e a saúde do ecossistema informacional.</p></div>
+  <div class="card fi"><h3>🌿 Boas Práticas no Contexto Amazônico</h3><ul>
+    <li><strong>Não reproduzir estereótipos:</strong> Questionar representações exoticizantes dos povos e culturas amazônicas</li>
+    <li><strong>Creditar criadores locais:</strong> Ao compartilhar conteúdo de criadores amazônicos, sempre creditar autoria</li>
+    <li><strong>Denunciar desinformação ambiental:</strong> Fake news sobre desmatamento têm consequências políticas reais</li>
+    <li><strong>Apoiar conectividade:</strong> Reivindicar melhores políticas públicas de acesso à internet nas comunidades</li>
+  </ul></div>
+  <div class="resource-box fi"><h4>🎬 Recursos Complementares</h4>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=cidadania+digital+etica+online+jovens')">▶ Cidadania digital: o que é e por que importa</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=detox+digital+saude+mental+redes+sociais')">▶ Detox digital e saúde mental</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+denunciar+conteudo+odio+desinformacao+redes+sociais')">▶ Como denunciar conteúdo nocivo nas redes</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 09</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões discursivas + tarefa de produção coletiva.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Por que as normas de conduta digital ainda estão sendo construídas? Quem deveria ter mais responsabilidade nesse processo: os usuários, as plataformas, os governos ou as escolas?</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Escolha 3 práticas da checklist que você considera as mais importantes. Explique por que as escolheu e se já as pratica em sua vida digital.</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>O que é "cidadania digital"? Quais habilidades e atitudes ela exige dos jovens do século XXI?</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Como a desinformação sobre o desmatamento e queimadas na Amazônia pode ter consequências políticas reais? Dê um exemplo concreto e explique o mecanismo.</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Tarefa de Produção</span><p>Em grupos, criem um "Guia de Boas Práticas Digitais para Jovens Amazônicos" com pelo menos 8 regras. O guia deve ser escrito em linguagem acessível para adolescentes e pode ser ilustrado. Apresentem para a turma.</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 09</h4>
+      <div class="mc-q"><div class="qn">1. "Cidadania digital" é:</div>
+        <div class="mc-opt"><input type="radio" name="q09_1" value="a"><label>a) O ato de votar online em eleições realizadas por plataformas digitais</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_1" value="b"><label>b) O conjunto de responsabilidades, direitos e habilidades para participar de forma ética no ambiente digital</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_1" value="c"><label>c) O cadastro obrigatório de usuários menores de 18 anos no sistema de identidade digital do governo</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_1" value="d"><label>d) A habilidade de criar conteúdo profissional para plataformas digitais</label></div>
+        <button class="check-btn" onclick="checkMC('q09_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q09_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. "Detox digital" refere-se a:</div>
+        <div class="mc-opt"><input type="radio" name="q09_2" value="a"><label>a) A prática de apagar todos os dados pessoais de plataformas digitais</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_2" value="b"><label>b) Períodos intencionais sem redes sociais para cuidar da saúde mental</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_2" value="c"><label>c) O processo de limpar vírus de dispositivos móveis</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_2" value="d"><label>d) A atualização sistemática de senhas e configurações de privacidade</label></div>
+        <button class="check-btn" onclick="checkMC('q09_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q09_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. A autenticação em dois fatores é uma boa prática de segurança que:</div>
+        <div class="mc-opt"><input type="radio" name="q09_3" value="a"><label>a) Exige que dois usuários confirmem cada postagem antes de publicar</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_3" value="b"><label>b) Adiciona uma segunda camada de verificação ao login, além da senha</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_3" value="c"><label>c) Cria duas senhas diferentes para a mesma conta</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_3" value="d"><label>d) Exige reconhecimento facial e impressão digital ao mesmo tempo</label></div>
+        <button class="check-btn" onclick="checkMC('q09_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q09_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. Uma boa prática digital específica para o contexto amazônico é:</div>
+        <div class="mc-opt"><input type="radio" name="q09_4" value="a"><label>a) Publicar apenas conteúdo em inglês para alcançar audiência global</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_4" value="b"><label>b) Denunciar desinformação ambiental sobre desmatamento e queimadas</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_4" value="c"><label>c) Evitar mencionar questões indígenas para não causar polêmica</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_4" value="d"><label>d) Restringir o acesso ao seu perfil apenas para seguidores locais</label></div>
+        <button class="check-btn" onclick="checkMC('q09_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q09_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. Por que publicar fotos ou vídeos de terceiros sem permissão é problemático?</div>
+        <div class="mc-opt"><input type="radio" name="q09_5" value="a"><label>a) Porque viola as políticas da plataforma mas não tem consequências legais</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_5" value="b"><label>b) Porque viola o direito de imagem, podendo gerar processos judiciais por danos morais</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_5" value="c"><label>c) Apenas quando a foto é usada para fins comerciais sem autorização</label></div>
+        <div class="mc-opt"><input type="radio" name="q09_5" value="d"><label>d) Somente quando envolve menores de 14 anos ou pessoas públicas</label></div>
+        <button class="check-btn" onclick="checkMC('q09_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q09_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+<!-- TÓPICO 10 -->
+<section class="content-section" id="c10">
+<div class="section-inner">
+  <div class="mascot-wrap fi"><div class="mascot-btn" id="m10" onclick="mascotClick('m10','b10')">🧑🏾</div><div class="mascot-bubble hidden" id="b10"><button class="mascot-close" onclick="closeMascot('b10')">✕</button><span id="b10-txt">🎬 Chegamos ao fim! Agora é SUA vez de criar! O primeiro documentário indígena independente ganhou prêmios internacionais. Você pode ser o próximo criador amazônico que o mundo vai conhecer!</span></div></div>
+  <div class="topic-header fi"><div class="topic-num">Tópico 10 · Projeto de Produção</div><div class="topic-title">Produção Autoral</div><div class="topic-sub">Documentário curto, tirinha ou podcast temático sobre cultura digital amazônica</div></div>
+  <div class="card fi"><h3>✍️ O projeto do bimestre</h3><p>Chegou a hora de colocar tudo que aprendemos em prática! O projeto de produção autoral é a atividade integradora do bimestre. Você (ou seu grupo) vai criar uma produção original sobre <strong>cultura digital amazônica</strong>, escolhendo um dos três formatos:</p>
+    <div class="info-grid">
+      <div class="info-card"><div class="ic-icon">🎬</div><div class="ic-val">Documentário</div><div class="ic-label">Vídeo curto (3 a 7 min) com entrevistas, imagens e narração</div></div>
+      <div class="info-card"><div class="ic-icon">✏️</div><div class="ic-val">Tirinha</div><div class="ic-label">HQ digital (4 a 8 quadros) em formato de post ou PDF</div></div>
+      <div class="info-card"><div class="ic-icon">🎙</div><div class="ic-val">Podcast</div><div class="ic-label">Episódio de áudio (5 a 10 min) com roteiro e edição</div></div>
+    </div>
+  </div>
+  <div class="card fi"><h3>📋 Como Fazer: Passo a Passo</h3>
+    <div class="steps">
+      <div class="step"><div class="step-txt"><strong>Escolha o tema:</strong> Dentro de "cultura digital amazônica", escolha um recorte específico. Ex.: como jovens ribeirinhos usam o TikTok; memes amazônicos como resistência cultural; um escritor amazônico e sua presença digital.</div></div>
+      <div class="step"><div class="step-txt"><strong>Pesquise e planeje:</strong> Levante informações, defina quem vai falar (se for documentário/podcast), escreva o roteiro ou planeje os quadros (se for tirinha).</div></div>
+      <div class="step"><div class="step-txt"><strong>Produza:</strong> Use o smartphone que você tem. Boa iluminação natural, áudio limpo e um roteiro claro valem mais do que qualquer câmera cara.</div></div>
+      <div class="step"><div class="step-txt"><strong>Edite:</strong> Apps gratuitos como CapCut (vídeo), Spotify for Podcasters (áudio) ou Canva (tirinhas) são suficientes para uma boa edição.</div></div>
+      <div class="step"><div class="step-txt"><strong>Apresente e publique:</strong> Apresente para a turma. Se quiser, publique nas redes com hashtags como #CulturaDigitalAmazonica e marque o professor e a escola.</div></div>
+    </div>
+  </div>
+  <div class="card fi"><h3>📊 Critérios de Avaliação</h3>
+    <table class="dtable">
+      <tr><th>Critério</th><th>Pontuação</th></tr>
+      <tr><td>Relevância temática (abordagem da cultura digital amazônica)</td><td>20 pts</td></tr>
+      <tr><td>Qualidade do roteiro e argumentação</td><td>25 pts</td></tr>
+      <tr><td>Uso crítico dos conceitos estudados no bimestre</td><td>25 pts</td></tr>
+      <tr><td>Qualidade técnica da produção (edição, clareza, organização)</td><td>20 pts</td></tr>
+      <tr><td>Apresentação e defesa oral do projeto</td><td>10 pts</td></tr>
+    </table>
+  </div>
+  <div class="card hero-card fi"><h3>🌟 Dica Final do Professor</h3><p>A Amazônia está mudando. O digital está mudando. E <strong>você</strong> está no centro dessa transformação. O que você produzir neste projeto é um registro do seu tempo, da sua geração, da sua visão. Faça com cuidado, com criatividade e com amor pelo lugar onde vivemos.</p><p style="margin-top:.6rem;font-style:italic;color:rgba(255,255,255,.8);">— Prof. Paulo Roberto R. Magalhães</p></div>
+  <div class="resource-box fi"><h4>🛠 Ferramentas Gratuitas para Produção</h4>
+    <span class="video-link" onclick="window.open('https://www.capcut.com')">✂️ CapCut (edição de vídeo)</span>
+    <span class="video-link" onclick="window.open('https://www.canva.com')">🎨 Canva (tirinhas e designs)</span>
+    <span class="video-link" onclick="window.open('https://podcasters.spotify.com')">🎙 Spotify for Podcasters</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+fazer+documentario+curto+celular+iniciante')">▶ Como fazer documentário curto no celular</span>
+    <span class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+fazer+podcast+iniciante+gravacao')">▶ Como fazer podcast para iniciantes</span>
+  </div>
+  <div class="activity-section fi"><h3>📝 Atividades — Tópico 10</h3>
+    <p style="font-size:.82rem;color:#3d1f00;margin-bottom:1rem;font-style:italic;">Questões de planejamento e reflexão sobre o projeto autoral.</p>
+    <div class="disc-q"><span class="qnum">Q01 · Discursiva</span><p>Qual formato você escolheu para o projeto (documentário, tirinha ou podcast)? Por quê? Quais são os desafios específicos desse formato que você vai precisar superar?</p></div>
+    <div class="disc-q"><span class="qnum">Q02 · Discursiva</span><p>Descreva o tema específico que você escolheu dentro de "cultura digital amazônica". Por que esse tema é importante? O que você quer que o público aprenda ou sinta ao consumir seu conteúdo?</p></div>
+    <div class="disc-q"><span class="qnum">Q03 · Discursiva</span><p>Escreva uma escaleta (roteiro resumido) do seu projeto com pelo menos 5 etapas ou cenas/blocos. Inclua abertura, desenvolvimento e conclusão.</p></div>
+    <div class="disc-q"><span class="qnum">Q04 · Discursiva</span><p>Quais conceitos estudados ao longo do bimestre aparecem no seu projeto? Como você vai usá-los criticamente na sua produção?</p></div>
+    <div class="disc-q"><span class="qnum">Q05 · Discursiva</span><p>Após finalizar o projeto, escreva uma autoavaliação: O que foi mais difícil? O que ficou melhor do que esperava? O que mudaria se fosse fazer de novo? Que aprendizado esse projeto trouxe que vai além da sala de aula?</p></div>
+    <div class="mc-section"><h4>🔵 Múltipla Escolha · Tópico 10</h4>
+      <div class="mc-q"><div class="qn">1. Uma "escaleta" em produção audiovisual é:</div>
+        <div class="mc-opt"><input type="radio" name="q10_1" value="a"><label>a) A lista completa de todos os equipamentos necessários para a filmagem</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_1" value="b"><label>b) Um roteiro resumido com as etapas, cenas ou blocos do projeto em sequência</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_1" value="c"><label>c) O orçamento detalhado de uma produção audiovisual</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_1" value="d"><label>d) A trilha sonora escolhida para o projeto</label></div>
+        <button class="check-btn" onclick="checkMC('q10_1','b',this)">Verificar ✓</button><div class="feedback" id="fb_q10_1"></div>
+      </div>
+      <div class="mc-q"><div class="qn">2. Para uma produção de qualidade com smartphone, o fator mais importante é:</div>
+        <div class="mc-opt"><input type="radio" name="q10_2" value="a"><label>a) Ter o modelo de celular mais caro disponível no mercado</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_2" value="b"><label>b) Boa iluminação natural, áudio limpo e um roteiro bem planejado</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_2" value="c"><label>c) Usar obrigatoriamente uma câmera secundária como ângulo de reação</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_2" value="d"><label>d) Publicar o conteúdo em pelo menos três plataformas diferentes</label></div>
+        <button class="check-btn" onclick="checkMC('q10_2','b',this)">Verificar ✓</button><div class="feedback" id="fb_q10_2"></div>
+      </div>
+      <div class="mc-q"><div class="qn">3. Qual app gratuito é mais indicado para edição de vídeos curtos no celular?</div>
+        <div class="mc-opt"><input type="radio" name="q10_3" value="a"><label>a) Microsoft Word</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_3" value="b"><label>b) CapCut</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_3" value="c"><label>c) Spotify</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_3" value="d"><label>d) Canva Docs</label></div>
+        <button class="check-btn" onclick="checkMC('q10_3','b',this)">Verificar ✓</button><div class="feedback" id="fb_q10_3"></div>
+      </div>
+      <div class="mc-q"><div class="qn">4. A autoavaliação ao final de um projeto é importante porque:</div>
+        <div class="mc-opt"><input type="radio" name="q10_4" value="a"><label>a) Substitui a avaliação do professor quando o projeto não foi entregue no prazo</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_4" value="b"><label>b) Desenvolve a metacognição — a capacidade de refletir sobre o próprio processo de aprendizagem</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_4" value="c"><label>c) Garante nota máxima independentemente da qualidade do projeto</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_4" value="d"><label>d) É exigida apenas quando o projeto foi realizado em grupo</label></div>
+        <button class="check-btn" onclick="checkMC('q10_4','b',this)">Verificar ✓</button><div class="feedback" id="fb_q10_4"></div>
+      </div>
+      <div class="mc-q"><div class="qn">5. Publicar o projeto com hashtags como #CulturaDigitalAmazonica contribui para:</div>
+        <div class="mc-opt"><input type="radio" name="q10_5" value="a"><label>a) Garantir nota extra automática no projeto bimestral</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_5" value="b"><label>b) Ampliar o alcance do conteúdo e contribuir para a visibilidade da cultura amazônica no digital</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_5" value="c"><label>c) Proteger o conteúdo contra cópia não autorizada</label></div>
+        <div class="mc-opt"><input type="radio" name="q10_5" value="d"><label>d) Monetizar o conteúdo automaticamente pelas plataformas de vídeo</label></div>
+        <button class="check-btn" onclick="checkMC('q10_5','b',this)">Verificar ✓</button><div class="feedback" id="fb_q10_5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<hr class="rainbow-div">
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Mundo Digital Amazônico</strong> — Trilha de Linguagens · 2ª Série · 1º Bimestre · 2026<br>E.E. Padre Carlos Casavequia · Prof. <strong>Paulo Roberto R. Magalhães</strong><br><span>Material pedagógico de uso exclusivo dos alunos. Proibida reprodução sem autorização.</span></p>
+</footer>
+
+<!-- FIXED NAV -->
+<div class="fnav">
+  <button class="fnav-btn" title="Ir ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂</button>
+  <button class="fnav-btn" title="Sumário" onclick="goTo('sumario')">☰</button>
+</div>
+
+<!-- BNCC MODAL -->
+<div class="modal-bg" id="bnccMod" onclick="closeMod(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="document.getElementById('bnccMod').classList.remove('show')">✕</button>
+    <span class="modal-label">Habilidade BNCC — Ensino Médio</span>
+    <div class="modal-code" id="mCode"></div>
+    <p class="modal-desc" id="mDesc"></p>
+  </div>
+</div>
+<script>
+/* THEME */
+const themes={'default':'tb-def','reading':'tb-read','dark':'tb-dark'};
+function setTheme(t){document.body.removeAttribute('data-theme');if(t!=='default')document.body.setAttribute('data-theme',t);Object.keys(themes).forEach(k=>document.getElementById(themes[k]).classList.toggle('on',k===t));try{localStorage.setItem('tl2b-theme',t);}catch(e){}}
+(function(){try{const s=localStorage.getItem('tl2b-theme');if(s)setTheme(s);}catch(e){}})();
+
+/* NAV */
+function goTo(id,e){if(e)e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* PROGRESS BAR */
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('prog').style.width=(window.scrollY/max*100)+'%';});
+
+/* BNCC DATA */
+const bncc={
+  'EM13LP07':'Analisar, em textos de diferentes gêneros, os efeitos de sentido decorrentes do uso de estratégias discursivas de persuasão (racionais e emocionais) com intuito de aprimorar a capacidade de elaboração de argumentos consistentes.',
+  'EM13LP10':'Analisar o fenômeno da disseminação de discursos autoritários, intolerantes, radicais e antidemocráticos nas redes sociais e outras mídias, bem como noticiar e comentar tais fatos sociais, desenvolvendo consciência do papel do campo jornalístico-midiático na construção da democracia.',
+  'EM13LP19':'Analisar formas contemporâneas de publicidade, em especial a publicidade digital, e estratégias de marketing que recorrem a influenciadores digitais, com vistas ao desenvolvimento de posturas críticas frente às práticas consumistas e à análise dos impactos do capitalismo de vigilância.',
+  'EM13LP43':'Analisar o papel das tecnologias digitais nos processos de produção e circulação de discursos desinformativos, reconhecendo e problematizando práticas de manipulação da informação.',
+  'EM13LP46':'Produzir textos de diferentes gêneros digitais — incluindo vídeo, podcast e infográficos — com autonomia, criatividade e domínio dos recursos multimodais, para publicação em diferentes plataformas digitais.',
+  'EM13LP47':'Compreender e analisar os mecanismos de produção de identidades digitais, incluindo avatares, personas e filtros, e refletir sobre os impactos na subjetividade, saúde mental e nos processos de identificação cultural de jovens.'
+};
+function openModal(code){document.getElementById('mCode').textContent=code;document.getElementById('mDesc').textContent=bncc[code]||'Consulte o documento da BNCC para mais detalhes sobre esta habilidade.';document.getElementById('bnccMod').classList.add('show');}
+function closeMod(e){if(e.target===document.getElementById('bnccMod'))document.getElementById('bnccMod').classList.remove('show');}
+
+/* MC CHECK */
+const mascotReactions={
+  correct:['🥳 Acertou em cheio! Você tá ligado(a)!','😎 Correto! Eu sabia que você ia acertar... talvez.','🎉 Isso aí! Continue assim!','🤩 Brilhante! Tô orgulhoso.','😄 Exato! Você leu, né? Boa!','🏆 Resposta certa! Você manda bem!','✅ Acertou! Tô te dando um tapinha nas costas digitalmente.'],
+  wrong:['😂 Errou! Isso dói mais que espinho de ouriço.','🙄 Hmm... não foi dessa vez. Vai lá reler o conteúdo.','😬 Eita! Pensou com o dedo, é?','🤦 Essa era fácil... mas tudo bem. Tenta de novo!','😅 Não foi dessa vez. Acontece com os melhores.','🥴 Essa resposta... eu vou fingi que não vi.','😤 Tô sem palavras. Mas vai lá reler.']
+};
+function showMascotReaction(isCorrect){
+  const arr=isCorrect?mascotReactions.correct:mascotReactions.wrong;
+  const msg=arr[Math.floor(Math.random()*arr.length)];
+  const pop=document.createElement('div');
+  pop.style.cssText='position:fixed;bottom:90px;right:16px;background:var(--card);border:2px solid var(--acc1);border-radius:18px 18px 0 18px;padding:.65rem 1rem;max-width:220px;font-size:.82rem;color:var(--txt);z-index:9999;box-shadow:0 6px 24px var(--shadow);animation:fadeIn .3s ease;';
+  pop.innerHTML=msg+'<button onclick="this.parentElement.remove()" style="position:absolute;top:.3rem;right:.5rem;background:none;border:none;cursor:pointer;font-size:.75rem;color:var(--muted);">✕</button>';
+  document.body.appendChild(pop);
+  setTimeout(()=>{if(pop.parentNode)pop.remove();},4000);
+}
+const style=document.createElement('style');
+style.textContent='@keyframes fadeIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}';
+document.head.appendChild(style);
+
+function checkMC(qid,correct,btn){
+  const opts=document.querySelectorAll('[name="'+qid+'"]');
+  const fb=document.getElementById('fb_'+qid);
+  let sel=null;
+  opts.forEach(o=>{if(o.checked)sel=o.value;});
+  if(!sel){if(fb){fb.className='feedback err';fb.textContent='Selecione uma alternativa primeiro!';}return;}
+  const isOk=sel===correct;
+  if(fb){fb.className=isOk?'feedback ok':'feedback err';fb.textContent=isOk?'✅ Correto!':'❌ Não foi dessa vez. Revise o conteúdo!';}
+  showMascotReaction(isOk);
+  if(btn)btn.disabled=true;
+}
+
+/* FLOATERS */
+const syms=['📱','🌿','🐍','🦜','📡','💬','🌊','🌳','🎙','📸','🔍','🐟','🦋','📲','🌺','🌎','💚','🦅','🍃','🌴'];
+function spawnFlt(){
+  const el=document.createElement('span');
+  el.className='flt';
+  el.textContent=syms[Math.floor(Math.random()*syms.length)];
+  el.style.left=(Math.random()*96)+'%';
+  el.style.fontSize=(Math.random()*2+.8)+'rem';
+  const d=Math.random()*16+9;
+  el.style.animationDuration=d+'s';
+  el.style.animationDelay=(Math.random()*5)+'s';
+  document.getElementById('floaters').appendChild(el);
+  setTimeout(()=>el.remove(),(d+6)*1000);
+}
+for(let i=0;i<10;i++)spawnFlt();
+setInterval(spawnFlt,1100);
+
+/* GYROSCOPE */
+window.addEventListener('deviceorientation',e=>{const fx=document.getElementById('floaters');if(fx)fx.style.transform='translate('+(e.gamma||0)/3+'px,'+(e.beta||0)/6+'px)';});
+
+/* FADE IN */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* PROGRESS BARS ANIMATION */
+const pbObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const p1=document.getElementById('pb1');const p2=document.getElementById('pb2');const p3=document.getElementById('pb3');if(p1)p1.style.width='92%';if(p2)p2.style.width='18%';if(p3)p3.style.width='75%';pbObs.unobserve(e.target);}});},{threshold:.5});
+const sc=document.getElementById('speed-card');
+if(sc)pbObs.observe(sc);
+
+/* PRIVACY CHECKER */
+const privData={
+  whatsapp:{title:'📱 WhatsApp coleta tipicamente:',items:['Número de telefone e lista de contatos','Localização (quando permitida pelo usuário)','Duração e frequência das chamadas','Dados do dispositivo e endereço IP','Informações de perfil (nome e foto)','Metadados das mensagens (horário, remetente)','Obs: conteúdo das mensagens é criptografado end-to-end']},
+  instagram:{title:'📸 Instagram coleta tipicamente:',items:['Fotos, vídeos e stories publicados','Histórico de buscas e interações','Localização geográfica','Dados de compras e interesses','Informações de dispositivo e conexão','Padrões de comportamento (tempo de tela, pausas em posts)','Dados vinculados ao Facebook/Meta']},
+  tiktok:{title:'🎵 TikTok coleta tipicamente:',items:['Histórico de vídeos assistidos e tempo de visualização','Dados de rosto e voz (biometria, dependendo das permissões)','Localização precisa','Lista de contatos e outros apps instalados','Dados de área de transferência (clipboard)','Padrões de digitação e comportamento','Informações de conta e pagamento']},
+  google:{title:'🔍 Google coleta tipicamente:',items:['Histórico completo de pesquisas','Localização detalhada e histórico de rotas','E-mails e calendário (via Gmail/Google Calendar)','Histórico completo do YouTube','Dados de voz via Google Assistente','Informações de pagamento','Dados de todos os dispositivos vinculados à conta']}
+};
+function showPriv(app,btn){
+  document.querySelectorAll('.priv-app-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const d=privData[app];
+  document.getElementById('priv-title').textContent=d.title;
+  const ul=document.getElementById('priv-list');
+  ul.innerHTML='';
+  d.items.forEach(item=>{const li=document.createElement('li');li.textContent=item;ul.appendChild(li);});
+  document.getElementById('priv-result').classList.add('show');
+}
+
+/* MASCOT */
+const mascotMsgs={
+  'm01':['🌳 Você sabia? A Amazônia abriga mais de 350 povos indígenas diferentes!','📡 O sinal de internet chega de helicóptero em algumas comunidades ribeirinhas!','🐍 A sucuri é o maior réptil do mundo — e mora aqui do lado!','🎥 O primeiro cinema indígena do Brasil foi criado por jovens Xavante nos anos 1970!','🌊 O Rio Amazonas carrega 20% da água doce que flui para os oceanos no planeta!'],
+  'm02':['📱 Um influenciador com 1M de seguidores pode ganhar R$100k por post!','👀 80% dos jovens dizem que influenciadores afetam suas decisões de compra.','🤔 Pergunta séria: você conhece algum influenciador amazônico? Pesquise!','😅 Algumas marcas pagam em produto e não em dinheiro. Influencer de coxinha de graça!','🕵️ Você tem 7 segundos para decidir se segue ou não alguém. Algoritmo sabe disso!'],
+  'm03':['🚨 Fake news viajam 6x mais rápido que notícias verdadeiras — MIT, 2018!','🧐 Dica: antes de compartilhar, respire fundo. Informação ansiosa é informação errada.','📰 A Agência Lupa checa mais de 100 rumores por semana!','🤥 Vovó que manda fake news no WhatsApp merece carinho E educação digital!','📲 70% das fake news são compartilhadas por pessoas que acreditam nelas. Cuidado!'],
+  'm04':['😂 O meme mais antigo tem mais de 2.000 anos. Era um grafite romano sobre gladiadores.','🔁 Template clássico + novo texto = novo meme. Exatamente o que Dawkins previu em 1976!','📜 O Dancing Baby de 1996 foi o primeiro meme viral da internet. Você é velho se lembra.','😬 Cuidado: meme engraçado pode esconder preconceito disfarçado. Pense antes de rir!','🎭 Meme de política? Cheque a fonte antes de compartilhar. Pode ser desinformação em traje de palhaço.'],
+  'm05':['🧵 Uma thread com mais de 1.000 posts existiu! Era de uma doutoranda ao vivo.','📲 Stories desaparecem em 24h. A Snapchat inventou isso em 2011. Instagram só copiou.','🌊 Durante a seca do Amazonas, moradores narraram ao vivo o drama pelo celular!','📖 Contar histórias em tempo real é tão antigo quanto a fogueira. A tecnologia mudou, a essência não.','🔥 Uma live de emergência amazônica pode alcançar mais gente do que um jornal nacional.'],
+  'm06':['📚 Milton Hatoum escreveu "Dois Irmãos" em 5 anos de pesquisa sobre Manaus!','🌿 Eliane Brum viveu na Amazônia para escrever seus textos. Jornalismo de imersão total.','🖊 Jaime Diakara escreve na língua Desana. São menos de 1.000 falantes no mundo!','📱 Livros amazônicos viralizando no BookTok? Já acontece! Busque #literaturamazonica','🌳 Márcio Souza dizia: "A Amazônia é o futuro do Brasil, se o Brasil sobreviver."'],
+  'm07':['🔒 Você leu a política de privacidade do Instagram? Tem 4.000+ palavras. Eu li. Quase dormi.','💰 Seus dados de localização valem muito dinheiro para anunciantes. Você sabe?','🇧🇷 A LGPD existe desde 2018 mas muitas empresas ainda não cumprem direito!','📋 Menos de 10% dos usuários leram alguma vez um termo de uso completo. Você é dos 10%?','🍪 Aquela mensagem de "aceitar cookies"? São literalmente dados seus sendo coletados.'],
+  'm08':['🪞 Filtros podem clarear pele até 3 tons. Isso afeta como jovens negros se veem!','🤖 Lu do Magalu tem 7 milhões de seguidores e nunca existiu de verdade. Pense nisso.','😬 Seu avatar digital pode ser mais famoso que você. Isso dá um pé na consciência!','💆 Fica 5 minutos longe do celular agora. Vai. Eu espero. Sério. Vai!','🌿 Sua identidade amazônica tem mais valor do que qualquer filtro vai te dar.'],
+  'm09':['😤 Chegou até aqui? Então tá quase! Cidadania digital começa por você!','😂 Esse checklist que fizemos juntos? Pode usar em casa. É grátis. De nada!','🌱 Cidadania digital não é das plataformas. Não é do governo. É SUA.','✅ Você sabia que reportar um post de fake news pode salvar vidas? Literalmente.','🔐 Senha "123456" ainda é a mais usada do mundo em 2024. Não seja essa pessoa.'],
+  'm10':['🎬 Chegamos! Agora é SUA vez! Acredite no seu projeto. Ele pode ir longe!','📱 Steven Spielberg disse: o melhor filme é o que você consegue fazer com o que tem.','🌳 Sua voz sobre a Amazônia importa. O mundo precisa ouvir quem vive aqui.','🏆 Na primeira vez é sempre difícil. Na segunda você vai arrasar!','🎙 O primeiro episódio do seu podcast não precisa ser perfeito. Precisa existir!']
+};
+function mascotClick(mid,bid){
+  const bubble=document.getElementById(bid);
+  const txtEl=document.getElementById(bid+'-txt');
+  const msgs=mascotMsgs[mid]||['Ei! Bons estudos!'];
+  const idx=Math.floor(Math.random()*msgs.length);
+  if(txtEl)txtEl.textContent=msgs[idx];
+  bubble.classList.toggle('hidden');
+}
+function closeMascot(bid){document.getElementById(bid).classList.add('hidden');}
+</script>
 </body>
 </html>
