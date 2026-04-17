@@ -645,6 +645,19 @@
   }
   .book-animating .book-img { animation: none !important; }
 
+  /* Livro disponível: flutuação suave + brilho verde pulsante */
+  @keyframes bookFloatSubtle {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-5px); }
+  }
+  @keyframes bookGlowGreen {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(240,190,40,0.45)) drop-shadow(0 3px 10px rgba(200,140,20,0.25)); }
+    50%      { filter: drop-shadow(0 0 16px rgba(255,220,60,0.85)) drop-shadow(0 5px 20px rgba(230,170,30,0.55)); }
+  }
+  .status-done .book-img {
+    animation: bookFloatSubtle 3.2s ease-in-out infinite, bookGlowGreen 2.6s ease-in-out infinite;
+  }
+
   /* Imagem de livro no modal */
   .modal-book-img {
     width: 4rem;
@@ -1375,7 +1388,7 @@
 
   let pendingNavigationUrl = null;
   const bookAvailabilityByUrl = {};
-  const MIN_BOOK_LINES = 200;
+  const MIN_BOOK_LINES = 100;
 
   function extractBookUrlFromCard(card) {
     const onclickText = card.getAttribute('onclick') || '';
@@ -1434,9 +1447,10 @@
     card.classList.remove('status-done', 'status-none');
     card.classList.add(available ? 'status-done' : 'status-none');
 
-    const iconEl = card.querySelector('.book-icon');
-    if (iconEl) {
-      iconEl.textContent = available ? '📗' : '📘';
+    const imgEl = card.querySelector('.book-img');
+    if (imgEl) {
+      imgEl.src = available ? 'assets/images/livro-verde.png' : 'assets/images/livro-azul.png';
+      imgEl.alt = available ? 'Livro disponível' : 'Livro indisponível';
     }
 
     const titleEl = card.querySelector('.medieval-title');
@@ -1591,6 +1605,9 @@
 
   // Initial load animation
   window.addEventListener('DOMContentLoaded', () => {
+    // Detecta disponibilidade real de todos os livros (regra: > 30 linhas)
+    updateBooksAvailability();
+
     if (isMobile) {
       // Mobile: nenhuma série selecionada até o usuário escolher
       document.querySelectorAll('.tab-btn').forEach(b => {
