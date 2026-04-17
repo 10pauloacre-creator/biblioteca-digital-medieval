@@ -652,6 +652,9 @@
 <audio id="sfx-livro-disponivel" preload="auto">
   <source src="assets/audio/som-livro-disponivel.mp3" type="audio/mpeg">
 </audio>
+<audio id="sfx-livro-abrindo" preload="auto">
+  <source src="assets/audio/livro-abrindo.mp3" type="audio/mpeg">
+</audio>
 <audio id="sfx-livro-indisponivel" preload="auto">
   <source src="assets/audio/som-livro-indisponivel.mp3" type="audio/mpeg">
 </audio>
@@ -1350,12 +1353,7 @@
 
     const iconEl = card.querySelector('.book-icon');
     if (iconEl) {
-      const imgEl = iconEl.querySelector('img');
-      if (imgEl) {
-        imgEl.src = available ? 'assets/images/livro-verde.png' : 'assets/images/livro-azul.png';
-        imgEl.alt = available ? 'Livro disponível' : 'Livro indisponível';
-      }
-      iconEl.style.filter = '';
+      iconEl.textContent = available ? '📗' : '📘';
     }
 
     const titleEl = card.querySelector('.medieval-title');
@@ -1411,6 +1409,7 @@
 
     if (isAvailable) {
       playSound('sfx-livro-disponivel');
+      playSound('sfx-livro-abrindo');
     } else {
       playSound('sfx-livro-indisponivel');
     }
