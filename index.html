@@ -540,6 +540,29 @@
     background: linear-gradient(90deg, transparent, #f0d060, transparent);
   }
 
+  /* "Escolha sua turma" — mobile only */
+  #escolha-turma {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    #escolha-turma {
+      display: block;
+      text-align: center;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      letter-spacing: 0.06em;
+      color: #c9a84c;
+      text-shadow: 0 0 12px rgba(201,168,76,0.45), 1px 1px 0 #3d2000;
+      margin: -16px 0 28px;
+      opacity: 0.9;
+    }
+    html.dark #escolha-turma {
+      color: #e8c96a;
+      text-shadow: 0 0 16px rgba(232,201,106,0.55), 1px 1px 0 #000;
+    }
+  }
+
   /* Tab content transition */
   .tab-content {
     display: none;
@@ -769,6 +792,7 @@
       ✦ 3ª SÉRIE ✦
     </button>
   </div>
+  <p id="escolha-turma">✦ Escolha sua turma ✦</p>
 </div>
 
 <!-- ========== TAB 1: 1ª SÉRIE ========== -->
@@ -1216,8 +1240,18 @@
 
   // ===== TABS =====
   let currentTab = 1;
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  let mobileUnlocked = false;
 
   function switchTab(num) {
+    // No mobile: 1ª seleção desbloqueia música e esconde instrução
+    if (isMobile && !mobileUnlocked) {
+      mobileUnlocked = true;
+      startBgMusic();
+      const et = document.getElementById('escolha-turma');
+      if (et) et.style.display = 'none';
+    }
+
     playSound('sfx-serie');
     const currentContent = document.querySelector('.tab-content.active');
     const nextContent = document.getElementById('content-' + num);
@@ -1318,8 +1352,8 @@
     } catch(e) {}
   }
 
-  // Tenta iniciar música imediatamente ao carregar
-  document.addEventListener('DOMContentLoaded', startBgMusic);
+  // Desktop: tenta iniciar música ao carregar; Mobile: aguarda seleção da série
+  document.addEventListener('DOMContentLoaded', () => { if (!isMobile) startBgMusic(); });
 
   // ===== MODAL =====
   const modalMessages = {
@@ -1557,8 +1591,22 @@
 
   // Initial load animation
   window.addEventListener('DOMContentLoaded', () => {
+    if (isMobile) {
+      // Mobile: nenhuma série selecionada até o usuário escolher
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.color = '#9a7040';
+        b.style.background = 'linear-gradient(135deg,#1a0a00,#120700)';
+      });
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.remove('active', 'show');
+      });
+      currentTab = 0;
+      return;
+    }
+
+    // Desktop: restaura a última série acessada
     const initialContent = document.querySelector('.tab-content.active');
-    // Restaura a última série acessada neste dispositivo
     try {
       const stored = localStorage.getItem('bdm-current-series');
       const num = stored ? parseInt(stored, 10) : 1;
