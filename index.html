@@ -1275,28 +1275,26 @@
     if (!music || musicStarted) return;
     music.volume = 0.02;
 
-    // Truque: inicia mutado (browsers permitem), depois desmuta
-    music.muted = true;
+    const interactionEvents = ['click','touchstart','touchmove','touchend','keydown','scroll','mousemove'];
+
+    const unlock = () => {
+      if (musicStarted) return;
+      music.play().then(() => {
+        musicStarted = true;
+        const btn = document.getElementById('mute-btn');
+        if (btn) btn.style.display = 'flex';
+        interactionEvents.forEach(ev => document.removeEventListener(ev, unlock));
+      }).catch(() => {});
+    };
+
     music.play().then(() => {
-      music.muted = false;
       musicStarted = true;
       const btn = document.getElementById('mute-btn');
       if (btn) btn.style.display = 'flex';
     }).catch(() => {
-      // Fallback: aguarda qualquer interação
-      music.muted = false;
-      const tryOnInteraction = () => {
-        music.play().then(() => {
-          musicStarted = true;
-          const btn = document.getElementById('mute-btn');
-          if (btn) btn.style.display = 'flex';
-        }).catch(() => {});
-        ['click','touchstart','keydown','scroll','mousemove'].forEach(ev =>
-          document.removeEventListener(ev, tryOnInteraction)
-        );
-      };
-      ['click','touchstart','keydown','scroll','mousemove'].forEach(ev =>
-        document.addEventListener(ev, tryOnInteraction, { once: true })
+      // Mobile: aguarda qualquer toque/interação
+      interactionEvents.forEach(ev =>
+        document.addEventListener(ev, unlock, { passive: true })
       );
     });
   }
