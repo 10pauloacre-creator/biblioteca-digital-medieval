@@ -102,6 +102,10 @@
   }
 </script>
 <style>
+  #modal-book-video {
+    transform: scale(1.4);   /* ligeiramente maior para "empurrar" as bordas ruins para fora */
+    overflow: hidden;         /* corta as bordas */
+}
   :root {
     --parchment: #f5e6c8;
     --parchment-dark: #e8d5a3;
@@ -608,10 +612,10 @@
 
   /* Animação de livro se abrindo no hover */
   @keyframes bookPop {
-    0%   { transform: scale(1) perspective(400px) rotateY(0deg); }
-    35%  { transform: scale(1.25) perspective(400px) rotateY(-30deg); }
-    70%  { transform: scale(1.18) perspective(400px) rotateY(8deg); }
-    100% { transform: scale(1) perspective(400px) rotateY(0deg); }
+    0%   { transform: scale(1) perspective(800px) rotateY(0deg); }
+    35%  { transform: scale(1.25) perspective(800px) rotateY(-30deg); }
+    70%  { transform: scale(1.18) perspective(800px) rotateY(8deg); }
+    100% { transform: scale(1) perspective(800px) rotateY(0deg); }
   }
   .bimestre-card:not(.status-none):not(.book-animating):hover .book-img {
     animation: bookPop 0.65s ease-in-out forwards;
@@ -689,7 +693,15 @@
     <div class="corner-ornament bl"></div>
     <div class="corner-ornament br"></div>
     <div class="mb-4" id="modal-book-icon">
-      <video id="modal-book-video" class="modal-book-img" src="assets/gif/livro-abrindo.webm" muted playsinline style="display:none;"></video>
+      <video 
+    id="modal-book-video" 
+    class="modal-book-video" 
+    muted 
+    playsinline 
+    autoplay 
+    loop 
+    style="display: none; width: 100%; height: auto;">
+  <source src="assets/gif/livro-abrindo.webm" type="video/webm"></video>
       <img id="modal-book-img" class="modal-book-img" src="assets/images/livro-azul.png" alt="Livro" style="display:none;">
     </div>
     <h2 id="modal-heading" class="gothic-title text-2xl mb-3" style="color:#f0d060;">Abrindo o pergaminho do conhecimento</h2>
@@ -1303,7 +1315,7 @@
     if (!audio) return;
     try {
       audio.currentTime = 0;
-      audio.volume = 0.7;
+      audio.volume = 0.1;
       audio.play().catch(() => {});
     } catch(e) {}
   }
@@ -1498,7 +1510,7 @@
     if (!isAvailable) return;
     if (!url) return;
     const elapsed = Date.now() - clickTime;
-    const remaining = Math.max(0, 4000 - elapsed);
+    const remaining = Math.max(0, 3500 - elapsed);
     window.setTimeout(() => {
       window.location.href = url;
     }, remaining);
