@@ -273,17 +273,13 @@
   }
 
   .bimestre-card:hover {
-    transform: translateY(-10px) scale(1.03);
+    transform: translateY(-12px) scale(1.04) perspective(500px) rotateY(-4deg);
     z-index: 10;
   }
 
   .bimestre-card:hover::after {
     opacity: 1;
-    box-shadow: 0 0 24px 4px rgba(201,168,76,0.6);
-  }
-
-  .bimestre-card:hover .book-icon {
-    animation: bookOpen 0.8s ease-in-out;
+    box-shadow: 0 0 30px 6px rgba(201,168,76,0.65);
   }
 
   /* Status cards */
@@ -310,7 +306,7 @@
   }
 
   .status-none .book-icon {
-    filter: grayscale(0.45) brightness(0.9);
+    opacity: 0.85;
   }
 
   .status-none .medieval-title {
@@ -579,6 +575,62 @@
   /* Book icon animation target */
   .book-icon { display: inline-block; transition: transform 0.3s; }
 
+  /* Imagens de livro — dimensão fixa, responsiva */
+  .book-img {
+    width: 2.2rem;
+    height: 2.8rem;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+  }
+  @media (max-width: 480px) {
+    .book-img { width: 1.8rem; height: 2.3rem; }
+  }
+
+  /* Animação de livro se abrindo no hover */
+  @keyframes bookPop {
+    0%   { transform: scale(1) perspective(400px) rotateY(0deg); }
+    35%  { transform: scale(1.25) perspective(400px) rotateY(-30deg); }
+    70%  { transform: scale(1.18) perspective(400px) rotateY(8deg); }
+    100% { transform: scale(1) perspective(400px) rotateY(0deg); }
+  }
+  .bimestre-card:not(.status-none):hover .book-img {
+    animation: bookPop 0.65s ease-in-out forwards;
+  }
+
+  /* Imagem de livro no modal */
+  .modal-book-img {
+    width: 4rem;
+    height: 5rem;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Botão mute medieval */
+  #mute-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 500;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid #c9a84c;
+    background: radial-gradient(circle at 40% 35%, #3a2000, #1a0c00);
+    color: #f0d060;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 0 16px rgba(201,168,76,0.4), 0 4px 12px rgba(0,0,0,0.6);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: none;
+  }
+  #mute-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 24px rgba(201,168,76,0.7), 0 4px 16px rgba(0,0,0,0.7);
+  }
+
   /* Watermark pattern in header */
   .medieval-pattern {
     position: absolute;
@@ -590,6 +642,23 @@
 </head>
 <body>
 
+<!-- ÁUDIO -->
+<audio id="bg-music" loop preload="auto">
+  <source src="assets/audio/musica-fundo.mp3" type="audio/mpeg">
+</audio>
+<audio id="sfx-serie" preload="auto">
+  <source src="assets/audio/som-serie.mp3" type="audio/mpeg">
+</audio>
+<audio id="sfx-livro-disponivel" preload="auto">
+  <source src="assets/audio/som-livro-disponivel.mp3" type="audio/mpeg">
+</audio>
+<audio id="sfx-livro-indisponivel" preload="auto">
+  <source src="assets/audio/som-livro-indisponivel.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Botão mute flutuante -->
+<button id="mute-btn" title="Música de fundo" onclick="toggleMute()">🔊</button>
+
 <!-- MODAL -->
 <div id="modal-overlay" class="modal-overlay" style="display:none;" onclick="closeModal(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
@@ -597,7 +666,9 @@
     <div class="corner-ornament tr"></div>
     <div class="corner-ornament bl"></div>
     <div class="corner-ornament br"></div>
-    <div class="text-5xl mb-4 animate-pageFloat" id="modal-book-icon">📜</div>
+    <div class="mb-4 animate-pageFloat" id="modal-book-icon">
+      <img id="modal-book-img" class="modal-book-img" src="assets/images/livro-verde.png" alt="Livro">
+    </div>
     <h2 id="modal-heading" class="gothic-title text-2xl mb-3" style="color:#f0d060;">Abrindo o pergaminho do conhecimento</h2>
     <div class="ornament-divider mb-4"><span style="color:#c9a84c;">✦ ✦ ✦</span></div>
     <p class="text-lg mb-2" style="color:#e8d5a3;font-family:'IM Fell English',serif;font-style:italic;" id="modal-title">Carregando o manuscrito…</p>
@@ -679,22 +750,22 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <!-- Bimestres LP S1 -->
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-6" onclick="openBook('1º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#1a0a00;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-7" onclick="openBook('2º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('3º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('4º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -709,22 +780,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🗺️</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-9" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -739,22 +810,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🏛️</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">1º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -774,22 +845,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">📜</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-6" onclick="openBook('1º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-7" onclick="openBook('2º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('3º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('4º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -804,22 +875,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🗺️</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -834,22 +905,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🏛️</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -864,22 +935,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🎨</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('1º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-13" onclick="openBook('2º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-14" onclick="openBook('3º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-15" onclick="openBook('4º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -899,22 +970,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">📜</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-6" onclick="openBook('1º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-7" onclick="openBook('2º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('3º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-9" onclick="openBook('4º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -929,22 +1000,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🗺️</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon">📗</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
         <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-9" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -959,22 +1030,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🏛️</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">1º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-13" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -989,22 +1060,22 @@
     <div class="ornament-divider mb-6"><span style="font-size:1rem;">🎨</span></div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('1º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/1-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">1º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('1º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/1-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-13" onclick="openBook('2º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/2-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-14" onclick="openBook('3º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/3-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
       <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-15" onclick="openBook('4º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon" style="filter:grayscale(0.5) brightness(0.7);">📘</div>
+        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
         <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
         <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/4-bimestre.html','none')">INDISPONÍVEL</button>
       </div>
@@ -1112,6 +1183,7 @@
   let currentTab = 1;
 
   function switchTab(num) {
+    playSound('sfx-serie');
     const currentContent = document.querySelector('.tab-content.active');
     const nextContent = document.getElementById('content-' + num);
     const isSame = currentContent === nextContent;
@@ -1159,20 +1231,58 @@
     }
   }
 
+  // ===== SONS =====
+  let musicStarted = false;
+  let muted = false;
+
+  function startBgMusic() {
+    const music = document.getElementById('bg-music');
+    if (!music || musicStarted) return;
+    music.volume = 0.35;
+    music.play().then(() => {
+      musicStarted = true;
+      const btn = document.getElementById('mute-btn');
+      if (btn) btn.style.display = 'flex';
+    }).catch(() => {});
+  }
+
+  function toggleMute() {
+    const music = document.getElementById('bg-music');
+    const btn = document.getElementById('mute-btn');
+    if (!music) return;
+    muted = !muted;
+    music.muted = muted;
+    if (btn) btn.textContent = muted ? '🔇' : '🔊';
+  }
+
+  function playSound(id) {
+    const audio = document.getElementById(id);
+    if (!audio) return;
+    try {
+      audio.currentTime = 0;
+      audio.volume = 0.7;
+      audio.play().catch(() => {});
+    } catch(e) {}
+  }
+
+  // Inicia música no primeiro toque/clique
+  document.addEventListener('click', () => startBgMusic(), { once: true });
+  document.addEventListener('touchstart', () => startBgMusic(), { once: true });
+
   // ===== MODAL =====
   const modalMessages = {
     done: {
-      icon: '📗',
+      icon: 'assets/images/livro-verde.png',
       status: '✦ A MÁGIA DO CONHECIMENTO ESTÁ SENDO DESPERTADA ✦',
       color: '#7ddc6e',
       heading: 'Abrindo o pergaminho do conhecimento',
       modeClass: 'modal-available',
     },
     none: {
-      icon: '📘',
+      icon: 'assets/images/livro-azul.png',
       status: '✦ ESSE PERGAMINHO AINDA NÃO RECEBEU A MÁGIA DO CONHECIMENTO ✦',
       color: '#5070a0',
-      heading: '',
+      heading: 'Pergaminho Selado',
       modeClass: 'modal-unavailable',
     },
   };
@@ -1240,7 +1350,12 @@
 
     const iconEl = card.querySelector('.book-icon');
     if (iconEl) {
-      iconEl.textContent = available ? '📗' : '📘';
+      const imgEl = iconEl.querySelector('img');
+      if (imgEl) {
+        imgEl.src = available ? 'assets/images/livro-verde.png' : 'assets/images/livro-azul.png';
+        imgEl.alt = available ? 'Livro disponível' : 'Livro indisponível';
+      }
+      iconEl.style.filter = '';
     }
 
     const titleEl = card.querySelector('.medieval-title');
@@ -1278,7 +1393,8 @@
       }
     }
 
-    document.getElementById('modal-book-icon').textContent = msg.icon;
+    const modalImg = document.getElementById('modal-book-img');
+    if (modalImg) { modalImg.src = msg.icon; modalImg.alt = msg.modeClass === 'modal-available' ? 'Livro disponível' : 'Livro indisponível'; }
     document.getElementById('modal-heading').textContent = msg.heading || 'Abrindo o pergaminho do conhecimento';
     document.getElementById('modal-title').textContent = title;
     const statusEl = document.getElementById('modal-status');
@@ -1290,9 +1406,14 @@
   }
 
   async function openBook(title, url, type) {
-    // Checa em tempo real se o livro está disponível
     const isAvailable = await checkBookAvailabilityRealtime(url);
     const statusType = isAvailable ? 'done' : 'none';
+
+    if (isAvailable) {
+      playSound('sfx-livro-disponivel');
+    } else {
+      playSound('sfx-livro-indisponivel');
+    }
 
     openModal(title, '', statusType, url);
     if (!isAvailable) return;
