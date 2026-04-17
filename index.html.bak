@@ -583,16 +583,6 @@
   /* Book icon animation target */
   .book-icon { display: inline-block; transition: transform 0.3s; }
 
-  /* Animação de livro fechando (reverso do GIF) */
-  @keyframes bookCloseAnim {
-    0%   { transform: scale(1.22) perspective(400px) rotateY(-28deg); }
-    55%  { transform: scale(1.06) perspective(400px) rotateY(-8deg); }
-    100% { transform: scale(1) perspective(400px) rotateY(0deg); }
-  }
-  .book-closing {
-    animation: bookCloseAnim 1.5s ease-in-out forwards !important;
-  }
-
   /* Imagens de livro — dimensão fixa, responsiva */
   .book-img {
     width: 8rem;
@@ -613,10 +603,9 @@
     70%  { transform: scale(1.18) perspective(400px) rotateY(8deg); }
     100% { transform: scale(1) perspective(400px) rotateY(0deg); }
   }
-  .bimestre-card:not(.status-none):not(.book-animating):hover .book-img {
+  .bimestre-card:not(.status-none):hover .book-img {
     animation: bookPop 0.65s ease-in-out forwards;
   }
-  .book-animating .book-img { animation: none !important; }
 
   /* Imagem de livro no modal */
   .modal-book-img {
@@ -1441,43 +1430,13 @@
     document.body.style.overflow = 'hidden';
   }
 
-  const GIF_OPEN_DURATION_MS = 2000;
-
-  function findCardByUrl(url) {
-    const cards = document.querySelectorAll('.bimestre-card');
-    for (const card of cards) {
-      const cardUrl = extractBookUrlFromCard(card);
-      if (cardUrl === url) return card;
-    }
-    return null;
-  }
-
-  function animateBookGif(card) {
-    const img = card.querySelector('.book-icon .book-img');
-    if (!img) return;
-    const staticSrc = 'assets/images/livro-verde.png';
-    card.classList.add('book-animating');
-    img.src = 'assets/gif/livro-abrindo.gif?t=' + Date.now();
-    playSound('sfx-livro-abrindo');
-    setTimeout(() => {
-      img.classList.add('book-closing');
-      setTimeout(() => {
-        img.src = staticSrc;
-        img.classList.remove('book-closing');
-        card.classList.remove('book-animating');
-      }, 1500);
-    }, GIF_OPEN_DURATION_MS);
-  }
-
   async function openBook(title, url, type) {
-    const clickTime = Date.now();
     const isAvailable = await checkBookAvailabilityRealtime(url);
     const statusType = isAvailable ? 'done' : 'none';
 
     if (isAvailable) {
       playSound('sfx-livro-disponivel');
-      const card = findCardByUrl(url);
-      if (card) animateBookGif(card);
+      playSound('sfx-livro-abrindo');
     } else {
       playSound('sfx-livro-indisponivel');
     }
@@ -1485,11 +1444,9 @@
     openModal(title, '', statusType, url);
     if (!isAvailable) return;
     if (!url) return;
-    const elapsed = Date.now() - clickTime;
-    const remaining = Math.max(0, 4000 - elapsed);
     window.setTimeout(() => {
       window.location.href = url;
-    }, remaining);
+    }, 650);
   }
 
   function closeModal(e) {
