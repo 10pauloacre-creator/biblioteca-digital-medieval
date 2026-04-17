@@ -688,8 +688,9 @@
     <div class="corner-ornament tr"></div>
     <div class="corner-ornament bl"></div>
     <div class="corner-ornament br"></div>
-    <div class="mb-4 animate-pageFloat" id="modal-book-icon">
-      <img id="modal-book-img" class="modal-book-img" src="assets/images/livro-verde.png" alt="Livro">
+    <div class="mb-4" id="modal-book-icon">
+      <video id="modal-book-video" class="modal-book-img" src="assets/gif/livro-abrindo.webm" muted playsinline style="display:none;"></video>
+      <img id="modal-book-img" class="modal-book-img" src="assets/images/livro-azul.png" alt="Livro" style="display:none;">
     </div>
     <h2 id="modal-heading" class="gothic-title text-2xl mb-3" style="color:#f0d060;">Abrindo o pergaminho do conhecimento</h2>
     <div class="ornament-divider mb-4"><span style="color:#c9a84c;">✦ ✦ ✦</span></div>
@@ -1294,7 +1295,7 @@
     if (!music) return;
     muted = !muted;
     music.muted = muted;
-    if (btn) btn.textContent = muted ? '🔇' : '🔊';
+    if (btn) btn.textContent = muted ? '' : '';
   }
 
   function playSound(id) {
@@ -1424,13 +1425,26 @@
 
     if (modalEl) {
       modalEl.classList.remove('modal-available', 'modal-unavailable');
-      if (msg.modeClass) {
-        modalEl.classList.add(msg.modeClass);
-      }
+      if (msg.modeClass) modalEl.classList.add(msg.modeClass);
     }
 
-    const modalImg = document.getElementById('modal-book-img');
-    if (modalImg) { modalImg.src = msg.icon; modalImg.alt = msg.modeClass === 'modal-available' ? 'Livro disponível' : 'Livro indisponível'; }
+    const modalVideo = document.getElementById('modal-book-video');
+    const modalImg   = document.getElementById('modal-book-img');
+    const isAvailable = type === 'done';
+
+    if (isAvailable) {
+      if (modalImg)   modalImg.style.display   = 'none';
+      if (modalVideo) {
+        modalVideo.style.display = 'block';
+        modalVideo.currentTime   = 0;
+        modalVideo.play().catch(() => {});
+      }
+      playSound('sfx-livro-abrindo');
+    } else {
+      if (modalVideo) { modalVideo.pause(); modalVideo.style.display = 'none'; }
+      if (modalImg)   { modalImg.src = msg.icon; modalImg.style.display = 'block'; }
+    }
+
     document.getElementById('modal-heading').textContent = msg.heading || 'Abrindo o pergaminho do conhecimento';
     document.getElementById('modal-title').textContent = title;
     const statusEl = document.getElementById('modal-status');
@@ -1476,8 +1490,6 @@
 
     if (isAvailable) {
       playSound('sfx-livro-disponivel');
-      const card = findCardByUrl(url);
-      if (card) animateBookGif(card);
     } else {
       playSound('sfx-livro-indisponivel');
     }
@@ -1494,6 +1506,8 @@
 
   function closeModal(e) {
     if (!e || e.target === document.getElementById('modal-overlay') || !e.target) {
+      const modalVideo = document.getElementById('modal-book-video');
+      if (modalVideo) { modalVideo.pause(); modalVideo.currentTime = 0; }
       document.getElementById('modal-overlay').style.display = 'none';
       document.body.style.overflow = '';
       pendingNavigationUrl = null;
