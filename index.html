@@ -1526,6 +1526,17 @@
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+  // Ao voltar pelo botão "voltar" do browser (mobile bfcache), fecha o modal
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) {
+      const modalVideo = document.getElementById('modal-book-video');
+      if (modalVideo) { modalVideo.pause(); modalVideo.currentTime = 0; }
+      document.getElementById('modal-overlay').style.display = 'none';
+      document.body.style.overflow = '';
+      pendingNavigationUrl = null;
+    }
+  });
+
   // ===== ANIMATIONS =====
   function triggerAnimations() {
     const activeContent = document.getElementById('content-' + currentTab);
