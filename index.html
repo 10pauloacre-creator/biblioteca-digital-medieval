@@ -1,2098 +1,1253 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>Biblioteca Digital Medieval</title>
-
-<!-- Favicon (ícone na aba do Chrome) -->
-<link rel="icon" type="image/x-icon" href="favicon.ico"/>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png"/>
-<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png"/>
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.json"/>
-<meta name="theme-color" content="#0d1f3c"/>
+<meta name="theme-color" content="#080300"/>
 <meta name="mobile-web-app-capable" content="yes"/>
-
-<!-- iOS (Safari / Chrome no iPhone) -->
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Biblioteca"/>
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png"/>
-
-<!-- Descrição e cor para Android -->
-<meta name="description" content="Acervo digital de materiais escolares com ambientação medieval"/>
-<meta name="application-name" content="Biblioteca Digital Medieval"/>
-
-<!-- Open Graph — preview ao compartilhar no WhatsApp, Instagram, Telegram etc. -->
-<meta property="og:type" content="website"/>
-<meta property="og:title" content="Biblioteca Digital Medieval"/>
-<meta property="og:description" content="Acervo digital de materiais escolares com ambientação medieval"/>
-<meta property="og:url" content="https://10pauloacre-creator.github.io/biblioteca-digital-medieval/"/>
-<meta property="og:image" content="https://10pauloacre-creator.github.io/biblioteca-digital-medieval/assets/icons/icon-512x512.png"/>
-<meta property="og:image:type" content="image/png"/>
-<meta property="og:image:width" content="512"/>
-<meta property="og:image:height" content="512"/>
-<meta property="og:image:alt" content="Biblioteca Digital Medieval — Escola Padre Carlos Casavequía"/>
-<meta property="og:locale" content="pt_BR"/>
-
-<!-- Twitter/X Card (também exibido em alguns previews) -->
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Biblioteca Digital Medieval"/>
-<meta name="twitter:description" content="Acervo digital de materiais escolares com ambientação medieval"/>
-<meta name="twitter:image" content="https://10pauloacre-creator.github.io/biblioteca-digital-medieval/assets/icons/icon-512x512.png"/>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=UnifrakturMaguntia&display=swap" rel="stylesheet"/>
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        colors: {
-          parchment: '#f5e6c8',
-          'parchment-dark': '#e8d5a3',
-          'parchment-deep': '#d4b896',
-          gold: '#c9a84c',
-          'gold-light': '#e8c96a',
-          'gold-bright': '#f0d060',
-          'brown-dark': '#3d1f0a',
-          'brown-mid': '#6b3a1f',
-          'brown-light': '#8b5e3c',
-          'moss-green': '#2d4a1e',
-          'moss-mid': '#3d6b2a',
-          burgundy: '#5c1a2e',
-          'burgundy-mid': '#7a2840',
-          'navy-deep': '#0d1f3c',
-          'navy-mid': '#1a3460',
-          'ink': '#1a0a00',
-          'candle': '#ff9f45',
-        },
-        fontFamily: {
-          gothic: ['"Cinzel Decorative"', 'serif'],
-          medieval: ['"Cinzel"', 'serif'],
-          fraktur: ['"UnifrakturMaguntia"', 'serif'],
-          fell: ['"IM Fell English"', 'serif'],
-        },
-        keyframes: {
-          fadeSlideUp: {
-            '0%': { opacity: '0', transform: 'translateY(32px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-          },
-          fadeIn: {
-            '0%': { opacity: '0' },
-            '100%': { opacity: '1' },
-          },
-          shimmer: {
-            '0%': { backgroundPosition: '-200% center' },
-            '100%': { backgroundPosition: '200% center' },
-          },
-          candleFlicker: {
-            '0%,100%': { opacity: '1', transform: 'scaleX(1)' },
-            '50%': { opacity: '0.8', transform: 'scaleX(0.96)' },
-          },
-          sealMelt: {
-            '0%': { transform: 'scale(1)' },
-            '30%': { transform: 'scale(1.15)' },
-            '60%': { transform: 'scale(0.95)' },
-            '100%': { transform: 'scale(1)' },
-          },
-          bookOpen: {
-            '0%': { transform: 'perspective(600px) rotateY(0deg)' },
-            '50%': { transform: 'perspective(600px) rotateY(-25deg)' },
-            '100%': { transform: 'perspective(600px) rotateY(0deg)' },
-          },
-          pageFloat: {
-            '0%,100%': { transform: 'translateY(0px) rotate(-1deg)' },
-            '50%': { transform: 'translateY(-6px) rotate(1deg)' },
-          },
-          ornamentSpin: {
-            '0%': { transform: 'rotate(0deg)' },
-            '100%': { transform: 'rotate(360deg)' },
-          },
-          glow: {
-            '0%,100%': { boxShadow: '0 0 8px 2px rgba(201,168,76,0.3)' },
-            '50%': { boxShadow: '0 0 22px 6px rgba(201,168,76,0.7)' },
-          },
-          tabFade: {
-            '0%': { opacity: '0', transform: 'translateX(-12px)' },
-            '100%': { opacity: '1', transform: 'translateX(0)' },
-          },
-          modalAppear: {
-            '0%': { opacity: '0', transform: 'scale(0.85) perspective(800px) rotateX(10deg)' },
-            '100%': { opacity: '1', transform: 'scale(1) perspective(800px) rotateX(0deg)' },
-          },
-        },
-        animation: {
-          fadeSlideUp: 'fadeSlideUp 0.7s ease-out both',
-          fadeIn: 'fadeIn 0.5s ease-out both',
-          shimmer: 'shimmer 2.5s linear infinite',
-          candleFlicker: 'candleFlicker 3s ease-in-out infinite',
-          sealMelt: 'sealMelt 0.6s ease-in-out',
-          bookOpen: 'bookOpen 0.8s ease-in-out',
-          pageFloat: 'pageFloat 4s ease-in-out infinite',
-          glow: 'glow 2s ease-in-out infinite',
-          tabFade: 'tabFade 0.4s ease-out both',
-          modalAppear: 'modalAppear 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both',
-        },
-      }
-    }
-  }
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
-  #modal-book-video {
-    transform: scale(1.4);   /* ligeiramente maior para "empurrar" as bordas ruins para fora */
-    overflow: hidden;         /* corta as bordas */
+/* ══════════════════════════════
+   ROOT TOKENS
+══════════════════════════════ */
+:root{
+  --gold:#c9a84c; --gold-l:#f0d060; --gold-b:#ffe87a;
+  --ember:#ff6a1a; --ember-d:#b84010;
+  --bg:#07030000; --card:#1a0e04;
+  --text:#f5e8c0; --text-m:#c9a870; --text-d:#7a5c30;
+  --green-book:#1d4a20; --brown-book:#4a2a0a; --red-book:#4a0e1a;
 }
-  :root {
-    --parchment: #f5e6c8;
-    --parchment-dark: #e8d5a3;
-    --gold: #c9a84c;
-    --gold-light: #e8c96a;
-    --brown-dark: #3d1f0a;
-    --brown-mid: #6b3a1f;
-    --moss: #2d4a1e;
-    --burgundy: #5c1a2e;
-    --navy: #0d1f3c;
-    --ink: #1a0a00;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    background-color: #f0ddb8;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
-      radial-gradient(ellipse at 20% 10%, #e8d5a3 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 90%, #d4b896 0%, transparent 50%),
-      linear-gradient(135deg, #f5e6c8 0%, #e8d5a3 30%, #f0ddb8 60%, #e2cc96 100%);
-    min-height: 100vh;
-    font-family: 'IM Fell English', serif;
-    transition: background 0.5s, color 0.5s;
-  }
-
-  .dark body, body.dark-mode {
-    background-color: #120800;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E"),
-      radial-gradient(ellipse at 30% 20%, #2a1000 0%, transparent 60%),
-      radial-gradient(ellipse at 70% 80%, #0d0500 0%, transparent 60%),
-      linear-gradient(135deg, #1a0800 0%, #120500 50%, #1a0c02 100%);
-  }
-
-  html.dark body {
-    background-color: #120800;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E"),
-      radial-gradient(ellipse at 30% 20%, #2a1000 0%, transparent 60%),
-      radial-gradient(ellipse at 70% 80%, #0d0500 0%, transparent 60%),
-      linear-gradient(135deg, #1a0800 0%, #120500 50%, #1a0c02 100%);
-  }
-
-  .gothic-title {
-    font-family: 'Cinzel Decorative', serif;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.4);
-    letter-spacing: 0.08em;
-    text-align: center;
-    display: block;
-    width: 100%;
-  }
-
-  .medieval-title {
-    font-family: 'Cinzel', serif;
-    letter-spacing: 0.12em;
-  }
-
-  .fraktur-title {
-    font-family: 'UnifrakturMaguntia', serif;
-  }
-
-  .parchment-card {
-    background: linear-gradient(135deg, #f5e6c8 0%, #edd9a3 40%, #e8d090 100%);
-    border: 2px solid #c9a84c;
-    box-shadow: 3px 3px 10px rgba(61,31,10,0.3), inset 0 0 20px rgba(201,168,76,0.1);
-    position: relative;
-  }
-
-  .dark .parchment-card, html.dark .parchment-card {
-    background: linear-gradient(135deg, #2a1500 0%, #1f1000 40%, #2d1800 100%);
-    border-color: #8a6030;
-    box-shadow: 3px 3px 10px rgba(0,0,0,0.7), inset 0 0 20px rgba(201,168,76,0.05);
-  }
-
-  .ornament-border {
-    border-image: linear-gradient(45deg, #c9a84c, #f0d060, #c9a84c, #8b6020, #c9a84c) 1;
-  }
-
-  .gold-text {
-    background: linear-gradient(135deg, #c9a84c 0%, #f0d060 40%, #e8c96a 60%, #c9a84c 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gold-shimmer {
-    background: linear-gradient(90deg, #c9a84c 0%, #f0d060 25%, #fff8dc 50%, #f0d060 75%, #c9a84c 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 2.5s linear infinite;
-  }
-
-  /* Tab system */
-  .tab-btn {
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    border: 2px solid rgba(201,168,76,0.25);
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(36,26,10,0.95) 0%, rgba(42,31,15,0.9) 45%, rgba(64,47,18,0.95) 100%);
-    color: #f8e5a1;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tab-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(201,168,76,0.12), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .tab-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 18px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.08);
-  }
-
-  .tab-btn:hover::before { opacity: 1; }
-
-  .tab-btn.active {
-    border-color: #f4d27c;
-    background: linear-gradient(180deg, #f1d885 0%, #c59f41 45%, #8b6a20 100%);
-    color: #3d2000;
-    box-shadow: 0 24px 32px rgba(0,0,0,0.45), inset 0 0 18px rgba(255,255,255,0.12);
-    transform: translateY(-8px);
-    z-index: 2;
-  }
-
-  .tab-btn.active::after {
-    content: '';
-    position: absolute;
-    inset: auto auto 0 12px;
-    height: 8px;
-    width: calc(100% - 24px);
-    background: rgba(0,0,0,0.18);
-    border-radius: 50%;
-    filter: blur(4px);
-    opacity: 0.65;
-  }
-
-  /* Bimestre Cards */
-  .bimestre-card {
-    transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s ease;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #281904 0%, #140a03 100%);
-    border: 2px solid rgba(201,168,76,0.25);
-    color: #f0d060;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .bimestre-card::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #c9a84c, #f0d060, #8b6020, #c9a84c);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-
-  .bimestre-card:hover {
-    transform: translateY(-12px) scale(1.04) perspective(500px) rotateY(-4deg);
-    z-index: 10;
-  }
-
-  .bimestre-card:hover::after {
-    opacity: 1;
-    box-shadow: 0 0 30px 6px rgba(201,168,76,0.65);
-  }
-
-  /* Status cards */
-  .status-done {
-    background: linear-gradient(135deg, #d0b55a 0%, #ecd27d 40%, #c49a3e 85%);
-    border-color: #d4ac47;
-    color: #2a1200;
-    box-shadow: inset 0 0 16px rgba(255,255,255,0.16), 0 10px 24px rgba(0,0,0,0.18);
-  }.status-none {
-    background: radial-gradient(circle at top left, rgba(255,255,255,0.04), transparent 18%),
-                radial-gradient(circle at bottom right, rgba(255,255,255,0.03), transparent 14%),
-                linear-gradient(145deg, #2b2b2b 0%, #181818 40%, #232323 100%);
-    border-color: #4d4d4d;
-    box-shadow: inset 0 0 18px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.05);
-    cursor: default;
-  }
-
-  .status-none:hover {
-    transform: none;
-  }
-
-  .status-none:hover::after {
-    opacity: 0;
-  }
-
-  .status-none .book-icon {
-    opacity: 0.85;
-  }
-
-  .status-none .medieval-title {
-    color: #d3d3d3;
-  }
-
-  .bimestre-card:not(.status-none) .medieval-title {
-    color: #1a0a00 !important;
-  }
-
-  /* Access button */
-  .btn-access {
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    font-size: clamp(0.55rem, 1.8vw, 0.75rem);
-    padding: 7px 10px;
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid #b58c2a;
-    background: linear-gradient(135deg, #d4b452 0%, #b9922d 45%, #8f6e16 100%);
-    color: #2a1100;
-    cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-    position: relative;
-    overflow: hidden;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.18);
-    box-shadow: inset 0 0 18px rgba(0,0,0,0.12), 0 0 22px rgba(189, 145, 56, 0.25);
-    transform: translateY(0);
-    white-space: nowrap;
-  }
-
-  .status-done .btn-access {
-    border-color: #b89231;
-    background: linear-gradient(135deg, #c7a250 0%, #f7c75a 35%, #a47a2c 75%, #917020 100%);
-    color: #2a1100;
-    box-shadow: inset 0 0 12px rgba(0,0,0,0.12), 0 5px 14px rgba(0,0,0,0.10);
-  }
-
-  .btn-access::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.07);
-    opacity: 0.2;
-    transition: opacity 0.35s;
-  }
-
-  .btn-access:hover::before {
-    opacity: 0.24;
-  }
-
-  .btn-access:hover {
-    box-shadow: inset 0 0 18px rgba(0,0,0,0.12), 0 0 22px rgba(189, 145, 56, 0.25);
-    transform: translateY(-1px) scale(1.03);
-  }
-
-  .btn-access:active {
-    transform: translateY(1px) scale(0.98);
-    box-shadow: inset 0 0 22px rgba(0,0,0,0.18), 0 0 8px rgba(0,0,0,0.12);
-  }
-
-  .btn-unavailable {
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    font-size: clamp(0.55rem, 1.8vw, 0.75rem);
-    padding: 7px 10px;
-    width: 100%;
-    border-radius: 6px;
-    border: 1.5px solid #5a5a5a;
-    background: linear-gradient(135deg, #262626 0%, #1c1c1c 55%, #2d2d2d 100%);
-    color: #ccc;
-    cursor: not-allowed;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-    box-shadow: inset 0 1px 2px rgba(255,255,255,0.08), inset 0 -1px 2px rgba(0,0,0,0.25);
-    white-space: nowrap;
-  }
-
-  /* Section headers */
-  .section-header {
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    position: relative;
-    display: block;
-    width: 100%;
-    text-align: center;
-    color: #f7d87a !important;
-    background: linear-gradient(90deg, #f9e3a0 0%, #f2c25c 45%, #b98b28 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.28);
-  }
-
-  .section-header::before, .section-header::after {
-    content: '❧';
-    margin: 0 8px;
-    -webkit-text-fill-color: #c9a84c;
-    font-size: 0.9em;
-  }
-
-  /* Divider ornament */
-  @keyframes borderGlow {
-    0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.25), 0 4px 30px rgba(201,168,76,0.15); }
-    50%       { box-shadow: 0 0 18px rgba(240,208,96,0.55), 0 4px 50px rgba(201,168,76,0.35), 0 0 60px rgba(201,168,76,0.12); }
-  }
-
-  .ornament-divider {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #c9a84c;
-  }
-
-  .ornament-divider::before, .ornament-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-  }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10,5,0,0.85);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-  }
-
-  .modal-content {
-    background: linear-gradient(160deg, #2a1500 0%, #1a0d00 50%, #2d1800 100%);
-    border: 3px solid #c9a84c;
-    border-radius: 8px;
-    padding: 40px;
-    max-width: 480px;
-    width: 90%;
-    text-align: center;
-    animation: modalAppear 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
-    box-shadow: 0 0 60px rgba(201,168,76,0.3), 0 20px 60px rgba(0,0,0,0.8);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .modal-content::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-  }
-
-  /* Modal magic states */
-  .modal-content.modal-available #modal-heading {
-    color: #f0d060;
-    text-shadow: 0 0 18px rgba(240,208,96,0.9), 0 0 32px rgba(240,208,96,0.7);
-  }
-
-  .modal-content.modal-available #modal-book-icon {
-    filter: drop-shadow(0 0 14px rgba(240,208,96,0.9));
-    animation: pageFloat 4s ease-in-out infinite, glow 2s ease-in-out infinite;
-  }
-
-  .modal-content.modal-unavailable #modal-heading {
-    color: #9a8060;
-    text-shadow: 0 0 4px rgba(0,0,0,0.6);
-  }
-
-  .modal-content.modal-unavailable #modal-book-icon {
-    filter: grayscale(0.6) brightness(0.8);
-    animation: pageFloat 4s ease-in-out infinite;
-  }
-
-  /* Corner ornaments */
-  .corner-ornament {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    border-color: #c9a84c;
-    opacity: 0.7;
-  }
-  .corner-ornament.tl { top: 8px; left: 8px; border-top: 2px solid; border-left: 2px solid; }
-  .corner-ornament.tr { top: 8px; right: 8px; border-top: 2px solid; border-right: 2px solid; }
-  .corner-ornament.bl { bottom: 8px; left: 8px; border-bottom: 2px solid; border-left: 2px solid; }
-  .corner-ornament.br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-right: 2px solid; }
-
-  /* Staggered animation delays */
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.2s; }
-  .delay-3 { animation-delay: 0.3s; }
-  .delay-4 { animation-delay: 0.4s; }
-  .delay-5 { animation-delay: 0.5s; }
-  .delay-6 { animation-delay: 0.6s; }
-  .delay-7 { animation-delay: 0.7s; }
-  .delay-8 { animation-delay: 0.8s; }
-  .delay-9 { animation-delay: 0.9s; }
-  .delay-10 { animation-delay: 1.0s; }
-  .delay-11 { animation-delay: 1.1s; }
-  .delay-12 { animation-delay: 1.2s; }
-  .delay-13 { animation-delay: 1.3s; }
-  .delay-14 { animation-delay: 1.4s; }
-  .delay-15 { animation-delay: 1.5s; }
-  .delay-16 { animation-delay: 1.6s; }
-
-  .animate-on-load { opacity: 1; transition: opacity 0.5s ease, transform 0.5s ease; }
-
-  /* Header decoration */
-  .header-bg {
-    background: linear-gradient(180deg, #2a1500 0%, #1a0c00 60%, transparent 100%);
-    border-bottom: 3px solid #c9a84c;
-    box-shadow: 0 4px 30px rgba(201,168,76,0.2);
-    position: relative;
-    overflow: hidden;
-    animation: borderGlow 3.5s ease-in-out infinite;
-  }
-
-  .dark .header-bg, html.dark .header-bg {
-    background: linear-gradient(180deg, #0d0500 0%, #080300 60%, transparent 100%);
-  }
-
-  .header-bg::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #f0d060, transparent);
-  }
-
-  /* "Escolha sua turma" — mobile only */
-  #escolha-turma {
-    display: none;
-  }
-  @media (max-width: 768px) {
-    #escolha-turma {
-      display: block;
-      text-align: center;
-      font-family: 'IM Fell English', serif;
-      font-style: italic;
-      font-size: 1.25rem;
-      letter-spacing: 0.06em;
-      color: #c9a84c;
-      text-shadow: 0 0 12px rgba(201,168,76,0.45), 1px 1px 0 #3d2000;
-      margin: -16px 0 28px;
-      opacity: 0.9;
-    }
-    html.dark #escolha-turma {
-      color: #e8c96a;
-      text-shadow: 0 0 16px rgba(232,201,106,0.55), 1px 1px 0 #000;
-    }
-  }
-
-  /* Tab content transition */
-  .tab-content {
-    display: none;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.42s ease-out, transform 0.42s ease-out;
-  }
-
-  .tab-content.active {
-    display: block;
-  }
-
-  .tab-content.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .tab-content.fade-out {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-
-  /* Footer */
-  .footer-bg {
-    background: linear-gradient(180deg, transparent 0%, #1a0c00 100%);
-    border-top: 3px solid #c9a84c;
-    animation: borderGlow 3.5s ease-in-out infinite;
-    animation-delay: 1.75s;
-  }
-
-  html.dark .footer-bg {
-    background: linear-gradient(180deg, transparent 0%, #080200 100%);
-  }
-
-  .candle-icon { animation: candleFlicker 3s ease-in-out infinite; }
-
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: #2a1500; }
-  ::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 4px; }
-
-  /* Dark mode text adjustments */
-  html.dark .text-brown-dark { color: #e8d5a3; }
-  html.dark .section-title { color: #e8c96a; }
-  html.dark .subtitle-text { color: #c9a870; }
-
-  /* Book icon animation target */
-  .book-icon { display: inline-block; transition: transform 0.3s; }
-
-  /* Animação de livro fechando (reverso do GIF) */
-  @keyframes bookCloseAnim {
-    0%   { transform: scale(1.22) perspective(400px) rotateY(-28deg); }
-    55%  { transform: scale(1.06) perspective(400px) rotateY(-8deg); }
-    100% { transform: scale(1) perspective(400px) rotateY(0deg); }
-  }
-  .book-closing {
-    animation: bookCloseAnim 1.5s ease-in-out forwards !important;
-  }
-
-  /* Imagens de livro — dimensão fixa, responsiva */
-  .book-img {
-    width: 8rem;
-    height: 9rem;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-    transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
-  }
-  @media (max-width: 480px) {
-    .book-img { width: 6rem; height: 7rem; }
-
-    /* Centralização forçada no mobile */
-    .gothic-title,
-    .medieval-title,
-    .fraktur-title,
-    .section-header {
-      text-align: center !important;
-      display: block !important;
-      width: 100% !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
-    }
-
-    header, header * {
-      text-align: center !important;
-    }
-
-    .ornament-divider {
-      justify-content: center !important;
-    }
-
-    header h1.gothic-title {
-      font-size: 1.5rem !important;
-      letter-spacing: 0.03em !important;
-      line-height: 1.4 !important;
-      padding: 0 4px !important;
-      box-sizing: border-box !important;
-      overflow-wrap: break-word !important;
-      word-break: break-word !important;
-    }
-
-    header .fraktur-title {
-      font-size: 1.3rem !important;
-      line-height: 1.4 !important;
-      overflow-wrap: break-word !important;
-      word-break: break-word !important;
-    }
-
-    header .medieval-title {
-      font-size: 0.85rem !important;
-      letter-spacing: 0.08em !important;
-    }
-
-    /* Section headers — reduz letter-spacing para caber na tela */
-    .section-header {
-      letter-spacing: 0.07em !important;
-      font-size: 1rem !important;
-      overflow-wrap: break-word !important;
-      word-break: break-word !important;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .section-header {
-      letter-spacing: 0.1em !important;
-      font-size: 1.05rem !important;
-    }
-  }
-
-  /* Animação de livro se abrindo no hover */
-  @keyframes bookPop {
-    0%   { transform: scale(1) perspective(800px) rotateY(0deg); }
-    35%  { transform: scale(1.25) perspective(800px) rotateY(-30deg); }
-    70%  { transform: scale(1.18) perspective(800px) rotateY(8deg); }
-    100% { transform: scale(1) perspective(800px) rotateY(0deg); }
-  }
-  .bimestre-card:not(.status-none):not(.book-animating):hover .book-img {
-    animation: bookPop 0.65s ease-in-out forwards;
-  }
-  .book-animating .book-img { animation: none !important; }
-
-  /* Livro disponível: flutuação suave + brilho verde pulsante */
-  @keyframes bookFloatSubtle {
-    0%, 100% { transform: translateY(0px); }
-    50%       { transform: translateY(-5px); }
-  }
-  @keyframes bookGlowGreen {
-    0%, 100% { filter: drop-shadow(0 0 5px rgba(240,190,40,0.45)) drop-shadow(0 3px 10px rgba(200,140,20,0.25)); }
-    50%      { filter: drop-shadow(0 0 16px rgba(255,220,60,0.85)) drop-shadow(0 5px 20px rgba(230,170,30,0.55)); }
-  }
-  .status-done .book-img {
-    animation: bookFloatSubtle 3.2s ease-in-out infinite, bookGlowGreen 2.6s ease-in-out infinite;
-  }
-
-  /* Imagem de livro no modal */
-  .modal-book-img {
-    width: 4rem;
-    height: 5rem;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-  }
-
-  /* Botão mute medieval */
-  #mute-btn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 500;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #c9a84c;
-    background: radial-gradient(circle at 40% 35%, #3a2000, #1a0c00);
-    color: #f0d060;
-    font-size: 1.4rem;
-    cursor: pointer;
-    box-shadow: 0 0 16px rgba(201,168,76,0.4), 0 4px 12px rgba(0,0,0,0.6);
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: none;
-  }
-  #mute-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 24px rgba(201,168,76,0.7), 0 4px 16px rgba(0,0,0,0.7);
-  }
-
-  /* ===== PWA INSTALL POPUP ===== */
-  #pwa-overlay {
-    position: fixed; inset: 0; z-index: 99999;
-    background: rgba(0,0,0,0.78);
-    display: flex; align-items: flex-end; justify-content: center;
-    padding: 0 0 env(safe-area-inset-bottom,0) 0;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.35s ease;
-    backdrop-filter: blur(3px);
-  }
-  #pwa-overlay.show { opacity: 1; pointer-events: all; }
-
-  #pwa-popup {
-    background: linear-gradient(160deg, #1a0e04 0%, #2d1a08 40%, #1e0f05 100%);
-    border: 2px solid #c9a84c;
-    border-bottom: none;
-    border-radius: 28px 28px 0 0;
-    padding: 2rem 1.6rem 2.4rem;
-    max-width: 480px; width: 100%;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 -8px 40px rgba(201,168,76,0.25), inset 0 1px 0 rgba(201,168,76,0.15);
-    transform: translateY(100%);
-    transition: transform 0.42s cubic-bezier(0.175,0.885,0.32,1.1);
-  }
-  #pwa-overlay.show #pwa-popup { transform: translateY(0); }
-
-  .pwa-handle {
-    width: 44px; height: 4px; border-radius: 2px;
-    background: rgba(201,168,76,0.4); margin: 0 auto 1.4rem;
-  }
-  .pwa-corner {
-    position: absolute; font-size: 1.1rem; color: #c9a84c; opacity: 0.7;
-  }
-  .pwa-corner.tl { top: 1rem; left: 1rem; }
-  .pwa-corner.tr { top: 1rem; right: 1rem; }
-
-  .pwa-ornament-line {
-    color: #c9a84c; font-size: 0.75rem; letter-spacing: 0.35em;
-    margin-bottom: 0.9rem; opacity: 0.8;
-  }
-  .pwa-icon-wrap {
-    font-size: 3.2rem; margin-bottom: 0.6rem;
-    filter: drop-shadow(0 0 12px rgba(201,168,76,0.6));
-  }
-  .pwa-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 1.15rem; font-weight: 900;
-    background: linear-gradient(90deg, #f9e3a0, #f2c25c, #b98b28);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.06em; line-height: 1.3;
-    margin-bottom: 0.5rem;
-  }
-  .pwa-subtitle {
-    font-family: 'IM Fell English', serif;
-    font-style: italic; font-size: 0.85rem;
-    color: #d4b070; margin-bottom: 1rem; line-height: 1.55;
-  }
-  .pwa-features {
-    display: flex; gap: 0.6rem; justify-content: center;
-    flex-wrap: wrap; margin-bottom: 1.4rem;
-  }
-  .pwa-feature-chip {
-    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.35);
-    color: #e8c96a; border-radius: 999px;
-    padding: 0.25rem 0.75rem; font-size: 0.72rem;
-    font-family: 'Cinzel', serif; letter-spacing: 0.04em;
-  }
-  #pwa-install-btn {
-    display: block; width: 100%;
-    background: linear-gradient(135deg, #c9a84c, #f0d060, #a07820);
-    color: #1a0800; border: none; border-radius: 14px;
-    padding: 0.95rem 1.5rem; font-size: 1rem; font-weight: 900;
-    font-family: 'Cinzel', serif; letter-spacing: 0.08em;
-    cursor: pointer; margin-bottom: 0.75rem;
-    box-shadow: 0 4px 20px rgba(201,168,76,0.4);
-    transition: all 0.22s;
-  }
-  #pwa-install-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.55); }
-  #pwa-dismiss-btn {
-    background: none; border: none; color: rgba(201,168,76,0.5);
-    font-family: 'Cinzel', serif; font-size: 0.78rem;
-    cursor: pointer; letter-spacing: 0.06em;
-    transition: color 0.2s; padding: 0.4rem;
-  }
-  #pwa-dismiss-btn:hover { color: rgba(201,168,76,0.85); }
-
-  /* iOS instructions variant */
-  .pwa-ios-steps {
-    background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 1.2rem; text-align: left;
-  }
-  .pwa-ios-steps p {
-    font-family: 'IM Fell English', serif; font-size: 0.82rem;
-    color: #d4b070; margin-bottom: 0.4rem; line-height: 1.55;
-  }
-  .pwa-ios-steps p:last-child { margin-bottom: 0; }
-  .pwa-ios-steps span { color: #f0d060; font-weight: bold; }
-
-  /* Watermark pattern in header */
-  .medieval-pattern {
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='0.3' opacity='0.15'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z'/%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3Cpath d='M30 10 L50 30 L30 50 L10 30 Z'/%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-  }
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;}
+body{background:#080300;color:var(--text);}
+
+/* ══════════════════════════════
+   SCREENS
+══════════════════════════════ */
+.screen{
+  position:fixed;inset:0;
+  transition:opacity .6s ease, transform .6s cubic-bezier(.4,0,.2,1);
+  will-change:opacity,transform;
+}
+.screen.hidden{opacity:0;pointer-events:none;transform:scale(1.04);}
+.screen.slide-out{opacity:0;transform:translateX(-60px);}
+
+/* ══════════════════════════════
+   LANDING SCREEN
+══════════════════════════════ */
+#screen-landing{
+  display:flex;flex-direction:column;align-items:center;
+  overflow:hidden;
+}
+
+/* Background layers */
+.bg-base{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% 0%,   rgba(30,12,0,.55) 0%, transparent 65%),
+    radial-gradient(ellipse 80%  50% at 50% 45%,  rgba(42,18,0,.45) 0%, transparent 70%),
+    radial-gradient(ellipse 120% 40% at 50% 100%, rgba(10,5,0,.6) 0%, transparent 60%);
+}
+
+/* Stone arch: warm light effect behind arch */
+.bg-arch{
+  position:absolute;z-index:1;
+  left:50%;transform:translateX(-50%);
+  top:-5%;
+  width:min(320px,85vw);
+  height:min(480px,90vw);
+  background:radial-gradient(ellipse 70% 80% at 50% 30%,
+    rgba(180,90,10,.20) 0%,
+    rgba(140,60,5,.10) 40%,
+    transparent 70%);
+  clip-path:polygon(15% 0%,85% 0%,100% 30%,100% 100%,0% 100%,0% 30%);
+  border-radius:50% 50% 0 0 / 35% 35% 0 0;
+}
+
+/* Arch stone border suggestion */
+.bg-arch-border{
+  position:absolute;z-index:2;
+  left:50%;transform:translateX(-50%);
+  top:-2%;
+  width:min(300px,80vw);
+  height:min(440px,85vw);
+  border:2px solid rgba(120,70,20,.35);
+  border-bottom:none;
+  border-radius:50% 50% 0 0 / 38% 38% 0 0;
+  box-shadow:
+    inset 0 0 30px rgba(120,60,10,.15),
+    0 0 40px rgba(120,60,10,.1);
+}
+
+/* Bookshelf silhouettes — left */
+.bg-shelf-l, .bg-shelf-r{
+  position:absolute;top:0;z-index:2;
+  width:min(80px,18vw);height:100%;
+  opacity:.85;
+}
+.bg-shelf-l{left:0;}
+.bg-shelf-r{right:0;}
+
+/* Stone floor */
+.bg-floor{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  height:35%;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    rgba(30,14,4,.6) 30%,
+    rgba(20,8,2,.95) 70%,
+    #060200 100%);
+}
+/* Table surface */
+.bg-table{
+  position:absolute;bottom:28%;left:50%;z-index:3;
+  transform:translateX(-50%);
+  width:min(340px,90vw);height:12px;
+  background:linear-gradient(180deg,#5a3010,#3a1c08);
+  border-radius:3px 3px 0 0;
+  box-shadow:0 4px 30px rgba(0,0,0,.7);
+}
+.bg-table-body{
+  position:absolute;bottom:0;left:50%;z-index:2;
+  transform:translateX(-50%);
+  width:min(340px,90vw);height:28%;
+  background:linear-gradient(180deg,#3a1c08,#200d04);
+}
+
+/* Vignette */
+.bg-vignette{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%,transparent 30%,rgba(4,2,0,.7) 100%),
+    linear-gradient(0deg,rgba(5,2,0,.8) 0%,transparent 30%);
+}
+
+/* ── Torch ── */
+.torch{
+  position:absolute;z-index:5;
+  display:flex;flex-direction:column;align-items:center;
+}
+.torch-l{left:min(22px,4vw);top:min(180px,36%);}
+.torch-r{right:min(22px,4vw);top:min(180px,36%);}
+
+.torch-mount{
+  width:10px;height:44px;
+  background:linear-gradient(180deg,#6a3a10,#3a1a06);
+  border-radius:3px;
+  box-shadow:2px 0 8px rgba(0,0,0,.6);
+  margin-top:2px;
+}
+.torch-head{
+  width:16px;height:10px;
+  background:linear-gradient(180deg,#8a5020,#5a2e0a);
+  border-radius:3px 3px 0 0;
+  position:relative;
+}
+.torch-fire-wrap{
+  position:absolute;top:-52px;left:50%;transform:translateX(-50%);
+  width:34px;height:56px;
+}
+.torch-glow{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  animation:torchGlowPulse 1.8s ease-in-out infinite;
+}
+.torch-l .torch-glow{
+  width:120px;height:120px;
+  top:min(210px,40%);left:min(-40px,2vw);
+  background:radial-gradient(circle,rgba(255,120,20,.12),transparent 70%);
+}
+.torch-r .torch-glow{
+  width:120px;height:120px;
+  top:min(210px,40%);right:min(-40px,2vw);
+  background:radial-gradient(circle,rgba(255,120,20,.12),transparent 70%);
+}
+
+/* ── Landing content ── */
+.landing-inner{
+  position:relative;z-index:10;
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:space-between;
+  padding:max(16px,3vw) max(12px,3vw) max(10px,2vw);
+}
+
+/* ── Header Plaque (image) ── */
+
+/* ── CTA text ── */
+.cta-text{
+  font-family:'UnifrakturMaguntia',serif;
+  font-size:clamp(1.5rem,7vw,2.2rem);
+  color:var(--gold-l);
+  text-shadow:
+    0 0 10px rgba(255,180,40,.8),
+    0 0 25px rgba(255,120,20,.5),
+    0 0 50px rgba(200,100,10,.3);
+  animation:ctaGlow 2.5s ease-in-out infinite;
+  position:relative;
+  letter-spacing:.04em;
+}
+.cta-text::before,.cta-text::after{
+  content:'✦';margin:0 10px;
+  color:var(--ember);
+  font-size:.65em;
+  animation:ctaSparkle 1.8s ease-in-out infinite;
+  font-family:serif;
+}
+.cta-text::after{animation-delay:.9s;}
+
+/* ── Books on table ── */
+.books-scene{
+  display:flex;align-items:flex-end;gap:clamp(16px,5vw,36px);
+  width:100%;max-width:min(460px,96vw);
+  justify-content:center;
+  padding:0 12px;
+}
+
+/* ── Quote plaque ── */
+.quote-plaque{
+  width:100%;max-width:min(370px,92vw);
+  background:linear-gradient(135deg,rgba(20,10,2,.95),rgba(14,7,1,.95));
+  border:1px solid rgba(100,60,20,.5);
+  border-radius:5px;
+  padding:10px 16px;
+  text-align:center;
+  box-shadow:inset 0 2px 10px rgba(0,0,0,.5),0 4px 20px rgba(0,0,0,.6);
+  position:relative;
+}
+.quote-plaque::before{
+  content:'';position:absolute;top:3px;left:3px;right:3px;bottom:3px;
+  border:1px solid rgba(100,60,20,.2);border-radius:3px;pointer-events:none;
+}
+.quote-text{
+  font-style:italic;font-size:clamp(.7rem,2.8vw,.88rem);
+  color:#c9a870;line-height:1.5;margin-bottom:4px;
+}
+.quote-divider{color:var(--text-d);font-size:.6rem;letter-spacing:.3em;font-family:'Cinzel',serif;margin-bottom:4px;}
+.quote-prof{
+  font-family:'Cinzel',serif;font-size:clamp(.5rem,1.9vw,.63rem);
+  color:var(--text-d);letter-spacing:.1em;font-style:normal;
+}
+
+/* ══════════════════════════════
+   CONTENT SCREEN
+══════════════════════════════ */
+#screen-content{
+  overflow-y:auto;
+  background:
+    radial-gradient(ellipse 100% 50% at 50% 0%,#160900 0%,transparent 60%),
+    linear-gradient(180deg,#090401 0%,#060200 100%);
+}
+#screen-content::-webkit-scrollbar{width:5px;}
+#screen-content::-webkit-scrollbar-track{background:#0a0500;}
+#screen-content::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+.content-header{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  background:linear-gradient(180deg,rgba(10,5,0,.98),rgba(8,3,0,.95));
+  border-bottom:1px solid rgba(201,168,76,.3);
+  box-shadow:0 4px 20px rgba(0,0,0,.6);
+}
+.back-btn{
+  font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;font-weight:700;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.08));
+  border:1px solid rgba(201,168,76,.4);color:var(--gold-l);
+  border-radius:4px;padding:7px 12px;cursor:pointer;
+  transition:all .2s;white-space:nowrap;flex-shrink:0;
+}
+.back-btn:hover{background:rgba(201,168,76,.25);box-shadow:0 0 15px rgba(201,168,76,.3);}
+.serie-name-header{
+  font-family:'Cinzel Decorative',serif;font-weight:700;
+  font-size:clamp(.9rem,4vw,1.2rem);letter-spacing:.08em;
+  background:linear-gradient(90deg,#c9a84c,#f0d060,#c9a84c);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:shimmer 3s linear infinite;
+}
+
+/* ── Content tab nav ── */
+.tabs-bar{
+  display:flex;gap:0;padding:0 16px;
+  border-bottom:1px solid rgba(201,168,76,.2);
+  background:rgba(8,4,0,.8);
+}
+.tab-btn-c{
+  font-family:'Cinzel',serif;font-weight:700;
+  font-size:clamp(.6rem,2.5vw,.78rem);letter-spacing:.12em;
+  padding:11px 16px;border:none;cursor:pointer;
+  background:transparent;color:#6a4a20;
+  border-bottom:2px solid transparent;
+  transition:all .25s;
+}
+.tab-btn-c.active{color:var(--gold-l);border-bottom-color:var(--gold);}
+.tab-btn-c:hover:not(.active){color:var(--text-m);}
+
+/* ── Tab content ── */
+.tab-panel{display:none;opacity:0;transform:translateY(12px);transition:opacity .35s,transform .35s;padding:16px;}
+.tab-panel.active{display:block;}
+.tab-panel.show{opacity:1;transform:translateY(0);}
+
+/* ── Discipline panel ── */
+.disc-panel{
+  position:relative;border-radius:5px;margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(22,11,3,.98),rgba(14,7,1,.98));
+  border:1px solid rgba(201,168,76,.2);
+  padding:14px 12px;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+  transition:border-color .3s;
+}
+.disc-panel:hover{border-color:rgba(201,168,76,.4);}
+.disc-panel-corner{position:absolute;width:16px;height:16px;border-color:rgba(201,168,76,.5);}
+.disc-panel-corner.tl{top:6px;left:6px;border-top:1.5px solid;border-left:1.5px solid;}
+.disc-panel-corner.tr{top:6px;right:6px;border-top:1.5px solid;border-right:1.5px solid;}
+.disc-panel-corner.bl{bottom:6px;left:6px;border-bottom:1.5px solid;border-left:1.5px solid;}
+.disc-panel-corner.br{bottom:6px;right:6px;border-bottom:1.5px solid;border-right:1.5px solid;}
+
+.disc-title{
+  font-family:'Cinzel',serif;font-weight:900;
+  font-size:clamp(.75rem,3vw,.9rem);letter-spacing:.2em;
+  background:linear-gradient(135deg,#f9e3a0,#f2c25c,#b98b28);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:center;margin-bottom:3px;display:block;
+}
+.disc-title::before,.disc-title::after{content:'❧';-webkit-text-fill-color:rgba(201,168,76,.6);font-size:.8em;margin:0 7px;}
+.disc-icon{display:block;text-align:center;font-size:.9rem;margin-bottom:6px;}
+
+.books-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;}
+@media(max-width:380px){.books-grid{gap:6px;}}
+
+/* ── Book card ── */
+.book-card{
+  border-radius:5px;padding:10px 6px 8px;
+  text-align:center;cursor:pointer;
+  transition:transform .3s cubic-bezier(.175,.885,.32,1.275),box-shadow .3s;
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,#1c1006,#0e0803);
+  border:1px solid rgba(50,30,8,.6);
+}
+.book-card.available{
+  background:linear-gradient(145deg,#251600,#160c02);
+  border-color:rgba(160,120,30,.35);
+}
+.book-card.available:hover{
+  transform:translateY(-8px) scale(1.04);
+  box-shadow:0 14px 35px rgba(0,0,0,.7),0 0 25px rgba(201,168,76,.25);
+  border-color:rgba(201,168,76,.6);
+}
+.book-card.unavailable{background:linear-gradient(145deg,#111,#0a0a0a);border-color:rgba(40,40,40,.5);}
+
+.card-img{width:54px;height:66px;object-fit:contain;display:block;margin:0 auto 6px;}
+.book-card.available .card-img{animation:cardFloat 3.2s ease-in-out infinite,cardGlow 2.6s ease-in-out infinite;}
+.book-card.unavailable .card-img{opacity:.65;filter:grayscale(.4) brightness(.7);}
+
+.card-label{
+  font-family:'Cinzel',serif;font-weight:700;
+  font-size:clamp(.48rem,1.8vw,.6rem);letter-spacing:.1em;margin-bottom:5px;
+}
+.book-card.available .card-label{color:#d5c090;}
+.book-card.unavailable .card-label{color:#444;}
+
+.btn-access,.btn-unavail{
+  font-family:'Cinzel',serif;font-weight:700;
+  letter-spacing:.08em;font-size:clamp(.44rem,1.7vw,.58rem);
+  padding:5px 4px;width:100%;border-radius:3px;border:none;cursor:pointer;white-space:nowrap;
+}
+.btn-access{
+  background:linear-gradient(135deg,#c9a84c,#f0d060,#8a6414);
+  color:#1a0800;box-shadow:0 2px 8px rgba(201,168,76,.3);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-access:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(201,168,76,.5);}
+.btn-unavail{background:linear-gradient(135deg,#1a1a1a,#111);color:#444;border:1px solid #2a2a2a;cursor:not-allowed;}
+
+/* ── Content footer ── */
+.content-footer{
+  text-align:center;padding:20px 16px 32px;
+  border-top:1px solid rgba(201,168,76,.15);
+  margin-top:8px;
+}
+.footer-quote-c{font-style:italic;font-size:.78rem;color:var(--text-d);margin-bottom:4px;}
+.footer-prof-c{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;color:rgba(120,80,30,.6);}
+
+/* ══════════════════════════════
+   MODAL
+══════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(4,2,0,.92);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+}
+.modal-box{
+  max-width:400px;width:90%;
+  background:linear-gradient(160deg,#1e1004,#130a02,#1c0e05);
+  border:2px solid var(--gold);border-radius:8px;
+  padding:2rem 1.5rem;text-align:center;
+  animation:modalIn .5s cubic-bezier(.175,.885,.32,1.275) both;
+  box-shadow:0 0 60px rgba(201,168,76,.3),0 20px 60px rgba(0,0,0,.9);
+  position:relative;overflow:hidden;
+}
+.modal-box::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold-b),transparent);
+  background-size:200% 100%;animation:sweep 2s linear infinite;
+}
+.modal-box>*{position:relative;z-index:1;}
+.modal-corner{position:absolute;width:22px;height:22px;border-color:rgba(201,168,76,.6);}
+.modal-corner.tl{top:7px;left:7px;border-top:2px solid;border-left:2px solid;}
+.modal-corner.tr{top:7px;right:7px;border-top:2px solid;border-right:2px solid;}
+.modal-corner.bl{bottom:7px;left:7px;border-bottom:2px solid;border-left:2px solid;}
+.modal-corner.br{bottom:7px;right:7px;border-bottom:2px solid;border-right:2px solid;}
+.modal-book-area{min-height:90px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;}
+.modal-book-img{width:60px;height:75px;object-fit:contain;}
+#modal-book-video{transform:scale(1.3);max-height:130px;}
+.modal-heading{font-family:'Cinzel Decorative',serif;font-size:1.05rem;font-weight:900;letter-spacing:.04em;margin-bottom:.7rem;line-height:1.3;}
+.modal-heading.avail{color:var(--gold-l);text-shadow:0 0 18px rgba(240,208,96,.8);}
+.modal-heading.unavail{color:#6a5030;}
+.modal-divider{display:flex;align-items:center;gap:6px;margin:0 auto .8rem;max-width:160px;color:var(--gold);}
+.modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.modal-title-t{font-style:italic;font-size:.95rem;color:#e8d5a3;margin-bottom:.4rem;}
+.modal-status-t{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;margin-bottom:1.2rem;}
+.modal-status-t.avail{color:var(--gold);}
+.modal-status-t.unavail{color:#3a3a5a;}
+
+/* ══════════════════════════════
+   PWA POPUP
+══════════════════════════════ */
+#pwa-overlay{
+  position:fixed;inset:0;z-index:99999;
+  background:rgba(0,0,0,.82);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:0 0 env(safe-area-inset-bottom,0) 0;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s;
+  backdrop-filter:blur(4px);
+}
+#pwa-overlay.show{opacity:1;pointer-events:all;}
+#pwa-popup{
+  background:linear-gradient(160deg,#1a0e04,#2d1a08,#1e0f05);
+  border:2px solid var(--gold);border-bottom:none;
+  border-radius:24px 24px 0 0;
+  padding:2rem 1.6rem 2.4rem;
+  max-width:480px;width:100%;
+  text-align:center;position:relative;
+  box-shadow:0 -8px 40px rgba(201,168,76,.25),inset 0 1px 0 rgba(201,168,76,.15);
+  transform:translateY(100%);
+  transition:transform .42s cubic-bezier(.175,.885,.32,1.1);
+}
+#pwa-overlay.show #pwa-popup{transform:translateY(0);}
+.pwa-handle{width:44px;height:4px;border-radius:2px;background:rgba(201,168,76,.4);margin:0 auto 1.4rem;}
+.pwa-corner-s{position:absolute;font-size:1rem;color:var(--gold);opacity:.7;}
+.pwa-corner-s.tl{top:1rem;left:1rem;}.pwa-corner-s.tr{top:1rem;right:1rem;}
+.pwa-orn{color:var(--gold);font-size:.75rem;letter-spacing:.35em;margin-bottom:.9rem;opacity:.8;}
+.pwa-icon-w{font-size:3rem;margin-bottom:.6rem;filter:drop-shadow(0 0 12px rgba(201,168,76,.6));}
+.pwa-t{font-family:'Cinzel Decorative',serif;font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#f9e3a0,#f2c25c,#b98b28);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.06em;margin-bottom:.5rem;}
+.pwa-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:.85rem;color:#d4b070;margin-bottom:1rem;line-height:1.55;}
+.pwa-feats{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.4rem;}
+.pwa-chip{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);color:var(--gold-l);border-radius:999px;padding:.2rem .7rem;font-size:.7rem;font-family:'Cinzel',serif;}
+#pwa-install-btn{display:block;width:100%;background:linear-gradient(135deg,#c9a84c,#f0d060,#a07820);color:#1a0800;border:none;border-radius:12px;padding:.9rem;font-size:.95rem;font-weight:900;font-family:'Cinzel',serif;letter-spacing:.08em;cursor:pointer;margin-bottom:.75rem;box-shadow:0 4px 20px rgba(201,168,76,.4);transition:all .22s;}
+#pwa-install-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.55);}
+#pwa-dismiss-btn{background:none;border:none;color:rgba(201,168,76,.45);font-family:'Cinzel',serif;font-size:.75rem;cursor:pointer;letter-spacing:.06em;transition:color .2s;padding:.4rem;}
+#pwa-dismiss-btn:hover{color:rgba(201,168,76,.85);}
+.pwa-ios-steps{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:.9rem 1rem;margin-bottom:1.2rem;text-align:left;}
+.pwa-ios-steps p{font-family:'IM Fell English',serif;font-size:.82rem;color:#d4b070;margin-bottom:.4rem;line-height:1.55;}
+.pwa-ios-steps p:last-child{margin-bottom:0;}
+.pwa-ios-steps span{color:var(--gold-l);font-weight:bold;}
+
+/* ══════════════════════════════
+   BACK TOAST
+══════════════════════════════ */
+#back-toast{
+  position:fixed;bottom:2rem;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:linear-gradient(135deg,#2a1500,#1a0d00);
+  border:1px solid var(--gold);color:var(--gold-l);
+  font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.06em;
+  padding:.6rem 1.3rem;border-radius:4px;
+  box-shadow:0 4px 20px rgba(0,0,0,.7);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  z-index:9999;white-space:nowrap;
+}
+#back-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* Mute btn */
+#mute-btn{
+  position:fixed;bottom:24px;right:20px;z-index:500;
+  width:40px;height:40px;border-radius:50%;
+  border:1.5px solid rgba(201,168,76,.5);
+  background:radial-gradient(circle at 40% 35%,#2a1400,#0e0700);
+  color:var(--gold-l);font-size:1.1rem;cursor:pointer;
+  box-shadow:0 0 16px rgba(201,168,76,.3);
+  transition:transform .2s,box-shadow .2s;
+  display:none;align-items:center;justify-content:center;
+}
+#mute-btn:hover{transform:scale(1.15);}
+
+/* ══════════════════════════════
+   KEYFRAMES
+══════════════════════════════ */
+@keyframes shimmer{from{background-position:-200% center}to{background-position:200% center}}
+@keyframes sweep{from{background-position:0% 50%}to{background-position:200% 50%}}
+@keyframes bookFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes cardGlow{
+  0%,100%{filter:drop-shadow(0 0 4px rgba(201,168,76,.4))}
+  50%{filter:drop-shadow(0 0 14px rgba(255,210,60,.85))}
+}
+@keyframes ctaGlow{
+  0%,100%{text-shadow:0 0 10px rgba(255,180,40,.7),0 0 25px rgba(255,120,20,.4);}
+  50%{text-shadow:0 0 20px rgba(255,210,60,.95),0 0 50px rgba(255,140,30,.7),0 0 80px rgba(200,100,10,.4);}
+}
+@keyframes ctaSparkle{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes torchGlowPulse{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes modalIn{from{opacity:0;transform:scale(.85) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes revealUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes screenReveal{from{opacity:0}to{opacity:1}}
+
+/* ── Background video ── */
+#bg-video{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  z-index:-1;
+  pointer-events:none;
+}
+
+/* ── Plaque image ── */
+.plaque-img-wrapper{
+  width:min(420px,96vw);
+  margin:0 auto 18px;
+  animation:revealUp .7s .1s ease-out both;
+}
+.placa-img{
+  width:100%;height:auto;
+  display:block;
+  filter:drop-shadow(0 4px 18px rgba(0,0,0,.7));
+}
+
+/* ── Serie image buttons ── */
+.serie-btn{
+  width:clamp(90px,26vw,140px);
+  cursor:pointer;
+  animation:bookFloat 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 12px 20px rgba(0,0,0,.8));
+  transition:filter .25s,transform .25s;
+}
+.serie-btn:nth-child(2){animation-delay:-.8s;}
+.serie-btn:nth-child(3){animation-delay:-1.6s;}
+.serie-btn:hover,.serie-btn:active{
+  filter:drop-shadow(0 16px 28px rgba(0,0,0,.9)) brightness(1.1);
+  transform:scale(1.06) translateY(-12px);
+  animation-play-state:paused;
+}
+.serie-img{width:100%;height:auto;display:block;}
 </style>
 </head>
 <body>
 
-<!-- ÁUDIO -->
-<audio id="bg-music" loop preload="auto">
-  <source src="assets/audio/musica-fundo.mp3" type="audio/mpeg">
-</audio>
-<audio id="sfx-serie" preload="auto">
-  <source src="assets/audio/som-serie.mp3" type="audio/mpeg">
-</audio>
-<audio id="sfx-livro-disponivel" preload="auto">
-  <source src="assets/audio/som-livro-disponivel.mp3" type="audio/mpeg">
-</audio>
-<audio id="sfx-livro-abrindo" preload="auto">
-  <source src="assets/audio/livro-abrindo.mp3" type="audio/mpeg">
-</audio>
-<audio id="sfx-livro-indisponivel" preload="auto">
-  <source src="assets/audio/som-livro-indisponivel.mp3" type="audio/mpeg">
-</audio>
+<!-- Background video -->
+<video id="bg-video" autoplay muted loop playsinline>
+  <source src="assets/gif/vide-de-fundo.mp4" type="video/mp4">
+</video>
 
-<!-- Botão mute flutuante -->
-<button id="mute-btn" title="Música de fundo" onclick="toggleMute()"></button>
+<!-- AUDIO -->
+<audio id="bg-music" loop preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/musica-fundo.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-serie" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-serie.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-livro-disponivel" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-livro-disponivel.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-livro-abrindo" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/livro-abrindo.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-livro-indisponivel" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-livro-indisponivel.mp3" type="audio/mpeg"></audio>
 
-<!-- MODAL -->
-<div id="modal-overlay" class="modal-overlay" style="display:none;" onclick="closeModal(event)">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div class="corner-ornament tl"></div>
-    <div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div>
-    <div class="corner-ornament br"></div>
-    <div class="mb-4" id="modal-book-icon">
-      <video 
-    id="modal-book-video" 
-    class="modal-book-video" 
-    muted 
-    playsinline 
-    autoplay 
-    loop 
-    style="display: none; width: 100%; height: auto;">
-  <source src="assets/gif/livro-abrindo.webm" type="video/webm"></video>
-      <img id="modal-book-img" class="modal-book-img" src="assets/images/livro-azul.png" alt="Livro" style="display:none;">
+<button id="mute-btn" onclick="toggleMute()">🔊</button>
+
+<!-- ════════════════════════════════════════
+     MODAL
+════════════════════════════════════════ -->
+<div id="modal-overlay" class="modal-overlay" style="display:none" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-corner tl"></div><div class="modal-corner tr"></div>
+    <div class="modal-corner bl"></div><div class="modal-corner br"></div>
+    <div class="modal-book-area" id="modal-book-icon">
+      <video id="modal-book-video" muted playsinline autoplay loop style="display:none;width:100%;height:auto;max-height:130px;">
+        <source src="https://biblioteca-digital-medieval.vercel.app/assets/gif/livro-abrindo.webm" type="video/webm">
+      </video>
+      <img id="modal-book-img" class="modal-book-img" alt="Livro" style="display:none">
     </div>
-    <h2 id="modal-heading" class="gothic-title text-2xl mb-3" style="color:#f0d060;">Abrindo o pergaminho do conhecimento</h2>
-    <div class="ornament-divider mb-4"><span style="color:#c9a84c;">✦ ✦ ✦</span></div>
-    <p class="text-lg mb-2" style="color:#e8d5a3;font-family:'IM Fell English',serif;font-style:italic;" id="modal-title">Carregando o manuscrito…</p>
-    <p class="text-sm mt-3" style="color:#9a8060;font-family:'Cinzel',serif;letter-spacing:0.1em;" id="modal-status">✦ ACESSANDO O ACERVO SAGRADO ✦</p>
-    <div class="mt-6 flex gap-3 justify-center">
-      <button onclick="closeModal()" class="btn-access text-sm px-6 py-2">↩ VOLTAR AO ACERVO</button>
-    </div>
+    <h2 id="modal-heading" class="modal-heading avail">Abrindo o pergaminho…</h2>
+    <div class="modal-divider"><span>✦</span></div>
+    <p id="modal-title" class="modal-title-t">Carregando…</p>
+    <p id="modal-status" class="modal-status-t avail">✦ ACESSANDO O ACERVO SAGRADO ✦</p>
+    <button onclick="closeModal()" class="btn-access" style="max-width:190px;margin:0 auto;display:block;font-size:.7rem;">↩ VOLTAR AO ACERVO</button>
   </div>
 </div>
 
-<!-- HEADER -->
-<header class="header-bg py-8 px-4 text-center relative">
-  <div class="medieval-pattern"></div>
+<!-- ════════════════════════════════════════
+     SCREEN 1 — LANDING
+════════════════════════════════════════ -->
+<section id="screen-landing" class="screen">
 
-  <!-- Top ornament -->
-  <div class="ornament-divider mb-4 max-w-lg mx-auto">
-    <span style="color:#c9a84c;font-size:1.4rem;">⚜</span>
-    <span style="color:#c9a84c;font-size:0.9rem;letter-spacing:0.3em;font-family:'Cinzel',serif;">✦ ✦ ✦ ✦ ✦</span>
-    <span style="color:#c9a84c;font-size:1.4rem;">⚜</span>
+  <!-- Background layers -->
+  <div class="bg-base"></div>
+  <div class="bg-arch"></div>
+  <div class="bg-arch-border"></div>
+
+  <!-- Bookshelf SVG silhouettes -->
+  <div class="bg-shelf-l">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="shelfGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#120700" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#120700" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#shelfGrad)"/>
+      <!-- shelf boards -->
+      <rect x="0" y="20%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="0" y="40%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="0" y="60%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="0" y="80%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <!-- book spines -->
+      <rect x="0" y="20%" width="9"  height="20%" fill="#3a1a06" opacity=".7"/>
+      <rect x="10" y="21%" width="7" height="18%" fill="#1a2a08" opacity=".7"/>
+      <rect x="18" y="20%" width="11" height="20%" fill="#2a0a10" opacity=".7"/>
+      <rect x="30" y="22%" width="8" height="18%" fill="#4a2a0a" opacity=".7"/>
+      <rect x="39" y="20%" width="10" height="20%" fill="#0a1a3a" opacity=".7"/>
+      <rect x="50" y="21%" width="7" height="18%" fill="#3a1006" opacity=".7"/>
+      <rect x="58" y="20%" width="12" height="20%" fill="#1a1a0a" opacity=".7"/>
+      <rect x="0" y="40%" width="12" height="20%" fill="#0a2a10" opacity=".7"/>
+      <rect x="13" y="41%" width="8" height="19%" fill="#3a1a06" opacity=".7"/>
+      <rect x="22" y="40%" width="10" height="20%" fill="#2a0a0a" opacity=".7"/>
+      <rect x="33" y="42%" width="7" height="18%" fill="#4a3010" opacity=".7"/>
+      <rect x="41" y="40%" width="11" height="20%" fill="#1a0a3a" opacity=".7"/>
+      <rect x="53" y="41%" width="8" height="18%" fill="#3a2006" opacity=".7"/>
+      <rect x="0" y="60%" width="10" height="20%" fill="#2a1a06" opacity=".7"/>
+      <rect x="11" y="62%" width="7" height="18%" fill="#0a2a1a" opacity=".7"/>
+      <rect x="19" y="60%" width="12" height="20%" fill="#3a0a10" opacity=".7"/>
+      <rect x="32" y="61%" width="9" height="19%" fill="#4a2a08" opacity=".7"/>
+      <rect x="42" y="60%" width="11" height="20%" fill="#1a1a2a" opacity=".7"/>
+    </svg>
+  </div>
+  <div class="bg-shelf-r">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="shelfGradR" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0%" stop-color="#120700" stop-opacity=".95"/>
+          <stop offset="100%" stop-color="#120700" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#shelfGradR)"/>
+      <rect x="10%" y="20%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="10%" y="40%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="10%" y="60%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="10%" y="80%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
+      <rect x="59" y="20%" width="9"  height="20%" fill="#3a1a06" opacity=".7"/>
+      <rect x="49" y="21%" width="9"  height="18%" fill="#1a2a08" opacity=".7"/>
+      <rect x="38" y="20%" width="10" height="20%" fill="#2a0a10" opacity=".7"/>
+      <rect x="28" y="22%" width="9"  height="18%" fill="#4a2a0a" opacity=".7"/>
+      <rect x="18" y="20%" width="9"  height="20%" fill="#0a1a3a" opacity=".7"/>
+      <rect x="8"  y="21%" width="9"  height="18%" fill="#3a1006" opacity=".7"/>
+      <rect x="60" y="40%" width="8"  height="20%" fill="#0a2a10" opacity=".7"/>
+      <rect x="49" y="41%" width="10" height="19%" fill="#3a1a06" opacity=".7"/>
+      <rect x="37" y="40%" width="11" height="20%" fill="#2a0a0a" opacity=".7"/>
+      <rect x="27" y="42%" width="9"  height="18%" fill="#4a3010" opacity=".7"/>
+      <rect x="16" y="40%" width="10" height="20%" fill="#1a0a3a" opacity=".7"/>
+      <rect x="7"  y="41%" width="8"  height="18%" fill="#3a2006" opacity=".7"/>
+      <rect x="56" y="60%" width="12" height="20%" fill="#2a1a06" opacity=".7"/>
+      <rect x="43" y="62%" width="12" height="18%" fill="#0a2a1a" opacity=".7"/>
+      <rect x="31" y="60%" width="11" height="20%" fill="#3a0a10" opacity=".7"/>
+      <rect x="20" y="61%" width="10" height="19%" fill="#4a2a08" opacity=".7"/>
+      <rect x="9"  y="60%" width="10" height="20%" fill="#1a1a2a" opacity=".7"/>
+    </svg>
   </div>
 
-  <!-- Main title -->
-  <h1 class="gothic-title text-3xl md:text-5xl mb-2 gold-shimmer animate-on-load fadeSlideUp delay-1" style="text-align:center;width:100%;">
-    📚 Biblioteca Digital 📚
-  </h1>
+  <div class="bg-floor"></div>
+  <div class="bg-table"></div>
+  <div class="bg-table-body"></div>
+  <div class="bg-vignette"></div>
 
-  <!-- Subtitle -->
-  <p class="fraktur-title text-2xl md:text-3xl mb-3 animate-on-load fadeSlideUp delay-2" style="color:#e8c96a;text-shadow:1px 1px 3px rgba(0,0,0,0.6);">
-    Escola Padre Carlos Casavequía
-  </p>
-  <p class="medieval-title text-base md:text-lg animate-on-load fadeSlideUp delay-3" style="color:#d4b070;letter-spacing:0.15em;">
-     ENSINO MÉDIO - 2026
-  </p>
-
-  <!-- Subtitle line (Anexo 1 style) -->
-  <div class="mt-2 animate-on-load fadeSlideUp delay-3">
-    <span class="fell text-sm italic" style="color:#b09060;">
-      ✧ Professor Paulo Roberto Ramalho Magalhães ✧
-    </span>
+  <!-- TORCH LEFT -->
+  <div class="torch torch-l">
+    <div class="torch-glow" style="position:fixed;left:0;top:30%;width:130px;height:130px;background:radial-gradient(circle,rgba(255,120,20,.13),transparent 70%);pointer-events:none;"></div>
+    <div style="position:relative;">
+      <div class="torch-fire-wrap"><canvas id="fire-l" width="34" height="56"></canvas></div>
+      <div class="torch-head"></div>
+      <div class="torch-mount"></div>
+    </div>
   </div>
 
-  <!-- Bottom ornament -->
-  <div class="ornament-divider mt-5 max-w-lg mx-auto">
-    <span style="color:#c9a84c;font-size:1.4rem;">⚜</span>
-    <span style="color:#c9a84c;font-size:0.9rem;letter-spacing:0.3em;font-family:'Cinzel',serif;">✦ ✦ ✦ ✦ ✦</span>
-    <span style="color:#c9a84c;font-size:1.4rem;">⚜</span>
+  <!-- TORCH RIGHT -->
+  <div class="torch torch-r">
+    <div class="torch-glow" style="position:fixed;right:0;top:30%;width:130px;height:130px;background:radial-gradient(circle,rgba(255,120,20,.13),transparent 70%);pointer-events:none;"></div>
+    <div style="position:relative;">
+      <div class="torch-fire-wrap"><canvas id="fire-r" width="34" height="56"></canvas></div>
+      <div class="torch-head"></div>
+      <div class="torch-mount"></div>
+    </div>
   </div>
-</header>
 
-<!-- TAB NAVIGATION -->
-<div class="max-w-5xl mx-auto px-4 mt-8">
-  <div class="flex gap-2 justify-center mb-8 flex-wrap animate-on-load fadeIn delay-4">
-    <button class="tab-btn active px-8 py-4 text-sm rounded" id="tab-1" onclick="switchTab(1)"
-      style="background:linear-gradient(135deg,#2a1500,#1a0c00);color:#f0d060;">
-      ✦ 1ª SÉRIE ✦
-    </button>
-    <button class="tab-btn px-8 py-4 text-sm rounded" id="tab-2" onclick="switchTab(2)"
-      style="background:linear-gradient(135deg,#1a0a00,#120700);color:#9a7040;">
-      ✦ 2ª SÉRIE ✦
-    </button>
-    <button class="tab-btn px-8 py-4 text-sm rounded" id="tab-3" onclick="switchTab(3)"
-      style="background:linear-gradient(135deg,#1a0a00,#120700);color:#9a7040;">
-      ✦ 3ª SÉRIE ✦
-    </button>
-  </div>
-  <p id="escolha-turma">✦ Escolha sua turma ✦</p>
-</div>
+  <!-- Content -->
+  <div class="landing-inner">
 
-<!-- ========== TAB 1: 1ª SÉRIE ========== -->
-<div id="content-1" class="tab-content active max-w-5xl mx-auto px-4 pb-12">
+    <!-- Header plaque -->
+    <div class="plaque-img-wrapper">
+      <img src="assets/images/placa.png" alt="Biblioteca Digital Medieval" class="placa-img">
+    </div>
 
-  <!-- LÍNGUA PORTUGUESA -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-5">
-    <div class="corner-ornament tl"></div>
-    <div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div>
-    <div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#f2ba01;">LÍNGUA PORTUGUESA</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">📜</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <!-- Bimestres LP S1 -->
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-6" onclick="openBook('1º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#1a0a00;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
+    <!-- CTA -->
+    <div class="cta-text" style="animation:revealUp .7s .4s ease-out both;">Escolha sua turma</div>
+
+    <!-- 3 Books -->
+    <div class="books-scene" style="animation:revealUp .7s .5s ease-out both;">
+
+      <div class="serie-btn" onclick="selectSerie(1)" role="button" aria-label="1ª Série">
+        <img src="assets/images/1-serie-home.png" alt="1ª Série" class="serie-img">
       </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-7" onclick="openBook('2º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/2-bimestre.html','none')">INDISPONÍVEL</button>
+      <div class="serie-btn" onclick="selectSerie(2)" role="button" aria-label="2ª Série">
+        <img src="assets/images/2-serie-home.png" alt="2ª Série" class="serie-img">
       </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('3º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/3-bimestre.html','none')">INDISPONÍVEL</button>
+      <div class="serie-btn" onclick="selectSerie(3)" role="button" aria-label="3ª Série">
+        <img src="assets/images/3-serie-home.png" alt="3ª Série" class="serie-img">
       </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('4º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/4-bimestre.html','none')">INDISPONÍVEL</button>
+
+    </div><!-- /books-scene -->
+
+    <!-- Quote plaque -->
+    <div class="quote-plaque" style="animation:revealUp .7s .7s ease-out both;">
+      <p class="quote-text">"O saber é a luz que atravessa as sombras do esquecimento."</p>
+      <div class="quote-divider">✦ ✦ ✦</div>
+      <p class="quote-prof">Prof. Paulo Roberto Ramalho Magalhães</p>
+    </div>
+
+  </div><!-- /landing-inner -->
+</section>
+
+<!-- ════════════════════════════════════════
+     SCREEN 2 — CONTENT
+════════════════════════════════════════ -->
+<section id="screen-content" class="screen hidden">
+
+  <div class="content-header">
+    <button class="back-btn" onclick="goBack()">⬅ Voltar</button>
+    <span class="serie-name-header" id="serie-name-header">1ª Série</span>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tabs-bar" id="tabs-bar">
+    <!-- filled by JS per serie -->
+  </div>
+
+  <!-- TAB PANELS — 1ª série -->
+  <div id="panels-1" style="display:none;">
+    <div id="tab-panel-1-1" class="tab-panel">
+      <div class="disc-panel">
+        <div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div>
+        <div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div>
+        <span class="disc-icon">📜</span>
+        <span class="disc-title">LÍNGUA PORTUGUESA</span>
+        <div class="books-grid">
+          <div class="book-card available" onclick="openBook('1º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/1-bimestre.html','done')">
+            <img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png" alt="Livro disponível">
+            <div class="card-label">1º BIMESTRE</div>
+            <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
+          </div>
+          <div class="book-card unavailable" onclick="openBook('2º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/2-bimestre.html','none')">
+            <img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png" alt="Indisponível">
+            <div class="card-label">2º BIMESTRE</div>
+            <button class="btn-unavail">INDISPONÍVEL</button>
+          </div>
+          <div class="book-card unavailable" onclick="openBook('3º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/3-bimestre.html','none')">
+            <img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png" alt="Indisponível">
+            <div class="card-label">3º BIMESTRE</div>
+            <button class="btn-unavail">INDISPONÍVEL</button>
+          </div>
+          <div class="book-card unavailable" onclick="openBook('4º Bimestre — Língua Portuguesa — 1ª Série','./livros/1-serie/lingua-portuguesa/4-bimestre.html','none')">
+            <img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png" alt="Indisponível">
+            <div class="card-label">4º BIMESTRE</div>
+            <button class="btn-unavail">INDISPONÍVEL</button>
+          </div>
+        </div>
+      </div>
+      <div class="disc-panel">
+        <div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div>
+        <div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div>
+        <span class="disc-icon">🗺️</span>
+        <span class="disc-title">TRILHAS DE LINGUAGENS</span>
+        <div class="books-grid">
+          <div class="book-card available" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/1-bimestre.html','done')">
+            <img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png" alt="Livro disponível">
+            <div class="card-label">1º BIMESTRE</div>
+            <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
+          </div>
+          <div class="book-card unavailable" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+          <div class="book-card unavailable" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+          <div class="book-card unavailable" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        </div>
+      </div>
+      <div class="disc-panel">
+        <div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div>
+        <div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div>
+        <span class="disc-icon">🏛️</span>
+        <span class="disc-title">TRILHAS DE C. HUMANAS</span>
+        <div class="books-grid">
+          <div class="book-card unavailable" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">1º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+          <div class="book-card unavailable" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+          <div class="book-card unavailable" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+          <div class="book-card unavailable" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        </div>
+      </div>
+      <div class="content-footer">
+        <p class="footer-quote-c">"O saber é a luz que atravessa as sombras do esquecimento."</p>
+        <p class="footer-prof-c">⚜ E.E. RURAL PE. CARLOS CASAVEQUÍA ⚜</p>
       </div>
     </div>
   </div>
 
-  <!-- TRILHAS DE LINGUAGENS -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-7">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#1a4a8a;">TRILHAS DE LINGUAGENS</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🗺️</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-9" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de Linguagens — 1ª Série','./livros/1-serie/trilhas-de-linguagens/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
+  <!-- TAB PANELS — 2ª série -->
+  <div id="panels-2" style="display:none;">
+    <div id="tab-panel-2-1" class="tab-panel">
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">📜</span><span class="disc-title">LÍNGUA PORTUGUESA</span><div class="books-grid">
+        <div class="book-card available" onclick="openBook('1º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🗺️</span><span class="disc-title">TRILHAS DE LINGUAGENS</span><div class="books-grid">
+        <div class="book-card available" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/2-serie/trilhas-de-linguagens/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/2-serie/trilhas-de-linguagens/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/2-serie/trilhas-de-linguagens/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🏛️</span><span class="disc-title">TRILHAS DE C. HUMANAS</span><div class="books-grid">
+        <div class="book-card available" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/1-bimestre.html','done')">ACESSAR</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/2-serie/trilhas-de-c-humanas/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/2-serie/trilhas-de-c-humanas/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/2-serie/trilhas-de-c-humanas/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🎨</span><span class="disc-title">ARTES</span><div class="books-grid">
+        <div class="book-card available" onclick="openBook('1º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/1-bimestre.html','done')">ACESSAR</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/2-serie/artes/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/2-serie/artes/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/2-serie/artes/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="content-footer"><p class="footer-quote-c">"O saber é a luz que atravessa as sombras do esquecimento."</p><p class="footer-prof-c">⚜ E.E. RURAL PE. CARLOS CASAVEQUÍA ⚜</p></div>
     </div>
   </div>
 
-  <!-- TRILHAS DE C. HUMANAS -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-9">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#6b3a00;">TRILHAS DE C. HUMANAS</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🏛️</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">1º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
+  <!-- TAB PANELS — 3ª série -->
+  <div id="panels-3" style="display:none;">
+    <div id="tab-panel-3-1" class="tab-panel">
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">📜</span><span class="disc-title">LÍNGUA PORTUGUESA</span><div class="books-grid">
+        <div class="book-card available" onclick="openBook('1º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/3-serie/lingua-portuguesa/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/3-serie/lingua-portuguesa/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/lingua-portuguesa/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🗺️</span><span class="disc-title">TRILHAS DE LINGUAGENS</span><div class="books-grid">
+        <div class="book-card available" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/3-serie/trilhas-de-linguagens/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/3-serie/trilhas-de-linguagens/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/trilhas-de-linguagens/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🏛️</span><span class="disc-title">TRILHAS DE C. HUMANAS</span><div class="books-grid">
+        <div class="book-card unavailable" onclick="openBook('1º','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">1º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/3-serie/trilhas-de-c-humanas/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/3-serie/trilhas-de-c-humanas/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/trilhas-de-c-humanas/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🎨</span><span class="disc-title">ARTES</span><div class="books-grid">
+        <div class="book-card unavailable" onclick="openBook('1º','./livros/3-serie/artes/1-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">1º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('2º','./livros/3-serie/artes/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('3º','./livros/3-serie/artes/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/artes/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+      </div></div>
+      <div class="content-footer"><p class="footer-quote-c">"O saber é a luz que atravessa as sombras do esquecimento."</p><p class="footer-prof-c">⚜ E.E. RURAL PE. CARLOS CASAVEQUÍA ⚜</p></div>
     </div>
   </div>
 
-</div>
+</section>
 
-<!-- ========== TAB 2: 2ª SÉRIE ========== -->
-<div id="content-2" class="tab-content max-w-5xl mx-auto px-4 pb-12">
-
-  <!-- LÍNGUA PORTUGUESA -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-5">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#8b1a2a;">LÍNGUA PORTUGUESA</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">📜</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-6" onclick="openBook('1º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-7" onclick="openBook('2º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('3º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('4º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Língua Portuguesa — 2ª Série','./livros/2-serie/lingua-portuguesa/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRILHAS DE LINGUAGENS -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-7">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#1a4a8a;">TRILHAS DE LINGUAGENS</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🗺️</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de Linguagens — 2ª Série','./livros/2-serie/trilhas-de-linguagens/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRILHAS DE C. HUMANAS -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-9">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#6b3a00;">TRILHAS DE C. HUMANAS</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🏛️</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de C. Humanas — 2ª Série','./livros/2-serie/trilhas-de-c-humanas/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ARTES -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-11">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#5a2080;">ARTES</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🎨</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('1º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-13" onclick="openBook('2º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-14" onclick="openBook('3º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-15" onclick="openBook('4º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Artes — 2ª Série','./livros/2-serie/artes/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ========== TAB 3: 3ª SÉRIE ========== -->
-<div id="content-3" class="tab-content max-w-5xl mx-auto px-4 pb-12">
-
-  <!-- LÍNGUA PORTUGUESA -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-5">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#8b1a2a;">LÍNGUA PORTUGUESA</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">📜</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-6" onclick="openBook('1º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-7" onclick="openBook('2º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('3º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-9" onclick="openBook('4º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Língua Portuguesa — 3ª Série','./livros/3-serie/lingua-portuguesa/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      </div>
-  </div>
-
-  <!-- TRILHAS DE LINGUAGENS -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-7">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#1a4a8a;">TRILHAS DE LINGUAGENS</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🗺️</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-done p-4 text-center animate-on-load fadeSlideUp delay-8" onclick="openBook('1º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/1-bimestre.html','done')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-verde.png" alt="Livro disponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#7ddc6e;">1º BIMESTRE</div>
-        <button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/1-bimestre.html','done')">ACESSAR</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-9" onclick="openBook('2º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('3º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('4º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de Linguagens — 3ª Série','./livros/3-serie/trilhas-de-linguagens/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TRILHAS DE C. HUMANAS -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-9">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#6b3a00;">TRILHAS DE C. HUMANAS</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🏛️</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-10" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">1º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-11" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-13" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ARTES -->
-  <div class="parchment-card rounded-lg p-6 mb-8 animate-on-load fadeSlideUp delay-11">
-    <div class="corner-ornament tl"></div><div class="corner-ornament tr"></div>
-    <div class="corner-ornament bl"></div><div class="corner-ornament br"></div>
-    <h2 class="section-header text-center text-xl mb-2" style="color:#5a2080;">ARTES</h2>
-    <div class="ornament-divider mb-6"><span style="font-size:1rem;">🎨</span></div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-12" onclick="openBook('1º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/1-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">1º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('1º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/1-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-13" onclick="openBook('2º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/2-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">2º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('2º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/2-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-14" onclick="openBook('3º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/3-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">3º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('3º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/3-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-      <div class="bimestre-card status-none p-4 text-center animate-on-load fadeSlideUp delay-15" onclick="openBook('4º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/4-bimestre.html','none')">
-        <div class="text-3xl mb-2 book-icon"><img class="book-img" src="assets/images/livro-azul.png" alt="Livro indisponível"></div>
-        <div class="medieval-title text-xs font-bold mb-1" style="color:#5070a0;">4º BIMESTRE</div>
-        <button class="btn-unavailable" onclick="event.stopPropagation();openBook('4º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/4-bimestre.html','none')">INDISPONÍVEL</button>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<footer class="footer-bg mt-4 py-10 px-4 text-center">
-  <div class="ornament-divider max-w-lg mx-auto mb-6">
-    <span style="color:#c9a84c;font-size:1.4rem;">⚜</span>
-    <span style="color:#c9a84c;font-size:0.9rem;letter-spacing:0.3em;font-family:'Cinzel',serif;">✦ ✦ ✦ ✦ ✦</span>
-    <span style="color:#c9a84c;font-size:1.4rem;">⚜</span>
-  </div>
- 
-  <p class="medieval-title text-sm font-bold mb-1" style="color:#e8c96a;letter-spacing:0.15em;">
-    E.E. RURAL PE. CARLOS CASAVEQUÍA
-  </p>
-  <p class="fell text-sm mb-1" style="color:#c9a870;font-style:italic;">
-    SENADOR GUIOMARD — ACRE
-  </p>
-  <p class="fell text-sm mb-4" style="color:#a08050;">
-    Prof. Paulo Roberto Ramalho Magalhães
-  </p>
-
-  <div class="ornament-divider max-w-xs mx-auto mb-4"><span style="color:#c9a84c;font-size:0.8rem;">✦ ✦ ✦</span></div>
-
-  <p class="fraktur-title text-base md:text-xl" style="color:#d4a840;text-shadow:0 0 12px rgba(201,168,76,0.4);">
-    "O saber é a luz que atravessa as sombras do esquecimento."
-  </p>
-
-  <div class="ornament-divider max-w-lg mx-auto mt-6">
-    <span style="color:#6b4a20;font-size:1.2rem;">⚜</span>
-    <span style="color:#6b4a20;font-size:0.7rem;letter-spacing:0.3em;font-family:'Cinzel',serif;">✦ ✦ ✦</span>
-    <span style="color:#6b4a20;font-size:1.2rem;">⚜</span>
-  </div>
-</footer>
-
-<script>
-  // ===== THEME =====
-  function applyTheme() {
-    document.documentElement.classList.add('dark');
-  }
-
-  // ===== USER PROFILE / DEVICE MEMORY =====
-  function updateUserProfile(partial) {
-    try {
-      const key = 'bdm-user-profile';
-      let profile = null;
-      const raw = localStorage.getItem(key);
-      if (raw) {
-        try {
-          profile = JSON.parse(raw);
-        } catch (e) {
-          profile = null;
-        }
-      }
-      if (!profile) {
-        profile = { firstVisit: new Date().toISOString() };
-      }
-
-      profile.lastVisit = new Date().toISOString();
-      if (partial && typeof partial === 'object') {
-        Object.assign(profile, partial);
-      }
-
-      localStorage.setItem(key, JSON.stringify(profile));
-
-      // Tenta descobrir e salvar o IP público uma única vez
-      if (!profile.ip) {
-        fetch('https://api.ipify.org?format=json')
-          .then(r => r.ok ? r.json() : null)
-          .then(data => {
-            if (!data || !data.ip) return;
-            try {
-              const raw2 = localStorage.getItem(key);
-              const p2 = raw2 ? JSON.parse(raw2) : profile;
-              p2.ip = data.ip;
-              localStorage.setItem(key, JSON.stringify(p2));
-            } catch (e) {}
-          })
-          .catch(() => {});
-      }
-    } catch (e) {
-      // falha silenciosa para não quebrar navegação
-    }
-  }
-
-  // Init theme
-  applyTheme();
-  // Inicializa memória básica do dispositivo
-  updateUserProfile({});
-
-  // ===== TABS =====
-  let currentTab = 1;
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  let mobileUnlocked = false;
-
-  function switchTab(num) {
-    // No mobile: 1ª seleção desbloqueia música e esconde instrução
-    if (isMobile && !mobileUnlocked) {
-      mobileUnlocked = true;
-      startBgMusic();
-      const et = document.getElementById('escolha-turma');
-      if (et) et.style.display = 'none';
-    }
-
-    playSound('sfx-serie');
-    const currentContent = document.querySelector('.tab-content.active');
-    const nextContent = document.getElementById('content-' + num);
-    const isSame = currentContent === nextContent;
-
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.remove('active');
-      b.style.color = '#9a7040';
-      b.style.background = 'linear-gradient(135deg,#1a0a00,#120700)';
-    });
-
-    const btn = document.getElementById('tab-' + num);
-    btn.classList.add('active');
-    btn.style.color = '#f0d060';
-    btn.style.background = 'linear-gradient(135deg,#2a1500,#1a0c00)';
-    currentTab = num;
-
-    // Memoriza a série atual no dispositivo
-    try {
-      localStorage.setItem('bdm-current-series', String(num));
-    } catch (e) {}
-    updateUserProfile({ lastSeries: num });
-
-    if (isSame) return;
-
-    const showNext = () => {
-      nextContent.classList.add('active');
-      nextContent.classList.remove('fade-out', 'show');
-      nextContent.offsetHeight;
-      nextContent.classList.add('show');
-      requestAnimationFrame(() => {
-        triggerAnimations();
-      });
-    };
-
-    if (currentContent) {
-      currentContent.classList.remove('show');
-      currentContent.classList.add('fade-out');
-      currentContent.addEventListener('transitionend', function handler() {
-        currentContent.classList.remove('active', 'fade-out');
-        currentContent.removeEventListener('transitionend', handler);
-        showNext();
-      }, { once: true });
-    } else {
-      showNext();
-    }
-  }
-
-  // ===== SONS =====
-  let musicStarted = false;
-  let muted = false;
-
-  // Chave usada para registrar que este dispositivo/navegador já desbloqueou o áudio ao menos uma vez
-  const AUDIO_UNLOCKED_KEY = 'bdm_audio_unlocked';
-
-  function markAudioUnlocked() {
-    try { localStorage.setItem(AUDIO_UNLOCKED_KEY, '1'); } catch(e) {}
-  }
-
-  function wasAudioUnlocked() {
-    try { return localStorage.getItem(AUDIO_UNLOCKED_KEY) === '1'; } catch(e) { return false; }
-  }
-
-  function startBgMusic() {
-    const music = document.getElementById('bg-music');
-    if (!music || musicStarted) return;
-    music.volume = 0.04;
-
-    const interactionEvents = ['click','touchstart','touchmove','touchend','keydown','scroll','mousemove'];
-
-    const unlock = () => {
-      if (musicStarted) return;
-      music.play().then(() => {
-        musicStarted = true;
-        markAudioUnlocked();
-        const btn = document.getElementById('mute-btn');
-        if (btn) btn.style.display = 'flex';
-        interactionEvents.forEach(ev => document.removeEventListener(ev, unlock));
-      }).catch(() => {});
-    };
-
-    music.play().then(() => {
-      musicStarted = true;
-      markAudioUnlocked();
-      const btn = document.getElementById('mute-btn');
-      if (btn) btn.style.display = 'flex';
-    }).catch(() => {
-      // Se este dispositivo já desbloqueou antes, tenta novamente com qualquer interação mínima
-      // Caso contrário aguarda interação normal do usuário
-      interactionEvents.forEach(ev =>
-        document.addEventListener(ev, unlock, { passive: true })
-      );
-    });
-  }
-
-  function toggleMute() {
-    const music = document.getElementById('bg-music');
-    const btn = document.getElementById('mute-btn');
-    if (!music) return;
-    muted = !muted;
-    music.muted = muted;
-    if (btn) btn.textContent = muted ? '' : '';
-  }
-
-  function playSound(id) {
-    const audio = document.getElementById(id);
-    if (!audio) return;
-    try {
-      audio.currentTime = 0;
-      audio.volume = 0.1;
-      audio.play().catch(() => {});
-    } catch(e) {}
-  }
-
-  // Se o dispositivo já desbloqueou áudio antes, inicia direto (desktop e mobile)
-  // Caso contrário, desktop tenta imediatamente; mobile aguarda primeira interação
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!isMobile || wasAudioUnlocked()) startBgMusic();
-  });
-
-  // ===== CONTROLE DE VISIBILIDADE DA MÚSICA =====
-  // Pausa a música quando o usuário sai da tela inicial; retoma ao voltar
-  let musicPausedBySystem = false;
-
-  function pauseMusicForSystem() {
-    const music = document.getElementById('bg-music');
-    if (!music || music.paused) return;
-    music.pause();
-    musicPausedBySystem = true;
-  }
-
-  function resumeMusicForSystem() {
-    if (!musicStarted || muted || !musicPausedBySystem) return;
-    const music = document.getElementById('bg-music');
-    if (!music) return;
-    music.play().catch(() => {});
-    musicPausedBySystem = false;
-  }
-
-  // Troca de aba ou minimização (mobile e desktop)
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      pauseMusicForSystem();
-    } else {
-      resumeMusicForSystem();
-    }
-  });
-
-  // Troca de app no desktop (alt+tab, outro programa em frente)
-  window.addEventListener('blur', pauseMusicForSystem);
-  window.addEventListener('focus', resumeMusicForSystem);
-
-  // ===== MODAL =====
-  const modalMessages = {
-    done: {
-      icon: 'assets/images/livro-verde.png',
-      status: '✦ A MÁGIA DO CONHECIMENTO ESTÁ SENDO DESPERTADA ✦',
-      color: '#7ddc6e',
-      heading: 'Abrindo o pergaminho do conhecimento',
-      modeClass: 'modal-available',
-    },
-    none: {
-      icon: 'assets/images/livro-azul.png',
-      status: '✦ ESSE PERGAMINHO AINDA NÃO RECEBEU A MÁGIA DO CONHECIMENTO ✦',
-      color: '#5070a0',
-      heading: 'Pergaminho Selado',
-      modeClass: 'modal-unavailable',
-    },
-  };
-
-  let pendingNavigationUrl = null;
-  const bookAvailabilityByUrl = {};
-  const MIN_BOOK_LINES = 100;
-
-  function extractBookUrlFromCard(card) {
-    const onclickText = card.getAttribute('onclick') || '';
-    const match = onclickText.match(/openBook\(\s*'[^']*'\s*,\s*'([^']+)'/);
-    return match ? match[1] : null;
-  }
-
-  async function hasBookContent(url) {
-    if (!url) {
-      return false;
-    }
-
-    if (url in bookAvailabilityByUrl) {
-      return bookAvailabilityByUrl[url];
-    }
-
-    try {
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) {
-        bookAvailabilityByUrl[url] = false;
-        return false;
-      }
-
-      const htmlText = await response.text();
-      const lineCount = htmlText.split(/\r?\n/).length;
-      const available = lineCount > MIN_BOOK_LINES;
-      bookAvailabilityByUrl[url] = available;
-      return available;
-    } catch (error) {
-      bookAvailabilityByUrl[url] = false;
-      return false;
-    }
-  }
-
-  // Checagem em tempo real, sem depender do cache interno
-  async function checkBookAvailabilityRealtime(url) {
-    if (!url) {
-      return false;
-    }
-
-    try {
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) {
-        return false;
-      }
-
-      const htmlText = await response.text();
-      const lineCount = htmlText.split(/\r?\n/).length;
-      return lineCount > MIN_BOOK_LINES;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  function setCardVisualState(card, available) {
-    card.classList.remove('status-done', 'status-none');
-    card.classList.add(available ? 'status-done' : 'status-none');
-
-    const imgEl = card.querySelector('.book-img');
-    if (imgEl) {
-      imgEl.src = available ? 'assets/images/livro-verde.png' : 'assets/images/livro-azul.png';
-      imgEl.alt = available ? 'Livro disponível' : 'Livro indisponível';
-    }
-
-    const titleEl = card.querySelector('.medieval-title');
-    if (titleEl) {
-      titleEl.style.color = available ? '#1a0a00' : '#5070a0';
-    }
-
-    const buttonEl = card.querySelector('button');
-    if (buttonEl) {
-      buttonEl.classList.remove('btn-access', 'btn-unavailable');
-      buttonEl.classList.add(available ? 'btn-access' : 'btn-unavailable');
-      buttonEl.textContent = available ? 'ACESSAR' : 'INDISPONÍVEL';
-    }
-  }
-
-  async function updateBooksAvailability() {
-    const cards = document.querySelectorAll('.bimestre-card');
-    const checks = Array.from(cards).map(async (card) => {
-      const url = extractBookUrlFromCard(card);
-      const available = await hasBookContent(url);
-      setCardVisualState(card, available);
-    });
-
-    await Promise.all(checks);
-  }
-
-  function openModal(title, statusText, type, url) {
-    const msg = modalMessages[type] || modalMessages.none;
-    const modalEl = document.querySelector('.modal-content');
-
-    if (modalEl) {
-      modalEl.classList.remove('modal-available', 'modal-unavailable');
-      if (msg.modeClass) modalEl.classList.add(msg.modeClass);
-    }
-
-    const modalVideo = document.getElementById('modal-book-video');
-    const modalImg   = document.getElementById('modal-book-img');
-    const isAvailable = type === 'done';
-
-    if (isAvailable) {
-      if (modalImg)   modalImg.style.display   = 'none';
-      if (modalVideo) {
-        modalVideo.style.display = 'block';
-        modalVideo.currentTime   = 0;
-        modalVideo.play().catch(() => {});
-      }
-      playSound('sfx-livro-abrindo');
-    } else {
-      if (modalVideo) { modalVideo.pause(); modalVideo.style.display = 'none'; }
-      if (modalImg)   { modalImg.src = msg.icon; modalImg.style.display = 'block'; }
-    }
-
-    document.getElementById('modal-heading').textContent = msg.heading || 'Abrindo o pergaminho do conhecimento';
-    document.getElementById('modal-title').textContent = title;
-    const statusEl = document.getElementById('modal-status');
-    statusEl.textContent = msg.status;
-    statusEl.style.color = msg.color;
-    pendingNavigationUrl = url || null;
-    document.getElementById('modal-overlay').style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-
-  const GIF_OPEN_DURATION_MS = 2000;
-
-  function findCardByUrl(url) {
-    const cards = document.querySelectorAll('.bimestre-card');
-    for (const card of cards) {
-      const cardUrl = extractBookUrlFromCard(card);
-      if (cardUrl === url) return card;
-    }
-    return null;
-  }
-
-  function animateBookGif(card) {
-    const img = card.querySelector('.book-icon .book-img');
-    if (!img) return;
-    const staticSrc = 'assets/images/livro-verde.png';
-    card.classList.add('book-animating');
-    img.src = 'assets/gif/livro-abrindo.gif?t=' + Date.now();
-    playSound('sfx-livro-abrindo');
-    setTimeout(() => {
-      img.classList.add('book-closing');
-      setTimeout(() => {
-        img.src = staticSrc;
-        img.classList.remove('book-closing');
-        card.classList.remove('book-animating');
-      }, 1500);
-    }, GIF_OPEN_DURATION_MS);
-  }
-
-  async function openBook(title, url, type) {
-    const clickTime = Date.now();
-    const isAvailable = await checkBookAvailabilityRealtime(url);
-    const statusType = isAvailable ? 'done' : 'none';
-
-    if (isAvailable) {
-      playSound('sfx-livro-disponivel');
-    } else {
-      playSound('sfx-livro-indisponivel');
-    }
-
-    openModal(title, '', statusType, url);
-    if (!isAvailable) return;
-    if (!url) return;
-    const elapsed = Date.now() - clickTime;
-    const remaining = Math.max(0, 3500 - elapsed);
-    window.setTimeout(() => {
-      window.location.href = url;
-    }, remaining);
-  }
-
-  function closeModal(e) {
-    if (!e || e.target === document.getElementById('modal-overlay') || !e.target) {
-      const modalVideo = document.getElementById('modal-book-video');
-      if (modalVideo) { modalVideo.pause(); modalVideo.currentTime = 0; }
-      document.getElementById('modal-overlay').style.display = 'none';
-      document.body.style.overflow = '';
-      pendingNavigationUrl = null;
-    }
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  // Ao voltar pelo botão "voltar" do browser (mobile bfcache), fecha o modal
-  window.addEventListener('pageshow', e => {
-    if (e.persisted) {
-      const modalVideo = document.getElementById('modal-book-video');
-      if (modalVideo) { modalVideo.pause(); modalVideo.currentTime = 0; }
-      document.getElementById('modal-overlay').style.display = 'none';
-      document.body.style.overflow = '';
-      pendingNavigationUrl = null;
-      // Retoma música ao voltar de um livro (página restaurada do cache do browser)
-      if (musicStarted && !muted) {
-        const music = document.getElementById('bg-music');
-        if (music) {
-          musicPausedBySystem = false;
-          music.play().catch(() => {});
-        }
-      }
-    }
-  });
-
-  // ===== ANIMATIONS =====
-  function triggerAnimations() {
-    const activeContent = document.getElementById('content-' + currentTab);
-    const els = activeContent.querySelectorAll('.animate-on-load');
-    els.forEach(el => {
-      el.style.animation = 'none';
-      el.offsetHeight; // reflow
-      el.style.animation = '';
-    });
-
-    // Animate in without hiding elements first
-    els.forEach((el, i) => {
-      setTimeout(() => {
-        el.style.animation = `fadeSlideUp 0.7s ease-out ${i * 0.08}s both`;
-      }, i * 80);
-    });
-  }
-
-  // Initial load animation
-  window.addEventListener('DOMContentLoaded', () => {
-    // Detecta disponibilidade real de todos os livros (regra: > 30 linhas)
-    updateBooksAvailability();
-
-    if (isMobile) {
-      // Mobile: nenhuma série selecionada até o usuário escolher
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.remove('active');
-        b.style.color = '#9a7040';
-        b.style.background = 'linear-gradient(135deg,#1a0a00,#120700)';
-      });
-      document.querySelectorAll('.tab-content').forEach(c => {
-        c.classList.remove('active', 'show');
-      });
-      currentTab = 0;
-      return;
-    }
-
-    // Desktop: restaura a última série acessada
-    const initialContent = document.querySelector('.tab-content.active');
-    try {
-      const stored = localStorage.getItem('bdm-current-series');
-      const num = stored ? parseInt(stored, 10) : 1;
-      if (num && num !== currentTab && document.getElementById('content-' + num)) {
-        switchTab(num);
-      }
-    } catch (e) {}
-    if (initialContent) {
-      initialContent.classList.add('show');
-    }
-    setTimeout(triggerAnimations, 200);
-  });
-</script>
-
-<!-- ===== PWA INSTALL POPUP HTML ===== -->
+<!-- PWA POPUP -->
 <div id="pwa-overlay">
   <div id="pwa-popup">
     <div class="pwa-handle"></div>
-    <span class="pwa-corner tl">✦</span>
-    <span class="pwa-corner tr">✦</span>
-
-    <div class="pwa-ornament-line">⚜ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ⚜</div>
-    <div class="pwa-icon-wrap">📜</div>
-
-    <h2 class="pwa-title" id="pwa-title">Grimório Digital</h2>
-    <p class="pwa-subtitle" id="pwa-subtitle">
-      Instale o acervo em seu pergaminho portátil e carregue os manuscritos para onde for
-    </p>
-
-    <div class="pwa-features">
-      <span class="pwa-feature-chip">📖 Acesso offline</span>
-      <span class="pwa-feature-chip">⚡ Abre instantâneo</span>
-      <span class="pwa-feature-chip">🏰 Sem navegador</span>
+    <span class="pwa-corner-s tl">✦</span><span class="pwa-corner-s tr">✦</span>
+    <div class="pwa-orn">⚜ ✦ ✦ ✦ ⚜</div>
+    <div class="pwa-icon-w">📜</div>
+    <h2 class="pwa-t">Grimório Digital</h2>
+    <p class="pwa-sub">Instale o acervo em seu pergaminho portátil e carregue os manuscritos para onde for</p>
+    <div class="pwa-feats">
+      <span class="pwa-chip">📖 Acesso offline</span>
+      <span class="pwa-chip">⚡ Abre instantâneo</span>
+      <span class="pwa-chip">🏰 Sem navegador</span>
     </div>
-
-    <!-- Botão Android (padrão) -->
-    <div id="pwa-android-content">
-      <button id="pwa-install-btn">⚜ &nbsp; Baixar o Aplicativo &nbsp; ⚜</button>
-    </div>
-
-    <!-- Instruções iOS -->
+    <div id="pwa-android-content"><button id="pwa-install-btn">⚜ &nbsp;Baixar o Aplicativo &nbsp;⚜</button></div>
     <div id="pwa-ios-content" style="display:none;">
       <div class="pwa-ios-steps">
-        <p>1. Toque em <span>Compartilhar</span> <span>⎙</span> no rodapé do navegador</p>
-        <p>2. Role e toque em <span>"Adicionar à Tela de Início"</span> <span>＋</span></p>
+        <p>1. Toque em <span>Compartilhar ⎙</span> no rodapé do navegador</p>
+        <p>2. Role e toque em <span>"Adicionar à Tela de Início" ＋</span></p>
         <p>3. Confirme tocando em <span>"Adicionar"</span></p>
       </div>
     </div>
-
     <button id="pwa-dismiss-btn">Talvez mais tarde</button>
-    <div class="pwa-ornament-line" style="margin-top:1rem;margin-bottom:0;">⚜ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ⚜</div>
+    <div class="pwa-orn" style="margin-top:1rem;margin-bottom:0;">⚜ ✦ ✦ ✦ ⚜</div>
   </div>
 </div>
 
-<!-- Registro do Service Worker para PWA (Android/iOS) -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
-  }
-</script>
-
-<!-- ===== PWA INSTALL POPUP LOGIC ===== -->
-<script>
-(function () {
-  const DISMISSED_KEY = 'bdm_pwa_dismissed';
-  const overlay  = document.getElementById('pwa-overlay');
-  const popup    = document.getElementById('pwa-popup');
-  const installBtn  = document.getElementById('pwa-install-btn');
-  const dismissBtn  = document.getElementById('pwa-dismiss-btn');
-  const androidContent = document.getElementById('pwa-android-content');
-  const iosContent     = document.getElementById('pwa-ios-content');
-
-  // Não exibe se já está instalado como app standalone
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
-                    || window.navigator.standalone === true;
-  if (isStandalone) return;
-
-  // Não exibe no desktop (só mobile)
-  const onMobile = window.matchMedia('(max-width: 900px)').matches
-                || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (!onMobile) return;
-
-  // Não exibe se o app já foi instalado com sucesso
-  if (localStorage.getItem(DISMISSED_KEY)) return;
-
-  const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent) && !window.MSStream;
-
-  let deferredPrompt = null;
-
-  function showPopup() {
-    overlay.style.display = 'flex';
-    requestAnimationFrame(() => overlay.classList.add('show'));
-  }
-
-  function hidePopup() {
-    overlay.classList.remove('show');
-    setTimeout(() => { overlay.style.display = 'none'; }, 380);
-  }
-
-  // Dispensar apenas fecha — não bloqueia para visitas futuras
-  dismissBtn.addEventListener('click', () => {
-    hidePopup();
-  });
-
-  // Fechar ao clicar fora do popup — não bloqueia para visitas futuras
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) {
-      hidePopup();
-    }
-  });
-
-  if (isIOS) {
-    // iOS: mostra instruções manuais (Safari/Chrome não suportam beforeinstallprompt)
-    androidContent.style.display = 'none';
-    iosContent.style.display = 'block';
-    setTimeout(showPopup, 4000);
-
-  } else {
-    // Android/Chrome: aguarda o evento nativo de instalação
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      deferredPrompt = e;
-
-      installBtn.addEventListener('click', async () => {
-        hidePopup();
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          localStorage.setItem(DISMISSED_KEY, '1');
-        }
-        deferredPrompt = null;
-      });
-
-      setTimeout(showPopup, 4000);
-    });
-
-    // Se o app for instalado por outro meio, fecha o popup
-    window.addEventListener('appinstalled', () => {
-      localStorage.setItem(DISMISSED_KEY, '1');
-      hidePopup();
-    });
-  }
-})();
-</script>
-
-<!-- ===== DOUBLE BACK TO EXIT ===== -->
-<style>
-  #back-toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: linear-gradient(135deg, #2a1500, #1a0d00);
-    border: 1px solid #c9a84c;
-    color: #f0d060;
-    font-family: 'Cinzel', serif;
-    font-size: 0.82rem;
-    letter-spacing: 0.06em;
-    padding: 0.65rem 1.4rem;
-    border-radius: 4px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 12px rgba(201,168,76,0.25);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 9999;
-    white-space: nowrap;
-  }
-  #back-toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-</style>
 <div id="back-toast">⚜ Pressione voltar novamente para sair ⚜</div>
 
 <script>
-(function () {
-  // Empurra um estado extra no histórico para interceptar o primeiro "voltar"
-  history.pushState({ backGuard: true }, '');
+/* ══════════════════════════════
+   TORCH FIRE CANVAS
+══════════════════════════════ */
+function initFire(canvas) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const particles = [];
+  const N = 22;
 
-  let backPressedOnce = false;
-  let toastTimer = null;
-  const toast = document.getElementById('back-toast');
+  function newP() {
+    return {
+      x: W/2 + (Math.random()-.5)*10,
+      y: H - 4,
+      vx: (Math.random()-.5)*.8,
+      vy: -(Math.random()*1.4+.5),
+      life: 1,
+      decay: Math.random()*.028+.012,
+      size: Math.random()*5+3,
+      hue: Math.random()*30, // 0=red, 30=orange
+    };
+  }
+  for(let i=0;i<N;i++){const p=newP();p.life=Math.random();particles.push(p);}
 
-  function showToast() {
+  function frame() {
+    ctx.clearRect(0,0,W,H);
+    // Emit new
+    if(particles.length < N+5) particles.push(newP());
+
+    particles.forEach((p,i)=>{
+      p.x += p.vx + Math.sin(Date.now()*.003+i)*.3;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if(p.life<=0){particles[i]=newP();return;}
+
+      const alpha = p.life;
+      const size  = p.size * p.life;
+      // color: yellow → orange → red as life decreases
+      const l = p.life;
+      let r,g,b;
+      if(l>.6){r=255;g=Math.round(180+75*(l-.6)/.4);b=20;}
+      else if(l>.3){r=255;g=Math.round(80+100*(l-.3)/.3);b=0;}
+      else{r=Math.round(200+55*(l/.3));g=20;b=0;}
+
+      const grd=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,size);
+      grd.addColorStop(0,`rgba(${r},${g},${b},${alpha})`);
+      grd.addColorStop(.6,`rgba(${r},${Math.round(g*.5)},0,${alpha*.6})`);
+      grd.addColorStop(1,`rgba(${r},0,0,0)`);
+      ctx.beginPath();ctx.arc(p.x,p.y,size,0,Math.PI*2);
+      ctx.fillStyle=grd;ctx.fill();
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  initFire(document.getElementById('fire-l'));
+  initFire(document.getElementById('fire-r'));
+});
+
+/* ══════════════════════════════
+   SCREEN TRANSITIONS
+══════════════════════════════ */
+let currentSerie = 0;
+const SERIE_NAMES = ['','1ª Série','2ª Série','3ª Série'];
+
+function selectSerie(n) {
+  playSound('sfx-serie');
+  currentSerie = n;
+  try{localStorage.setItem('bdm-current-serie',String(n));}catch(e){}
+
+  // Update header
+  document.getElementById('serie-name-header').textContent = SERIE_NAMES[n];
+
+  // Show correct panels
+  [1,2,3].forEach(s=>{
+    const el=document.getElementById('panels-'+s);
+    if(el) el.style.display = s===n ? 'block':'none';
+  });
+
+  // Show first tab panel
+  const firstPanel = document.getElementById('tab-panel-'+n+'-1');
+  if(firstPanel){
+    document.querySelectorAll('.tab-panel').forEach(p=>{p.classList.remove('active','show');});
+    firstPanel.classList.add('active');
+    requestAnimationFrame(()=>firstPanel.classList.add('show'));
+  }
+
+  // Build tabs bar
+  buildTabs(n);
+
+  // Transition screens
+  const landing = document.getElementById('screen-landing');
+  const content = document.getElementById('screen-content');
+  landing.classList.add('slide-out');
+  setTimeout(()=>{
+    landing.classList.add('hidden');
+    landing.classList.remove('slide-out');
+    content.classList.remove('hidden');
+    content.style.animation='screenReveal .5s ease-out both';
+    content.scrollTop=0;
+    updateAvailability();
+    startBgMusic();
+  },400);
+}
+
+function buildTabs(n) {
+  // For now all series have one discipline group (simplified — could add multiple tabs)
+  // Tab bar hidden since content is scrollable
+  const bar = document.getElementById('tabs-bar');
+  bar.innerHTML = '';
+}
+
+function goBack() {
+  const landing = document.getElementById('screen-landing');
+  const content = document.getElementById('screen-content');
+  content.classList.add('hidden');
+  landing.classList.remove('hidden');
+  landing.style.animation='screenReveal .4s ease-out both';
+}
+
+/* ══════════════════════════════
+   AUDIO
+══════════════════════════════ */
+let musicStarted=false, muted=false, musicPausedBySystem=false;
+
+function startBgMusic() {
+  const m=document.getElementById('bg-music');
+  if(!m||musicStarted)return;
+  m.volume=.04;
+  m.play().then(()=>{
+    musicStarted=true;
+    const btn=document.getElementById('mute-btn');
+    if(btn)btn.style.display='flex';
+  }).catch(()=>{
+    const unlock=()=>{
+      m.play().then(()=>{
+        musicStarted=true;
+        const btn=document.getElementById('mute-btn');
+        if(btn)btn.style.display='flex';
+        ['click','touchstart'].forEach(ev=>document.removeEventListener(ev,unlock));
+      }).catch(()=>{});
+    };
+    ['click','touchstart'].forEach(ev=>document.addEventListener(ev,unlock,{passive:true}));
+  });
+}
+
+function toggleMute(){
+  const m=document.getElementById('bg-music');
+  const btn=document.getElementById('mute-btn');
+  if(!m)return;
+  muted=!muted;m.muted=muted;
+  if(btn)btn.textContent=muted?'🔇':'🔊';
+}
+
+function playSound(id){
+  const a=document.getElementById(id);
+  if(!a)return;
+  try{a.currentTime=0;a.volume=.1;a.play().catch(()=>{});}catch(e){}
+}
+
+document.addEventListener('visibilitychange',()=>{
+  const m=document.getElementById('bg-music');if(!m)return;
+  if(document.hidden){if(!m.paused){m.pause();musicPausedBySystem=true;}}
+  else if(musicPausedBySystem&&!muted&&musicStarted){m.play().catch(()=>{});musicPausedBySystem=false;}
+});
+window.addEventListener('blur',()=>{const m=document.getElementById('bg-music');if(m&&!m.paused){m.pause();musicPausedBySystem=true;}});
+window.addEventListener('focus',()=>{if(musicPausedBySystem&&!muted&&musicStarted){const m=document.getElementById('bg-music');if(m){m.play().catch(()=>{});musicPausedBySystem=false;}}});
+
+/* ══════════════════════════════
+   MODAL
+══════════════════════════════ */
+const bookCache={};
+async function checkBook(url){
+  if(url in bookCache)return bookCache[url];
+  try{
+    const r=await fetch(url,{cache:'no-store'});
+    if(!r.ok){bookCache[url]=false;return false;}
+    const ok=(await r.text()).split(/\r?\n/).length>100;
+    bookCache[url]=ok;return ok;
+  }catch{bookCache[url]=false;return false;}
+}
+
+async function openBook(title,url,type){
+  const t0=Date.now();
+  const avail=await checkBook(url);
+  const status=avail?'done':'none';
+  playSound(avail?'sfx-livro-disponivel':'sfx-livro-indisponivel');
+
+  const heading=document.getElementById('modal-heading');
+  const titleEl=document.getElementById('modal-title');
+  const statusEl=document.getElementById('modal-status');
+  const video=document.getElementById('modal-book-video');
+  const img=document.getElementById('modal-book-img');
+  const isAvail=status==='done';
+
+  heading.className='modal-heading '+(isAvail?'avail':'unavail');
+  statusEl.className='modal-status-t '+(isAvail?'avail':'unavail');
+  heading.textContent=isAvail?'Abrindo o pergaminho do conhecimento':'Pergaminho Selado';
+  titleEl.textContent=title;
+  statusEl.textContent=isAvail?'✦ A MÁGIA DO CONHECIMENTO ESTÁ SENDO DESPERTADA ✦':'✦ ESSE PERGAMINHO AINDA NÃO RECEBEU A MÁGIA DO CONHECIMENTO ✦';
+
+  if(isAvail){
+    img.style.display='none';
+    video.style.display='block';video.currentTime=0;video.play().catch(()=>{});
+    playSound('sfx-livro-abrindo');
+  }else{
+    video.pause();video.style.display='none';
+    img.src=window.IMG_AZUL||'https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png';img.style.display='block';
+  }
+  document.getElementById('modal-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+
+  if(isAvail){
+    const elapsed=Date.now()-t0;
+    setTimeout(()=>{window.location.href=url;},Math.max(0,3500-elapsed));
+  }
+}
+
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay')||!e.target){
+    const v=document.getElementById('modal-book-video');
+    if(v){v.pause();v.currentTime=0;}
+    document.getElementById('modal-overlay').style.display='none';
+    document.body.style.overflow='';
+  }
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+window.addEventListener('pageshow',e=>{
+  if(e.persisted){
+    const v=document.getElementById('modal-book-video');
+    if(v){v.pause();v.currentTime=0;}
+    document.getElementById('modal-overlay').style.display='none';
+    document.body.style.overflow='';
+    if(musicStarted&&!muted){const m=document.getElementById('bg-music');if(m){musicPausedBySystem=false;m.play().catch(()=>{});}}
+  }
+});
+
+/* ══════════════════════════════
+   BOOK AVAILABILITY CHECK
+══════════════════════════════ */
+async function updateAvailability(){
+  const cards=document.querySelectorAll('.book-card');
+  await Promise.all(Array.from(cards).map(async card=>{
+    const oc=card.getAttribute('onclick')||'';
+    const m=oc.match(/openBook\(\s*'[^']*'\s*,\s*'([^']+)'/);
+    if(!m)return;
+    const avail=await checkBook(m[1]);
+    card.classList.toggle('available',avail);
+    card.classList.toggle('unavailable',!avail);
+    const img=card.querySelector('.card-img');
+    if(img)img.src=avail?(window.IMG_VERDE||'https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png'):(window.IMG_AZUL||'https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png');
+    const lbl=card.querySelector('.card-label');
+    if(lbl)lbl.style.color=avail?'#d5c090':'#444';
+    const btn=card.querySelector('button');
+    if(btn){btn.className=avail?'btn-access':'btn-unavail';btn.textContent=avail?'ACESSAR':'INDISPONÍVEL';}
+  }));
+}
+
+/* ══════════════════════════════
+   INIT
+══════════════════════════════ */
+window.addEventListener('DOMContentLoaded',()=>{
+  // Sempre começa na tela inicial (landing)
+  startBgMusic();
+});
+</script>
+
+<!-- FIX IMAGES — substitui src por base64 embutido -->
+<script>
+(function(){
+  function fixImages(){
+    if(!window.IMG_AZUL||!window.IMG_VERDE)return;
+    document.querySelectorAll('img').forEach(img=>{
+      const s=img.getAttribute('src')||'';
+      if(s.includes('livro-azul')) img.src=window.IMG_AZUL;
+      else if(s.includes('livro-verde')) img.src=window.IMG_VERDE;
+    });
+  }
+  if(document.readyState==='loading')
+    document.addEventListener('DOMContentLoaded',fixImages);
+  else fixImages();
+  // também roda depois de updateAvailability trocar os src
+  const _orig=window.updateAvailability;
+  window.addEventListener('load',fixImages);
+})();
+</script>
+
+<!-- SERVICE WORKER -->
+<script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
+
+<!-- PWA POPUP -->
+<script>
+(function(){
+  const DISMISSED='bdm_pwa_dismissed';
+  const overlay=document.getElementById('pwa-overlay');
+  const installBtn=document.getElementById('pwa-install-btn');
+  const dismissBtn=document.getElementById('pwa-dismiss-btn');
+  const androidC=document.getElementById('pwa-android-content');
+  const iosC=document.getElementById('pwa-ios-content');
+  const isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+  if(isStandalone)return;
+  const onMobile=window.matchMedia('(max-width: 900px)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(!onMobile)return;
+  if(localStorage.getItem(DISMISSED))return;
+  const isIOS=/iPad|iPhone|iPod/i.test(navigator.userAgent)&&!window.MSStream;
+  let deferredPrompt=null;
+  const show=()=>{overlay.style.display='flex';requestAnimationFrame(()=>overlay.classList.add('show'));};
+  const hide=()=>{overlay.classList.remove('show');setTimeout(()=>{overlay.style.display='none';},380);};
+  dismissBtn.addEventListener('click',hide);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)hide();});
+  if(isIOS){androidC.style.display='none';iosC.style.display='block';setTimeout(show,5000);}
+  else{
+    window.addEventListener('beforeinstallprompt',e=>{
+      e.preventDefault();deferredPrompt=e;
+      installBtn.addEventListener('click',async()=>{
+        hide();deferredPrompt.prompt();
+        const{outcome}=await deferredPrompt.userChoice;
+        if(outcome==='accepted')localStorage.setItem(DISMISSED,'1');
+        deferredPrompt=null;
+      });
+      setTimeout(show,5000);
+    });
+    window.addEventListener('appinstalled',()=>{localStorage.setItem(DISMISSED,'1');hide();});
+  }
+})();
+</script>
+
+<!-- DOUBLE BACK -->
+<script>
+(function(){
+  history.pushState({backGuard:true},'');
+  let once=false,timer=null;
+  const toast=document.getElementById('back-toast');
+  window.addEventListener('popstate',()=>{
+    if(once)return;
+    history.pushState({backGuard:true},'');
+    once=true;
     toast.classList.add('show');
-  }
-
-  function hideToast() {
-    toast.classList.remove('show');
-  }
-
-  window.addEventListener('popstate', function (e) {
-    if (backPressedOnce) {
-      // Segunda pressão dentro de 2s — permite sair
-      return;
-    }
-
-    // Primeira pressão — bloqueia e avisa
-    history.pushState({ backGuard: true }, '');
-    backPressedOnce = true;
-    showToast();
-
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () {
-      backPressedOnce = false;
-      hideToast();
-    }, 2000);
+    clearTimeout(timer);
+    timer=setTimeout(()=>{once=false;toast.classList.remove('show');},2000);
   });
 })();
 </script>
+
 </body>
 </html>
