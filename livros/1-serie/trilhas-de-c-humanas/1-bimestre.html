@@ -1,16 +1,2891 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1ª Série • Trilhas de C. Humanas • 1º Bimestre</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Ágora: Democracia, Cidadania e Colonialidade | Trilhas de Ciências Humanas | 1ª Série | 1º Bim 2026</title>
+<style>
+/* ===== GOOGLE FONTS — Greek/Political aesthetic ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+/* ===== CSS VARIABLES / THEMES ===== */
+:root {
+  --bg: #f8f6f0;
+  --bg2: #ede8dc;
+  --bg3: #e0d8c8;
+  --card: #ffffff;
+  --txt: #1a1208;
+  --txt2: #3a2e1a;
+  --muted: #7a6a50;
+  --border: #cdc0a0;
+  --acc1: #1a3a6b;   /* deep Athens blue */
+  --acc2: #c8960a;   /* Olympic gold */
+  --acc3: #8b1a1a;   /* crimson/Sparta red */
+  --acc4: #2d5a3d;   /* laurel green */
+  --shadow: rgba(26,58,107,.15);
+  --hl-bg: #eef2fb;
+  --hl-txt: #0d254a;
+  --card-hover: #f0f4fd;
+  --gold: #c8960a;
+  --marble: #f0ece4;
+  --agora-blue: #1a3a6b;
+  --olympus: #c8960a;
+  --parchment: #f5edd9;
+}
+[data-theme="dark"] {
+  --bg: #080c14;
+  --bg2: #0d1420;
+  --bg3: #121c2c;
+  --card: #111828;
+  --txt: #e8dfc8;
+  --txt2: #b0a080;
+  --muted: #6a7a9a;
+  --border: #1e2e4a;
+  --acc1: #4a7acc;
+  --acc2: #e8b820;
+  --acc3: #d44040;
+  --acc4: #4a9060;
+  --shadow: rgba(74,122,204,.22);
+  --hl-bg: #0d1828;
+  --hl-txt: #a0c0f0;
+  --card-hover: #141e30;
+  --gold: #e8b820;
+  --marble: #111828;
+  --agora-blue: #4a7acc;
+  --parchment: #0d1420;
+}
+[data-theme="reading"] {
+  --bg: #fef9ee;
+  --bg2: #fdf3d8;
+  --bg3: #fbecbf;
+  --card: #fffdf5;
+  --txt: #2a1a08;
+  --txt2: #4a2e10;
+  --muted: #8a6040;
+  --border: #e0cc99;
+  --acc1: #0d2a5a;
+  --acc2: #b07808;
+  --acc3: #7a1515;
+  --acc4: #285030;
+  --shadow: rgba(13,42,90,.12);
+  --hl-bg: #fef5d8;
+  --hl-txt: #0d254a;
+  --card-hover: #fef8e8;
+  --gold: #b07808;
+  --marble: #fef5d8;
+  --parchment: #fef5d8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  transition: background .35s, color .35s;
+  overflow-x: hidden;
+  line-height: 1.75;
+}
+
+/* ===== PROGRESS BAR ===== */
+#prog {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
+  background: linear-gradient(90deg, var(--acc1), var(--gold), var(--acc3), var(--acc4));
+  width: 0%; transition: width .1s linear;
+}
+
+/* ===== FLOATING THEME BAR ===== */
+#float-theme {
+  position: fixed; top: .7rem; right: .7rem; z-index: 9998;
+  display: flex; gap: .3rem; align-items: center;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px; padding: .3rem .5rem;
+}
+.ft-btn {
+  padding: .3rem .65rem; border-radius: 999px;
+  border: 1.5px solid transparent;
+  background: transparent; color: rgba(255,255,255,.85);
+  font-size: .68rem; font-weight: 700; cursor: pointer;
+  transition: all .18s; white-space: nowrap;
+}
+.ft-btn:hover, .ft-btn.on { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.6); }
+
+/* ===== COVER ===== */
+#cover {
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 15% 85%, rgba(139,26,26,.4) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 15%, rgba(200,150,10,.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(26,58,107,.2) 0%, transparent 65%),
+    linear-gradient(175deg, #020810 0%, #060e1e 18%, #0a1630 35%, #061020 55%, #100808 80%, #080404 100%);
+  position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 3.5rem 1.4rem 2.5rem;
+  overflow: hidden;
+}
+
+/* Marble texture overlay */
+#cover::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.45' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  opacity: .5; pointer-events: none; z-index: 0;
+}
+
+/* Greek key border ornament */
+#cover::after {
+  content: '';
+  position: absolute; inset: 1.2rem;
+  border: 1px solid rgba(200,150,10,.3);
+  pointer-events: none; z-index: 1;
+  box-shadow: inset 0 0 50px rgba(200,150,10,.07), 0 0 80px rgba(26,58,107,.1);
+}
+
+/* Greek column silhouettes */
+.column-left, .column-right {
+  position: absolute; bottom: 0; z-index: 1;
+  width: clamp(40px, 8vw, 90px);
+  opacity: .12; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center;
+}
+.column-left { left: clamp(.5rem, 3vw, 3rem); }
+.column-right { right: clamp(.5rem, 3vw, 3rem); transform: scaleX(-1); }
+
+.col-capital { width: 100%; height: 12px; background: linear-gradient(to bottom, rgba(200,150,10,.6), rgba(200,150,10,.3)); border-radius: 2px 2px 0 0; }
+.col-shaft { width: 60%; flex: 1; min-height: 200px; background: linear-gradient(to right, rgba(200,150,10,.15), rgba(200,150,10,.4), rgba(200,150,10,.15)); position: relative; }
+.col-shaft::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(to bottom, transparent 0, transparent 18px, rgba(200,150,10,.08) 18px, rgba(200,150,10,.08) 20px); }
+.col-base { width: 100%; height: 14px; background: linear-gradient(to top, rgba(200,150,10,.6), rgba(200,150,10,.3)); border-radius: 0 0 2px 2px; }
+
+/* Floating particles */
+#particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particle {
+  position: absolute; opacity: 0;
+  animation: particleRise linear infinite;
+  will-change: transform; user-select: none;
+}
+@keyframes particleRise {
+  0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  8%   { opacity: .18; }
+  92%  { opacity: .12; }
+  100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
+}
+
+.cover-inner {
+  position: relative; z-index: 3;
+  text-align: center; max-width: 620px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+
+/* Pills */
+.school-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(200,150,10,.12); border: 1px solid rgba(200,150,10,.4);
+  color: rgba(255,220,140,.92); padding: .35rem 1.1rem;
+  border-radius: 999px; font-size: .68rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; backdrop-filter: blur(8px);
+  text-decoration: none; transition: all .2s;
+}
+.school-pill:hover { background: rgba(200,150,10,.28); border-color: rgba(200,150,10,.7); }
+
+.disc-pill {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(26,58,107,.25); border: 1.5px solid rgba(74,122,204,.5);
+  color: rgba(160,200,255,.92); padding: .3rem .9rem; border-radius: 999px;
+  font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  text-decoration: none; transition: all .2s;
+}
+.disc-pill:hover { background: rgba(26,58,107,.4); border-color: rgba(74,122,204,.8); }
+
+/* Greek key decorative line */
+.greek-key-line {
+  display: flex; align-items: center; gap: .8rem; width: 100%; max-width: 380px;
+}
+.gk-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,150,10,.5), transparent); }
+.gk-icon { color: rgba(200,150,10,.7); font-size: 1.1rem; letter-spacing: .15em; white-space: nowrap; font-family: 'Cinzel', serif; font-size: .7rem; }
+
+/* Cover eyebrow */
+.cover-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(.6rem, 1.6vw, .78rem);
+  color: rgba(200,150,10,.7); letter-spacing: .3em; text-transform: uppercase; font-weight: 400;
+}
+
+/* Main title */
+.cover-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2.4rem, 9vw, 5rem);
+  font-weight: 900; color: #f0e8d0; line-height: .95;
+  letter-spacing: .02em;
+  text-shadow: 0 0 80px rgba(200,150,10,.45), 0 4px 30px rgba(0,0,0,.8);
+}
+.cover-title .gold-word {
+  background: linear-gradient(135deg, #f8e080, #e8b010, #c8960a, #e8b010, #f8e080);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  background-size: 200% 100%;
+  animation: goldShimmer 4s ease-in-out infinite;
+}
+@keyframes goldShimmer {
+  0%,100%{background-position:0% 50%} 50%{background-position:100% 50%}
+}
+
+.cover-subtitle {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: clamp(.9rem, 2.8vw, 1.18rem);
+  color: rgba(240,230,200,.72); font-style: italic;
+  line-height: 1.65; max-width: 460px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.5);
+}
+
+.meta-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; }
+.meta-chip {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  color: rgba(240,220,180,.88); padding: .3rem .85rem; border-radius: 999px;
+  font-size: .7rem; font-weight: 600; backdrop-filter: blur(6px);
+}
+
+.prof-tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16);
+  color: rgba(240,225,200,.88); padding: .55rem 1.3rem; border-radius: 999px;
+  font-size: .82rem; backdrop-filter: blur(6px); text-decoration: none;
+}
+.prof-tag strong { color: #f0c840; }
+
+.theme-row { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; }
+.tbtn {
+  padding: .45rem 1.1rem; border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,.25); background: rgba(255,255,255,.07);
+  color: rgba(240,220,180,.92); font-size: .72rem; font-weight: 700;
+  cursor: pointer; transition: all .2s; letter-spacing: .03em; backdrop-filter: blur(6px);
+}
+.tbtn:hover, .tbtn.on { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.65); }
+
+/* BNCC box */
+.bncc-box {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(200,150,10,.25);
+  border-radius: 18px; padding: 1.1rem 1.2rem; max-width: 520px; width: 100%;
+  backdrop-filter: blur(10px);
+}
+.bncc-box h4 {
+  color: rgba(200,150,10,.9); font-size: .66rem; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase; margin-bottom: .7rem; text-align: center;
+  font-family: 'Cinzel', serif;
+}
+.bncc-chips { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: center; }
+.bc {
+  background: rgba(200,150,10,.1); border: 1.5px solid rgba(200,150,10,.4);
+  color: #f0cc60; padding: .28rem .8rem; border-radius: 10px;
+  font-size: .72rem; font-weight: 800; cursor: pointer; transition: all .2s;
+  letter-spacing: .04em; font-family: 'Cinzel', serif;
+}
+.bc:hover { background: rgba(200,150,10,.28); transform: scale(1.06); box-shadow: 0 4px 18px rgba(200,150,10,.25); }
+
+.start-btn {
+  display: inline-flex; align-items: center; gap: .55rem;
+  background: linear-gradient(135deg, #1a3a6b, #0d2050, #8b1a1a);
+  color: #f5e6c0; padding: .95rem 2.2rem; border-radius: 999px;
+  font-size: .98rem; font-weight: 800;
+  border: 1.5px solid rgba(200,150,10,.5); cursor: pointer;
+  box-shadow: 0 8px 32px rgba(26,58,107,.5), 0 2px 8px rgba(200,150,10,.3);
+  transition: all .22s; text-decoration: none; letter-spacing: .05em;
+  font-family: 'Cinzel', serif;
+}
+.start-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(26,58,107,.6); }
+
+/* ===== RAINBOW DIV ===== */
+.rainbow-div {
+  height: 3px;
+  background: linear-gradient(90deg, var(--acc1), var(--gold), var(--acc3), var(--acc4), var(--acc1));
+  border: none;
+}
+
+/* ===== SECTION HEADER ===== */
+.sec-head {
+  padding: 2.8rem 1.5rem 2.2rem;
+  background: linear-gradient(135deg, var(--acc1) 0%, #0d2050 50%, #1a0d30 100%);
+  position: relative; overflow: hidden; text-align: center;
+}
+.sec-head::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.sec-head::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(200,150,10,.1) 0%, transparent 60%); }
+.sec-head h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.5rem, 5vw, 2.4rem); font-weight: 900; color: #f0e8c8;
+  position: relative; z-index: 1; letter-spacing: .05em;
+  text-shadow: 0 2px 20px rgba(0,0,0,.5);
+}
+.sec-head p { color: rgba(240,230,200,.7); font-size: .88rem; margin-top: .4rem; position: relative; z-index: 1; font-style: italic; }
+
+/* ===== WRAP ===== */
+.wrap { max-width: 800px; margin: 0 auto; padding: 2rem 1.2rem 2.5rem; }
+
+/* ===== SUMÁRIO ===== */
+#sumario { background: var(--bg2); }
+
+.sumario-intro {
+  text-align: center; padding: 1.2rem 1rem 1.8rem;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.05rem; color: var(--txt2); font-style: italic;
+  border-bottom: 1px solid var(--border); margin-bottom: 1.5rem;
+  line-height: 1.75;
+}
+
+.cat-label {
+  font-family: 'Cinzel', serif;
+  font-size: .62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--muted); padding: 1.3rem .3rem .55rem;
+  display: flex; align-items: center; gap: .5rem;
+}
+.cat-label::before, .cat-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.s-grid { display: flex; flex-direction: column; gap: .4rem; }
+@media(min-width:640px){ .s-grid { display: grid; grid-template-columns: 1fr 1fr; } }
+
+.s-item {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: .9rem 1rem; cursor: pointer; text-decoration: none; color: var(--txt);
+  transition: all .22s; position: relative; overflow: hidden;
+}
+.s-item:hover { background: var(--card-hover); border-color: var(--acc1); transform: translateX(6px); box-shadow: 0 4px 22px var(--shadow); }
+
+.s-num {
+  min-width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--acc1), var(--acc2));
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: .72rem; font-weight: 700; color: #fff8e8;
+  flex-shrink: 0; box-shadow: 0 2px 8px var(--shadow);
+}
+.s-txt { flex: 1; min-width: 0; }
+.s-ttl { font-size: .88rem; font-weight: 700; line-height: 1.3; color: var(--txt); }
+.s-sub { font-size: .72rem; color: var(--muted); margin-top: .12rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
+.s-arr { color: var(--gold); font-size: .9rem; flex-shrink: 0; }
+
+.sbadge {
+  font-size: .58rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .05em; padding: .18rem .55rem; border-radius: 999px; flex-shrink: 0;
+}
+.b-hist { background: #e8d5f5; color: #4a1a7a; }
+.b-pol  { background: #d0e0f8; color: #0a2a6a; }
+.b-fil  { background: #fde8cc; color: #7a3500; }
+.b-eco  { background: #d5e8d4; color: #1a5a25; }
+.b-prod { background: #fce8e8; color: #6a1a1a; }
+[data-theme="dark"] .b-hist { background: #2a1050; color: #cc99ff; }
+[data-theme="dark"] .b-pol  { background: #0a2050; color: #88ccff; }
+[data-theme="dark"] .b-fil  { background: #4a2500; color: #ffcc88; }
+[data-theme="dark"] .b-eco  { background: #0a3a10; color: #88dd88; }
+[data-theme="dark"] .b-prod { background: #400a0a; color: #ff9999; }
+
+/* ===== LEGEND BOX ===== */
+.legend-box {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1rem 1.2rem; margin-bottom: 1.4rem;
+}
+.legend-box h4 { font-family: 'Cinzel', serif; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: .7rem; }
+.legend-items { display: flex; flex-wrap: wrap; gap: .45rem; }
+.legend-item { display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: var(--txt2); }
+
+/* Quote */
+.agora-quote {
+  background: var(--marble); border: 1px solid var(--border);
+  border-left: 4px solid var(--gold); border-radius: 0 16px 16px 0;
+  padding: 1.2rem 1.4rem; margin: 1.5rem 0;
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+.agora-quote blockquote { font-size: 1.05rem; color: var(--txt2); font-style: italic; line-height: 1.85; }
+.agora-quote .q-attr { font-size: .78rem; font-weight: 800; color: var(--gold); margin-top: .5rem; font-style: normal; font-family: 'Cinzel', serif; }
+
+/* ===== CARD STYLES ===== */
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+  padding: 1.5rem; margin-bottom: 1.1rem;
+  box-shadow: 0 2px 16px var(--shadow); transition: background .3s, border .3s;
+}
+.card h3 {
+  font-family: 'Cinzel', serif; font-size: .98rem; font-weight: 700;
+  color: var(--acc1); margin-bottom: .75rem;
+  display: flex; align-items: center; gap: .45rem; line-height: 1.3;
+}
+.card p, .card li { font-size: .9rem; color: var(--txt2); line-height: 1.75; margin-bottom: .35rem; }
+.card ul { padding-left: 1.1rem; }
+.card ul li::marker { color: var(--gold); }
+
+.hero-card {
+  background: linear-gradient(135deg, #080e1e 0%, #0d1a35 40%, #1a0d08 100%);
+  border: 1px solid rgba(200,150,10,.3);
+}
+.hero-card h3 { color: #f0cc60 !important; }
+.hero-card p { color: rgba(240,228,200,.88) !important; }
+.hero-card strong { color: #f0c840; }
+
+.info-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1rem 1.2rem; margin: .6rem 0; transition: all .2s;
+}
+.info-card:hover { border-color: var(--acc1); box-shadow: 0 4px 18px var(--shadow); }
+.info-card h4 { font-size: .9rem; font-weight: 800; color: var(--acc1); margin-bottom: .4rem; font-family: 'Cinzel', serif; }
+.info-card p { font-size: .84rem; color: var(--txt2); margin: 0; line-height: 1.7; }
+
+.grid2 { display: grid; grid-template-columns: 1fr; gap: .7rem; margin: .8rem 0; }
+@media(min-width:560px){ .grid2 { grid-template-columns: 1fr 1fr; } }
+
+.ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: .85rem; }
+.ai-card { background: var(--hl-bg); border: 1px solid var(--border); border-radius: 12px; padding: .85rem .9rem; text-align: center; }
+.ai-name { font-weight: 800; font-size: .83rem; color: var(--acc1); font-family: 'Cinzel', serif; }
+.ai-tip { font-size: .73rem; color: var(--muted); margin-top: .3rem; line-height: 1.45; }
+
+.ia-btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--hl-bg); border: 1.5px solid var(--acc1); border-radius: 999px;
+  padding: .4rem .9rem; font-size: .78rem; font-weight: 700; cursor: pointer;
+  text-decoration: none; color: var(--acc1); transition: all .2s; margin: .2rem;
+}
+.ia-btn:hover { background: var(--acc1); color: #fff8e8; transform: scale(1.05); }
+
+/* ===== MODAL ===== */
+.modal-bg {
+  position: fixed; inset: 0; background: rgba(0,0,0,.88); z-index: 2000;
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  opacity: 0; pointer-events: none; transition: opacity .22s;
+}
+.modal-bg.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--card); border-radius: 22px; padding: 1.8rem;
+  max-width: 540px; width: 100%; position: relative;
+  transform: scale(.92); transition: transform .22s;
+  max-height: 88vh; overflow-y: auto;
+  border: 1px solid var(--gold);
+}
+.modal-bg.show .modal { transform: scale(1); }
+.modal-x {
+  position: absolute; top: .9rem; right: .9rem;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 50%;
+  width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: .85rem; color: var(--txt); font-weight: 700;
+}
+.modal-label { font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: .35rem; font-family: 'Cinzel', serif; }
+.modal-code { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: var(--acc1); margin-bottom: .5rem; }
+.modal-tag { display: inline-block; background: var(--hl-bg); color: var(--acc1); border: 1px solid var(--acc1); border-radius: 6px; padding: .15rem .55rem; font-size: .68rem; font-weight: 800; margin-bottom: .7rem; font-family: 'Cinzel', serif; }
+.modal-desc { font-size: .88rem; color: var(--txt2); line-height: 1.8; }
+
+/* ===== FIXED NAV ===== */
+.fnav { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 998; display: flex; flex-direction: column; gap: .5rem; }
+.fnav-btn {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--acc1), #0d2050);
+  color: #f0e8c0; border: none; border-radius: 50%; font-size: 1.1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px var(--shadow); transition: all .2s;
+  border: 1px solid rgba(200,150,10,.3);
+}
+.fnav-btn:hover { transform: scale(1.12); }
+
+/* ===== PROF. PAULO MASCOT ===== */
+#paulo-wrap {
+  position: fixed; bottom: 5.5rem; left: .8rem; z-index: 990;
+  display: flex; flex-direction: column; align-items: flex-start; gap: .4rem;
+}
+#paulo-bubble {
+  background: var(--card); border: 2px solid var(--acc1);
+  border-radius: 16px 16px 16px 4px; padding: .75rem 1rem;
+  max-width: min(260px, calc(100vw - 5rem));
+  font-size: .79rem; color: var(--txt2); line-height: 1.6;
+  box-shadow: 0 4px 20px var(--shadow); position: relative;
+  animation: bubblePop .3s ease;
+}
+#paulo-bubble.hide { display: none; }
+@keyframes bubblePop { from { transform: scale(.8) translateY(8px); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.paulo-name { font-size: .6rem; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); margin-bottom: .2rem; font-family: 'Cinzel', serif; }
+.paulo-close {
+  position: absolute; top: .3rem; right: .4rem;
+  background: var(--bg2); border: none; border-radius: 50%;
+  width: 20px; height: 20px; font-size: .62rem; cursor: pointer;
+  color: var(--txt); display: flex; align-items: center; justify-content: center; font-weight: 900;
+}
+#paulo-btns { display: none; gap: .5rem; margin-top: .6rem; flex-wrap: wrap; }
+#paulo-avatar {
+  font-size: 2.4rem; cursor: pointer; user-select: none;
+  filter: drop-shadow(0 3px 10px rgba(200,150,10,.3));
+  animation: floatMascot 3s ease-in-out infinite;
+  transition: transform .2s;
+  display: flex; flex-direction: column; align-items: center;
+}
+#paulo-avatar:hover { transform: scale(1.12); }
+#paulo-avatar .paulo-label {
+  font-size: .58rem; font-weight: 900; color: var(--gold);
+  background: var(--card); border: 1px solid var(--gold);
+  padding: .08rem .4rem; border-radius: 999px; margin-top: .1rem;
+  letter-spacing: .04em; font-family: 'Cinzel', serif;
+}
+@keyframes floatMascot { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* ===== SECTION FLOATERS ===== */
+.sfloat-wrap { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.sfloat { position: absolute; opacity: 0; font-size: clamp(.9rem,2.5vw,1.8rem); animation: srise linear infinite; user-select: none; }
+@keyframes srise { 0%{transform:translateY(120%)rotate(0deg);opacity:0} 10%{opacity:.1} 90%{opacity:.08} 100%{transform:translateY(-20%)rotate(360deg);opacity:0} }
+
+/* ===== FADE IN ===== */
+.fi { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+.fi.in { opacity: 1; transform: none; }
+
+/* ===== INTERACTIVE BUTTON PULSES ===== */
+.tbtn, .start-btn, .bc, .school-pill, .disc-pill, .s-item, .fnav-btn, .ia-btn {
+  position: relative; overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease, filter .22s ease;
+}
+.tbtn:hover, .bc:hover, .s-item:hover { filter: brightness(1.06); }
+
+/* ===== MISC ===== */
+.concept-box {
+  background: var(--hl-bg); border: 2px solid var(--acc1);
+  border-radius: 14px; padding: 1.1rem 1.2rem; margin: .9rem 0;
+}
+.concept-box .cb-title { font-family: 'Cinzel', serif; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--acc1); margin-bottom: .5rem; }
+.concept-box p { font-size: .9rem; color: var(--txt2); line-height: 1.75; margin: 0; }
+
+.tag-cloud { display: flex; flex-wrap: wrap; gap: .4rem; margin: .8rem 0; }
+.tag { background: var(--hl-bg); color: var(--hl-txt); border: 1px solid var(--acc1); padding: .25rem .7rem; border-radius: 8px; font-size: .78rem; font-weight: 700; cursor: default; transition: all .18s; }
+.tag:hover { background: var(--acc1); color: #fff8e8; transform: scale(1.05); }
+
+.tip-box { background: var(--bg2); border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0; padding: .9rem 1rem; font-size: .84rem; color: var(--txt2); margin: .8rem 0; }
+
+.highlight-pill {
+  display: inline-block; background: var(--acc1); color: #fff8e8;
+  padding: .18rem .6rem; border-radius: 6px; font-size: .76rem; font-weight: 700; margin: .1rem;
+}
+
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 2.2rem 1.5rem; text-align: center; }
+footer p { font-size: .77rem; color: var(--muted); line-height: 1.7; }
+footer strong { color: var(--gold); }
+
+/* Placeholder sections (content TBD) */
+.placeholder-sec {
+  padding: 2.5rem 1.5rem; text-align: center;
+  font-family: 'Crimson Pro', serif; font-style: italic;
+  color: var(--muted); font-size: .92rem;
+  background: var(--bg); min-height: 60px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:400px) {
+  .cover-title { font-size: 2.2rem; }
+  .ai-grid { grid-template-columns: 1fr; }
+  .bncc-chips { justify-content: flex-start; }
+}
+
+/* ===== BLOCO TABS ===== */
+.bloco-tabs { margin: 1rem 0; }
+.btabs-nav {
+  display: flex; gap: .3rem; flex-wrap: wrap;
+  border-bottom: 2px solid var(--border); margin-bottom: 0;
+  position: sticky; top: 0; background: var(--bg); z-index: 10; padding: .4rem 0 0;
+}
+[data-theme="dark"] .btabs-nav { background: var(--bg2); }
+.btab-btn {
+  padding: .5rem 1rem; border: none; border-radius: 8px 8px 0 0;
+  background: var(--bg2); color: var(--muted);
+  font-size: .78rem; font-weight: 700; cursor: pointer;
+  transition: all .18s; border: 1.5px solid var(--border);
+  border-bottom: none; margin-bottom: -2px; font-family: 'Inter', sans-serif;
+}
+.btab-btn:hover { background: var(--card-hover); color: var(--acc1); }
+.btab-btn.active {
+  background: var(--card); color: var(--acc1);
+  border-color: var(--acc1); border-bottom: 2px solid var(--card);
+  box-shadow: 0 -3px 10px var(--shadow);
+}
+.btab-panel {
+  display: none; background: var(--card);
+  border: 1.5px solid var(--acc1); border-top: none;
+  border-radius: 0 0 16px 16px; padding: 1.2rem;
+  animation: tabFade .25s ease;
+}
+.btab-panel.active { display: block; }
+@keyframes tabFade { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+/* Content columns */
+.content-cols { display: flex; flex-direction: column; gap: 1rem; }
+.col-main { flex: 1; }
+
+/* Activity styles */
+.activity-section {
+  background: linear-gradient(135deg, var(--acc1), #0d1a35);
+  border-radius: 18px; padding: 1.5rem; margin: .5rem 0;
+}
+.act-title { color: #f0e8c0; font-size: 1rem; font-weight: 900; margin-bottom: .5rem; font-family: 'Cinzel', serif; }
+.act-subtitle { color: rgba(240,230,200,.78); font-size: .8rem; margin-bottom: 1rem; font-style: italic; }
+.q-card {
+  background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.18); border-radius: 12px;
+  padding: .9rem 1.1rem; margin: .6rem 0;
+}
+.q-num { font-size: .65rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.65); margin-bottom: .3rem; }
+.q-text { font-size: .87rem; color: #fff; line-height: 1.65; font-weight: 500; }
+.q-caderno { font-size: .7rem; color: rgba(255,255,255,.55); margin-top: .4rem; font-style: italic; }
+
+/* Quiz styles */
+.quiz-section {
+  background: var(--bg2); border: 2px solid var(--border);
+  border-radius: 18px; padding: 1.4rem; margin: .5rem 0;
+}
+.quiz-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.quiz-title { font-size: .95rem; font-weight: 900; color: var(--acc1); font-family: 'Cinzel', serif; }
+.quiz-score-box { display: flex; align-items: center; gap: .4rem; background: var(--card); border: 1.5px solid var(--border); border-radius: 999px; padding: .28rem .8rem; font-size: .77rem; }
+.score-num { font-weight: 900; color: var(--acc1); font-size: .98rem; }
+.quiz-progress-bar { height: 5px; background: var(--border); border-radius: 3px; margin-bottom: .9rem; overflow: hidden; }
+.quiz-progress-fill { height: 100%; background: linear-gradient(90deg, var(--acc1), var(--acc2)); border-radius: 3px; transition: width .4s ease; }
+.qmc-card { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: .9rem 1rem; margin: .7rem 0; }
+.qmc-card.answered { border-color: var(--acc1); }
+.qmc-num { font-size: .63rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: .35rem; }
+.qmc-text { font-size: .88rem; color: var(--txt); font-weight: 600; line-height: 1.6; margin-bottom: .7rem; }
+.qmc-opts { display: flex; flex-direction: column; gap: .3rem; }
+.qmc-opt {
+  display: flex; align-items: flex-start; gap: .6rem;
+  padding: .55rem .75rem; border-radius: 9px; cursor: pointer;
+  border: 1.5px solid var(--border); background: var(--bg2);
+  font-size: .83rem; color: var(--txt2); transition: all .18s; text-align: left; width: 100%;
+}
+.qmc-opt:hover:not(:disabled) { border-color: var(--acc1); background: var(--hl-bg); color: var(--txt); }
+.qmc-opt:disabled { cursor: default; }
+.qmc-opt.correct { border-color: #16a34a !important; background: #dcfce7 !important; color: #14532d !important; font-weight: 700; }
+.qmc-opt.wrong   { border-color: #dc2626 !important; background: #fee2e2 !important; color: #991b1b !important; }
+.qmc-opt.reveal  { border-color: #2563eb !important; background: #dbeafe !important; color: #1e3a8a !important; }
+[data-theme="dark"] .qmc-opt.correct { background: #14532d !important; color: #86efac !important; }
+[data-theme="dark"] .qmc-opt.wrong   { background: #450a0a !important; color: #fca5a5 !important; }
+[data-theme="dark"] .qmc-opt.reveal  { background: #1e3a5f !important; color: #93c5fd !important; }
+.opt-letter { font-weight: 900; min-width: 20px; flex-shrink: 0; }
+.opt-icon   { margin-left: auto; flex-shrink: 0; }
+.qmc-feedback { margin-top: .6rem; border-radius: 9px; padding: .65rem .85rem; font-size: .8rem; line-height: 1.6; display: none; animation: tabFade .3s ease; }
+.qmc-feedback.show { display: block; }
+.qmc-feedback.fb-correct { background: #dcfce7; border-left: 4px solid #16a34a; color: #14532d; }
+.qmc-feedback.fb-wrong   { background: #fee2e2; border-left: 4px solid #dc2626; color: #991b1b; }
+[data-theme="dark"] .qmc-feedback.fb-correct { background: #14532d; color: #86efac; }
+[data-theme="dark"] .qmc-feedback.fb-wrong   { background: #450a0a; color: #fca5a5; }
+.quiz-result-banner { background: linear-gradient(135deg, var(--acc1), #0d2050); border-radius: 12px; padding: 1.1rem; text-align: center; margin-top: .9rem; display: none; }
+.quiz-result-banner.show { display: block; animation: tabFade .4s ease; }
+.qrb-emoji { font-size: 2.2rem; }
+.qrb-text { color: #f0e8c0; font-size: .95rem; font-weight: 900; margin-top: .3rem; font-family: 'Cinzel', serif; }
+.qrb-sub  { color: rgba(240,230,200,.8); font-size: .8rem; margin-top: .2rem; }
+.qrb-retry { margin-top: .7rem; background: rgba(255,255,255,.18); border: 1.5px solid rgba(255,255,255,.45); color: #f0e8c0; padding: .4rem 1.1rem; border-radius: 999px; font-size: .78rem; font-weight: 800; cursor: pointer; transition: all .18s; }
+.qrb-retry:hover { background: rgba(255,255,255,.32); }
+
+/* Resource links */
+.resource-grid { display: flex; flex-direction: column; gap: .5rem; margin: .7rem 0; }
+.video-link {
+  display: flex; align-items: center; gap: .65rem;
+  background: var(--card); border: 1px solid var(--border); border-radius: 11px;
+  padding: .7rem .9rem; cursor: pointer; text-decoration: none; transition: all .2s; color: var(--txt);
+}
+.video-link:hover { border-color: var(--acc2); background: var(--card-hover); transform: translateX(3px); }
+.vl-icon { font-size: 1.3rem; flex-shrink: 0; }
+.vl-txt strong { font-size: .83rem; color: var(--txt); font-weight: 700; display: block; }
+.vl-txt span { font-size: .72rem; color: var(--muted); }
+.res-tag { font-size: .58rem; font-weight: 800; text-transform: uppercase; padding: .12rem .45rem; border-radius: 999px; flex-shrink: 0; }
+.rt-yt { background: #fee2e2; color: #991b1b; }
+[data-theme="dark"] .rt-yt { background: #450a0a; color: #fca5a5; }
+
+/* Image search button */
+.img-search-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--hl-bg); border: 1.5px solid var(--acc2); border-radius: 999px;
+  padding: .38rem .9rem; font-size: .76rem; font-weight: 700; cursor: pointer;
+  text-decoration: none; color: var(--acc2); transition: all .2s;
+}
+.img-search-btn:hover { background: var(--acc2); color: #fff8e8; transform: scale(1.04); }
+
+/* Comparison table */
+.comp-table { width: 100%; border-collapse: collapse; margin: .8rem 0; font-size: .82rem; overflow-x: auto; display: block; }
+.comp-table th { background: var(--acc1); color: #f0e8c0; padding: .6rem .75rem; text-align: left; font-size: .76rem; font-weight: 800; font-family: 'Cinzel', serif; }
+.comp-table td { padding: .55rem .75rem; border-bottom: 1px solid var(--border); color: var(--txt2); vertical-align: top; }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table tr:nth-child(even) td { background: var(--bg2); }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 1.8rem; }
+.timeline::before { content: ''; position: absolute; left: .6rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--acc1), var(--acc2)); }
+.tl-item { position: relative; padding: .6rem 0 .6rem .8rem; }
+.tl-item::before { content: ''; position: absolute; left: -1.6rem; top: 1.1rem; width: 11px; height: 11px; border-radius: 50%; background: var(--acc2); border: 2px solid var(--bg); box-shadow: 0 0 0 2px var(--acc2); }
+.tl-item h4 { font-size: .88rem; font-weight: 800; color: var(--acc1); font-family: 'Cinzel', serif; }
+.tl-item p { font-size: .82rem; color: var(--txt2); line-height: 1.65; margin-top: .2rem; }
+
+/* Drop zone (drag games) */
+.drop-zone {
+  background: var(--bg2); border: 2px dashed var(--border);
+  border-radius: 12px; padding: .7rem; min-height: 100px;
+  transition: border-color .2s;
+}
+.drop-zone.active { border-color: var(--acc1); background: var(--hl-bg); }
+
+/* Drag items */
+.drag-item {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 8px; padding: .35rem .7rem;
+  font-size: .78rem; font-weight: 700; cursor: pointer;
+  transition: all .18s; color: var(--txt2); user-select: none;
+  display: inline-block;
+}
+.drag-item:hover { border-color: var(--acc1); color: var(--acc1); transform: scale(1.04); }
+.drag-item.selected { border-color: var(--acc1); background: var(--hl-bg); color: var(--acc1); }
+.drag-item.placed { cursor: default; opacity: .85; }
+.drag-item.correct-place { border-color: #16a34a; background: #dcfce7; color: #14532d; }
+.drag-item.wrong-place { border-color: #dc2626; background: #fee2e2; color: #991b1b; }
+
+/* Memory game cards */
+.mem-card {
+  aspect-ratio: 1; border-radius: 10px; cursor: pointer;
+  background: var(--acc1); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 700; color: #fff8e8;
+  transition: transform .3s ease; position: relative;
+  overflow: hidden; perspective: 600px; text-align: center; padding: .3rem;
+  line-height: 1.3;
+}
+.mem-card .mem-front { display: none; font-size: 1.3rem; }
+.mem-card .mem-back { display: flex; align-items: center; justify-content: center; }
+.mem-card.flipped { background: var(--card); color: var(--txt2); border-color: var(--acc2); }
+.mem-card.flipped .mem-front { display: flex; align-items: center; justify-content: center; font-size: .65rem; color: var(--txt); }
+.mem-card.flipped .mem-back { display: none; }
+.mem-card.matched { background: #dcfce7; border-color: #16a34a; color: #14532d; animation: matchPulse .4s ease; }
+[data-theme="dark"] .mem-card.matched { background: #14532d; color: #86efac; }
+@keyframes matchPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+
+/* Connect game */
+.connect-col { display: flex; flex-direction: column; gap: .45rem; min-width: 130px; }
+.connect-item {
+  background: var(--card); border: 2px solid var(--border);
+  border-radius: 9px; padding: .5rem .75rem; cursor: pointer;
+  font-size: .78rem; font-weight: 700; color: var(--txt2); transition: all .18s;
+  text-align: center;
+}
+.connect-item:hover { border-color: var(--acc1); color: var(--acc1); }
+.connect-item.selected { border-color: var(--acc2); background: var(--hl-bg); color: var(--acc1); transform: scale(1.04); }
+.connect-item.connected-left { border-color: var(--acc4); background: #d5e8d4; color: #1a5a25; }
+.connect-item.connected-right { border-color: var(--acc4); background: #d5e8d4; color: #1a5a25; }
+.connect-item.wrong-conn { border-color: var(--acc3); background: #fee2e2; }
+[data-theme="dark"] .connect-item.connected-left,
+[data-theme="dark"] .connect-item.connected-right { background: #0a3a10; color: #88dd88; }
+</style>
 </head>
 <body>
-  <p><a href="../../../../index.html">↩ Voltar para a Biblioteca</a></p>
-  <h1>1ª Série — Trilhas de C. Humanas — 1º Bimestre</h1>
-  <hr />
 
-  <!-- COLE_AQUI_O_HTML_DO_LIVRO -->
+<div id="prog"></div>
+
+<!-- FLOATING THEME BAR -->
+<div id="float-theme">
+  <button class="ft-btn on" id="ft-def" onclick="setTheme('default')">☀️</button>
+  <button class="ft-btn" id="ft-read" onclick="setTheme('reading')">📖</button>
+  <button class="ft-btn" id="ft-dark" onclick="setTheme('dark')">🌙</button>
+</div>
+
+<!-- ====================== CAPA ====================== -->
+<section id="capa">
+<div id="cover">
+
+  <!-- Greek columns (decorative) -->
+  <div class="column-left">
+    <div class="col-capital"></div>
+    <div class="col-shaft"></div>
+    <div class="col-base"></div>
+  </div>
+  <div class="column-right">
+    <div class="col-capital"></div>
+    <div class="col-shaft"></div>
+    <div class="col-base"></div>
+  </div>
+
+  <!-- Particles -->
+  <div id="particles"></div>
+
+  <div class="cover-inner">
+
+    <a class="school-pill" href="https://www.instagram.com/pe.carloscasavequia/" target="_blank" rel="noopener">
+      🏛️ E.E. Padre Carlos Casavequia
+    </a>
+
+    <a class="disc-pill" href="https://drive.google.com/drive/folders/1-zl_FMzxLNIm_dtg9JF6mQhhsp2Wmyy2" target="_blank" rel="noopener">
+      ⚖️ Trilhas de Ciências Humanas
+    </a>
+
+    <div class="cover-eyebrow">Democracia · Cidadania · Colonialidade</div>
+
+    <h1 class="cover-title">
+      <span class="gold-word">Ágora</span><br>
+      <span style="font-size:clamp(1.1rem,4vw,2rem);letter-spacing:.08em;color:rgba(240,228,200,.82);">A Política que Move o Mundo</span>
+    </h1>
+
+    <p class="cover-subtitle">
+      "O homem é um animal político." Da Grécia Antiga às ruas do Brasil de hoje: descubra como a democracia foi inventada, esquecida e reinventada.
+    </p>
+
+    <div class="greek-key-line">
+      <div class="gk-line"></div>
+      <div class="gk-icon">⚜ MDXXVI ⚜</div>
+      <div class="gk-line"></div>
+    </div>
+
+    <div class="meta-row">
+      <span class="meta-chip">📖 1ª Série · Ensino Médio</span>
+      <span class="meta-chip">📅 1º Bimestre · 2026</span>
+    </div>
+
+    <a class="prof-tag" href="https://www.instagram.com/pauloroberto.rm/" target="_blank" rel="noopener">
+      👨‍🏫 Prof. <strong>Paulo Roberto R. Magalhães</strong>
+    </a>
+
+    <div class="theme-row">
+      <button class="tbtn on" id="tb-def" onclick="setTheme('default')">☀️ Normal</button>
+      <button class="tbtn" id="tb-read" onclick="setTheme('reading')">📖 Leitura</button>
+      <button class="tbtn" id="tb-dark" onclick="setTheme('dark')">🌙 Escuro</button>
+    </div>
+
+    <div class="bncc-box">
+      <h4>📋 Habilidades BNCC — clique para ver</h4>
+      <div class="bncc-chips">
+        <span class="bc" onclick="openBNCC('CHSOA1C1')">CHSOA1C1</span>
+        <span class="bc" onclick="openBNCC('CHSOA1C2')">CHSOA1C2</span>
+        <span class="bc" onclick="openBNCC('CHSOA1C3')">CHSOA1C3</span>
+        <span class="bc" onclick="openBNCC('CHSOA1C4')">CHSOA1C4</span>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="goTo('sumario')">
+      🏛️ Entrar na Ágora
+    </button>
+
+  </div>
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ====================== SUMÁRIO ====================== -->
+<section id="sumario" style="background:var(--bg2)">
+<div class="sec-head">
+  <h2>🗺️ Sumário</h2>
+  <p>Clique em qualquer tópico para ir direto ao conteúdo</p>
+</div>
+<div class="wrap">
+
+  <div class="sumario-intro fi">
+    Neste bimestre, você vai percorrer uma jornada que começa na Ágora de Atenas e chega até o Brasil de hoje.
+    Dez tópicos. Cinco blocos. Uma grande pergunta central:
+    <strong style="color:var(--acc1);font-style:normal">Quem tem direito de participar da democracia?</strong>
+  </div>
+
+  <div class="legend-box fi">
+    <h4>🗺️ Legenda das Áreas</h4>
+    <div class="legend-items">
+      <div class="legend-item"><span class="sbadge b-hist">Hist.</span> História</div>
+      <div class="legend-item"><span class="sbadge b-pol">Pol.</span> Política</div>
+      <div class="legend-item"><span class="sbadge b-fil">Fil.</span> Filosofia</div>
+      <div class="legend-item"><span class="sbadge b-eco">Econ.</span> Economia/Sociologia</div>
+      <div class="legend-item"><span class="sbadge b-prod">Prod.</span> Produção/Síntese</div>
+    </div>
+  </div>
+
+  <!-- BLOCO I -->
+  <div class="cat-label fi">⚗️ Bloco I · Investigação e Método · Tópicos 1</div>
+  <div class="s-grid fi">
+    <a class="s-item" href="#bloco1" onclick="goTo('bloco1',event)">
+      <div class="s-num">01</div>
+      <div class="s-txt">
+        <div class="s-ttl">Ciências Humanas: o que estudamos?</div>
+        <div class="s-sub">Método científico nas humanidades; fontes históricas; análise crítica</div>
+      </div>
+      <span class="sbadge b-hist">Hist.</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <!-- BLOCO II -->
+  <div class="cat-label fi">🏛️ Bloco II · Nascimento da Democracia · Tópicos 2–3</div>
+  <div class="s-grid fi">
+    <a class="s-item" href="#bloco2" onclick="goTo('bloco2',event)">
+      <div class="s-num">02</div>
+      <div class="s-txt">
+        <div class="s-ttl">Origens da democracia: Grécia Antiga</div>
+        <div class="s-sub">Democracia direta ateniense; quem eram os cidadãos?</div>
+      </div>
+      <span class="sbadge b-hist">Hist.</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#bloco2" onclick="goTo('bloco2',event)">
+      <div class="s-num">03</div>
+      <div class="s-txt">
+        <div class="s-ttl">Democracia direta e representativa</div>
+        <div class="s-sub">Comparação de modelos; funcionamento no Brasil</div>
+      </div>
+      <span class="sbadge b-pol">Pol.</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <!-- BLOCO III -->
+  <div class="cat-label fi">⛓️ Bloco III · Modernidade e Colonialidade · Tópicos 4–5</div>
+  <div class="s-grid fi">
+    <a class="s-item" href="#bloco3" onclick="goTo('bloco3',event)">
+      <div class="s-num">04</div>
+      <div class="s-txt">
+        <div class="s-ttl">Modernidade, colonialismo e Estado-nação</div>
+        <div class="s-sub">Formação dos Estados modernos; heranças do colonialismo</div>
+      </div>
+      <span class="sbadge b-hist">Hist.</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#bloco3" onclick="goTo('bloco3',event)">
+      <div class="s-num">05</div>
+      <div class="s-txt">
+        <div class="s-ttl">Colonialidade e decolonialidade</div>
+        <div class="s-sub">Colonialidade do poder e do saber; pensamento decolonial</div>
+      </div>
+      <span class="sbadge b-fil">Fil.</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <!-- BLOCO IV -->
+  <div class="cat-label fi">⚖️ Bloco IV · Estado, Política e Cotidiano · Tópicos 6–8</div>
+  <div class="s-grid fi">
+    <a class="s-item" href="#bloco4" onclick="goTo('bloco4',event)">
+      <div class="s-num">06</div>
+      <div class="s-txt">
+        <div class="s-ttl">Economia e Estado: Marx</div>
+        <div class="s-sub">Infraestrutura e superestrutura; conceitos marxistas básicos</div>
+      </div>
+      <span class="sbadge b-eco">Econ.</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#bloco4" onclick="goTo('bloco4',event)">
+      <div class="s-num">07</div>
+      <div class="s-txt">
+        <div class="s-ttl">Estado, governo e política</div>
+        <div class="s-sub">Diferença entre Estado e governo; tipos de Estado</div>
+      </div>
+      <span class="sbadge b-pol">Pol.</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#bloco4" onclick="goTo('bloco4',event)">
+      <div class="s-num">08</div>
+      <div class="s-txt">
+        <div class="s-ttl">Política e cotidiano</div>
+        <div class="s-sub">Cidadania ativa; política além das eleições</div>
+      </div>
+      <span class="sbadge b-pol">Pol.</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <!-- BLOCO V -->
+  <div class="cat-label fi">📜 Bloco V · Análise e Síntese Final · Tópicos 9–10</div>
+  <div class="s-grid fi">
+    <a class="s-item" href="#bloco5" onclick="goTo('bloco5',event)">
+      <div class="s-num">09</div>
+      <div class="s-txt">
+        <div class="s-ttl">Debates e análise de fontes</div>
+        <div class="s-sub">Política e democracia no Brasil hoje; verificação de discursos</div>
+      </div>
+      <span class="sbadge b-pol">Pol.</span>
+      <span class="s-arr">›</span>
+    </a>
+    <a class="s-item" href="#bloco5" onclick="goTo('bloco5',event)" style="border-color:var(--gold)">
+      <div class="s-num" style="background:linear-gradient(135deg,#7a5000,#c8960a)">10</div>
+      <div class="s-txt">
+        <div class="s-ttl">⭐ Mapa conceitual: Democracia</div>
+        <div class="s-sub">Sistematização dos conteúdos; produção escrita ou oral</div>
+      </div>
+      <span class="sbadge b-prod">Prod.</span>
+      <span class="s-arr">›</span>
+    </a>
+  </div>
+
+  <!-- Quote -->
+  <div class="agora-quote fi">
+    <blockquote>
+      "Não é a Constituição que nos dá a democracia. É a democracia que nos dá a Constituição — e é nossa participação que a mantém viva todos os dias."
+    </blockquote>
+    <div class="q-attr">Prof. Paulo Roberto R. Magalhães · 2026</div>
+  </div>
+
+  <div style="text-align:center;padding-top:.5rem" class="fi">
+    <button class="start-btn" onclick="goTo('apresentacao')">
+      📖 Ver Apresentação do Livro
+    </button>
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ====================== APRESENTAÇÃO ====================== -->
+<section id="apresentacao" style="background:var(--bg)">
+<div class="sec-head">
+  <h2>📖 Apresentação</h2>
+  <p>Tudo que você precisa saber antes de entrar na Ágora</p>
+</div>
+<div class="wrap">
+
+  <div class="card hero-card fi">
+    <h3>🏛️ Bem-vindo(a) ao livro Ágora</h3>
+    <p>Você está segurando um material que vai mudar a forma como você enxerga o mundo ao redor. <strong>Ágora</strong> era a praça pública de Atenas onde os cidadãos se reuniam para debater, votar e tomar decisões coletivas. Hoje, a sua escola, a sua rua, as suas redes sociais são a Ágora do século XXI.</p>
+    <p style="margin-top:.6rem;">Neste primeiro bimestre de 2026, vamos descobrir juntos como a democracia foi <strong>inventada na Grécia Antiga</strong>, como o <strong>colonialismo europeu</strong> moldou quem tem e quem não tem voz nas sociedades modernas, e como a <strong>política está presente em cada detalhe do seu cotidiano</strong>.</p>
+    <p style="margin-top:.6rem;">Aviso: este livro vai te fazer questionar coisas que você nunca questionou. Isso é bom. Isso é Ciências Humanas.</p>
+  </div>
+
+  <div class="card fi">
+    <h3>🎯 O que você vai aprender neste bimestre</h3>
+    <ul style="list-style:none;padding:0">
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>⚗️</span><span>Compreender o <strong>método científico nas Ciências Humanas</strong> e como analisar fontes históricas de forma crítica</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>🏛️</span><span>Entender as <strong>origens da democracia ateniense</strong> e seus limites: quem era (e quem não era) considerado cidadão</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>⚖️</span><span>Comparar a <strong>democracia direta e a representativa</strong>, e entender como a democracia brasileira funciona hoje</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>⛓️</span><span>Analisar a <strong>formação dos Estados modernos</strong> e as heranças do colonialismo europeu nas sociedades do Sul Global</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>🌍</span><span>Compreender o que é <strong>colonialidade do poder e do saber</strong> e por que o pensamento decolonial é urgente</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>📊</span><span>Entender a relação entre <strong>economia e política</strong> a partir dos conceitos de infraestrutura e superestrutura de Marx</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--border)"><span>🗳️</span><span>Distinguir <strong>Estado, governo e política</strong>, e perceber onde a política aparece no seu cotidiano</span></li>
+      <li style="display:flex;gap:.6rem;align-items:flex-start;padding:.5rem 0"><span>📜</span><span>Produzir um <strong>mapa conceitual</strong> sobre democracia, sistematizando os aprendizados do bimestre</span></li>
+    </ul>
+  </div>
+
+  <div class="card fi">
+    <h3>📱 Como usar este material</h3>
+    <ul>
+      <li>🗺️ Use o <strong>Sumário</strong> para navegar diretamente ao bloco desejado</li>
+      <li>🌙 Alterne entre <strong>Modo Escuro</strong>, <strong>Modo Leitura</strong> e <strong>Normal</strong> no topo direito</li>
+      <li>▶️ Links de vídeo abrem buscas no YouTube com diversas opções de visualização</li>
+      <li>📝 As <strong>questões discursivas</strong> devem ser respondidas no caderno</li>
+      <li>📲 As questões de <strong>múltipla escolha</strong> podem ser respondidas diretamente no livro</li>
+      <li>💾 Salve este arquivo no celular para acessar <strong>offline</strong> a qualquer momento</li>
+      <li>🏺 Clique no <strong>Prof. Paulo</strong> no canto inferior esquerdo para dicas, fofocas históricas e reações!</li>
+      <li>📌 O livro lembra onde você parou e te leva de volta na próxima abertura</li>
+    </ul>
+  </div>
+
+  <div class="card fi">
+    <h3>🤖 Estudando com Inteligências Artificiais</h3>
+    <p>Use IAs como aliadas do seu aprendizado. Elas explicam, exemplificam e provocam, mas <strong>não substituem sua análise e seu posicionamento crítico.</strong></p>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <div class="ai-name">🎵 NotebookLM</div>
+        <div class="ai-tip">Cole trechos deste livro e peça um podcast de revisão para ouvir enquanto caminha ou descansa!</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-name">💬 ChatGPT</div>
+        <div class="ai-tip">Peça exemplos atuais de colonialidade, comparações entre democracia grega e brasileira ou análise de fontes históricas.</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-name">✨ Gemini</div>
+        <div class="ai-tip">Compare conceitos de Marx com situações do Brasil hoje e explore perspectivas decoloniais com exemplos reais.</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-name">🔮 Grok</div>
+        <div class="ai-tip">Use para encontrar notícias recentes sobre democracia no Brasil e identificar discursos políticos nas redes sociais.</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem">
+      <a class="ia-btn" href="https://notebooklm.google.com" target="_blank">🎵 NotebookLM</a>
+      <a class="ia-btn" href="https://chat.openai.com" target="_blank">💬 ChatGPT</a>
+      <a class="ia-btn" href="https://gemini.google.com" target="_blank">✨ Gemini</a>
+      <a class="ia-btn" href="https://grok.x.ai" target="_blank">🔮 Grok</a>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ====================== PLACEHOLDER BLOCOS (PRÓXIMAS ETAPAS) ====================== -->
+
+
+<hr class="rainbow-div">
+
+<!-- ====================== BLOCO I ====================== -->
+<section id="bloco1" style="background:var(--bg);position:relative;overflow:hidden;">
+<div class="sfloat-wrap" id="sf01"></div>
+<div style="position:relative;z-index:1;">
+<div class="sec-head" style="background:linear-gradient(135deg,#1a3a6b 0%,#0d2050 60%,#2d5a3d 100%)">
+  <div style="font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,150,10,.85);margin-bottom:.5rem;">Bloco I &middot; T&oacute;pico 1</div>
+  <h2>&#x2697;&#xFE0F; Ci&ecirc;ncias Humanas: o que estudamos?</h2>
+  <p>M&eacute;todo cient&iacute;fico nas humanidades, fontes hist&oacute;ricas e an&aacute;lise cr&iacute;tica</p>
+</div>
+<div style="max-width:1100px;margin:0 auto;padding:1.5rem 1rem 2.5rem;">
+
+<!-- CSS extra para blocos (inserido inline aqui para garantir) -->
+<style>
+.bloco-tabs{margin:1rem 0}
+.btabs-nav{display:flex;gap:.3rem;flex-wrap:wrap;border-bottom:2px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:10;padding:.4rem 0 0}
+[data-theme="dark"] .btabs-nav,[data-theme="reading"] .btabs-nav{background:var(--bg2)}
+.btab-btn{padding:.5rem 1rem;border:none;border-radius:8px 8px 0 0;background:var(--bg2);color:var(--muted);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;border:1.5px solid var(--border);border-bottom:none;margin-bottom:-2px}
+.btab-btn:hover{background:var(--card-hover);color:var(--acc1)}
+.btab-btn.active{background:var(--card);color:var(--acc1);border-color:var(--acc1);border-bottom:2px solid var(--card);box-shadow:0 -3px 10px var(--shadow)}
+.btab-panel{display:none;background:var(--card);border:1.5px solid var(--acc1);border-top:none;border-radius:0 0 16px 16px;padding:1.2rem;animation:tabFade .25s ease}
+.btab-panel.active{display:block}
+@keyframes tabFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.activity-section{background:linear-gradient(135deg,var(--acc1),#0d1a35);border-radius:18px;padding:1.5rem;margin:.5rem 0}
+.act-title{color:#f0e8c0;font-size:1rem;font-weight:900;margin-bottom:.5rem;font-family:'Cinzel',serif}
+.act-subtitle{color:rgba(240,230,200,.78);font-size:.8rem;margin-bottom:1rem;font-style:italic}
+.q-card{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:.9rem 1.1rem;margin:.6rem 0}
+.q-num{font-size:.65rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.65);margin-bottom:.3rem}
+.q-text{font-size:.87rem;color:#fff;line-height:1.65;font-weight:500}
+.q-caderno{font-size:.7rem;color:rgba(255,255,255,.55);margin-top:.4rem;font-style:italic}
+.quiz-section{background:var(--bg2);border:2px solid var(--border);border-radius:18px;padding:1.4rem;margin:.5rem 0}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.quiz-title{font-size:.95rem;font-weight:900;color:var(--acc1);font-family:'Cinzel',serif}
+.quiz-score-box{display:flex;align-items:center;gap:.4rem;background:var(--card);border:1.5px solid var(--border);border-radius:999px;padding:.28rem .8rem;font-size:.77rem}
+.score-num{font-weight:900;color:var(--acc1);font-size:.98rem}
+.quiz-progress-bar{height:5px;background:var(--border);border-radius:3px;margin-bottom:.9rem;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--acc1),var(--acc2));border-radius:3px;transition:width .4s ease}
+.qmc-card{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1rem;margin:.7rem 0}
+.qmc-card.answered{border-color:var(--acc1)}
+.qmc-num{font-size:.63rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.35rem}
+.qmc-text{font-size:.88rem;color:var(--txt);font-weight:600;line-height:1.6;margin-bottom:.7rem}
+.qmc-opts{display:flex;flex-direction:column;gap:.3rem}
+.qmc-opt{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .75rem;border-radius:9px;cursor:pointer;border:1.5px solid var(--border);background:var(--bg2);font-size:.83rem;color:var(--txt2);transition:all .18s;text-align:left;width:100%}
+.qmc-opt:hover:not(:disabled){border-color:var(--acc1);background:var(--hl-bg);color:var(--txt)}
+.qmc-opt:disabled{cursor:default}
+.qmc-opt.correct{border-color:#16a34a!important;background:#dcfce7!important;color:#14532d!important;font-weight:700}
+.qmc-opt.wrong{border-color:#dc2626!important;background:#fee2e2!important;color:#991b1b!important}
+.qmc-opt.reveal{border-color:#2563eb!important;background:#dbeafe!important;color:#1e3a8a!important}
+[data-theme="dark"] .qmc-opt.correct{background:#14532d!important;color:#86efac!important}
+[data-theme="dark"] .qmc-opt.wrong{background:#450a0a!important;color:#fca5a5!important}
+.opt-letter{font-weight:900;min-width:20px;flex-shrink:0}
+.opt-icon{margin-left:auto;flex-shrink:0}
+.qmc-feedback{margin-top:.6rem;border-radius:9px;padding:.65rem .85rem;font-size:.8rem;line-height:1.6;display:none;animation:tabFade .3s ease}
+.qmc-feedback.show{display:block}
+.qmc-feedback.fb-correct{background:#dcfce7;border-left:4px solid #16a34a;color:#14532d}
+.qmc-feedback.fb-wrong{background:#fee2e2;border-left:4px solid #dc2626;color:#991b1b}
+[data-theme="dark"] .qmc-feedback.fb-correct{background:#14532d;color:#86efac}
+[data-theme="dark"] .qmc-feedback.fb-wrong{background:#450a0a;color:#fca5a5}
+.quiz-result-banner{background:linear-gradient(135deg,var(--acc1),#0d2050);border-radius:12px;padding:1.1rem;text-align:center;margin-top:.9rem;display:none}
+.quiz-result-banner.show{display:block;animation:tabFade .4s ease}
+.qrb-emoji{font-size:2.2rem}
+.qrb-text{color:#f0e8c0;font-size:.95rem;font-weight:900;margin-top:.3rem;font-family:'Cinzel',serif}
+.qrb-sub{color:rgba(240,230,200,.8);font-size:.8rem;margin-top:.2rem}
+.qrb-retry{margin-top:.7rem;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.45);color:#f0e8c0;padding:.4rem 1.1rem;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer}
+.video-link{display:flex;align-items:center;gap:.65rem;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:.7rem .9rem;cursor:pointer;text-decoration:none;transition:all .2s;color:var(--txt);margin:.4rem 0}
+.video-link:hover{border-color:var(--acc2);background:var(--card-hover);transform:translateX(3px)}
+.vl-icon{font-size:1.3rem;flex-shrink:0}
+.vl-txt strong{font-size:.83rem;color:var(--txt);font-weight:700;display:block}
+.vl-txt span{font-size:.72rem;color:var(--muted)}
+.res-tag{font-size:.58rem;font-weight:800;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px;flex-shrink:0}
+.rt-yt{background:#fee2e2;color:#991b1b}
+[data-theme="dark"] .rt-yt{background:#450a0a;color:#fca5a5}
+.img-search-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--hl-bg);border:1.5px solid var(--acc2);border-radius:999px;padding:.38rem .9rem;font-size:.76rem;font-weight:700;cursor:pointer;text-decoration:none;color:var(--acc2);transition:all .2s;margin:.2rem 0}
+.img-search-btn:hover{background:var(--acc2);color:#fff8e8;transform:scale(1.04)}
+.comp-table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.82rem;display:block;overflow-x:auto}
+.comp-table th{background:var(--acc1);color:#f0e8c0;padding:.6rem .75rem;text-align:left;font-size:.76rem;font-weight:800;font-family:'Cinzel',serif}
+.comp-table td{padding:.55rem .75rem;border-bottom:1px solid var(--border);color:var(--txt2);vertical-align:top}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:nth-child(even) td{background:var(--bg2)}
+.timeline{position:relative;padding-left:1.8rem}
+.timeline::before{content:'';position:absolute;left:.6rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--acc1),var(--acc2))}
+.tl-item{position:relative;padding:.6rem 0 .6rem .8rem}
+.tl-item::before{content:'';position:absolute;left:-1.6rem;top:1.1rem;width:11px;height:11px;border-radius:50%;background:var(--acc2);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--acc2)}
+.tl-item h4{font-size:.88rem;font-weight:800;color:var(--acc1);font-family:'Cinzel',serif}
+.tl-item p{font-size:.82rem;color:var(--txt2);line-height:1.65;margin-top:.2rem}
+.drop-zone{background:var(--bg2);border:2px dashed var(--border);border-radius:12px;padding:.7rem;min-height:90px;transition:border-color .2s}
+.drop-zone.dz-active{border-color:var(--acc1);background:var(--hl-bg)}
+.drag-item{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:.35rem .7rem;font-size:.77rem;font-weight:700;cursor:pointer;transition:all .18s;color:var(--txt2);user-select:none;display:inline-block;margin:.15rem}
+.drag-item:hover{border-color:var(--acc1);color:var(--acc1);transform:scale(1.04)}
+.drag-item.di-selected{border-color:var(--acc2);background:var(--hl-bg);color:var(--acc1);transform:scale(1.06)}
+.drag-item.di-correct{border-color:#16a34a;background:#dcfce7;color:#14532d}
+.drag-item.di-wrong{border-color:#dc2626;background:#fee2e2;color:#991b1b}
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;max-width:480px;margin:0 auto}
+.mem-card{aspect-ratio:1;border-radius:9px;cursor:pointer;background:var(--acc1);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:#fff8e8;transition:transform .25s;text-align:center;padding:.3rem;line-height:1.25;position:relative;overflow:hidden;user-select:none}
+.mem-card .mc-back{font-size:1.5rem}
+.mem-card .mc-front{display:none;font-size:.63rem;color:var(--txt)}
+.mem-card.flipped{background:var(--card);color:var(--txt2);border-color:var(--acc2)}
+.mem-card.flipped .mc-front{display:flex;align-items:center;justify-content:center;text-align:center}
+.mem-card.flipped .mc-back{display:none}
+.mem-card.matched{background:#dcfce7;border-color:#16a34a;color:#14532d;animation:memPulse .4s ease;cursor:default}
+[data-theme="dark"] .mem-card.matched{background:#14532d;color:#86efac}
+@keyframes memPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.connect-wrap{display:flex;gap:1.5rem;justify-content:center;align-items:flex-start;flex-wrap:wrap;margin:.8rem 0}
+.connect-col{display:flex;flex-direction:column;gap:.45rem}
+.connect-item{background:var(--card);border:2px solid var(--border);border-radius:9px;padding:.5rem .75rem;cursor:pointer;font-size:.78rem;font-weight:700;color:var(--txt2);transition:all .18s;text-align:center;min-width:130px}
+.connect-item:hover{border-color:var(--acc1);color:var(--acc1)}
+.connect-item.ci-selected{border-color:var(--acc2);background:var(--hl-bg);color:var(--acc1)}
+.connect-item.ci-connected{border-color:var(--acc4);background:#d5e8d4;color:#1a5a25;cursor:default}
+.connect-item.ci-wrong{border-color:var(--acc3);background:#fee2e2;animation:shake .3s ease}
+[data-theme="dark"] .connect-item.ci-connected{background:#0a3a10;color:#88dd88}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.sfloat-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.sfloat{position:absolute;opacity:0;font-size:clamp(.9rem,2.5vw,1.8rem);animation:srise linear infinite;user-select:none}
+@keyframes srise{0%{transform:translateY(120%)rotate(0deg);opacity:0}10%{opacity:.1}90%{opacity:.08}100%{transform:translateY(-20%)rotate(360deg);opacity:0}}
+</style>
+
+<div class="bloco-tabs fi" id="tabs-b1">
+  <div class="btabs-nav">
+    <button class="btab-btn active" onclick="switchTab('b1',0,this)">&#x1F4D6; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('b1',1,this)">&#x1F3AE; Interativo</button>
+    <button class="btab-btn" onclick="switchTab('b1',2,this)">&#x270D; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('b1',3,this)">&#x1F4CA; Quiz</button>
+  </div>
+
+  <!-- ===== B1 TAB 0: CONTEUDO ===== -->
+  <div class="btab-panel active" id="b1-tab0">
+
+    <div class="card fi">
+      <h3>&#x1F52C; O que s&atilde;o as Ci&ecirc;ncias Humanas?</h3>
+      <div class="concept-box">
+        <div class="cb-title">Defini&ccedil;&atilde;o</div>
+        <p>As Ci&ecirc;ncias Humanas s&atilde;o um conjunto de disciplinas que estudam o ser humano em suas dimens&otilde;es hist&oacute;ricas, sociais, culturais, pol&iacute;ticas, econ&ocirc;micas e filos&oacute;ficas. Diferentemente das ci&ecirc;ncias naturais (que estudam fen&ocirc;menos da natureza com experimentos replicaveis), as humanidades estudam a&ccedil;&otilde;es, ideias e rela&ccedil;&otilde;es humanas &mdash; fen&ocirc;menos que s&atilde;o hist&oacute;ricos, contextuais e raramente se repetem de forma id&ecirc;ntica.</p>
+      </div>
+      <p style="margin-top:.85rem">Fazem parte das Ci&ecirc;ncias Humanas: <span class="highlight-pill">Hist&oacute;ria</span> <span class="highlight-pill">Geografia</span> <span class="highlight-pill">Filosofia</span> <span class="highlight-pill">Sociologia</span> <span class="highlight-pill">Antropologia</span> <span class="highlight-pill">Economia Pol&iacute;tica</span></p>
+      <div class="tip-box" style="margin-top:.85rem"><strong>Por que isso importa para voc&ecirc;?</strong> Quando voc&ecirc; entende como a sociedade funciona, como o poder &eacute; distribu&iacute;do e como as hist&oacute;rias s&atilde;o contadas (e por quem), voc&ecirc; se torna um(a) cidad&atilde;o(a) mais cr&iacute;tico e capaz de transformar a realidade ao seu redor. Ci&ecirc;ncias Humanas n&atilde;o s&atilde;o decora&ccedil;&atilde;o: s&atilde;o ferramentas de sobreviv&ecirc;ncia e transforma&ccedil;&atilde;o social.</div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F50D; M&eacute;todos Cient&iacute;ficos nas Humanidades</h3>
+      <p>O m&eacute;todo cient&iacute;fico n&atilde;o &eacute; exclusivo das ci&ecirc;ncias naturais. Nas humanidades ele se adapta para lidar com a complexidade dos fen&ocirc;menos humanos. Existem dois grandes grupos:</p>
+      <div class="grid2" style="margin-top:.9rem">
+        <div class="info-card">
+          <h4>&#x1F4D0; M&eacute;todo Quantitativo</h4>
+          <p>Usa dados num&eacute;ricos para medir fen&ocirc;menos sociais em larga escala. Identifica padr&otilde;es, compara grupos e per&iacute;odos. Exemplos de uso: taxa de desemprego, porcentagem de analfabetos, &iacute;ndice de homicidios por cor/ra&ccedil;a. Responde &ldquo;quantos?&rdquo; e &ldquo;qual a propor&ccedil;&atilde;o?&rdquo;</p>
+        </div>
+        <div class="info-card">
+          <h4>&#x1F4AC; M&eacute;todo Qualitativo</h4>
+          <p>Usa entrevistas, observa&ccedil;&atilde;o participante e an&aacute;lise de textos para entender significados, experi&ecirc;ncias e processos subjetivos. Responde &ldquo;como?&rdquo; e &ldquo;por qu&ecirc;?&rdquo;. Essencial para entender culturas, identidades e discursos que n&atilde;o se reduzem a n&uacute;meros.</p>
+        </div>
+        <div class="info-card">
+          <h4>&#x1F4DA; Pesquisa Bibliogr&aacute;fica</h4>
+          <p>An&aacute;lise cr&iacute;tica de obras j&aacute; publicadas. Base de todo trabalho cient&iacute;fico. N&atilde;o &eacute; repetir o que outros disseram, mas dialogar criticamente com ideias e construir argumentos fundamentados a partir delas.</p>
+        </div>
+        <div class="info-card">
+          <h4>&#x1F5C3; Pesquisa Documental</h4>
+          <p>Analisa documentos prim&aacute;rios: leis, cartas, fotografias, jornais, cens os, di&aacute;rios. Muito usada em Hist&oacute;ria. O pesquisador interpreta o documento em seu contexto de produ&ccedil;&atilde;o, sem ingenuidade.</p>
+        </div>
+      </div>
+      <div class="agora-quote" style="margin-top:1rem">
+        <blockquote>&ldquo;Nas Ci&ecirc;ncias Humanas n&atilde;o h&aacute; experimentos de laborat&oacute;rio. Mas h&aacute; rigor, m&eacute;todo, evid&ecirc;ncias e argumenta&ccedil;&atilde;o. A diferen&ccedil;a &eacute; que o objeto de estudo &eacute; a pr&oacute;pria humanidade em toda a sua complexidade e irrepetibilidade.&rdquo;</blockquote>
+        <div class="q-attr">Boaventura de Sousa Santos, soci&oacute;logo e fil&oacute;sofo portugu&ecirc;s</div>
+      </div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F4DC; O que s&atilde;o Fontes Hist&oacute;ricas?</h3>
+      <div class="concept-box">
+        <div class="cb-title">Defini&ccedil;&atilde;o fundamental</div>
+        <p>Fontes hist&oacute;ricas s&atilde;o todos os vest&iacute;gios deixados pelos seres humanos no passado que podem ser usados para reconstruir e compreender eventos, processos e mentalidades de outras &eacute;pocas. <strong>Toda fonte carrega a perspectiva de quem a produziu</strong> e jamais deve ser aceita de forma ingênua ou literal.</p>
+      </div>
+      <div style="margin-top:1rem;background:var(--hl-bg);border-radius:14px;padding:1rem 1.1rem;border:1px solid var(--border)">
+        <div style="font-family:'Cinzel',serif;font-size:.74rem;font-weight:700;color:var(--acc1);margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.08em">Tipos de Fontes Hist&oacute;ricas</div>
+        <div class="grid2">
+          <div>
+            <p style="font-weight:700;color:var(--acc2);font-size:.84rem;margin-bottom:.3rem">&#x1F4DD; Fontes Escritas</p>
+            <p style="font-size:.82rem;color:var(--txt2)">Cartas, leis, cr&ocirc;nicas, di&aacute;rios, jornais, atas, tratados, processos judiciais. Ex: Carta de Pero Vaz de Caminha (1500), a primeira descri&ccedil;&atilde;o escrita do Brasil.</p>
+          </div>
+          <div>
+            <p style="font-weight:700;color:var(--acc2);font-size:.84rem;margin-bottom:.3rem">&#x1F3FA; Fontes Materiais</p>
+            <p style="font-size:.82rem;color:var(--txt2)">Objetos, constru&ccedil;&otilde;es, armas, moedas, ferramentas, ru&iacute;nas, utens&iacute;lios. Ex: terracota grega, ru&iacute;nas do Colis eu romano, cer&acirc;micas ind&iacute;genas.</p>
+          </div>
+          <div>
+            <p style="font-weight:700;color:var(--acc2);font-size:.84rem;margin-bottom:.3rem">&#x1F5BC; Fontes Iconogr&aacute;ficas</p>
+            <p style="font-size:.82rem;color:var(--txt2)">Pinturas, fotografias, esculturas, mapas, filmes, gravuras, ilustra&ccedil;&otilde;es. Ex: pinturas gregas em vasos de cer&acirc;mica &aacute;tica, telas de Jean-Baptiste Debret.</p>
+          </div>
+          <div>
+            <p style="font-weight:700;color:var(--acc2);font-size:.84rem;margin-bottom:.3rem">&#x1F5E3; Fontes Orais</p>
+            <p style="font-size:.82rem;color:var(--txt2)">Relatos de testemunhas, entrevistas, tradi&ccedil;&otilde;es orais ind&iacute;genas e africanas. Fundamentais para recuperar hist&oacute;rias que nunca foram escritas pelo colonizador.</p>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.5rem">
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=fontes+historicas+documentos+arqueologia+tipos" target="_blank" rel="noopener">&#x1F5BC; Imagens: Tipos de fontes hist&oacute;ricas</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=ceramica+atica+grega+pintura+vasos+museu+nacional" target="_blank" rel="noopener">&#x1F3FA; Imagens: Cer&acirc;mica &aacute;tica grega</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Carta+Pero+Vaz+Caminha+manuscrito+original" target="_blank" rel="noopener">&#x1F4DC; Imagens: Manuscrito da Carta de Caminha</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Debret+pinturas+brasil+colonial+escravidao" target="_blank" rel="noopener">&#x1F5BC; Imagens: Pinturas de Debret</a>
+      </div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F9D0; Como Analisar Criticamente uma Fonte?</h3>
+      <p>Todo documento hist&oacute;rico precisa ser interrogado. Historiadores e cientistas sociais usam estas quatro perguntas fundamentais:</p>
+      <div style="margin-top:.9rem;display:flex;flex-direction:column;gap:.45rem">
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--acc1);border-radius:0 12px 12px 0;padding:.85rem 1rem">
+          <p style="font-weight:800;font-size:.85rem;color:var(--acc1)">1. Quem produziu?</p>
+          <p style="font-size:.83rem;color:var(--txt2);margin:0">A posi&ccedil;&atilde;o social, pol&iacute;tica e cultural do autor influencia profundamente o que &eacute; dito e o que &eacute; silenciado. Um governante, um colonizador ou um escravo descrevem o mesmo evento de formas radicalmente diferentes.</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--acc2);border-radius:0 12px 12px 0;padding:.85rem 1rem">
+          <p style="font-weight:800;font-size:.85rem;color:var(--acc2)">2. Para quem foi produzido?</p>
+          <p style="font-size:.83rem;color:var(--txt2);margin:0">O p&uacute;blico define o que se diz e como se diz. Um documento para o rei tem objetivos completamente diferentes de uma carta pessoal ou um panfleto popular.</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--acc3);border-radius:0 12px 12px 0;padding:.85rem 1rem">
+          <p style="font-weight:800;font-size:.85rem;color:var(--acc3)">3. Em que contexto foi produzido?</p>
+          <p style="font-size:.83rem;color:var(--txt2);margin:0">O mesmo discurso em tempo de guerra tem sentido completamente diferente do mesmo discurso em tempo de paz. O contexto hist&oacute;rico, pol&iacute;tico e social molda todo o significado.</p>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--acc4);border-radius:0 12px 12px 0;padding:.85rem 1rem">
+          <p style="font-weight:800;font-size:.85rem;color:var(--acc4)">4. O que est&aacute; ausente?</p>
+          <p style="font-size:.83rem;color:var(--txt2);margin:0">O sil&ecirc;ncio tamb&eacute;m &eacute; dado hist&oacute;rico. Aus&ecirc;ncia &eacute; informa&ccedil;&atilde;o. Documentos coloniais raramente registram a perspectiva dos povos dominados. Quem n&atilde;o tem voz nessa fonte?</p>
+        </div>
+      </div>
+      <div class="tip-box" style="margin-top:.9rem"><strong>Exemplo concreto:</strong> A Carta de Pero Vaz de Caminha (1500) descreve os ind&iacute;genas brasileiros com os olhos de um escriv&atilde;o portugu&ecirc;s, crist&atilde;o, a servi&ccedil;o da Coroa. &Eacute; um documento valios&iacute;ssimo, mas precisamos perguntar: que vis&atilde;o de mundo ela revela? O que os povos Tupi diriam sobre o mesmo encontro? Que palavras eles usariam?</div>
+      <div style="margin-top:.8rem">
+        <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+analisar+fontes+historicas+critica+ensino+medio')">
+          <div class="vl-icon">&#x25B6;&#xFE0F;</div><div class="vl-txt"><strong>Como analisar fontes hist&oacute;ricas criticamente</strong><span>YouTube &middot; M&eacute;todo e exemplos pr&aacute;ticos</span></div><span class="res-tag rt-yt">YT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x26A0;&#xFE0F; Desinforma&ccedil;&atilde;o e Verifica&ccedil;&atilde;o Cr&iacute;tica na Era Digital</h3>
+      <p>Na era das redes sociais, a habilidade de avaliar fontes &eacute; mais urgente do que nunca. Um estudo do MIT (2018) mostrou que fake news se espalham <strong>6 vezes mais r&aacute;pido</strong> que not&iacute;cias verdadeiras. Antes de compartilhar qualquer informa&ccedil;&atilde;o:</p>
+      <div class="tag-cloud" style="margin-top:.7rem">
+        <span class="tag">Quem publicou?</span><span class="tag">Tem data?</span><span class="tag">Outras fontes confirmam?</span><span class="tag">H&aacute; evid&ecirc;ncias?</span><span class="tag">Qual o interesse?</span><span class="tag">&Eacute; contexto real?</span><span class="tag">Site &eacute; confi&aacute;vel?</span>
+      </div>
+      <div style="margin-top:.85rem;background:linear-gradient(135deg,var(--acc1),#0d2050);border-radius:14px;padding:1rem 1.2rem">
+        <p style="color:#f0e8c0;font-size:.85rem;font-weight:700;margin-bottom:.55rem">Ag&ecirc;ncias de checagem profissional no Brasil:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+          <a href="https://www.aosfatos.org" target="_blank" style="background:rgba(255,255,255,.15);color:#f0e8c0;border:1px solid rgba(255,255,255,.3);padding:.28rem .75rem;border-radius:999px;font-size:.73rem;font-weight:700;text-decoration:none;">&#x1F50D; Aos Fatos</a>
+          <a href="https://piaui.folha.uol.com.br/lupa/" target="_blank" style="background:rgba(255,255,255,.15);color:#f0e8c0;border:1px solid rgba(255,255,255,.3);padding:.28rem .75rem;border-radius:999px;font-size:.73rem;font-weight:700;text-decoration:none;">&#x1F50E; Ag&ecirc;ncia Lupa</a>
+          <a href="https://www.boatos.org" target="_blank" style="background:rgba(255,255,255,.15);color:#f0e8c0;border:1px solid rgba(255,255,255,.3);padding:.28rem .75rem;border-radius:999px;font-size:.73rem;font-weight:700;text-decoration:none;">&#x1F6D1; Boatos.org</a>
+        </div>
+      </div>
+      <div style="margin-top:.9rem">
+        <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+identificar+fake+news+fontes+confiaveis')">
+          <div class="vl-icon">&#x25B6;&#xFE0F;</div><div class="vl-txt"><strong>Como identificar fake news e fontes confi&aacute;veis</strong><span>YouTube &middot; T&eacute;cnicas pr&aacute;ticas de fact-checking</span></div><span class="res-tag rt-yt">YT</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin:.8rem 0" class="fi">
+      <h4 style="font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.7rem">&#x1F4D6; Gloss&aacute;rio &mdash; Bloco I</h4>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Ci&ecirc;ncias Humanas:</strong> Conjunto de disciplinas que estudam o ser humano em suas dimens&otilde;es hist&oacute;ricas, sociais e culturais.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Fonte prim&aacute;ria:</strong> Documento produzido na &eacute;poca estudada (carta, lei, fotografia, ata, di&aacute;rio).</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Fonte secund&aacute;ria:</strong> An&aacute;lise ou interpreta&ccedil;&atilde;o de fontes prim&aacute;rias feita posteriormente por pesquisadores.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">M&eacute;todo quantitativo:</strong> Abordagem cient&iacute;fica que usa dados num&eacute;ricos e estat&iacute;sticos para analisar fen&ocirc;menos sociais.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">M&eacute;todo qualitativo:</strong> Abordagem que compreende significados e experi&ecirc;ncias por meio de entrevistas, observa&ccedil;&atilde;o e an&aacute;lise de textos.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Epistemicidio:</strong> Destrui&ccedil;&atilde;o ou apagamento sistem&aacute;tico do conhecimento produzido por povos colonizados.</div>
+      <div style="padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Epistemologia:</strong> Ramo da filosofia que estuda a natureza e os limites do conhecimento humano. &ldquo;Como sabemos o que sabemos?&rdquo;</div>
+    </div>
+  </div>
+
+  <!-- ===== B1 TAB 1: INTERATIVO ===== -->
+  <div class="btab-panel" id="b1-tab1">
+
+    <div class="card fi" style="margin-top:.5rem">
+      <h3>&#x1F3AE; Jogo 1: Classifique a Fonte!</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">Clique em um item para selecion&aacute;-lo (ficar&aacute; dourado). Depois clique na caixa correta: Fonte Prim&aacute;ria ou Fonte Secund&aacute;ria. Classifique todos!</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem">
+        <div class="drop-zone" id="dz-primary" onclick="dzClick(this)">
+          <div style="font-family:'Cinzel',serif;font-size:.77rem;font-weight:700;color:var(--acc1);margin-bottom:.5rem;text-align:center">&#x1F4DC; FONTE PRIM&Aacute;RIA</div>
+          <div id="dz-primary-items" style="min-height:70px;display:flex;flex-direction:column;gap:.35rem"></div>
+        </div>
+        <div class="drop-zone" id="dz-secondary" onclick="dzClick(this)">
+          <div style="font-family:'Cinzel',serif;font-size:.77rem;font-weight:700;color:var(--acc3);margin-bottom:.5rem;text-align:center">&#x1F4DA; FONTE SECUND&Aacute;RIA</div>
+          <div id="dz-secondary-items" style="min-height:70px;display:flex;flex-direction:column;gap:.35rem"></div>
+        </div>
+      </div>
+      <div id="src-items-pool" style="display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:.9rem"></div>
+      <div id="src-feedback" style="display:none;text-align:center;padding:.75rem;border-radius:10px;font-weight:700;font-size:.84rem;margin-bottom:.5rem"></div>
+      <div style="text-align:center">
+        <button onclick="checkSrcGame()" style="background:var(--acc1);color:#fff8e8;border:none;padding:.55rem 1.3rem;border-radius:999px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:'Cinzel',serif;margin-right:.4rem">Verificar &#x2714;</button>
+        <button onclick="resetSrcGame()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.55rem 1.3rem;border-radius:999px;font-size:.82rem;font-weight:800;cursor:pointer">Reiniciar &#x1F504;</button>
+      </div>
+    </div>
+
+    <div class="card fi" style="margin-top:.9rem">
+      <h3>&#x1F9E9; Jogo 2: Mem&oacute;ria &mdash; Conceitos das Ci&ecirc;ncias Humanas</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">Encontre os pares: conceito + defini&ccedil;&atilde;o. Clique em duas cartas para vir&aacute;-las. Pares corretos ficam verdes!</p>
+      <div class="mem-grid" id="memory-game-b1"></div>
+      <div id="memory-status-b1" style="text-align:center;margin-top:.75rem;font-size:.84rem;color:var(--muted)"></div>
+      <div style="text-align:center;margin-top:.5rem">
+        <button onclick="initMemoryB1()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.45rem 1.1rem;border-radius:999px;font-size:.8rem;font-weight:800;cursor:pointer">Embaralhar &#x1F504;</button>
+      </div>
+    </div>
+
+    <div class="card fi" style="margin-top:.9rem">
+      <h3>&#x1F517; Jogo 3: Ligue os Pontos &mdash; M&eacute;todo x Exemplo</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">Clique em um m&eacute;todo (coluna esquerda) e depois no exemplo correto (coluna direita). Conecte todos os pares!</p>
+      <div class="connect-wrap" id="connect-game-b1"></div>
+      <div id="connect-feedback-b1" style="display:none;text-align:center;margin-top:.5rem;padding:.65rem;border-radius:10px;font-weight:700;font-size:.83rem"></div>
+      <div style="text-align:center;margin-top:.7rem">
+        <button onclick="checkConnectB1()" style="background:var(--acc1);color:#fff8e8;border:none;padding:.5rem 1.2rem;border-radius:999px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:'Cinzel',serif;margin-right:.4rem">Verificar &#x2714;</button>
+        <button onclick="resetConnectB1()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.5rem 1.2rem;border-radius:999px;font-size:.82rem;font-weight:800;cursor:pointer">Reiniciar &#x1F504;</button>
+      </div>
+    </div>
+
+    <div class="card fi" style="margin-top:.9rem">
+      <h3>&#x1F3C6; Desafio Final: Quiz de Velocidade!</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">Responda 5 perguntas r&aacute;pidas sobre fontes hist&oacute;ricas. Cada acerto vale 20 pontos. Vai de boa!</p>
+      <div id="speed-quiz-b1">
+        <div id="sq-progress" style="height:5px;background:var(--border);border-radius:3px;margin-bottom:.9rem;overflow:hidden"><div id="sq-fill" style="height:100%;background:linear-gradient(90deg,var(--acc1),var(--acc2));border-radius:3px;transition:width .3s;width:0%"></div></div>
+        <div id="sq-question" style="font-size:.9rem;font-weight:700;color:var(--txt);background:var(--hl-bg);padding:.85rem;border-radius:12px;border:1px solid var(--border);margin-bottom:.75rem"></div>
+        <div id="sq-options" style="display:flex;flex-direction:column;gap:.35rem"></div>
+        <div id="sq-feedback" style="display:none;margin-top:.6rem;padding:.7rem;border-radius:10px;font-size:.83rem;font-weight:700"></div>
+        <div id="sq-result" style="display:none;text-align:center;padding:1.2rem;background:linear-gradient(135deg,var(--acc1),#0d2050);border-radius:14px;margin-top:.8rem">
+          <div id="sq-score-display" style="font-size:2rem;font-weight:900;color:#f0cc60;font-family:'Cinzel',serif"></div>
+          <div id="sq-msg" style="color:rgba(240,230,200,.9);font-size:.85rem;margin-top:.3rem"></div>
+          <button onclick="initSpeedQuizB1()" style="margin-top:.7rem;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.4);color:#f0e8c0;padding:.4rem 1.1rem;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer">Jogar de novo &#x1F504;</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== B1 TAB 2: ATIVIDADES ===== -->
+  <div class="btab-panel" id="b1-tab2">
+    <div class="activity-section fi">
+      <div class="act-title">&#x270D;&#xFE0F; Atividades Discursivas &mdash; Bloco I</div>
+      <div class="act-subtitle">Responda no caderno com aten&ccedil;&atilde;o e usando suas pr&oacute;prias palavras</div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 01</div><div class="q-text">Explique, com suas pr&oacute;prias palavras, a diferen&ccedil;a entre o m&eacute;todo quantitativo e o m&eacute;todo qualitativo nas Ci&ecirc;ncias Humanas. D&ecirc; um exemplo concreto de como cada um poderia ser usado para estudar a desigualdade social no Brasil.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 02</div><div class="q-text">Uma empresa de tecnologia publicou pesquisa mostrando que &ldquo;80% dos jovens brasileiros preferem trabalhar de forma independente a ter carteira assinada&rdquo;. Aplique as quatro perguntas de an&aacute;lise cr&iacute;tica de fontes estudadas. O que voc&ecirc; precisaria saber antes de usar esse dado num trabalho escolar?</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 03</div><div class="q-text">Por que as fontes orais s&atilde;o especialmente importantes para estudar a hist&oacute;ria dos povos ind&iacute;genas e afrodescendentes no Brasil? Qual &eacute; o risco de construir a hist&oacute;ria apenas a partir de documentos escritos pelo colonizador?</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 04</div><div class="q-text">Voc&ecirc; encontrou na internet uma not&iacute;cia afirmando que o desemprego no Brasil teria &ldquo;ca&iacute;do para zero&rdquo;. Como um(a) cientista social aplicaria o m&eacute;todo cient&iacute;fico para investigar se essa informa&ccedil;&atilde;o &eacute; verdadeira? Quais fontes consultaria e por qu&ecirc;?</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 05</div><div class="q-text">Os pesquisadores das Ci&ecirc;ncias Humanas tamb&eacute;m s&atilde;o seres humanos com valores e hist&oacute;ria. Isso representa um problema para a objetividade cient&iacute;fica? Como os cientistas sociais lidam com essa quest&atilde;o? Pesquise o conceito de &ldquo;reflexividade&rdquo; na pesquisa social.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 06</div><div class="q-text">Pesquise e descreva brevemente uma fonte hist&oacute;rica do Brasil colonial (pode ser a Carta de Pero Vaz de Caminha, os relat&oacute;rios jesu&iacute;ticos ou outra de sua escolha). Identifique: que tipo de fonte &eacute;, quem produziu, para quem, com qual objetivo. O que ela revela e o que ela silencia?</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+    </div>
+  </div>
+
+  <!-- ===== B1 TAB 3: QUIZ ===== -->
+  <div class="btab-panel" id="b1-tab3">
+    <div class="quiz-section fi">
+      <div class="quiz-header">
+        <div class="quiz-title">&#x1F4CA; Quiz Oficial &mdash; Bloco I</div>
+        <div class="quiz-score-box" id="b1-score"><span>Acertos:</span><span class="score-num">0</span><span class="score-total"> / 5</span></div>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="b1-bar" style="width:0%"></div></div>
+
+      <div class="qmc-card" id="b1q0">
+        <div class="qmc-num">Quest&atilde;o 1 de 5</div>
+        <div class="qmc-text">Qual alternativa descreve corretamente a principal diferen&ccedil;a entre ci&ecirc;ncias naturais e ci&ecirc;ncias humanas?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b1',0,0)"><span class="opt-letter">A)</span><span>Ci&ecirc;ncias naturais s&atilde;o mais rigorosas e confi&aacute;veis que as humanidades</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',0,1)"><span class="opt-letter">B)</span><span>Ci&ecirc;ncias naturais estudam fen&ocirc;menos da natureza com experimentos replic&aacute;veis; ci&ecirc;ncias humanas estudam a&ccedil;&otilde;es e rela&ccedil;&otilde;es humanas, hist&oacute;ricas e contextuais</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',0,2)"><span class="opt-letter">C)</span><span>Ci&ecirc;ncias humanas n&atilde;o usam m&eacute;todo cient&iacute;fico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',0,3)"><span class="opt-letter">D)</span><span>Ci&ecirc;ncias humanas estudam apenas o passado remoto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',0,4)"><span class="opt-letter">E)</span><span>Ci&ecirc;ncias naturais n&atilde;o produzem dados quantitativos</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b1fb0"></div>
+      </div>
+
+      <div class="qmc-card" id="b1q1">
+        <div class="qmc-num">Quest&atilde;o 2 de 5</div>
+        <div class="qmc-text">Um pesquisador faz 200 entrevistas com moradores de favelas sobre como percebem a atua&ccedil;&atilde;o policial em seu bairro. Esse tipo de pesquisa &eacute; classificado como:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b1',1,0)"><span class="opt-letter">A)</span><span>M&eacute;todo quantitativo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',1,1)"><span class="opt-letter">B)</span><span>Pesquisa experimental</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',1,2)"><span class="opt-letter">C)</span><span>M&eacute;todo qualitativo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',1,3)"><span class="opt-letter">D)</span><span>Pesquisa documental exclusivamente</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',1,4)"><span class="opt-letter">E)</span><span>M&eacute;todo dedutivo puro</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b1fb1"></div>
+      </div>
+
+      <div class="qmc-card" id="b1q2">
+        <div class="qmc-num">Quest&atilde;o 3 de 5</div>
+        <div class="qmc-text">A Carta de Pero Vaz de Caminha (1500) &eacute; um exemplo de qual tipo de fonte hist&oacute;rica?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b1',2,0)"><span class="opt-letter">A)</span><span>Fonte secund&aacute;ria iconogr&aacute;fica</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',2,1)"><span class="opt-letter">B)</span><span>Fonte prim&aacute;ria escrita</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',2,2)"><span class="opt-letter">C)</span><span>Pesquisa bibliogr&aacute;fica contempor&acirc;nea</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',2,3)"><span class="opt-letter">D)</span><span>Fonte oral ind&iacute;gena</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',2,4)"><span class="opt-letter">E)</span><span>Documento sem valor hist&oacute;rico por ser muito antigo</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b1fb2"></div>
+      </div>
+
+      <div class="qmc-card" id="b1q3">
+        <div class="qmc-num">Quest&atilde;o 4 de 5</div>
+        <div class="qmc-text">Perguntar &ldquo;o que est&aacute; ausente neste documento?&rdquo; ao analisar uma fonte hist&oacute;rica significa que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b1',3,0)"><span class="opt-letter">A)</span><span>O documento est&aacute; incompleto e n&atilde;o pode ser usado</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',3,1)"><span class="opt-letter">B)</span><span>O pesquisador deve inventar as partes faltantes</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',3,2)"><span class="opt-letter">C)</span><span>Os sil&ecirc;ncios e omiss&otilde;es tamb&eacute;m s&atilde;o dados hist&oacute;ricos importantes, revelando quais vozes foram exclu&iacute;das</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',3,3)"><span class="opt-letter">D)</span><span>A fonte n&atilde;o &eacute; classificada como prim&aacute;ria</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',3,4)"><span class="opt-letter">E)</span><span>A fonte s&oacute; pode ser usada por arque&oacute;logos</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b1fb3"></div>
+      </div>
+
+      <div class="qmc-card" id="b1q4">
+        <div class="qmc-num">Quest&atilde;o 5 de 5</div>
+        <div class="qmc-text">Qual pr&aacute;tica melhor representa a habilidade de &ldquo;avaliar fontes confi&aacute;veis e variadas&rdquo; (CHSOA1C1)?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b1',4,0)"><span class="opt-letter">A)</span><span>Aceitar qualquer informa&ccedil;&atilde;o de site com visual profissional</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',4,1)"><span class="opt-letter">B)</span><span>Confiar apenas no que amigos e familiares compartilham no WhatsApp</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',4,2)"><span class="opt-letter">C)</span><span>Cruzar informa&ccedil;&otilde;es de m&uacute;ltiplas fontes, verificar autoria, data e contexto, e consultar ag&ecirc;ncias de checagem quando necess&aacute;rio</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',4,3)"><span class="opt-letter">D)</span><span>Usar apenas fontes que confirmem suas opini&otilde;es j&aacute; formadas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b1',4,4)"><span class="opt-letter">E)</span><span>Evitar toda fonte digital, pois &eacute; sempre falsa</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b1fb4"></div>
+      </div>
+
+      <div class="quiz-result-banner" id="b1-banner">
+        <div class="qrb-emoji">&#x1F3C6;</div><div class="qrb-text">Resultado</div><div class="qrb-sub"></div>
+        <button class="qrb-retry" onclick="retryBlocoQuiz('b1')">&#x1F504; Tentar novamente</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /bloco-tabs b1 -->
+</div>
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- ====================== BLOCO II ====================== -->
+<section id="bloco2" style="background:var(--bg2);position:relative;overflow:hidden;">
+<div class="sfloat-wrap" id="sf02"></div>
+<div style="position:relative;z-index:1;">
+<div class="sec-head" style="background:linear-gradient(135deg,#8b1a1a 0%,#5a0f0f 50%,#1a3a6b 100%)">
+  <div style="font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(200,150,10,.85);margin-bottom:.5rem;">Bloco II &middot; T&oacute;picos 2 e 3</div>
+  <h2>&#x1F3DB;&#xFE0F; Nascimento da Democracia</h2>
+  <p>Da &Aacute;gora de Atenas &agrave; democracia representativa brasileira</p>
+</div>
+<div style="max-width:1100px;margin:0 auto;padding:1.5rem 1rem 2.5rem;">
+
+<div class="bloco-tabs fi" id="tabs-b2">
+  <div class="btabs-nav">
+    <button class="btab-btn active" onclick="switchTab('b2',0,this)">&#x1F4D6; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('b2',1,this)">&#x1F3AE; Interativo</button>
+    <button class="btab-btn" onclick="switchTab('b2',2,this)">&#x270D; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('b2',3,this)">&#x1F4CA; Quiz</button>
+  </div>
+
+  <!-- ===== B2 TAB 0: CONTEUDO ===== -->
+  <div class="btab-panel active" id="b2-tab0">
+
+    <div class="card fi">
+      <h3>&#x1F3FA; Gr&eacute;cia Antiga: O Ber&ccedil;o da Democracia?</h3>
+      <div class="concept-box">
+        <div class="cb-title">Contexto hist&oacute;rico</div>
+        <p>Por volta do s&eacute;culo V a.C., a cidade-estado de Atenas desenvolveu um sistema pol&iacute;tico in&eacute;dito na hist&oacute;ria documentada: a <strong>democracia</strong>. A palavra vem do grego <em>demos</em> (povo) + <em>kratos</em> (poder): &ldquo;poder do povo&rdquo;. Mas &eacute; fundamental entender que nem todo mundo era considerado &ldquo;povo&rdquo; em Atenas &mdash; e isso exige an&aacute;lise cr&iacute;tica.</p>
+      </div>
+      <p style="margin-top:.85rem">A Gr&eacute;cia n&atilde;o era um pa&iacute;s unificado. Era um conjunto de <strong>póleis</strong> (cidades-estado) independentes, frequentemente em guerra umas com as outras. Cada p&oacute;lis tinha seu pr&oacute;prio governo, leis, exercito e deuses protetores.</p>
+      <div style="margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.5rem">
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Agora+de+Atenas+reconstituicao+3D+arqueologica" target="_blank" rel="noopener">&#x1F5BC; Reconstitu&iacute;&ccedil;&atilde;o da &Aacute;gora de Atenas</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=mapa+grecia+antiga+cidades+estado+poleis+seculo+V" target="_blank" rel="noopener">&#x1F5FA; Mapa da Gr&eacute;cia Antiga</a>
+      </div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F3D9; As Principais P&oacute;leis Gregas</h3>
+      <div class="grid2" style="margin-top:.85rem">
+        <div class="info-card" style="border-left:4px solid var(--acc1)">
+          <h4>&#x1F3DB; Atenas</h4>
+          <p>Centro intelectual e comercial do mundo grego. Ber&ccedil;o da democracia e da filosofia (S&oacute;crates, Plat&atilde;o, Arist&oacute;teles). Desenvolveu a primeira experi&ecirc;ncia democr&aacute;tica documentada da hist&oacute;ria ocidental. Grande potencia naval.</p>
+        </div>
+        <div class="info-card" style="border-left:4px solid var(--acc3)">
+          <h4>&#x2694;&#xFE0F; Esparta</h4>
+          <p>Cidade-estado militarizada ao extremo. Todos os espartanos (homens) eram guerreiros profissionais. Sistema oligarquico (governo de poucos). Rival de Atenas. Venceu a Guerra do Peloponeso (431-404 a.C.).</p>
+        </div>
+        <div class="info-card" style="border-left:4px solid var(--acc2)">
+          <h4>&#x1F3FA; Corinto</h4>
+          <p>Grande centro portu&aacute;rio e comercial. Rica e influente, aliada de Esparta. Nexo de rotas comerciais do Mediterr&acirc;neo. Produzia cer&acirc;micas famosas em todo o mundo antigo.</p>
+        </div>
+        <div class="info-card" style="border-left:4px solid var(--acc4)">
+          <h4>&#x1F33F; Tebas</h4>
+          <p>Ganhou proeminência no s&eacute;c. IV a.C. com o general Epaminondas e chegou a derrotar Esparta. Importante at&eacute; a conquista de Alexandre, o Grande (336 a.C.).</p>
+        </div>
+      </div>
+      <div style="margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.5rem">
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Parthenon+Atenas+Acropole+fotografia+atual" target="_blank" rel="noopener">&#x1F5BC; O Partenon na Acr&oacute;pole</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=guerreiro+espartano+hoplita+grego+reconstituicao" target="_blank" rel="noopener">&#x2694; Guerreiro hoplita grego</a>
+      </div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x2696;&#xFE0F; Como Funcionava a Democracia Ateniense?</h3>
+      <p>A democracia ateniense era <strong>direta</strong>: os cidad&atilde;os votavam pessoalmente em cada lei e decis&atilde;o, sem intermediarios. Suas quatro institui&ccedil;&otilde;es principais:</p>
+      <div style="margin-top:.9rem;display:flex;flex-direction:column;gap:.5rem">
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1.5rem;flex-shrink:0">&#x1F3DB;</span>
+          <div><p style="font-weight:800;font-size:.87rem;color:var(--acc1);margin-bottom:.22rem">Ekklesia &mdash; Assembleia do Povo</p><p style="font-size:.82rem;color:var(--txt2);margin:0">O cora&ccedil;&atilde;o da democracia. Reunia todos os cidad&atilde;os na colina da Pnix para votar leis, declarar guerras, assinar tratados e eleger magistrados. Podia reunir mais de 6.000 pessoas. Qualquer cidad&atilde;o podia falar.</p></div>
+        </div>
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1.5rem;flex-shrink:0">&#x1F4CB;</span>
+          <div><p style="font-weight:800;font-size:.87rem;color:var(--acc1);margin-bottom:.22rem">Boul&eacute; &mdash; Conselho dos 500</p><p style="font-size:.82rem;color:var(--txt2);margin:0">500 cidad&atilde;os sorteados anualmente (50 de cada tribo) que preparava a pauta da Assembleia e administrava Atenas no cotidiano. O sorteio garantia representação de todas as classes sociais.</p></div>
+        </div>
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1.5rem;flex-shrink:0">&#x2696;</span>
+          <div><p style="font-weight:800;font-size:.87rem;color:var(--acc1);margin-bottom:.22rem">Heliaia &mdash; Tribunal Popular</p><p style="font-size:.82rem;color:var(--txt2);margin:0">Tribunal composto por ju&iacute;zes sorteados entre os cidad&atilde;os. Resolvia disputas legais e aplicava as leis. Em 399 a.C., esse tribunal condenou o fil&oacute;sofo S&oacute;crates &agrave; morte por 280 votos a 220 &mdash; um dos casos mais debatidos da historia da democracia.</p></div>
+        </div>
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.75rem;align-items:flex-start">
+          <span style="font-size:1.5rem;flex-shrink:0">&#x1F5E1;</span>
+          <div><p style="font-weight:800;font-size:.87rem;color:var(--acc1);margin-bottom:.22rem">Strategoi &mdash; Os 10 Generais</p><p style="font-size:.82rem;color:var(--txt2);margin:0">10 generais eleitos anualmente pela Assembleia para comandar o ex&eacute;rcito. &Eacute; o &uacute;nico cargo que era eleito (n&atilde;o sorteado). P&eacute;ricles foi estratego por quase 30 anos consecutivos (461-429 a.C.), tornando-se o rosto mais famoso da democracia ateniense.</p></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem">
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Pnix+colina+assembleia+popular+Atenas+grecia" target="_blank" rel="noopener">&#x1F5BC; Colina da Pnix (local da Assembleia)</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Pericles+busto+escultura+museu+grego" target="_blank" rel="noopener">&#x1F5BC; Busto de P&eacute;ricles</a>
+        <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=democracia+ateniense+como+funcionava+historia+grecia')">
+          <div class="vl-icon">&#x25B6;</div><div class="vl-txt"><strong>Como funcionava a democracia de Atenas</strong><span>YouTube &middot; Explica&ccedil;&atilde;o detalhada</span></div><span class="res-tag rt-yt">YT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card fi" style="border-left:5px solid var(--acc3)">
+      <h3 style="color:var(--acc3)">&#x1F6AB; Quem Era Exlu&iacute;do? O Lado Sombrio da Democracia Ateniense</h3>
+      <p>Este &eacute; o ponto mais cr&iacute;tico e mais importante: a democracia ateniense exlu&iacute;a a <strong>maioria absoluta</strong> da popula&ccedil;&atilde;o. Eram considerados cidad&atilde;os com direitos pol&iacute;ticos plenos apenas um grupo restrito:</p>
+      <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;margin:.75rem 0">
+        <p style="font-weight:800;font-size:.85rem;color:var(--acc4);margin-bottom:.3rem">&#x2705; Quem TINHA direitos pol&iacute;ticos:</p>
+        <p style="font-size:.83rem;color:var(--txt2)">Homens adultos, livres, nascidos em Atenas (pai <em>e</em> m&atilde;e atenienses), que completaram o servi&ccedil;o militar. Estimativas: entre 30.000 e 50.000 cidad&atilde;os de uma popula&ccedil;&atilde;o total de 250.000 a 300.000 pessoas &mdash; menos de 20% da popula&ccedil;&atilde;o total.</p>
+      </div>
+      <div style="background:#fef2f2;border:1px solid #fca5a5;border-radius:12px;padding:.85rem 1rem;margin:.75rem 0">
+        <p style="font-weight:800;font-size:.85rem;color:var(--acc3);margin-bottom:.3rem">&#x274C; Quem N&Atilde;O tinha direitos pol&iacute;ticos (mais de 80% da popula&ccedil;&atilde;o):</p>
+        <ul style="font-size:.83rem;color:var(--txt2);padding-left:1rem;margin:0;display:flex;flex-direction:column;gap:.3rem">
+          <li><strong>Mulheres (todas, sem excecao):</strong> sem voto, sem fala p&uacute;blica, sem participacao pol&iacute;tica &mdash; independente de riqueza, intelig&ecirc;ncia ou nobleza.</li>
+          <li><strong>Escravos (entre 80.000 e 100.000 pessoas):</strong> representavam 30-40% da popula&ccedil;&atilde;o total. Eram propriedade de outros, sem absolutamente nenhum direito. A democracia ateniense dependia do trabalho escravo para funcionar.</li>
+          <li><strong>Metecos (estrangeiros residentes):</strong> podiam trabalhar, pagar impostos e at&eacute; combater no ex&eacute;rcito, mas n&atilde;o podiam votar nem participar da Assembleia.</li>
+          <li><strong>Libertos:</strong> ex-escravos que ganhavam a liberdade, mas n&atilde;o a cidadania. Permaneciam sem direitos pol&iacute;ticos.</li>
+        </ul>
+      </div>
+      <div class="agora-quote" style="margin-top:.85rem">
+        <blockquote>&ldquo;A democracia ateniense era, simultaneamente, uma das experi&ecirc;ncias pol&iacute;ticas mais avan&ccedil;adas de seu tempo e um sistema radicalmente excludente que se sustentava no trabalho escravo de dezenas de milhares de pessoas.&rdquo;</blockquote>
+        <div class="q-attr">Moses Finley, historiador da Gr&eacute;cia Antiga</div>
+      </div>
+      <div class="tip-box" style="margin-top:.85rem"><strong>Para refletir criticamente:</strong> A democracia grega nos ensina que um sistema pode ser revolucion&aacute;rio para o seu tempo e ainda assim ser profundamente injusto para a maioria. Isso nos obriga a perguntar: nossa democracia atual ainda exclui quem? Quem n&atilde;o tem voz real no Brasil de hoje?</div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F504; Democracia Direta x Democracia Representativa</h3>
+      <p>Existem dois grandes modelos democr&aacute;ticos, e o Brasil combina elementos de ambos:</p>
+      <table class="comp-table">
+        <tr><th>Democracia Direta (Atenas, s&eacute;c. V a.C.)</th><th>Democracia Representativa (Brasil, s&eacute;c. XXI)</th></tr>
+        <tr><td>Cidad&atilde;os votam diretamente em cada lei e decis&atilde;o</td><td>Cidad&atilde;os elegem representantes para votar em seu nome</td></tr>
+        <tr><td>Participa&ccedil;&atilde;o presencial e frequente na Assembleia</td><td>Participa&ccedil;&atilde;o via voto a cada 2 ou 4 anos</td></tr>
+        <tr><td>Vi&aacute;vel em cidades pequenas (30-50 mil cidad&atilde;os)</td><td>Necess&aacute;ria em pa&iacute;ses com 215 milh&otilde;es de pessoas</td></tr>
+        <tr><td>Sem partidos pol&iacute;ticos formais</td><td>Organizada por partidos pol&iacute;ticos</td></tr>
+        <tr><td>Exlu&iacute;a mulheres, escravos, metecos e libertos</td><td>Voto universal (maiores de 16 anos, facultativo at&eacute; 17 e ap&oacute;s 70)</td></tr>
+        <tr><td>Alguns cargos eram preenchidos por sorteio</td><td>Todos os cargos eletivos s&atilde;o por elei&ccedil;&atilde;o</td></tr>
+        <tr><td>Qualquer cidad&atilde;o podia falar na Assembleia</td><td>Participa&ccedil;&atilde;o popular via redes sociais, protestos, conselhos</td></tr>
+      </table>
+      <div class="tip-box" style="margin-top:.85rem"><strong>Democracia semidireta no Brasil:</strong> Al&eacute;m das elei&ccedil;&otilde;es, a Constitui&ccedil;&atilde;o de 1988 prev&ecirc; instrumentos de democracia direta: <em>referendos</em> (ex.: desarmamento em 2005, em que 64% votou contra o total da venda de armas), <em>plebiscitos</em> (ex.: forma de governo em 1993, que escolheu o presidencialismo) e <em>iniciativa popular</em> (projetos de lei com assinaturas de 1% do eleitorado nacional).</div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F1E7;&#x1F1F7; Os Tr&ecirc;s Poderes da Rep&uacute;blica Brasileira</h3>
+      <p>O Brasil &eacute; uma <strong>Rep&uacute;blica Federativa Presidencialista</strong>. Nossa Constitui&ccedil;&atilde;o de 1988 organiza o poder do Estado em tr&ecirc;s poderes independentes e harm&ocirc;nicos entre si, seguindo a teoria da separa&ccedil;&atilde;o dos poderes de Montesquieu (s&eacute;c. XVIII):</p>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.85rem">
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.7rem">
+          <span style="font-size:1.4rem;flex-shrink:0">&#x26A1;</span>
+          <div>
+            <p style="font-weight:800;font-size:.85rem;color:var(--acc1)">Poder Executivo</p>
+            <p style="font-size:.82rem;color:var(--txt2);margin:.2rem 0 0">Presidente da Rep&uacute;blica (eleito a cada 4 anos, m&aacute;ximo 2 mandatos consecutivos), governadores estaduais e prefeitos municipais. Respons&aacute;vel por executar as leis e administrar o Estado no dia a dia. Tem poder de veto sobre projetos de lei.</p>
+          </div>
+        </div>
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.7rem">
+          <span style="font-size:1.4rem;flex-shrink:0">&#x1F4DC;</span>
+          <div>
+            <p style="font-weight:800;font-size:.85rem;color:var(--acc1)">Poder Legislativo</p>
+            <p style="font-size:.82rem;color:var(--txt2);margin:.2rem 0 0">Congresso Nacional: C&acirc;mara dos Deputados (513 deputados, mandato de 4 anos) + Senado Federal (81 senadores, mandato de 8 anos). Cria, modifica e revoga leis. Fiscaliza o Executivo. Pode abrir processo de impeachment.</p>
+          </div>
+        </div>
+        <div style="background:var(--hl-bg);border:1px solid var(--border);border-radius:12px;padding:.85rem 1rem;display:flex;gap:.7rem">
+          <span style="font-size:1.4rem;flex-shrink:0">&#x2696;</span>
+          <div>
+            <p style="font-weight:800;font-size:.85rem;color:var(--acc1)">Poder Judici&aacute;rio</p>
+            <p style="font-size:.82rem;color:var(--txt2);margin:.2rem 0 0">STF (Supremo Tribunal Federal), STJ, TSE, TRF e tribunais estaduais. Interpreta as leis, garante que a Constitui&ccedil;&atilde;o seja respeitada e julga crimes. Deve ser independente dos outros dois poderes para exercer sua fun&ccedil;&atilde;o de controle.</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.85rem">
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Congresso+Nacional+Brasilia+Niemeyer+Palacio+fotografia" target="_blank" rel="noopener">&#x1F5BC; Congresso Nacional em Bras&iacute;lia</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Constituicao+Federal+1988+promulgacao+Ulysses+Guimaraes" target="_blank" rel="noopener">&#x1F5BC; Promulga&ccedil;&atilde;o da Constitui&ccedil;&atilde;o de 1988</a>
+        <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=tres+poderes+executivo+legislativo+judiciario+brasil+explicado')">
+          <div class="vl-icon">&#x25B6;</div><div class="vl-txt"><strong>Os tr&ecirc;s poderes do Brasil explicados</strong><span>YouTube &middot; Funcionamento e exemplos</span></div><span class="res-tag rt-yt">YT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card fi">
+      <h3>&#x1F4CA; Linha do Tempo: Da Gr&eacute;cia ao Brasil Democr&aacute;tico</h3>
+      <div class="timeline" style="margin-top:.85rem">
+        <div class="tl-item"><h4>594 a.C. &mdash; Reformas de Sol&atilde;o</h4><p>O legislador Sol&atilde;o abole a escravid&atilde;o por d&iacute;vidas em Atenas e cria um sistema de classes baseado em renda, n&atilde;o em heredi-tariedade. Primeiro passo para a democracia.</p></div>
+        <div class="tl-item"><h4>508-507 a.C. &mdash; Reformas de Cl&iacute;stenes</h4><p>Marco fundador da democracia ateniense: reorganiza Atenas em 10 tribos territoriais, cria o Conselho dos 500 e amplia a participa&ccedil;&atilde;o popular a todos os atenienses livres (exceto mulheres, escravos e metecos).</p></div>
+        <div class="tl-item"><h4>461-429 a.C. &mdash; Era de P&eacute;ricles</h4><p>Auge da democracia ateniense. P&eacute;ricles institui pagamento de di&aacute;rias para participantes da Assembleia (permitindo que cidad&atilde;os pobres participassem). Constrói o Partenon. Pronuncia o famoso Discurso F&uacute;nebre.</p></div>
+        <div class="tl-item"><h4>399 a.C. &mdash; Morte de S&oacute;crates</h4><p>O fil&oacute;sofo S&oacute;crates &eacute; condenado &agrave; morte por 280 votos a 220. Crime: &ldquo;corromper a juventude&rdquo; e &ldquo;n&atilde;o honrar os deuses da cidade&rdquo;. Um dos maiores paradoxos da democracia: o poder do povo executando quem a questionava.</p></div>
+        <div class="tl-item"><h4>1789 &mdash; Revolu&ccedil;&atilde;o Francesa</h4><p>Ressurgimento da soberania popular e dos direitos do cidad&atilde;o: &ldquo;Liberdade, Igualdade, Fraternidade&rdquo;. Declara&ccedil;&atilde;o dos Direitos do Homem e do Cidad&atilde;o. Base de todas as democracias modernas.</p></div>
+        <div class="tl-item"><h4>1822 &mdash; Independ&ecirc;ncia do Brasil</h4><p>Brasil independente, mas com monarquia e escravid&atilde;o. Voto censit&aacute;rio (apenas homens com renda m&iacute;nima votavam). Mulheres, escravos e analfabetos eram exclu&iacute;dos. Longe de ser uma democracia real.</p></div>
+        <div class="tl-item"><h4>1932 &mdash; Voto feminino no Brasil</h4><p>As brasileiras conquistam o direito ao voto ap&oacute;s d&eacute;cadas de luta sufragista, liderada por figuras como Bertha Lutz. Uma das maiores conquistas democr&aacute;ticas da hist&oacute;ria brasileira.</p></div>
+        <div class="tl-item"><h4>1964-1985 &mdash; Ditadura Militar</h4><p>Direitos pol&iacute;ticos suspensos, partidos cassados, imprensa censurada, opositores perseguidos e torturados. O retrocesso democr&aacute;tico mais grave da hist&oacute;ria republicana brasileira. Torna 1988 ainda mais significativo.</p></div>
+        <div class="tl-item"><h4>1988 &mdash; Constitui&ccedil;&atilde;o Cidad&atilde;</h4><p>Ap&oacute;s a redemocratiza&ccedil;&atilde;o, o Brasil aprova uma nova Constitui&ccedil;&atilde;o que garante voto universal (incluindo analfabetos pela primeira vez), direitos fundamentais, separa&ccedil;&atilde;o dos poderes e liberdades civis. Marco hist&oacute;rico da nossa democracia.</p></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem">
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Bertha+Lutz+sufragista+voto+feminino+brasil" target="_blank" rel="noopener">&#x1F5BC; Bertha Lutz e o sufr&aacute;gio feminino</a>
+        <a class="img-search-btn" href="https://www.google.com/search?tbm=isch&q=Socrates+julgamento+morte+hemlock+grego" target="_blank" rel="noopener">&#x1F5BC; S&oacute;crates e o paradoxo democr&aacute;tico</a>
+      </div>
+    </div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem;margin:.8rem 0" class="fi">
+      <h4 style="font-family:'Cinzel',serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.7rem">&#x1F4D6; Gloss&aacute;rio &mdash; Bloco II</h4>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Democracia:</strong> Sistema pol&iacute;tico em que o poder emana do povo, diretamente ou por representantes eleitos.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">P&oacute;lis:</strong> Cidade-estado grega aut&ocirc;noma com governo, leis e territ&oacute;rio pr&oacute;prios.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Cidadania:</strong> Conjunto de direitos e deveres de uma pessoa em rela&ccedil;&atilde;o ao Estado em que vive.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Sufr&aacute;gio universal:</strong> Direito de voto garantido a todos os cidad&atilde;os adultos, independente de renda, sexo ou ra&ccedil;a.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Oligarquia:</strong> Sistema pol&iacute;tico em que o poder &eacute; exercido por um pequeno grupo privilegiado.</div>
+      <div style="border-bottom:1px solid var(--border);padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Meteco:</strong> Estrangeiro residente em Atenas com direitos econ&ocirc;micos, mas sem direitos pol&iacute;ticos.</div>
+      <div style="padding:.4rem 0;font-size:.83rem;color:var(--txt2)"><strong style="color:var(--acc1)">Constitui&ccedil;&atilde;o:</strong> Lei fundamental de um pa&iacute;s que estabelece os direitos dos cidad&atilde;os e organiza os poderes do Estado.</div>
+    </div>
+  </div>
+
+  <!-- ===== B2 TAB 1: INTERATIVO ===== -->
+  <div class="btab-panel" id="b2-tab1">
+
+    <div class="card fi" style="margin-top:.5rem">
+      <h3>&#x1F5F3; Simulador: Voc&ecirc; Votaria na &Aacute;gora de Atenas?</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">&Eacute; 430 a.C., Atenas. P&eacute;ricles propõe uma nova lei na Assembleia. Descubra se voc&ecirc; teria direito de votar respondendo as perguntas!</p>
+      <div id="agora-q" style="font-size:.9rem;font-weight:700;color:var(--txt);padding:.85rem;background:var(--hl-bg);border-radius:12px;border:1px solid var(--border);margin-bottom:.8rem">Carregando simulador...</div>
+      <div id="agora-opts" style="display:flex;flex-direction:column;gap:.4rem"></div>
+      <div id="agora-result" style="display:none;margin-top:.9rem;padding:1.1rem;border-radius:14px;text-align:center;font-weight:700;font-size:.88rem"></div>
+      <div style="text-align:center;margin-top:.7rem">
+        <button onclick="resetAgora()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.45rem 1.1rem;border-radius:999px;font-size:.8rem;font-weight:800;cursor:pointer">Reiniciar &#x1F504;</button>
+      </div>
+    </div>
+
+    <div class="card fi" style="margin-top:.9rem">
+      <h3>&#x1F9E9; Jogo da Mem&oacute;ria: Institui&ccedil;&otilde;es Democr&aacute;ticas Gregas</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">Encontre os pares: institui&ccedil;&atilde;o grega + fun&ccedil;&atilde;o. Clique em duas cartas!</p>
+      <div class="mem-grid" id="memory-game-b2"></div>
+      <div id="memory-status-b2" style="text-align:center;margin-top:.7rem;font-size:.84rem;color:var(--muted)"></div>
+      <div style="text-align:center;margin-top:.5rem">
+        <button onclick="initMemoryB2()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.45rem 1.1rem;border-radius:999px;font-size:.8rem;font-weight:800;cursor:pointer">Embaralhar &#x1F504;</button>
+      </div>
+    </div>
+
+    <div class="card fi" style="margin-top:.9rem">
+      <h3>&#x2696; Compare: Atenas x Brasil</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">Clique em uma caracter&iacute;stica para selecion&aacute;-la e depois clique na coluna correta (Atenas ou Brasil). Cuidado: algumas podem surpreender!</p>
+      <div id="compare-game" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.85rem">
+        <div class="drop-zone" id="cg-atenas">
+          <div style="font-family:'Cinzel',serif;font-size:.77rem;font-weight:700;color:var(--acc1);text-align:center;margin-bottom:.5rem">&#x1F3DB; ATENAS</div>
+          <div id="cg-atenas-items" style="min-height:80px;display:flex;flex-direction:column;gap:.3rem"></div>
+        </div>
+        <div class="drop-zone" id="cg-brasil">
+          <div style="font-family:'Cinzel',serif;font-size:.77rem;font-weight:700;color:var(--acc4);text-align:center;margin-bottom:.5rem">&#x1F1E7;&#x1F1F7; BRASIL</div>
+          <div id="cg-brasil-items" style="min-height:80px;display:flex;flex-direction:column;gap:.3rem"></div>
+        </div>
+      </div>
+      <div id="compare-pool" style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-bottom:.8rem"></div>
+      <div style="text-align:center">
+        <button onclick="checkCompare()" style="background:var(--acc1);color:#fff8e8;border:none;padding:.5rem 1.2rem;border-radius:999px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:'Cinzel',serif;margin-right:.4rem">Verificar &#x2714;</button>
+        <button onclick="resetCompare()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.5rem 1.2rem;border-radius:999px;font-size:.82rem;font-weight:800;cursor:pointer">Reiniciar &#x1F504;</button>
+      </div>
+      <div id="compare-feedback" style="display:none;text-align:center;margin-top:.55rem;padding:.65rem;border-radius:10px;font-weight:700;font-size:.83rem"></div>
+    </div>
+
+    <div class="card fi" style="margin-top:.9rem">
+      <h3>&#x1F3C6; Desafio: Quiz de Velocidade &mdash; Democracia!</h3>
+      <p style="font-size:.85rem;color:var(--txt2);margin-bottom:.9rem">5 perguntas sobre democracia grega e brasileira. Responda r&aacute;pido!</p>
+      <div id="speed-quiz-b2">
+        <div id="sq2-progress" style="height:5px;background:var(--border);border-radius:3px;margin-bottom:.9rem;overflow:hidden"><div id="sq2-fill" style="height:100%;background:linear-gradient(90deg,var(--acc3),var(--acc2));border-radius:3px;transition:width .3s;width:0%"></div></div>
+        <div id="sq2-question" style="font-size:.9rem;font-weight:700;color:var(--txt);background:var(--hl-bg);padding:.85rem;border-radius:12px;border:1px solid var(--border);margin-bottom:.75rem"></div>
+        <div id="sq2-options" style="display:flex;flex-direction:column;gap:.35rem"></div>
+        <div id="sq2-feedback" style="display:none;margin-top:.6rem;padding:.7rem;border-radius:10px;font-size:.83rem;font-weight:700"></div>
+        <div id="sq2-result" style="display:none;text-align:center;padding:1.2rem;background:linear-gradient(135deg,#8b1a1a,#1a3a6b);border-radius:14px;margin-top:.8rem">
+          <div id="sq2-score-display" style="font-size:2rem;font-weight:900;color:#f0cc60;font-family:'Cinzel',serif"></div>
+          <div id="sq2-msg" style="color:rgba(240,230,200,.9);font-size:.85rem;margin-top:.3rem"></div>
+          <button onclick="initSpeedQuizB2()" style="margin-top:.7rem;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.4);color:#f0e8c0;padding:.4rem 1.1rem;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer">Jogar de novo &#x1F504;</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== B2 TAB 2: ATIVIDADES ===== -->
+  <div class="btab-panel" id="b2-tab2">
+    <div class="activity-section fi">
+      <div class="act-title">&#x270D;&#xFE0F; Atividades Discursivas &mdash; Bloco II</div>
+      <div class="act-subtitle">Responda no caderno com profundidade e pensamento cr&iacute;tico</div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 01</div><div class="q-text">A democracia ateniense exlu&iacute;a mulheres, escravos e estrangeiros. Em sua opini&atilde;o, &eacute; correto cham&aacute;-la de &ldquo;democracia&rdquo;? Justifique considerando tanto o contexto hist&oacute;rico do s&eacute;culo V a.C. quanto os valores democr&aacute;ticos contempor&acirc;neos.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 02</div><div class="q-text">P&eacute;ricles disse: &ldquo;Nossa constitui&ccedil;&atilde;o &eacute; chamada democracia porque o poder n&atilde;o est&aacute; nas m&atilde;os de poucos, mas da maioria.&rdquo; Quem era essa &ldquo;maioria&rdquo; em Atenas? Avalie criticamente essa afirma&ccedil;&atilde;o: ela era verdadeira para toda a popula&ccedil;&atilde;o ateniense?</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 03</div><div class="q-text">Compare o sistema de sorteio de cargos em Atenas (Conselho dos 500) com o sistema de elei&ccedil;&otilde;es no Brasil. Quais s&atilde;o as vantagens e desvantagens de cada modelo? Voc&ecirc; acha que o sorteio poderia ser uma boa ideia para algum cargo no Brasil hoje? Justifique.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 04</div><div class="q-text">O Brasil possui plebiscitos, referendos e iniciativa popular como instrumentos de democracia direta. Por que esses mecanismos s&atilde;o t&atilde;o pouco usados? Pesquise e descreva um caso real de uso desses instrumentos na hist&oacute;ria brasileira recente.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 05</div><div class="q-text">A Constitui&ccedil;&atilde;o de 1988 &eacute; chamada de &ldquo;Constitui&ccedil;&atilde;o Cidad&atilde;&rdquo;. Por qu&ecirc; recebeu esse nome? Pesquise pelo menos tr&ecirc;s direitos que ela garantiu e que n&atilde;o existiam antes. Como a ditadura militar (1964-1985) est&aacute; relacionada &agrave; import&acirc;ncia dessa Constitui&ccedil;&atilde;o?</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 06</div><div class="q-text">S&oacute;crates foi condenado &agrave; morte pela democracia ateniense em 399 a.C. &mdash; um &ldquo;paradoxo democr&aacute;tico&rdquo;. Voc&ecirc; acha que democracia e liberdade de express&atilde;o sempre andam juntas? Justifique com exemplos hist&oacute;ricos ou contempor&acirc;neos do Brasil.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+      <div class="q-card"><div class="q-num">Quest&atilde;o 07</div><div class="q-text">Pesquise o movimento sufragista no Brasil: quem foram as mulheres que lutaram pelo voto? Que estrat&eacute;gias usaram? O que mudou com o voto feminino em 1932? Relate em pelo menos 15 linhas, citando ao menos dois nomes de lideran&ccedil;as e dois fatos concretos da luta.</div><div class="q-caderno">&#x1F4DD; Responder no caderno</div></div>
+    </div>
+  </div>
+
+  <!-- ===== B2 TAB 3: QUIZ ===== -->
+  <div class="btab-panel" id="b2-tab3">
+    <div class="quiz-section fi">
+      <div class="quiz-header">
+        <div class="quiz-title">&#x1F4CA; Quiz Oficial &mdash; Bloco II</div>
+        <div class="quiz-score-box" id="b2-score"><span>Acertos:</span><span class="score-num">0</span><span class="score-total"> / 5</span></div>
+      </div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="b2-bar" style="width:0%"></div></div>
+
+      <div class="qmc-card" id="b2q0">
+        <div class="qmc-num">Quest&atilde;o 1 de 5</div>
+        <div class="qmc-text">&ldquo;Democracia&rdquo; vem do grego e significa literalmente:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b2',0,0)"><span class="opt-letter">A)</span><span>Governo dos s&aacute;bios</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',0,1)"><span class="opt-letter">B)</span><span>Lei do mais forte</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',0,2)"><span class="opt-letter">C)</span><span>Poder do povo (demos = povo + kratos = poder)</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',0,3)"><span class="opt-letter">D)</span><span>Cidade livre e soberana</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',0,4)"><span class="opt-letter">E)</span><span>Assembleia de cidad&atilde;os igualitaria</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b2fb0"></div>
+      </div>
+
+      <div class="qmc-card" id="b2q1">
+        <div class="qmc-num">Quest&atilde;o 2 de 5</div>
+        <div class="qmc-text">A Ekklesia, em Atenas, era:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b2',1,0)"><span class="opt-letter">A)</span><span>O ex&eacute;rcito permanente de Atenas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',1,1)"><span class="opt-letter">B)</span><span>O tribunal que julgava os criminosos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',1,2)"><span class="opt-letter">C)</span><span>A Assembleia Popular onde os cidad&atilde;os votavam diretamente leis e decis&otilde;es pol&iacute;ticas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',1,3)"><span class="opt-letter">D)</span><span>Um grupo de fil&oacute;sofos que assessorava o governo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',1,4)"><span class="opt-letter">E)</span><span>O Conselho dos 500 cidadaos sorteados</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b2fb1"></div>
+      </div>
+
+      <div class="qmc-card" id="b2q2">
+        <div class="qmc-num">Quest&atilde;o 3 de 5</div>
+        <div class="qmc-text">Na democracia ateniense, qual grupo N&Atilde;O tinha direitos pol&iacute;ticos?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b2',2,0)"><span class="opt-letter">A)</span><span>Apenas estrangeiros ricos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',2,1)"><span class="opt-letter">B)</span><span>Apenas quem n&atilde;o pagava impostos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',2,2)"><span class="opt-letter">C)</span><span>Mulheres, escravos, metecos (estrangeiros residentes) e libertos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',2,3)"><span class="opt-letter">D)</span><span>Apenas cidad&atilde;os mais pobres</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',2,4)"><span class="opt-letter">E)</span><span>Apenas jovens com menos de 25 anos</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b2fb2"></div>
+      </div>
+
+      <div class="qmc-card" id="b2q3">
+        <div class="qmc-num">Quest&atilde;o 4 de 5</div>
+        <div class="qmc-text">Os poderes do Estado brasileiro, segundo a Constitui&ccedil;&atilde;o de 1988, s&atilde;o:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b2',3,0)"><span class="opt-letter">A)</span><span>Presidente, Senado e STF</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',3,1)"><span class="opt-letter">B)</span><span>Executivo, Legislativo e Judici&aacute;rio</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',3,2)"><span class="opt-letter">C)</span><span>Federal, Estadual e Municipal</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',3,3)"><span class="opt-letter">D)</span><span>Democr&aacute;tico, Republicano e Federativo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',3,4)"><span class="opt-letter">E)</span><span>C&acirc;mara, Senado e Presid&ecirc;ncia da Rep&uacute;blica</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b2fb3"></div>
+      </div>
+
+      <div class="qmc-card" id="b2q4">
+        <div class="qmc-num">Quest&atilde;o 5 de 5</div>
+        <div class="qmc-text">A principal diferen&ccedil;a entre democracia direta e democracia representativa &eacute; que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerBloco('b2',4,0)"><span class="opt-letter">A)</span><span>A direta &eacute; mais antiga e, por isso, inferior &agrave; representativa</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',4,1)"><span class="opt-letter">B)</span><span>Na direta, cidad&atilde;os votam pessoalmente em cada decis&atilde;o; na representativa, elegem pessoas para decidir em seu nome</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',4,2)"><span class="opt-letter">C)</span><span>A representativa n&atilde;o realiza elei&ccedil;&otilde;es peri&oacute;dicas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',4,3)"><span class="opt-letter">D)</span><span>Na direta o voto &eacute; secreto; na representativa &eacute; sempre p&uacute;blico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerBloco('b2',4,4)"><span class="opt-letter">E)</span><span>S&atilde;o sistemas id&ecirc;nticos com nomes historicamente diferentes</span><span class="opt-icon"></span></button>
+        </div>
+        <div class="qmc-feedback" id="b2fb4"></div>
+      </div>
+
+      <div class="quiz-result-banner" id="b2-banner">
+        <div class="qrb-emoji">&#x1F3C6;</div><div class="qrb-text">Resultado</div><div class="qrb-sub"></div>
+        <button class="qrb-retry" onclick="retryBlocoQuiz('b2')">&#x1F504; Tentar novamente</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /bloco-tabs b2 -->
+</div>
+</div>
+</section>
+
+<hr class="rainbow-div">
+
+<!-- PLACEHOLDER BLOCOS 3-5 -->
+<section id="bloco3" class="placeholder-sec" style="background:var(--bg);padding:2rem;text-align:center;font-family:'Crimson Pro',serif;font-style:italic;color:var(--muted)">&#x26D3;&#xFE0F; Bloco III &mdash; Em breve: Modernidade, Colonialismo e Colonialidade</section>
+<section id="bloco4" class="placeholder-sec" style="background:var(--bg2);padding:1rem;min-height:1px"></section>
+<section id="bloco5" class="placeholder-sec" style="background:var(--bg);padding:1rem;min-height:1px"></section>
+
+
+
+<hr class="rainbow-div">
+
+<footer>
+  <p>
+    <strong>Ágora: A Política que Move o Mundo</strong> · Trilhas de Ciências Humanas · 1ª Série · 1º Bimestre · 2026<br>
+    E.E. Padre Carlos Casavequia · Prof. <strong>Paulo Roberto R. Magalhães</strong><br>
+    <span>Material pedagógico de uso exclusivo dos alunos. Proibida reprodução sem autorização.</span>
+  </p>
+</footer>
+
+<!-- Fixed navigation -->
+<div class="fnav">
+  <button class="fnav-btn" title="Ir ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">⌂</button>
+  <button class="fnav-btn" title="Sumário" onclick="goTo('sumario')">☰</button>
+</div>
+
+<!-- PROF. PAULO MASCOT -->
+<div id="paulo-wrap">
+  <div id="paulo-bubble">
+    <button class="paulo-close" onclick="pauloClose()">✕</button>
+    <div class="paulo-name">🏺 Prof. Paulo</div>
+    <div id="paulo-msg">Salve, cidadão(ã)! Bem-vindo(a) à Ágora! Prepare-se: aqui você aprende que política não é coisa só de político. É coisa de todo mundo! 🏛️</div>
+    <div id="paulo-btns" style="gap:.5rem;margin-top:.6rem;flex-wrap:wrap;"></div>
+  </div>
+  <div id="paulo-avatar" onclick="pauloHandleClick(event)">
+    <span id="paulo-emoji">🏺</span>
+    <span class="paulo-label">Prof. Paulo</span>
+  </div>
+</div>
+
+<!-- BNCC MODAL -->
+<div class="modal-bg" id="bnccMod" onclick="closeMod(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="document.getElementById('bnccMod').classList.remove('show')">✕</button>
+    <span class="modal-label">Habilidade · Trilhas de Ciências Humanas e Sociais Aplicadas</span>
+    <div class="modal-code" id="mCode"></div>
+    <div id="mTag"></div>
+    <p class="modal-desc" id="mDesc"></p>
+  </div>
+</div>
+
+
+</body>
+</html>
+
+
+<script>
+/* ============================================================
+   LOCAL MEMORY SYSTEM
+   ============================================================ */
+const BOOK_KEY_BASE = 'bdm-book-' + window.location.pathname;
+function saveBookData(k,v){try{localStorage.setItem(BOOK_KEY_BASE+'-'+k,JSON.stringify(v))}catch(e){}}
+function loadBookData(k){try{const v=localStorage.getItem(BOOK_KEY_BASE+'-'+k);return v?JSON.parse(v):null}catch(e){return null}}
+(function(){try{const p=JSON.parse(localStorage.getItem('bdm-user-profile')||'{}');p.lastVisit=Date.now();p.lastBook=window.location.pathname;localStorage.setItem('bdm-user-profile',JSON.stringify(p))}catch(e){}})();
+window.addEventListener('load',()=>{const s=loadBookData('last-section');if(s&&s.id){setTimeout(()=>{const el=document.getElementById(s.id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},700)}});
+
+/* ============================================================
+   PROGRESS BAR + SCROLL TRACKING
+   ============================================================ */
+const allSections=['capa','sumario','apresentacao','bloco1','bloco2','bloco3','bloco4','bloco5'];
+function handleScroll(){
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(window.scrollY/max*100)+'%';
+  const mid=window.innerHeight/2;
+  let bestId='',bestDist=Infinity;
+  allSections.forEach(id=>{const el=document.getElementById(id);if(!el)return;const r=el.getBoundingClientRect();const d=Math.abs(r.top+r.height/2-mid);if(d<bestDist){bestDist=d;bestId=id}});
+  if(bestId)saveBookData('last-section',{id:bestId});
+}
+window.addEventListener('scroll',handleScroll,{passive:true});
+
+/* ============================================================
+   THEME
+   ============================================================ */
+const themeMap={'default':['tb-def','ft-def'],'reading':['tb-read','ft-read'],'dark':['tb-dark','ft-dark']};
+function setTheme(t){
+  document.body.removeAttribute('data-theme');
+  if(t!=='default')document.body.setAttribute('data-theme',t);
+  Object.keys(themeMap).forEach(k=>themeMap[k].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('on',k===t)}));
+  try{localStorage.setItem('agora-theme',t)}catch(e){}
+}
+(function(){try{const s=localStorage.getItem('agora-theme');if(s)setTheme(s)}catch(e){}})();
+
+/* ============================================================
+   SMOOTH SCROLL
+   ============================================================ */
+function goTo(id,e){if(e)e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+
+/* ============================================================
+   BNCC MODAL
+   ============================================================ */
+const bnccData={
+  'CHSOA1C1':{tag:'Habilidade 1 · Trilhas de Ciências Humanas · 1ª Série',desc:'Avaliar fontes confiáveis e variadas para analisar processos históricos, políticos, econômicos, sociais, ambientais e culturais, considerando diferentes perspectivas, inclusive a feminina, assegurando a diversidade epistemológica no estudo de fenômenos sociais, promovendo o combate à desinformação por meio da verificação crítica e da disseminação responsável do conhecimento.'},
+  'CHSOA1C2':{tag:'Habilidade 2 · Trilhas de Ciências Humanas · 1ª Série',desc:'Analisar dados e evidências provenientes de diferentes métodos científicos, como análises quantitativas e qualitativas, utilizando-os para compreender fenômenos locais, regionais, nacionais e globais em diferentes contextos temporais.'},
+  'CHSOA1C3':{tag:'Habilidade 3 · Trilhas de Ciências Humanas · 1ª Série',desc:'Construir argumentos fundamentados e coerentes, integrando conhecimentos científicos, históricos e culturais, contemplando a valorização da produção científica de grupos marginalizados, para posicionar-se criticamente sobre questões sociais e propor soluções para problemas contemporâneos de maneira ética e embasada.'},
+  'CHSOA1C4':{tag:'Habilidade 4 · Trilhas de Ciências Humanas · 1ª Série',desc:'Relacionar os resultados das análises científicas às dinâmicas sociais e culturais, avaliando os impactos políticos, econômicos e ambientais de decisões humanas e refletindo sobre sua própria atuação como agente transformador na sociedade.'}
+};
+function openBNCC(code){const d=bnccData[code];if(!d)return;document.getElementById('mCode').textContent=code;document.getElementById('mTag').innerHTML='<span class="modal-tag">'+d.tag+'</span>';document.getElementById('mDesc').textContent=d.desc;document.getElementById('bnccMod').classList.add('show')}
+function closeMod(e){if(e.target===document.getElementById('bnccMod'))document.getElementById('bnccMod').classList.remove('show')}
+
+/* ============================================================
+   COVER PARTICLES
+   ============================================================ */
+const particleSyms=['🏛️','⚖️','🏺','📜','⚔️','⭐','🦅','🔱','👑','🗺️','🌙','📖','🏆','🌿','⚜'];
+function spawnParticle(){
+  const el=document.createElement('span');el.className='particle';
+  el.textContent=particleSyms[Math.floor(Math.random()*particleSyms.length)];
+  el.style.left=(Math.random()*96)+'%';el.style.fontSize=(Math.random()*1.2+.7)+'rem';
+  el.style.color='rgba(200,150,10,'+(Math.random()*.25+.08)+')';
+  const d=Math.random()*18+10;el.style.animationDuration=d+'s';el.style.animationDelay=(Math.random()*4)+'s';
+  const c=document.getElementById('particles');if(c)c.appendChild(el);
+  setTimeout(()=>el.remove(),(d+5)*1000);
+}
+for(let i=0;i<14;i++)spawnParticle();
+setInterval(spawnParticle,1200);
+
+/* ============================================================
+   GYROSCOPE
+   ============================================================ */
+window.addEventListener('deviceorientation',e=>{const px=document.getElementById('particles');if(px)px.style.transform='translate('+((e.gamma||0)/4)+'px,'+((e.beta||0)/8)+'px)'});
+
+/* ============================================================
+   FADE-IN ON SCROLL
+   ============================================================ */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* ============================================================
+   SECTION FLOATERS
+   ============================================================ */
+const sfData={
+  sf01:['⚗️','📜','🔬','📚','🗃️','🧐','📰','✏️'],
+  sf02:['🏛️','⚖️','🏺','🗡️','👑','🌿','⚜','🦅']
+};
+Object.keys(sfData).forEach(id=>{
+  const wrap=document.getElementById(id);if(!wrap)return;
+  const items=sfData[id];
+  function spawn(){
+    const el=document.createElement('span');el.className='sfloat';
+    el.textContent=items[Math.floor(Math.random()*items.length)];
+    el.style.left=(Math.random()*95)+'%';
+    const d=Math.random()*20+12;
+    el.style.animationDuration=d+'s';el.style.animationDelay=(Math.random()*3)+'s';
+    wrap.appendChild(el);setTimeout(()=>el.remove(),(d+4)*1000);
+  }
+  for(let i=0;i<3;i++)spawn();
+  setInterval(spawn,3000+Math.random()*2000);
+});
+
+/* ============================================================
+   TAB SWITCHING
+   ============================================================ */
+function switchTab(blocoId,tabIdx,btn){
+  const prefix=blocoId+'-tab';
+  document.querySelectorAll('#tabs-'+blocoId+' .btab-panel').forEach((p,i)=>{
+    p.classList.toggle('active',i===tabIdx);
+  });
+  document.querySelectorAll('#tabs-'+blocoId+' .btab-btn').forEach((b,i)=>{
+    b.classList.toggle('active',i===tabIdx);
+  });
+  // Init interactive content on first open
+  if(tabIdx===1){
+    if(blocoId==='b1'&&!window['b1_init']){window['b1_init']=true;initSrcGame();initMemoryB1();initConnectB1();initSpeedQuizB1()}
+    if(blocoId==='b2'&&!window['b2_init']){window['b2_init']=true;resetAgora();initMemoryB2();initCompare();initSpeedQuizB2()}
+  }
+}
+
+/* ============================================================
+   QUIZ DATA + SYSTEM
+   ============================================================ */
+const quizAnswers={
+  b1:{answers:[1,2,1,2,2],
+    exps:[
+      ['Errado. Ambas são rigorosas; a diferença é o objeto e o método.','Correto! Naturais: experimentos replicáveis. Humanas: fenômenos históricos e contextuais.','Errado. Humanidades usam método científico adaptado às suas especificidades.','Errado. Humanidades estudam o presente e o futuro também.','Errado. Ciências naturais são ricas em dados quantitativos.'],
+      ['Errado. O método quantitativo usa dados numéricos, não entrevistas.','Errado. Pesquisa experimental envolve grupos controle em laboratório.','Correto! 200 entrevistas buscam compreender percepções, significados e experiências — método qualitativo clássico.','Errado. Pesquisa documental analisa documentos escritos, não entrevistas.','Errado. Método dedutivo parte de hipóteses teóricas, não de entrevistas.'],
+      ['Errado. Fonte secundária é a análise de outra fonte; iconográfica usa imagens.','Correto! Escrita por Caminha no momento do acontecimento (1500) = fonte primária escrita por excelência.','Errado. Pesquisa bibliográfica é posterior, não contemporânea ao fato.','Errado. Fonte oral usa fala e tradição; Caminha escreveu um documento.','Errado. A antiguidade não diminui o valor; ao contrário, aumenta a raridade.'],
+      ['Errado. Documentos incompletos podem e devem ser usados com análise crítica.','Errado. Inventar dados é desonestidade científica; o pesquisador indica as lacunas.','Correto! O silêncio é dado histórico. A ausência da perspectiva indígena na Carta de Caminha diz muito sobre o poder colonial.','Errado. Documentos primários podem ter lacunas; isso não muda sua classificação.','Errado. Arqueólogos usam fontes materiais; historiadores usam todo tipo de fonte.'],
+      ['Errado. Visual profissional não garante confiabilidade; sites falsos também têm boa aparência.','Errado. Círculos de confiança reproduzem os mesmos vieses; é essencial buscar fontes independentes.','Correto! Cruzar fontes, verificar autoria e contexto, e consultar checadores são as práticas centrais da CHSOA1C1.','Errado. Usar apenas fontes que confirmam suas ideias é chamado de viés de confirmação.','Errado. Fontes digitais podem ser excelentes (IBGE, universidades, jornalismo sério).']
+    ]
+  },
+  b2:{answers:[2,2,2,1,1],
+    exps:[
+      ['Errado. Governo dos sábios é Aristocracia (aristos = melhor + kratos).','Errado. Lei do mais forte se aproxima de Tirania ou estado de natureza hobbesiano.','Correto! Democracia: demos (povo) + kratos (poder). Literalmente "poder do povo".','Errado. Cidade livre descreve soberania, não o sistema de governo.','Errado. "Assembleia de cidadãos" descreve a Ekklesia, não o conceito de democracia.'],
+      ['Errado. O exército era comandado pelos Strategoi (generais).','Errado. O tribunal era a Heliaia.','Correto! Ekklesia = assembleia do povo. Reunia cidadãos para votar diretamente em todas as decisões políticas importantes.','Errado. Isso se aproximaria de algo como o Areopago, conselho de ex-magistrados.','Errado. O Conselho dos 500 era a Boulé.'],
+      ['Errado. Estrangeiros ricos eram metecos e também eram excluídos.','Errado. O critério era nascimento e status, não apenas impostos.','Correto! Mulheres, escravos (30-40% da população), metecos e libertos eram todos excluídos. Mais de 80% da população não tinha direitos políticos.','Errado. Até cidadãos pobres tinham direitos políticos (Péricles criou diárias para incluí-los).','Errado. A maioridade para direitos políticos era 18 anos, após o serviço militar.'],
+      ['Errado. Presidente, Senado e STF são órgãos, não os poderes em si.','Correto! A tripartição dos poderes brasileira (Montesquieu) é Executivo (governa), Legislativo (legisla) e Judiciário (julga).','Errado. Federal, Estadual e Municipal são os níveis federativos do Estado, não os poderes.','Errado. Democrático, Republicano e Federativo são princípios da organização do Estado.','Errado. Câmara e Senado são as casas do Legislativo; Presidência é o Executivo.'],
+      ['Errado. Nenhum sistema é superior por ser mais antigo; cada um serve ao seu contexto histórico.','Correto! Essa é a diferença fundamental: participação direta (Atenas) versus delegação de representação (Brasil).','Errado. A democracia representativa é organizada justamente em torno de eleições periódicas.','Errado. O voto no Brasil é secreto (não público) na maioria das votações parlamentares e em todas as eleições.','Errado. São sistemas com lógicas, escalas e contextos históricos muito diferentes.']
+    ]
+  }
+};
+
+const blocoQuizState={};
+function initBlocoQuiz(id){if(!blocoQuizState[id])blocoQuizState[id]={correct:0,answered:0,total:5}}
+
+function answerBloco(blocoId,qIdx,chosen){
+  initBlocoQuiz(blocoId);
+  const state=blocoQuizState[blocoId];
+  const card=document.getElementById(blocoId+'q'+qIdx);
+  if(!card||card.dataset.answered)return;
+  const correct=quizAnswers[blocoId].answers[qIdx];
+  const exps=quizAnswers[blocoId].exps[qIdx];
+  const isRight=(chosen===correct);
+  card.dataset.answered='1';card.classList.add('answered');
+  card.querySelectorAll('.qmc-opt').forEach((opt,i)=>{
+    opt.disabled=true;opt.classList.remove('correct','wrong','reveal');
+    const icon=opt.querySelector('.opt-icon');
+    if(i===correct){opt.classList.add('correct');if(icon)icon.textContent='✅'}
+    else if(i===chosen){opt.classList.add('wrong');if(icon)icon.textContent='❌'}
+    else{opt.classList.add('reveal');if(icon)icon.textContent='💡'}
+  });
+  const fb=document.getElementById(blocoId+'fb'+qIdx);
+  if(fb){
+    fb.classList.remove('fb-correct','fb-wrong');
+    fb.classList.add('show',isRight?'fb-correct':'fb-wrong');
+    let html=isRight?'<strong>✅ Correto!</strong> '+exps[correct]:'<strong>❌ Errado.</strong> Você marcou <strong>'+String.fromCharCode(65+chosen)+'</strong>. A resposta certa é <strong>'+String.fromCharCode(65+correct)+'</strong>. '+exps[correct];
+    html+='<div style="margin-top:.5rem;font-size:.77rem;border-top:1px solid rgba(0,0,0,.1);padding-top:.4rem">';
+    exps.forEach((e,i)=>{html+='<div style="padding:.2rem 0;color:'+(i===correct?'#14532d':'#6b7280')+'">'+(i===correct?'✅':'○')+' <strong>'+String.fromCharCode(65+i)+')</strong> '+e+'</div>'});
+    html+='</div>';fb.innerHTML=html;
+  }
+  if(isRight)state.correct++;
+  state.answered++;
+  // Update score display
+  const scoreEl=document.getElementById(blocoId+'-score');
+  if(scoreEl)scoreEl.querySelector('.score-num').textContent=state.correct;
+  const bar=document.getElementById(blocoId+'-bar');
+  if(bar)bar.style.width=(state.answered/state.total*100)+'%';
+  // Paulo reaction
+  pauloShowMsg(isRight?getRnd(pauloPhrases.correct):getRnd(pauloPhrases.wrong),4500);
+  // Final banner
+  if(state.answered===state.total){
+    const banner=document.getElementById(blocoId+'-banner');
+    if(banner){
+      banner.classList.add('show');
+      const pct=Math.round(state.correct/state.total*100);
+      let em,tx,sb;
+      if(pct===100){em='🏆';tx='Nota 10! Perfeito, cidadão(ã)!';sb='O Prof. Paulo está com orgulho! Você mandou muito bem!'}
+      else if(pct>=80){em='🎉';tx=state.correct+'/'+state.total+' corretas — Excelente!';sb='Quase perfeito! Revise as que errou.'}
+      else if(pct>=60){em='📚';tx=state.correct+'/'+state.total+' corretas — Bom!';sb='Bom esforço! Revise o conteúdo antes da prova.'}
+      else{em='🤔';tx=state.correct+'/'+state.total+' corretas.';sb='Volte ao conteúdo e tente novamente. Você consegue!'}
+      banner.querySelector('.qrb-emoji').textContent=em;
+      banner.querySelector('.qrb-text').textContent=tx;
+      banner.querySelector('.qrb-sub').textContent=sb;
+    }
+  }
+  saveBookData('quiz-'+blocoId+'-q'+qIdx,{chosen,correct:isRight});
+}
+
+function retryBlocoQuiz(id){
+  if(blocoQuizState[id]){blocoQuizState[id]={correct:0,answered:0,total:5}}
+  for(let i=0;i<5;i++){
+    const card=document.getElementById(id+'q'+i);
+    if(!card)continue;
+    delete card.dataset.answered;card.classList.remove('answered');
+    card.querySelectorAll('.qmc-opt').forEach(opt=>{opt.disabled=false;opt.classList.remove('correct','wrong','reveal');const icon=opt.querySelector('.opt-icon');if(icon)icon.textContent=''});
+    const fb=document.getElementById(id+'fb'+i);
+    if(fb){fb.classList.remove('show','fb-correct','fb-wrong');fb.innerHTML=''}
+  }
+  const banner=document.getElementById(id+'-banner');if(banner)banner.classList.remove('show');
+  const scoreEl=document.getElementById(id+'-score');if(scoreEl)scoreEl.querySelector('.score-num').textContent='0';
+  const bar=document.getElementById(id+'-bar');if(bar)bar.style.width='0%';
+}
+
+/* ============================================================
+   GAME 1: CLASSIFIQUE A FONTE (drag-click system)
+   ============================================================ */
+const srcItems=[
+  {text:'Carta de Pero Vaz de Caminha (1500)',type:'primary'},
+  {text:'Livro "Raízes do Brasil" de Sérgio Buarque',type:'secondary'},
+  {text:'Fotografia de manifestação de 1968',type:'primary'},
+  {text:'Moeda romana do século II d.C.',type:'primary'},
+  {text:'Artigo acadêmico sobre a ditadura militar',type:'secondary'},
+  {text:'Pintura "Independência ou Morte" de Pedro Américo',type:'primary'},
+  {text:'Documentário sobre a Constituição de 1988',type:'secondary'},
+  {text:'Diário pessoal de soldado da 2ª Guerra',type:'primary'}
+];
+let srcSelected=null;
+let srcPlaced={primary:[],secondary:[]};
+let srcOriginal=[...srcItems];
+
+function initSrcGame(){
+  srcSelected=null;srcPlaced={primary:[],secondary:[]};
+  const pool=document.getElementById('src-items-pool');
+  const prim=document.getElementById('dz-primary-items');
+  const sec=document.getElementById('dz-secondary-items');
+  const fb=document.getElementById('src-feedback');
+  if(!pool||!prim||!sec)return;
+  pool.innerHTML='';prim.innerHTML='';sec.innerHTML='';
+  if(fb){fb.style.display='none';fb.textContent=''}
+  // Shuffle
+  const shuffled=[...srcItems].sort(()=>Math.random()-.5);
+  shuffled.forEach((item,i)=>{
+    const el=document.createElement('span');
+    el.className='drag-item';el.textContent=item.text;
+    el.dataset.idx=i;el.dataset.type=item.type;
+    el.dataset.orig=item.text;
+    el.onclick=()=>selectSrcItem(el);
+    pool.appendChild(el);
+  });
+}
+
+function selectSrcItem(el){
+  if(el.classList.contains('drag-item')){
+    document.querySelectorAll('.drag-item').forEach(d=>d.classList.remove('di-selected'));
+    el.classList.add('di-selected');
+    srcSelected=el;
+  }
+}
+
+function dzClick(zone){
+  if(!srcSelected)return;
+  const zoneType=zone.id==='dz-primary'?'primary':'secondary';
+  const itemsContainer=document.getElementById('dz-'+zoneType+'-items');
+  srcSelected.classList.remove('di-selected');
+  srcSelected.classList.add('placed');
+  srcSelected.onclick=()=>returnToPool(srcSelected);
+  itemsContainer.appendChild(srcSelected);
+  srcSelected=null;
+  zone.classList.remove('dz-active');
+}
+
+function returnToPool(el){
+  el.classList.remove('placed','di-correct','di-wrong');
+  el.onclick=()=>selectSrcItem(el);
+  document.getElementById('src-items-pool').appendChild(el);
+}
+
+function checkSrcGame(){
+  const fb=document.getElementById('src-feedback');
+  let correct=0,total=0;
+  document.querySelectorAll('.drag-item.placed').forEach(el=>{
+    const actualZone=el.closest('.drop-zone');
+    if(!actualZone)return;
+    total++;
+    const placedIn=actualZone.id==='dz-primary'?'primary':'secondary';
+    const isRight=placedIn===el.dataset.type;
+    el.classList.remove('di-correct','di-wrong');
+    el.classList.add(isRight?'di-correct':'di-wrong');
+    if(isRight)correct++;
+  });
+  if(total===0){if(fb){fb.style.display='block';fb.style.background='#fef3c7';fb.style.color='#78350f';fb.textContent='⚠️ Mova pelo menos um item para uma categoria antes de verificar!'};return}
+  const all=srcItems.length;
+  const inPool=document.getElementById('src-items-pool').querySelectorAll('.drag-item').length;
+  if(fb){
+    fb.style.display='block';
+    if(correct===total&&inPool===0){
+      fb.style.background='#dcfce7';fb.style.color='#14532d';
+      fb.textContent='✅ Parabéns! Todos os '+total+' itens classificados corretamente!';
+      pauloShowMsg(getRnd(pauloPhrases.correct),4500);
+    } else {
+      fb.style.background='#fee2e2';fb.style.color='#991b1b';
+      fb.textContent='❌ '+correct+' de '+total+' corretos. Itens em vermelho estão na categoria errada. Tente corrigir!';
+    }
+  }
+}
+
+function resetSrcGame(){initSrcGame()}
+
+/* ============================================================
+   GAME 2: MEMORIA B1 — Conceitos Ciências Humanas
+   ============================================================ */
+const memPairsB1=[
+  {a:'Fonte Primária',b:'Produzida na época estudada'},
+  {a:'Fonte Secundária',b:'Análise feita por pesquisadores posteriores'},
+  {a:'Método Quantitativo',b:'Usa dados numéricos e estatísticos'},
+  {a:'Método Qualitativo',b:'Entrevistas e observação participante'},
+  {a:'Epistemologia',b:'Estudo dos limites do conhecimento'},
+  {a:'Epistemicídio',b:'Apagamento do saber de povos colonizados'},
+  {a:'Fonte Oral',b:'Relatos, entrevistas e tradições faladas'},
+  {a:'Fonte Material',b:'Objetos, ruínas e artefatos físicos'}
+];
+let memB1State={flipped:[],matched:0,locked:false,attempts:0};
+
+function initMemoryB1(){
+  memB1State={flipped:[],matched:0,locked:false,attempts:0};
+  const grid=document.getElementById('memory-game-b1');
+  if(!grid)return;
+  const status=document.getElementById('memory-status-b1');
+  if(status)status.textContent='Clique em duas cartas para encontrar os pares!';
+  const cards=[];
+  memPairsB1.forEach((pair,i)=>{
+    cards.push({id:'a'+i,pairId:i,face:pair.a,icon:'🏛️'});
+    cards.push({id:'b'+i,pairId:i,face:pair.b,icon:'📖'});
+  });
+  cards.sort(()=>Math.random()-.5);
+  grid.innerHTML='';
+  cards.forEach(card=>{
+    const el=document.createElement('div');
+    el.className='mem-card';
+    el.dataset.id=card.id;el.dataset.pairid=card.pairId;
+    el.innerHTML='<span class="mc-back">❓</span><span class="mc-front">'+card.face+'</span>';
+    el.onclick=()=>flipMemCard(el,'b1');
+    grid.appendChild(el);
+  });
+}
+
+function flipMemCard(el,gameId){
+  const state=memB1State;
+  if(state.locked||el.classList.contains('flipped')||el.classList.contains('matched'))return;
+  el.classList.add('flipped');
+  state.flipped.push(el);
+  if(state.flipped.length===2){
+    state.attempts++;state.locked=true;
+    const [a,b]=state.flipped;
+    if(a.dataset.pairid===b.dataset.pairid){
+      a.classList.add('matched');b.classList.add('matched');
+      state.matched++;state.flipped=[];state.locked=false;
+      const status=document.getElementById('memory-status-b1');
+      if(state.matched===memPairsB1.length){
+        if(status)status.textContent='🏆 Parabéns! Todos os '+memPairsB1.length+' pares encontrados em '+state.attempts+' tentativas!';
+        pauloShowMsg(getRnd(pauloPhrases.correct),4500);
+      } else {
+        if(status)status.textContent='✅ Par encontrado! '+state.matched+'/'+memPairsB1.length+' pares. Continue!';
+      }
+    } else {
+      setTimeout(()=>{
+        a.classList.remove('flipped');b.classList.remove('flipped');
+        state.flipped=[];state.locked=false;
+      },900);
+    }
+  }
+}
+
+/* ============================================================
+   GAME 3: CONNECT B1 — Método x Exemplo
+   ============================================================ */
+const connectDataB1={
+  left:['Quantitativo','Qualitativo','Bibliográfico','Documental'],
+  right:['Taxa de homicídios por raça no Brasil (IPEA)','200 entrevistas com mulheres em situação de violência','Análise crítica de obras de Florestan Fernandes','Cartas de Tiradentes antes da execução'],
+  correct:[0,1,2,3]
+};
+let connectStateB1={selected:null,connections:{}};
+
+function initConnectB1(){
+  connectStateB1={selected:null,connections:{}};
+  const wrap=document.getElementById('connect-game-b1');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  const leftCol=document.createElement('div');leftCol.className='connect-col';
+  const rightCol=document.createElement('div');rightCol.className='connect-col';
+  const shuffledRight=[...connectDataB1.right.keys()].sort(()=>Math.random()-.5);
+  connectDataB1.left.forEach((txt,i)=>{
+    const el=document.createElement('div');el.className='connect-item';
+    el.textContent=txt;el.dataset.side='left';el.dataset.idx=i;
+    el.onclick=()=>connectClick(el,'b1');
+    leftCol.appendChild(el);
+  });
+  const rightMap=[];
+  shuffledRight.forEach(origIdx=>{
+    const el=document.createElement('div');el.className='connect-item';
+    el.textContent=connectDataB1.right[origIdx];
+    el.dataset.side='right';el.dataset.idx=origIdx;
+    el.onclick=()=>connectClick(el,'b1');
+    rightCol.appendChild(el);
+    rightMap.push(origIdx);
+  });
+  wrap.appendChild(leftCol);wrap.appendChild(rightCol);
+}
+
+function connectClick(el,gameId){
+  const state=connectStateB1;
+  if(el.classList.contains('ci-connected'))return;
+  if(!state.selected){
+    document.querySelectorAll('#connect-game-b1 .connect-item').forEach(e=>e.classList.remove('ci-selected'));
+    el.classList.add('ci-selected');state.selected=el;
+  } else {
+    if(state.selected===el){el.classList.remove('ci-selected');state.selected=null;return}
+    if(el.dataset.side===state.selected.dataset.side){
+      document.querySelectorAll('#connect-game-b1 .connect-item').forEach(e=>e.classList.remove('ci-selected'));
+      el.classList.add('ci-selected');state.selected=el;return;
+    }
+    const leftEl=state.selected.dataset.side==='left'?state.selected:el;
+    const rightEl=state.selected.dataset.side==='right'?state.selected:el;
+    state.connections[leftEl.dataset.idx]=rightEl.dataset.idx;
+    leftEl.classList.remove('ci-selected');leftEl.classList.add('ci-connected');
+    rightEl.classList.add('ci-connected');
+    state.selected=null;
+  }
+}
+
+function checkConnectB1(){
+  const fb=document.getElementById('connect-feedback-b1');
+  const state=connectStateB1;
+  if(Object.keys(state.connections).length<4){
+    if(fb){fb.style.display='block';fb.style.background='#fef3c7';fb.style.color='#78350f';fb.textContent='⚠️ Conecte todos os pares antes de verificar!'}
+    return;
+  }
+  let correct=0;
+  document.querySelectorAll('#connect-game-b1 .connect-item[data-side="left"]').forEach(el=>{
+    const leftIdx=el.dataset.idx;const rightIdx=state.connections[leftIdx];
+    const isRight=parseInt(rightIdx)===connectDataB1.correct[leftIdx];
+    if(isRight)correct++;
+  });
+  if(fb){
+    fb.style.display='block';
+    if(correct===4){fb.style.background='#dcfce7';fb.style.color='#14532d';fb.textContent='✅ Perfeito! Todos os 4 pares conectados corretamente!';pauloShowMsg(getRnd(pauloPhrases.correct),4500)}
+    else{fb.style.background='#fee2e2';fb.style.color='#991b1b';fb.textContent='❌ '+correct+' de 4 corretos. Tente reiniciar e refazer!'}
+  }
+}
+
+function resetConnectB1(){initConnectB1();const fb=document.getElementById('connect-feedback-b1');if(fb)fb.style.display='none'}
+
+/* ============================================================
+   SPEED QUIZ B1
+   ============================================================ */
+const speedQB1=[
+  {q:'Um decreto imperial de 1888 é um exemplo de:',opts:['Fonte secundária','Fonte primária escrita','Pesquisa qualitativa','Fonte oral'],correct:1},
+  {q:'Entrevistar 50 mulheres sobre machismo no trabalho é um exemplo de:',opts:['Método quantitativo','Pesquisa documental','Método qualitativo','Fonte primária'],correct:2},
+  {q:'O que é "epistemicídio"?',opts:['Estudo da ciência','Apagamento do saber de povos colonizados','Método de pesquisa histórica','Tipo de fonte iconográfica'],correct:1},
+  {q:'Uma fotografia tirada em 1964 durante o golpe militar é:',opts:['Fonte secundária','Fonte oral','Fonte primária iconográfica','Pesquisa bibliográfica'],correct:2},
+  {q:'A primeira pergunta ao analisar criticamente uma fonte é:',opts:['Quantas páginas tem?','Quem produziu e qual sua posição social?','Qual é a editora?','Em que idioma foi escrita?'],correct:1}
+];
+let sqB1State={current:0,score:0};
+
+function initSpeedQuizB1(){
+  sqB1State={current:0,score:0};
+  document.getElementById('sq-result').style.display='none';
+  renderSQB1();
+}
+
+function renderSQB1(){
+  const q=speedQB1[sqB1State.current];
+  if(!q){showSQResultB1();return}
+  document.getElementById('sq-fill').style.width=((sqB1State.current/speedQB1.length)*100)+'%';
+  document.getElementById('sq-question').textContent=(sqB1State.current+1)+'/'+speedQB1.length+' — '+q.q;
+  const opts=document.getElementById('sq-options');
+  opts.innerHTML='';
+  const fb=document.getElementById('sq-feedback');
+  if(fb){fb.style.display='none';fb.textContent=''}
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.style.cssText='width:100%;padding:.5rem .75rem;border-radius:9px;border:1.5px solid var(--border);background:var(--bg2);color:var(--txt2);font-size:.83rem;font-weight:600;cursor:pointer;text-align:left;transition:all .15s;margin-bottom:.3rem';
+    btn.textContent=String.fromCharCode(65+i)+') '+opt;
+    btn.onmouseover=()=>{btn.style.borderColor='var(--acc1)';btn.style.background='var(--hl-bg)'};
+    btn.onmouseout=()=>{btn.style.borderColor='var(--border)';btn.style.background='var(--bg2)'};
+    btn.onclick=()=>{
+      opts.querySelectorAll('button').forEach(b=>b.disabled=true);
+      const isRight=i===q.correct;
+      if(isRight){btn.style.background='#dcfce7';btn.style.borderColor='#16a34a';btn.style.color='#14532d';sqB1State.score+=20}
+      else{btn.style.background='#fee2e2';btn.style.borderColor='#dc2626';btn.style.color='#991b1b';opts.querySelectorAll('button')[q.correct].style.cssText+=';background:#dcfce7;border-color:#16a34a;color:#14532d'}
+      if(fb){fb.style.display='block';fb.style.background=isRight?'#dcfce7':'#fee2e2';fb.style.color=isRight?'#14532d':'#991b1b';fb.style.padding='.6rem .9rem';fb.style.borderRadius='8px';fb.textContent=isRight?'✅ Correto!':'❌ Errado. A resposta certa era: '+opt.charAt(0).toUpperCase()+q.opts[q.correct].slice(1)+'.'}
+      setTimeout(()=>{sqB1State.current++;renderSQB1()},1500);
+    };
+    opts.appendChild(btn);
+  });
+}
+
+function showSQResultB1(){
+  document.getElementById('sq-options').innerHTML='';
+  document.getElementById('sq-question').textContent='';
+  document.getElementById('sq-feedback').style.display='none';
+  document.getElementById('sq-fill').style.width='100%';
+  const result=document.getElementById('sq-result');result.style.display='block';
+  document.getElementById('sq-score-display').textContent=sqB1State.score+'/100';
+  let msg=sqB1State.score>=80?'Excelente! Você domina as Ciências Humanas!':sqB1State.score>=60?'Bom! Revise os conceitos que errou.':'Reveja o conteúdo do Bloco I. Você consegue!';
+  document.getElementById('sq-msg').textContent=msg;
+}
+
+/* ============================================================
+   SIMULADOR DA AGORA (B2)
+   ============================================================ */
+const agoraQs=[
+  {q:'Você é... (escolha sua identidade em Atenas, 430 a.C.)',opts:[
+    {text:'Homem, nascido em Atenas, pai e mãe atenienses',next:1},
+    {text:'Mulher ateniense, filha de cidadãos',next:'excluida_mulher'},
+    {text:'Escravo(a) trabalhando na cidade',next:'excluido_escravo'},
+    {text:'Meteco (estrangeiro residente)',next:'excluido_meteco'}
+  ]},
+  {q:'Ótimo! Você completou o serviço militar (ephebeia)?',opts:[
+    {text:'Sim, completei meus 2 anos de treinamento militar',next:2},
+    {text:'Não, ainda sou jovem demais (menos de 18 anos)',next:'excluido_jovem'}
+  ]},
+  {q:'Você tem 18 anos ou mais?',opts:[
+    {text:'Sim, tenho 18 anos ou mais',next:'votante'},
+    {text:'Não, ainda não completei 18 anos',next:'excluido_jovem'}
+  ]}
+];
+const agoraResults={
+  votante:{text:'🏛️ PARABÉNS! Você é um CIDADÃO de Atenas com plenos direitos políticos! Pode participar da Ekklesia, falar na Assembleia e votar em leis e guerras. Mas lembre-se: você representa menos de 20% da população total de Atenas.',bg:'#dcfce7',color:'#14532d'},
+  excluida_mulher:{text:'🚫 Você NÃO pode votar. Em Atenas, TODAS as mulheres eram excluídas da participação política — independente de riqueza, inteligência ou nobreza familiar. Isso afetava mais de 40% da população. A democracia ateniense era democracia apenas para os homens.',bg:'#fee2e2',color:'#991b1b'},
+  excluido_escravo:{text:'⛓️ Você NÃO tem direitos políticos. Como escravo(a), você é propriedade de outra pessoa. Sem cidadania, sem voto, sem fala pública. Escravos representavam 30-40% da população ateniense — e a democracia dependia do seu trabalho para funcionar.',bg:'#fef3c7',color:'#78350f'},
+  excluido_meteco:{text:'🌍 Você NÃO pode votar. Como meteco (estrangeiro residente), você pode trabalhar, pagar impostos e até lutar no exército de Atenas — mas não tem direitos políticos. Para obter cidadania, seria necessário um decreto especial da Assembleia, algo extremamente raro.',bg:'#fef3c7',color:'#78350f'},
+  excluido_jovem:{text:'⏳ Ainda não! Você precisa ter completado o serviço militar (ephebeia) aos 18 anos para se tornar cidadão. Você precisará esperar. Quando isso acontecer (se for homem ateniense), poderá participar da Assembleia.',bg:'#dbeafe',color:'#1e3a8a'}
+};
+let agoraStep=0;
+
+function resetAgora(){
+  agoraStep=0;
+  const result=document.getElementById('agora-result');
+  if(result)result.style.display='none';
+  renderAgora();
+}
+
+function renderAgora(){
+  const q=agoraQs[agoraStep];
+  if(!q)return;
+  const qEl=document.getElementById('agora-q');
+  const optsEl=document.getElementById('agora-opts');
+  if(!qEl||!optsEl)return;
+  qEl.textContent=q.q;
+  optsEl.innerHTML='';
+  q.opts.forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.style.cssText='width:100%;padding:.6rem .9rem;border-radius:10px;border:1.5px solid var(--border);background:var(--bg2);color:var(--txt);font-size:.85rem;font-weight:600;cursor:pointer;text-align:left;transition:all .18s;margin-bottom:.3rem';
+    btn.textContent=opt.text;
+    btn.onmouseover=()=>{btn.style.borderColor='var(--acc1)';btn.style.background='var(--hl-bg)'};
+    btn.onmouseout=()=>{btn.style.borderColor='var(--border)';btn.style.background='var(--bg2)'};
+    btn.onclick=()=>{
+      if(typeof opt.next==='string'){
+        const r=agoraResults[opt.next];
+        const result=document.getElementById('agora-result');
+        const qEl2=document.getElementById('agora-q');
+        const optsEl2=document.getElementById('agora-opts');
+        if(qEl2)qEl2.textContent='';
+        if(optsEl2)optsEl2.innerHTML='';
+        if(result&&r){result.style.display='block';result.style.background=r.bg;result.style.color=r.color;result.textContent=r.text}
+      } else {
+        agoraStep=opt.next;renderAgora();
+      }
+    };
+    optsEl.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   GAME: MEMORIA B2 — Instituições Democráticas
+   ============================================================ */
+const memPairsB2=[
+  {a:'Ekklesia',b:'Assembleia popular de votação direta'},
+  {a:'Boulé',b:'Conselho dos 500 sorteados'},
+  {a:'Heliaia',b:'Tribunal popular de juízes sorteados'},
+  {a:'Strategoi',b:'Os 10 generais eleitos'},
+  {a:'Demos',b:'Palavra grega para "povo"'},
+  {a:'Meteco',b:'Estrangeiro residente sem voto'},
+  {a:'Executivo',b:'Poder que governa e administra'},
+  {a:'Judiciário',b:'Poder que julga e interpreta as leis'}
+];
+let memB2State={flipped:[],matched:0,locked:false,attempts:0};
+
+function initMemoryB2(){
+  memB2State={flipped:[],matched:0,locked:false,attempts:0};
+  const grid=document.getElementById('memory-game-b2');
+  if(!grid)return;
+  const status=document.getElementById('memory-status-b2');
+  if(status)status.textContent='Clique em duas cartas para encontrar os pares!';
+  const cards=[];
+  memPairsB2.forEach((pair,i)=>{
+    cards.push({id:'a'+i,pairId:i,face:pair.a});
+    cards.push({id:'b'+i,pairId:i,face:pair.b});
+  });
+  cards.sort(()=>Math.random()-.5);
+  grid.innerHTML='';
+  cards.forEach(card=>{
+    const el=document.createElement('div');
+    el.className='mem-card';
+    el.dataset.id=card.id;el.dataset.pairid=card.pairId;
+    el.innerHTML='<span class="mc-back">⚡</span><span class="mc-front">'+card.face+'</span>';
+    el.onclick=()=>flipMemCardB2(el);
+    grid.appendChild(el);
+  });
+}
+
+function flipMemCardB2(el){
+  const state=memB2State;
+  if(state.locked||el.classList.contains('flipped')||el.classList.contains('matched'))return;
+  el.classList.add('flipped');state.flipped.push(el);
+  if(state.flipped.length===2){
+    state.attempts++;state.locked=true;
+    const [a,b]=state.flipped;
+    if(a.dataset.pairid===b.dataset.pairid){
+      a.classList.add('matched');b.classList.add('matched');
+      state.matched++;state.flipped=[];state.locked=false;
+      const status=document.getElementById('memory-status-b2');
+      if(state.matched===memPairsB2.length){
+        if(status)status.textContent='🏆 Todos os '+memPairsB2.length+' pares em '+state.attempts+' tentativas!';
+        pauloShowMsg(getRnd(pauloPhrases.correct),4500);
+      } else {
+        if(status)status.textContent='✅ Par! '+state.matched+'/'+memPairsB2.length+' pares encontrados.';
+      }
+    } else {
+      setTimeout(()=>{a.classList.remove('flipped');b.classList.remove('flipped');state.flipped=[];state.locked=false},900);
+    }
+  }
+}
+
+/* ============================================================
+   GAME: COMPARE ATENAS x BRASIL
+   ============================================================ */
+const compareItems=[
+  {text:'Voto direto em cada lei',correct:'atenas'},
+  {text:'Cargos preenchidos por sorteio',correct:'atenas'},
+  {text:'Voto universal (maiores de 16)',correct:'brasil'},
+  {text:'Presidencialismo',correct:'brasil'},
+  {text:'Excluía mulheres do voto',correct:'atenas'},
+  {text:'Constitução escrita garantindo direitos',correct:'brasil'},
+  {text:'Democracia direta sem partidos',correct:'atenas'},
+  {text:'Poder Judiciário independente',correct:'brasil'}
+];
+let compareSelected=null;
+
+function initCompare(){
+  compareSelected=null;
+  const pool=document.getElementById('compare-pool');
+  const atenas=document.getElementById('cg-atenas-items');
+  const brasil=document.getElementById('cg-brasil-items');
+  const fb=document.getElementById('compare-feedback');
+  if(!pool)return;
+  pool.innerHTML='';if(atenas)atenas.innerHTML='';if(brasil)brasil.innerHTML='';
+  if(fb)fb.style.display='none';
+  const shuffled=[...compareItems].sort(()=>Math.random()-.5);
+  shuffled.forEach((item,i)=>{
+    const el=document.createElement('span');
+    el.className='drag-item';el.textContent=item.text;
+    el.dataset.correct=item.correct;el.dataset.i=i;
+    el.onclick=()=>{
+      document.querySelectorAll('#compare-pool .drag-item,#cg-atenas-items .drag-item,#cg-brasil-items .drag-item').forEach(d=>d.classList.remove('di-selected'));
+      el.classList.add('di-selected');compareSelected=el;
+    };
+    pool.appendChild(el);
+  });
+}
+
+function compareZoneClick(zoneId){
+  if(!compareSelected)return;
+  const container=document.getElementById(zoneId+'-items');
+  if(!container)return;
+  compareSelected.classList.remove('di-selected');
+  compareSelected.dataset.placed=zoneId;
+  compareSelected.onclick=()=>{
+    compareSelected=compareSelected;
+    document.querySelectorAll('#compare-pool .drag-item,#cg-atenas-items .drag-item,#cg-brasil-items .drag-item').forEach(d=>d.classList.remove('di-selected'));
+    // Return to pool
+    document.getElementById('compare-pool').appendChild(compareSelected);
+    compareSelected=null;
+  };
+  container.appendChild(compareSelected);compareSelected=null;
+}
+
+function checkCompare(){
+  const fb=document.getElementById('compare-feedback');
+  let correct=0,total=0;
+  document.querySelectorAll('#cg-atenas-items .drag-item,#cg-brasil-items .drag-item').forEach(el=>{
+    total++;
+    const placed=el.closest('.drop-zone').id==='cg-atenas'?'atenas':'brasil';
+    const isRight=placed===el.dataset.correct;
+    el.classList.remove('di-correct','di-wrong');el.classList.add(isRight?'di-correct':'di-wrong');
+    if(isRight)correct++;
+  });
+  if(fb){
+    fb.style.display='block';
+    if(correct===total&&total===compareItems.length){fb.style.background='#dcfce7';fb.style.color='#14532d';fb.textContent='✅ Perfeito! Todos os '+total+' itens corretamente classificados!';pauloShowMsg(getRnd(pauloPhrases.correct),4500)}
+    else{fb.style.background='#fee2e2';fb.style.color='#991b1b';fb.textContent='❌ '+correct+' de '+total+' corretos. Verifique os itens em vermelho!'}
+  }
+}
+
+function resetCompare(){initCompare()}
+
+/* Intercept clicks on drop zones for compare game */
+document.addEventListener('click',function(e){
+  const atenas=document.getElementById('cg-atenas');
+  const brasil=document.getElementById('cg-brasil');
+  if(atenas&&(atenas===e.target||atenas.contains(e.target))&&compareSelected)compareZoneClick('cg-atenas');
+  if(brasil&&(brasil===e.target||brasil.contains(e.target))&&compareSelected)compareZoneClick('cg-brasil');
+});
+
+/* ============================================================
+   SPEED QUIZ B2 — Democracia
+   ============================================================ */
+const speedQB2=[
+  {q:'A palavra "Ekklesia" significava em Atenas:',opts:['Tribunal popular','Conselho dos generais','Assembleia do povo','Guarda presidencial'],correct:2},
+  {q:'Em Atenas, quem decidia os cargos por SORTEIO?',opts:['Os generais (strategoi)','O Conselho dos 500 (Boulé)','O rei de Atenas','Os juízes militares'],correct:1},
+  {q:'A Constituição Cidadã brasileira foi promulgada em:',opts:['1985','1988','1992','1980'],correct:1},
+  {q:'Na democracia representativa, como os cidadãos participam?',opts:['Votando diretamente em cada lei','Elegendo representantes para decidir em seu nome','Sorteando cargos entre todos os cidadãos','Aprovando leis em praças públicas'],correct:1},
+  {q:'Qual conquista Bertha Lutz lutou para conquistar no Brasil?',opts:['Abolição da escravatura','Direito ao voto para as mulheres','Criação da Constituição de 1988','Fim da ditadura militar'],correct:1}
+];
+let sqB2State={current:0,score:0};
+
+function initSpeedQuizB2(){
+  sqB2State={current:0,score:0};
+  document.getElementById('sq2-result').style.display='none';
+  renderSQB2();
+}
+
+function renderSQB2(){
+  const q=speedQB2[sqB2State.current];
+  if(!q){showSQResultB2();return}
+  document.getElementById('sq2-fill').style.width=((sqB2State.current/speedQB2.length)*100)+'%';
+  document.getElementById('sq2-question').textContent=(sqB2State.current+1)+'/'+speedQB2.length+' — '+q.q;
+  const opts=document.getElementById('sq2-options');opts.innerHTML='';
+  const fb=document.getElementById('sq2-feedback');if(fb){fb.style.display='none'}
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.style.cssText='width:100%;padding:.5rem .75rem;border-radius:9px;border:1.5px solid var(--border);background:var(--bg2);color:var(--txt2);font-size:.83rem;font-weight:600;cursor:pointer;text-align:left;transition:all .15s;margin-bottom:.3rem';
+    btn.textContent=String.fromCharCode(65+i)+') '+opt;
+    btn.onmouseover=()=>{btn.style.borderColor='var(--acc3)';btn.style.background='var(--hl-bg)'};
+    btn.onmouseout=()=>{btn.style.borderColor='var(--border)';btn.style.background='var(--bg2)'};
+    btn.onclick=()=>{
+      opts.querySelectorAll('button').forEach(b=>b.disabled=true);
+      const isRight=i===q.correct;
+      if(isRight){btn.style.background='#dcfce7';btn.style.borderColor='#16a34a';btn.style.color='#14532d';sqB2State.score+=20}
+      else{btn.style.background='#fee2e2';btn.style.borderColor='#dc2626';btn.style.color='#991b1b';opts.querySelectorAll('button')[q.correct].style.cssText+=';background:#dcfce7;border-color:#16a34a;color:#14532d'}
+      if(fb){fb.style.display='block';fb.style.background=isRight?'#dcfce7':'#fee2e2';fb.style.color=isRight?'#14532d':'#991b1b';fb.style.padding='.6rem .9rem';fb.style.borderRadius='8px';fb.textContent=isRight?'✅ Correto!':'❌ Errado. Resposta certa: '+q.opts[q.correct]}
+      setTimeout(()=>{sqB2State.current++;renderSQB2()},1500);
+    };
+    opts.appendChild(btn);
+  });
+}
+
+function showSQResultB2(){
+  document.getElementById('sq2-options').innerHTML='';
+  document.getElementById('sq2-question').textContent='';
+  const fb=document.getElementById('sq2-feedback');if(fb)fb.style.display='none';
+  document.getElementById('sq2-fill').style.width='100%';
+  const result=document.getElementById('sq2-result');result.style.display='block';
+  document.getElementById('sq2-score-display').textContent=sqB2State.score+'/100';
+  let msg=sqB2State.score>=80?'Excelente! Você é um(a) democrata nato(a)!':sqB2State.score>=60?'Bom! Revise os conceitos que errou.':'Releia o Bloco II e tente de novo!';
+  document.getElementById('sq2-msg').textContent=msg;
+}
+
+/* ============================================================
+   PROF. PAULO — MASCOT SYSTEM COMPLETO
+   ============================================================ */
+const pauloPhrases={
+  welcome:[
+    'Salve, cidadão(ã)! Bora aprender que política não é coisa só de político? 🏛️',
+    'Bem-vindo(a) à Ágora! Aqui você aprende que TUDO é político — até a fila do RU!',
+    'Oi! Sou o Prof. Paulo. Neste livro você vai entender como o mundo funciona. Sem frescura!',
+    'E aí! Preparado(a) para questionar tudo que te ensinaram sobre democracia?',
+    'Chegou o(a) futuro(a) analista político(a)! Vamos ver se você aguenta o tranco.',
+    'Salve! Sócrates morreu por fazer perguntas incômodas. Aqui a gente faz o mesmo!',
+    'Olá! Você sabia que Atenas tinha democracia mas excluía 80% da população? Bora entender isso.',
+    'Bem-vindo(a)! Aristóteles disse que somos animais políticos. E você é humano, né?'
+  ],
+  correct:[
+    'ACERTOU! Péricles estaria orgulhoso! 🏛️',
+    'Isso aí! Você tá voando alto como a coruja de Atena!',
+    'Correto! O Prof. Paulo bate palma com toga e tudo! 👏',
+    'Perfeito! Você acertou feio. Continua assim!',
+    'Correto! Sócrates que me perdoe, mas você sabe mais que ele! (não, não sabe)',
+    'Acertou! A Ekklesia aprovaria sua resposta por unanimidade!',
+    'Isso! Mais uma assim e você vira cidadão(ã) de honra de Atenas!',
+    'Muito bem! Você passou no teste democrático! 🎉'
+  ],
+  wrong:[
+    'Errou... mas Esparta também errou várias vezes na história! Tenta de novo.',
+    'Não foi dessa vez. Volta ao pergaminho e lê com mais atenção!',
+    'Quase! Mas quase no ENEM não paga nota, não.',
+    'Errou! O Prof. Paulo não tá decepcionado... tá um pouco decepcionado.',
+    'Ops! Os metecos de Atenas sabiam mais que você. Isso é péssimo.',
+    'Errou feio! Mas tudo bem, até Sócrates errou (foi condenado à morte kkk).',
+    'Não foi! Relê o conteúdo antes de tentar de novo.',
+    'Errou! Mas com estilo. Releia e tente de novo!'
+  ],
+  gossip:[
+    'Sabia que Sócrates nunca escreveu nada? Tudo que sabemos é pelo seu aluno Platão!',
+    'A democracia ateniense tinha o "ostracismo": votavam para exilar cidadãos chatos por 10 anos!',
+    'Péricles era filho de Agariste, neta do tirano Clístenes. Democracia nasceu de família nobre!',
+    'A palavra "política" vem de "polis" (cidade-estado). Tudo que acontece na cidade é político!',
+    'Alexandre, o Grande, era macedônio — considerado "bárbaro" pelos gregos de Atenas!',
+    'A Constituição americana de 1787 foi inspirada diretamente na democracia grega!',
+    'No Brasil de 1824, só 1% da população tinha direito a votar. Democracia tem história longa!',
+    'Bertha Lutz foi cientista e ativista. Representou o Brasil na ONU antes de votar no Brasil!'
+  ],
+  newContent:[
+    'Novo tópico! Tenho uma fofoca grega para aquecimento. Quer ouvir?',
+    'Ei! Chegamos num conteúdo novo. Posso te contar algo curioso antes?',
+    'Novo bloco! Tenho uma curiosidade histórica imperdível. Aceita?',
+    'Mudou o assunto! Tem uma história sobre isso que você vai adorar. Quer?'
+  ],
+  noGossip:[
+    'Hmph. Você perde uma fofoca épica. Que desperdício de potencial histórico.',
+    'Ok, modo sério ativado. Mas saiba que era uma boa história...',
+    'Tá bem! Fico aqui quieto como um meteco sem direitos.',
+    'Entendido. Silêncio de filósofo grego ativado por sua causa.',
+    'Que falta de interesse histórico! Bem, sigamos...'
+  ]
+};
+
+function getRnd(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+let pauloTimer=null,pauloOpen=true,pauloClickCt=0,pauloLastClick=0,pauloGossipActive=false;
+
+function pauloClose(){
+  if(pauloTimer){clearTimeout(pauloTimer);pauloTimer=null}
+  document.getElementById('paulo-bubble').classList.add('hide');
+  pauloOpen=false;
+}
+
+function pauloShowMsg(msg,duration){
+  const dur=duration||5500;
+  const bubble=document.getElementById('paulo-bubble');
+  const msgEl=document.getElementById('paulo-msg');
+  const btnsEl=document.getElementById('paulo-btns');
+  bubble.classList.remove('hide');
+  if(msgEl)msgEl.textContent=msg;
+  if(btnsEl)btnsEl.style.display='none';
+  pauloOpen=true;
+  if(pauloTimer)clearTimeout(pauloTimer);
+  pauloTimer=setTimeout(pauloClose,dur);
+}
+
+function pauloShowGossip(){
+  pauloGossipActive=true;
+  const msg=getRnd(pauloPhrases.newContent);
+  const bubble=document.getElementById('paulo-bubble');
+  const msgEl=document.getElementById('paulo-msg');
+  const btnsEl=document.getElementById('paulo-btns');
+  bubble.classList.remove('hide');
+  if(msgEl)msgEl.textContent=msg;
+  if(btnsEl){
+    btnsEl.style.display='flex';
+    btnsEl.innerHTML='<button onclick="pauloGossipYes()" style="background:var(--acc1);color:#fff8e8;border:none;padding:.3rem .8rem;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer;">Sim! 👍</button><button onclick="pauloGossipNo()" style="background:var(--bg2);color:var(--txt);border:1px solid var(--border);padding:.3rem .8rem;border-radius:999px;font-size:.78rem;font-weight:800;cursor:pointer;">Não 👎</button>';
+  }
+  pauloOpen=true;
+  if(pauloTimer)clearTimeout(pauloTimer);
+  pauloTimer=setTimeout(pauloClose,12000);
+}
+
+function pauloGossipYes(){
+  pauloGossipActive=false;
+  const btnsEl=document.getElementById('paulo-btns');
+  if(btnsEl)btnsEl.style.display='none';
+  pauloShowMsg(getRnd(pauloPhrases.gossip),6000);
+  document.getElementById('paulo-emoji').textContent='😄';
+  setTimeout(()=>{document.getElementById('paulo-emoji').textContent='🏺'},3500);
+}
+
+function pauloGossipNo(){
+  pauloGossipActive=false;
+  const btnsEl=document.getElementById('paulo-btns');
+  if(btnsEl)btnsEl.style.display='none';
+  pauloShowMsg(getRnd(pauloPhrases.noGossip),4000);
+  document.getElementById('paulo-emoji').textContent='😒';
+  setTimeout(()=>{document.getElementById('paulo-emoji').textContent='🏺'},3000);
+}
+
+function pauloHandleClick(e){
+  e.stopPropagation();
+  const now=Date.now();
+  pauloClickCt=(now-pauloLastClick<600)?pauloClickCt+1:1;
+  pauloLastClick=now;
+  if(pauloClickCt>=3){
+    const angryMsgs=['Para de me cutucar! Sou professor, não boneco! 😠','EI! Mais respeito ao mestre! Isso seria heresia na Grécia Antiga! 🤬','Para com isso ou vou te dar uma avaliação surpresa sobre o Trovadorismo!','Tá me testando? Sou mais bravo que um guerreiro espartano quando irritado!'];
+    pauloShowMsg(getRnd(angryMsgs),4000);
+    document.getElementById('paulo-emoji').textContent='😡';
+    setTimeout(()=>{document.getElementById('paulo-emoji').textContent='🏺';pauloClickCt=0},3500);
+    return;
+  }
+  const idleMsgs=['Clique no conteúdo, não em mim! 🏺','Ei, estou tentando dar aula aqui!','Você sabia que Sócrates morreu por fazer perguntas? Cuidado com as minhas!','Política está em todo lugar, até no seu grupo de WhatsApp!','Aristóteles disse que somos animais políticos. Prove que ele estava certo!'];
+  pauloShowMsg(getRnd(idleMsgs),4000);
+  document.getElementById('paulo-emoji').textContent=['🏺','🏛️','⚖️','📜','🦉'][Math.floor(Math.random()*5)];
+  setTimeout(()=>{document.getElementById('paulo-emoji').textContent='🏺'},3000);
+}
+
+/* Section observer for Paulo gossip */
+const contentSects=['bloco1','bloco2','bloco3','bloco4','bloco5'];
+let lastPauloSect='';
+const sectObs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const id=entry.target.id;
+      if(id!==lastPauloSect&&contentSects.includes(id)){
+        lastPauloSect=id;
+        setTimeout(()=>{if(!pauloGossipActive)pauloShowGossip()},1500);
+      }
+    }
+  });
+},{threshold:0.3});
+contentSects.forEach(id=>{const el=document.getElementById(id);if(el)sextObs.observe(el)});
+
+/* Fix typo in observer call */
+const sextObs=sectObs;
+
+/* Welcome */
+setTimeout(()=>{
+  pauloShowMsg(getRnd(pauloPhrases.welcome),7000);
+  document.getElementById('paulo-emoji').textContent='😄';
+  setTimeout(()=>{document.getElementById('paulo-emoji').textContent='🏺'},3500);
+},1800);
+
+/* Init interactive for open tabs */
+window.addEventListener('DOMContentLoaded',()=>{
+  initSrcGame();initMemoryB1();initConnectB1();initSpeedQuizB1();
+  resetAgora();initMemoryB2();initCompare();initSpeedQuizB2();
+});
+</script>
 
 </body>
 </html>
