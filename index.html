@@ -29,16 +29,19 @@
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Biblioteca Digital Medieval"/>
 <meta property="og:description" content="Acervo digital de materiais escolares com ambientação medieval"/>
-<meta property="og:image" content="assets/icons/icon-512x512.png"/>
+<meta property="og:url" content="https://10pauloacre-creator.github.io/biblioteca-digital-medieval/"/>
+<meta property="og:image" content="https://10pauloacre-creator.github.io/biblioteca-digital-medieval/assets/icons/icon-512x512.png"/>
+<meta property="og:image:type" content="image/png"/>
 <meta property="og:image:width" content="512"/>
 <meta property="og:image:height" content="512"/>
+<meta property="og:image:alt" content="Biblioteca Digital Medieval — Escola Padre Carlos Casavequía"/>
 <meta property="og:locale" content="pt_BR"/>
 
 <!-- Twitter/X Card (também exibido em alguns previews) -->
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Biblioteca Digital Medieval"/>
 <meta name="twitter:description" content="Acervo digital de materiais escolares com ambientação medieval"/>
-<meta name="twitter:image" content="assets/icons/icon-512x512.png"/>
+<meta name="twitter:image" content="https://10pauloacre-creator.github.io/biblioteca-digital-medieval/assets/icons/icon-512x512.png"/>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=UnifrakturMaguntia&display=swap" rel="stylesheet"/>
@@ -680,7 +683,7 @@
     transition: transform 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
   }
   @media (max-width: 480px) {
-    .book-img { width: 8rem; height: 9rem; }
+    .book-img { width: 7.4rem; height: 8.4rem; }
 
     /* Centralização forçada no mobile */
     .gothic-title,
@@ -1963,7 +1966,7 @@
                 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   if (!onMobile) return;
 
-  // Não exibe se o usuário já dispensou
+  // Não exibe se o app já foi instalado com sucesso
   if (localStorage.getItem(DISMISSED_KEY)) return;
 
   const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent) && !window.MSStream;
@@ -1980,15 +1983,14 @@
     setTimeout(() => { overlay.style.display = 'none'; }, 380);
   }
 
+  // Dispensar apenas fecha — não bloqueia para visitas futuras
   dismissBtn.addEventListener('click', () => {
-    localStorage.setItem(DISMISSED_KEY, '1');
     hidePopup();
   });
 
-  // Fechar ao clicar fora do popup
+  // Fechar ao clicar fora do popup — não bloqueia para visitas futuras
   overlay.addEventListener('click', e => {
     if (e.target === overlay) {
-      localStorage.setItem(DISMISSED_KEY, '1');
       hidePopup();
     }
   });
@@ -2024,6 +2026,72 @@
       hidePopup();
     });
   }
+})();
+</script>
+
+<!-- ===== DOUBLE BACK TO EXIT ===== -->
+<style>
+  #back-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, #2a1500, #1a0d00);
+    border: 1px solid #c9a84c;
+    color: #f0d060;
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    padding: 0.65rem 1.4rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 12px rgba(201,168,76,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+  #back-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+<div id="back-toast">⚜ Pressione voltar novamente para sair ⚜</div>
+
+<script>
+(function () {
+  // Empurra um estado extra no histórico para interceptar o primeiro "voltar"
+  history.pushState({ backGuard: true }, '');
+
+  let backPressedOnce = false;
+  let toastTimer = null;
+  const toast = document.getElementById('back-toast');
+
+  function showToast() {
+    toast.classList.add('show');
+  }
+
+  function hideToast() {
+    toast.classList.remove('show');
+  }
+
+  window.addEventListener('popstate', function (e) {
+    if (backPressedOnce) {
+      // Segunda pressão dentro de 2s — permite sair
+      return;
+    }
+
+    // Primeira pressão — bloqueia e avisa
+    history.pushState({ backGuard: true }, '');
+    backPressedOnce = true;
+    showToast();
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      backPressedOnce = false;
+      hideToast();
+    }, 2000);
+  });
 })();
 </script>
 </body>
