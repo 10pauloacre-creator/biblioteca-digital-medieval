@@ -4,6 +4,42 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Biblioteca Digital Medieval</title>
+
+<!-- Favicon (ícone na aba do Chrome) -->
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png"/>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#0d1f3c"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+
+<!-- iOS (Safari / Chrome no iPhone) -->
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Biblioteca"/>
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png"/>
+
+<!-- Descrição e cor para Android -->
+<meta name="description" content="Acervo digital de materiais escolares com ambientação medieval"/>
+<meta name="application-name" content="Biblioteca Digital Medieval"/>
+
+<!-- Open Graph — preview ao compartilhar no WhatsApp, Instagram, Telegram etc. -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Biblioteca Digital Medieval"/>
+<meta property="og:description" content="Acervo digital de materiais escolares com ambientação medieval"/>
+<meta property="og:image" content="assets/icons/icon-512x512.png"/>
+<meta property="og:image:width" content="512"/>
+<meta property="og:image:height" content="512"/>
+<meta property="og:locale" content="pt_BR"/>
+
+<!-- Twitter/X Card (também exibido em alguns previews) -->
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Biblioteca Digital Medieval"/>
+<meta name="twitter:description" content="Acervo digital de materiais escolares com ambientação medieval"/>
+<meta name="twitter:image" content="assets/icons/icon-512x512.png"/>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=UnifrakturMaguntia&display=swap" rel="stylesheet"/>
 <script>
@@ -1317,6 +1353,17 @@
   let musicStarted = false;
   let muted = false;
 
+  // Chave usada para registrar que este dispositivo/navegador já desbloqueou o áudio ao menos uma vez
+  const AUDIO_UNLOCKED_KEY = 'bdm_audio_unlocked';
+
+  function markAudioUnlocked() {
+    try { localStorage.setItem(AUDIO_UNLOCKED_KEY, '1'); } catch(e) {}
+  }
+
+  function wasAudioUnlocked() {
+    try { return localStorage.getItem(AUDIO_UNLOCKED_KEY) === '1'; } catch(e) { return false; }
+  }
+
   function startBgMusic() {
     const music = document.getElementById('bg-music');
     if (!music || musicStarted) return;
@@ -1328,6 +1375,7 @@
       if (musicStarted) return;
       music.play().then(() => {
         musicStarted = true;
+        markAudioUnlocked();
         const btn = document.getElementById('mute-btn');
         if (btn) btn.style.display = 'flex';
         interactionEvents.forEach(ev => document.removeEventListener(ev, unlock));
@@ -1336,10 +1384,12 @@
 
     music.play().then(() => {
       musicStarted = true;
+      markAudioUnlocked();
       const btn = document.getElementById('mute-btn');
       if (btn) btn.style.display = 'flex';
     }).catch(() => {
-      // Mobile: aguarda qualquer toque/interação
+      // Se este dispositivo já desbloqueou antes, tenta novamente com qualquer interação mínima
+      // Caso contrário aguarda interação normal do usuário
       interactionEvents.forEach(ev =>
         document.addEventListener(ev, unlock, { passive: true })
       );
@@ -1365,8 +1415,43 @@
     } catch(e) {}
   }
 
-  // Desktop: tenta iniciar música ao carregar; Mobile: aguarda seleção da série
-  document.addEventListener('DOMContentLoaded', () => { if (!isMobile) startBgMusic(); });
+  // Se o dispositivo já desbloqueou áudio antes, inicia direto (desktop e mobile)
+  // Caso contrário, desktop tenta imediatamente; mobile aguarda primeira interação
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!isMobile || wasAudioUnlocked()) startBgMusic();
+  });
+
+  // ===== CONTROLE DE VISIBILIDADE DA MÚSICA =====
+  // Pausa a música quando o usuário sai da tela inicial; retoma ao voltar
+  let musicPausedBySystem = false;
+
+  function pauseMusicForSystem() {
+    const music = document.getElementById('bg-music');
+    if (!music || music.paused) return;
+    music.pause();
+    musicPausedBySystem = true;
+  }
+
+  function resumeMusicForSystem() {
+    if (!musicStarted || muted || !musicPausedBySystem) return;
+    const music = document.getElementById('bg-music');
+    if (!music) return;
+    music.play().catch(() => {});
+    musicPausedBySystem = false;
+  }
+
+  // Troca de aba ou minimização (mobile e desktop)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      pauseMusicForSystem();
+    } else {
+      resumeMusicForSystem();
+    }
+  });
+
+  // Troca de app no desktop (alt+tab, outro programa em frente)
+  window.addEventListener('blur', pauseMusicForSystem);
+  window.addEventListener('focus', resumeMusicForSystem);
 
   // ===== MODAL =====
   const modalMessages = {
@@ -1582,6 +1667,14 @@
       document.getElementById('modal-overlay').style.display = 'none';
       document.body.style.overflow = '';
       pendingNavigationUrl = null;
+      // Retoma música ao voltar de um livro (página restaurada do cache do browser)
+      if (musicStarted && !muted) {
+        const music = document.getElementById('bg-music');
+        if (music) {
+          musicPausedBySystem = false;
+          music.play().catch(() => {});
+        }
+      }
     }
   });
 
@@ -1636,6 +1729,15 @@
     }
     setTimeout(triggerAnimations, 200);
   });
+</script>
+
+<!-- Registro do Service Worker para PWA (Android/iOS) -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
 </script>
 </body>
 </html>
