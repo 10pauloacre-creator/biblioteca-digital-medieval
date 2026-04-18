@@ -191,6 +191,9 @@
     font-family: 'Cinzel Decorative', serif;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.4);
     letter-spacing: 0.08em;
+    text-align: center;
+    display: block;
+    width: 100%;
   }
 
   .medieval-title {
@@ -436,6 +439,9 @@
     font-weight: 900;
     letter-spacing: 0.2em;
     position: relative;
+    display: block;
+    width: 100%;
+    text-align: center;
     color: #f7d87a !important;
     background: linear-gradient(90deg, #f9e3a0 0%, #f2c25c 45%, #b98b28 100%);
     -webkit-background-clip: text;
@@ -445,8 +451,8 @@
 
   .section-header::before, .section-header::after {
     content: '❧';
-    margin: 0 12px;
-    color: #c9a84c;
+    margin: 0 8px;
+    -webkit-text-fill-color: #c9a84c;
     font-size: 0.9em;
   }
 
@@ -667,6 +673,26 @@
   }
   @media (max-width: 480px) {
     .book-img { width: 8rem; height: 9rem; }
+
+    /* Centralização forçada no mobile */
+    .gothic-title,
+    .medieval-title,
+    .fraktur-title,
+    .section-header {
+      text-align: center !important;
+      display: block !important;
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
+    header, header * {
+      text-align: center !important;
+    }
+
+    .ornament-divider {
+      justify-content: center !important;
+    }
   }
 
   /* Animação de livro se abrindo no hover */
@@ -725,6 +751,106 @@
     transform: scale(1.1);
     box-shadow: 0 0 24px rgba(201,168,76,0.7), 0 4px 16px rgba(0,0,0,0.7);
   }
+
+  /* ===== PWA INSTALL POPUP ===== */
+  #pwa-overlay {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(0,0,0,0.78);
+    display: flex; align-items: flex-end; justify-content: center;
+    padding: 0 0 env(safe-area-inset-bottom,0) 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+    backdrop-filter: blur(3px);
+  }
+  #pwa-overlay.show { opacity: 1; pointer-events: all; }
+
+  #pwa-popup {
+    background: linear-gradient(160deg, #1a0e04 0%, #2d1a08 40%, #1e0f05 100%);
+    border: 2px solid #c9a84c;
+    border-bottom: none;
+    border-radius: 28px 28px 0 0;
+    padding: 2rem 1.6rem 2.4rem;
+    max-width: 480px; width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 -8px 40px rgba(201,168,76,0.25), inset 0 1px 0 rgba(201,168,76,0.15);
+    transform: translateY(100%);
+    transition: transform 0.42s cubic-bezier(0.175,0.885,0.32,1.1);
+  }
+  #pwa-overlay.show #pwa-popup { transform: translateY(0); }
+
+  .pwa-handle {
+    width: 44px; height: 4px; border-radius: 2px;
+    background: rgba(201,168,76,0.4); margin: 0 auto 1.4rem;
+  }
+  .pwa-corner {
+    position: absolute; font-size: 1.1rem; color: #c9a84c; opacity: 0.7;
+  }
+  .pwa-corner.tl { top: 1rem; left: 1rem; }
+  .pwa-corner.tr { top: 1rem; right: 1rem; }
+
+  .pwa-ornament-line {
+    color: #c9a84c; font-size: 0.75rem; letter-spacing: 0.35em;
+    margin-bottom: 0.9rem; opacity: 0.8;
+  }
+  .pwa-icon-wrap {
+    font-size: 3.2rem; margin-bottom: 0.6rem;
+    filter: drop-shadow(0 0 12px rgba(201,168,76,0.6));
+  }
+  .pwa-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.15rem; font-weight: 900;
+    background: linear-gradient(90deg, #f9e3a0, #f2c25c, #b98b28);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.06em; line-height: 1.3;
+    margin-bottom: 0.5rem;
+  }
+  .pwa-subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic; font-size: 0.85rem;
+    color: #d4b070; margin-bottom: 1rem; line-height: 1.55;
+  }
+  .pwa-features {
+    display: flex; gap: 0.6rem; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 1.4rem;
+  }
+  .pwa-feature-chip {
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.35);
+    color: #e8c96a; border-radius: 999px;
+    padding: 0.25rem 0.75rem; font-size: 0.72rem;
+    font-family: 'Cinzel', serif; letter-spacing: 0.04em;
+  }
+  #pwa-install-btn {
+    display: block; width: 100%;
+    background: linear-gradient(135deg, #c9a84c, #f0d060, #a07820);
+    color: #1a0800; border: none; border-radius: 14px;
+    padding: 0.95rem 1.5rem; font-size: 1rem; font-weight: 900;
+    font-family: 'Cinzel', serif; letter-spacing: 0.08em;
+    cursor: pointer; margin-bottom: 0.75rem;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+    transition: all 0.22s;
+  }
+  #pwa-install-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.55); }
+  #pwa-dismiss-btn {
+    background: none; border: none; color: rgba(201,168,76,0.5);
+    font-family: 'Cinzel', serif; font-size: 0.78rem;
+    cursor: pointer; letter-spacing: 0.06em;
+    transition: color 0.2s; padding: 0.4rem;
+  }
+  #pwa-dismiss-btn:hover { color: rgba(201,168,76,0.85); }
+
+  /* iOS instructions variant */
+  .pwa-ios-steps {
+    background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 1.2rem; text-align: left;
+  }
+  .pwa-ios-steps p {
+    font-family: 'IM Fell English', serif; font-size: 0.82rem;
+    color: #d4b070; margin-bottom: 0.4rem; line-height: 1.55;
+  }
+  .pwa-ios-steps p:last-child { margin-bottom: 0; }
+  .pwa-ios-steps span { color: #f0d060; font-weight: bold; }
 
   /* Watermark pattern in header */
   .medieval-pattern {
@@ -798,7 +924,7 @@
   </div>
 
   <!-- Main title -->
-  <h1 class="gothic-title text-3xl md:text-5xl mb-2 gold-shimmer animate-on-load fadeSlideUp delay-1">
+  <h1 class="gothic-title text-3xl md:text-5xl mb-2 gold-shimmer animate-on-load fadeSlideUp delay-1" style="text-align:center;width:100%;">
     📚 Biblioteca Digital 📚
   </h1>
 
@@ -1731,6 +1857,46 @@
   });
 </script>
 
+<!-- ===== PWA INSTALL POPUP HTML ===== -->
+<div id="pwa-overlay">
+  <div id="pwa-popup">
+    <div class="pwa-handle"></div>
+    <span class="pwa-corner tl">✦</span>
+    <span class="pwa-corner tr">✦</span>
+
+    <div class="pwa-ornament-line">⚜ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ⚜</div>
+    <div class="pwa-icon-wrap">📜</div>
+
+    <h2 class="pwa-title" id="pwa-title">Grimório Digital</h2>
+    <p class="pwa-subtitle" id="pwa-subtitle">
+      Instale o acervo em seu pergaminho portátil e carregue os manuscritos para onde for
+    </p>
+
+    <div class="pwa-features">
+      <span class="pwa-feature-chip">📖 Acesso offline</span>
+      <span class="pwa-feature-chip">⚡ Abre instantâneo</span>
+      <span class="pwa-feature-chip">🏰 Sem navegador</span>
+    </div>
+
+    <!-- Botão Android (padrão) -->
+    <div id="pwa-android-content">
+      <button id="pwa-install-btn">⚜ &nbsp; Baixar o Aplicativo &nbsp; ⚜</button>
+    </div>
+
+    <!-- Instruções iOS -->
+    <div id="pwa-ios-content" style="display:none;">
+      <div class="pwa-ios-steps">
+        <p>1. Toque em <span>Compartilhar</span> <span>⎙</span> no rodapé do navegador</p>
+        <p>2. Role e toque em <span>"Adicionar à Tela de Início"</span> <span>＋</span></p>
+        <p>3. Confirme tocando em <span>"Adicionar"</span></p>
+      </div>
+    </div>
+
+    <button id="pwa-dismiss-btn">Talvez mais tarde</button>
+    <div class="pwa-ornament-line" style="margin-top:1rem;margin-bottom:0;">⚜ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ⚜</div>
+  </div>
+</div>
+
 <!-- Registro do Service Worker para PWA (Android/iOS) -->
 <script>
   if ('serviceWorker' in navigator) {
@@ -1738,6 +1904,91 @@
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
   }
+</script>
+
+<!-- ===== PWA INSTALL POPUP LOGIC ===== -->
+<script>
+(function () {
+  const DISMISSED_KEY = 'bdm_pwa_dismissed';
+  const overlay  = document.getElementById('pwa-overlay');
+  const popup    = document.getElementById('pwa-popup');
+  const installBtn  = document.getElementById('pwa-install-btn');
+  const dismissBtn  = document.getElementById('pwa-dismiss-btn');
+  const androidContent = document.getElementById('pwa-android-content');
+  const iosContent     = document.getElementById('pwa-ios-content');
+
+  // Não exibe se já está instalado como app standalone
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+                    || window.navigator.standalone === true;
+  if (isStandalone) return;
+
+  // Não exibe no desktop (só mobile)
+  const onMobile = window.matchMedia('(max-width: 900px)').matches
+                || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!onMobile) return;
+
+  // Não exibe se o usuário já dispensou
+  if (localStorage.getItem(DISMISSED_KEY)) return;
+
+  const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent) && !window.MSStream;
+
+  let deferredPrompt = null;
+
+  function showPopup() {
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.classList.add('show'));
+  }
+
+  function hidePopup() {
+    overlay.classList.remove('show');
+    setTimeout(() => { overlay.style.display = 'none'; }, 380);
+  }
+
+  dismissBtn.addEventListener('click', () => {
+    localStorage.setItem(DISMISSED_KEY, '1');
+    hidePopup();
+  });
+
+  // Fechar ao clicar fora do popup
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) {
+      localStorage.setItem(DISMISSED_KEY, '1');
+      hidePopup();
+    }
+  });
+
+  if (isIOS) {
+    // iOS: mostra instruções manuais (Safari/Chrome não suportam beforeinstallprompt)
+    androidContent.style.display = 'none';
+    iosContent.style.display = 'block';
+    setTimeout(showPopup, 4000);
+
+  } else {
+    // Android/Chrome: aguarda o evento nativo de instalação
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+
+      installBtn.addEventListener('click', async () => {
+        hidePopup();
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          localStorage.setItem(DISMISSED_KEY, '1');
+        }
+        deferredPrompt = null;
+      });
+
+      setTimeout(showPopup, 4000);
+    });
+
+    // Se o app for instalado por outro meio, fecha o popup
+    window.addEventListener('appinstalled', () => {
+      localStorage.setItem(DISMISSED_KEY, '1');
+      hidePopup();
+    });
+  }
+})();
 </script>
 </body>
 </html>
