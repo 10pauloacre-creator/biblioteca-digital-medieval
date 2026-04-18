@@ -923,6 +923,134 @@ footer strong { color: var(--gold); }
 .tc-label { font-family:'Cinzel',serif; font-size:.7rem; font-weight:900; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
 .tc-text { font-family:'Crimson Pro',Georgia,serif; font-style:italic; font-size:.9rem; line-height:1.75; color:var(--txt); margin-bottom:.5rem; padding:.5rem .7rem; background:var(--parchment); border-radius:8px; }
 .tc-analysis { font-size:.78rem; color:var(--txt2); line-height:1.6; }
+
+/* ===== BLOCK 3 STYLES ===== */
+.timeline-lit { position:relative; padding-left:2rem; margin:1rem 0; }
+.timeline-lit::before { content:''; position:absolute; left:.7rem; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--acc1),var(--gold),var(--acc2),var(--acc3),var(--acc4)); }
+.tl-lit-item { position:relative; padding:.65rem 0 .65rem .8rem; }
+.tl-lit-item::before { content:''; position:absolute; left:-1.65rem; top:1.1rem; width:14px; height:14px; border-radius:50%; background:var(--gold); border:2.5px solid var(--bg); box-shadow:0 0 0 3px var(--gold); }
+.tl-lit-date { font-family:'Cinzel',serif; font-size:.63rem; font-weight:900; text-transform:uppercase; letter-spacing:.1em; color:var(--gold); margin-bottom:.2rem; }
+.tl-lit-item h4 { font-family:'Cinzel',serif; font-size:.88rem; font-weight:800; color:var(--acc1); }
+.tl-lit-item p { font-size:.83rem; color:var(--txt2); line-height:1.65; margin-top:.2rem; }
+
+.lit-period-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:1.1rem; margin:.65rem 0; transition:all .2s; cursor:pointer; }
+.lit-period-card:hover { border-color:var(--gold); box-shadow:0 4px 18px var(--shadow); }
+.lit-period-card.expanded { border-color:var(--acc1); }
+.lpc-header { display:flex; align-items:center; gap:.7rem; }
+.lpc-era { min-width:70px; background:linear-gradient(135deg,var(--acc1),var(--acc2)); color:#fff5e0; border-radius:8px; padding:.35rem .5rem; font-family:'Cinzel',serif; font-size:.65rem; font-weight:800; text-align:center; flex-shrink:0; }
+.lpc-title { font-family:'Cinzel',serif; font-size:.88rem; font-weight:800; color:var(--acc1); }
+.lpc-sub { font-size:.72rem; color:var(--muted); margin-top:.1rem; }
+.lpc-arrow { margin-left:auto; color:var(--gold); font-size:.9rem; transition:transform .2s; }
+.lit-period-card.expanded .lpc-arrow { transform:rotate(90deg); }
+.lpc-body { display:none; margin-top:.8rem; padding-top:.8rem; border-top:1px solid var(--border); animation:tabFadeIn .25s ease; }
+.lit-period-card.expanded .lpc-body { display:block; }
+
+.parchment-text { background:var(--parchment); border:1px solid var(--border); border-left:4px solid var(--gold); border-radius:0 14px 14px 0; padding:1rem 1.2rem; margin:.7rem 0; font-family:'Crimson Pro',Georgia,serif; font-style:italic; font-size:.93rem; line-height:1.85; color:var(--txt); }
+.parchment-attr { font-size:.72rem; color:var(--muted); margin-top:.5rem; font-style:normal; font-weight:700; }
+
+.trovador-grid { display:grid; grid-template-columns:1fr; gap:.65rem; margin:.8rem 0; }
+@media(min-width:500px){ .trovador-grid { grid-template-columns:1fr 1fr; } }
+@media(min-width:800px){ .trovador-grid { grid-template-columns:1fr 1fr 1fr; } }
+.trov-card { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:.9rem 1rem; text-align:center; transition:all .2s; }
+.trov-card:hover { border-color:var(--gold); box-shadow:0 4px 14px var(--shadow); transform:translateY(-2px); }
+.trov-icon { font-size:2rem; margin-bottom:.3rem; }
+.trov-name { font-family:'Cinzel',serif; font-size:.82rem; font-weight:800; color:var(--acc1); margin-bottom:.25rem; }
+.trov-desc { font-size:.76rem; color:var(--txt2); line-height:1.55; }
+
+.quiz-section { background:var(--bg2); border:2px solid var(--border); border-radius:20px; padding:1.4rem; margin:1.2rem 0; }
+
+/* Map/Scroll interactive */
+.scroll-map { position:relative; width:100%; overflow:hidden; border-radius:14px; border:2px solid var(--gold); background:linear-gradient(135deg,#0a1a08 0%,#122808 100%); padding:1.2rem; margin:.9rem 0; }
+.sm-title { font-family:'Cinzel',serif; color:var(--gold); font-size:.88rem; font-weight:800; margin-bottom:.8rem; text-align:center; }
+.sm-route { display:flex; flex-direction:column; gap:.5rem; }
+.sm-stop { display:flex; align-items:flex-start; gap:.65rem; background:rgba(255,255,255,.07); border:1px solid rgba(196,134,10,.3); border-radius:10px; padding:.6rem .8rem; cursor:pointer; transition:all .2s; }
+.sm-stop:hover { background:rgba(196,134,10,.15); border-color:rgba(196,134,10,.6); }
+.sm-stop.active { background:rgba(196,134,10,.2); border-color:var(--gold); }
+.sm-num { background:var(--gold); color:#1a0800; border-radius:50%; width:26px; height:26px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.72rem; font-family:'Cinzel',serif; }
+.sm-info h5 { color:#f5e6c8; font-size:.82rem; font-weight:800; font-family:'Cinzel',serif; }
+.sm-info p { color:rgba(245,230,200,.7); font-size:.74rem; margin-top:.15rem; line-height:1.5; }
+.sm-detail { display:none; margin-top:.4rem; padding:.5rem; background:rgba(0,0,0,.3); border-radius:7px; font-size:.75rem; color:rgba(245,230,200,.85); line-height:1.6; }
+.sm-stop.active .sm-detail { display:block; }
+
+/* Indigenous card */
+.indig-card { background:linear-gradient(135deg,#0a2010 0%,#1a3520 100%); border:1.5px solid rgba(100,200,100,.3); border-radius:16px; padding:1.1rem; margin:.65rem 0; }
+.indig-card h4 { font-family:'Cinzel',serif; color:#a0ffa0; font-size:.88rem; font-weight:800; margin-bottom:.4rem; }
+.indig-card p { color:rgba(200,255,200,.8); font-size:.82rem; line-height:1.65; }
+
+
+/* ===== BLOCK 4 STYLES ===== */
+.debate-arena { background:linear-gradient(135deg,#0a0a1a 0%,#1a0a00 100%); border-radius:20px; padding:1.4rem; margin:.9rem 0; }
+.da-title { font-family:'Cinzel',serif; color:#f5e6c8; font-size:.92rem; font-weight:800; margin-bottom:.8rem; text-align:center; }
+.debate-sides { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; margin-bottom:.9rem; }
+.debate-side { border-radius:12px; padding:.8rem; border:1.5px solid; }
+.ds-pro { background:rgba(45,90,61,.3); border-color:rgba(100,200,100,.4); }
+.ds-con { background:rgba(139,26,26,.3); border-color:rgba(200,100,100,.4); }
+.ds-label { font-family:'Cinzel',serif; font-size:.68rem; font-weight:900; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
+.ds-pro .ds-label { color:#a0ffa0; }
+.ds-con .ds-label { color:#ffa0a0; }
+.ds-arg { font-size:.78rem; color:rgba(245,230,200,.85); line-height:1.6; }
+.ds-arg li { margin-bottom:.3rem; padding-left:.3rem; }
+
+.oralidade-card { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:.9rem 1rem; margin:.5rem 0; cursor:pointer; transition:all .2s; }
+.oralidade-card:hover { border-color:var(--gold); box-shadow:0 3px 12px var(--shadow); }
+.oralidade-card.expanded { border-color:var(--acc1); }
+.oc-header { display:flex; align-items:center; gap:.7rem; }
+.oc-icon { font-size:1.6rem; flex-shrink:0; }
+.oc-title { font-family:'Cinzel',serif; font-size:.85rem; font-weight:800; color:var(--acc1); }
+.oc-sub { font-size:.72rem; color:var(--muted); margin-top:.1rem; }
+.oc-arr { margin-left:auto; color:var(--gold); font-size:.9rem; transition:transform .2s; }
+.oralidade-card.expanded .oc-arr { transform:rotate(90deg); }
+.oc-body { display:none; margin-top:.7rem; padding-top:.7rem; border-top:1px solid var(--border); font-size:.82rem; color:var(--txt2); line-height:1.7; animation:tabFadeIn .2s ease; }
+.oralidade-card.expanded .oc-body { display:block; }
+
+.turno-game { background:var(--bg2); border:2px solid var(--gold); border-radius:16px; padding:1.2rem; margin:.9rem 0; }
+.tg-title { font-family:'Cinzel',serif; font-size:.88rem; font-weight:800; color:var(--gold); margin-bottom:.7rem; }
+.tg-convo { display:flex; flex-direction:column; gap:.4rem; margin-bottom:.8rem; }
+.tg-msg { max-width:80%; border-radius:12px; padding:.6rem .85rem; font-size:.82rem; line-height:1.6; }
+.tg-msg.left { background:var(--hl-bg); border:1px solid var(--acc1); color:var(--txt2); align-self:flex-start; }
+.tg-msg.right { background:linear-gradient(135deg,var(--acc1),var(--acc4)); color:#fff5e0; align-self:flex-end; text-align:right; }
+.tg-msg .tg-speaker { font-size:.64rem; font-weight:900; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.2rem; opacity:.75; }
+.tg-options { display:flex; flex-wrap:wrap; gap:.4rem; }
+.tg-opt { padding:.45rem .85rem; border:1.5px solid var(--border); border-radius:999px; background:var(--bg2); font-size:.78rem; color:var(--txt2); cursor:pointer; font-family:'Inter',sans-serif; font-weight:700; transition:all .18s; }
+.tg-opt:hover { border-color:var(--gold); background:var(--hl-bg); }
+.tg-opt:disabled { cursor:default; opacity:.6; }
+.tg-opt.tg-correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+.tg-opt.tg-wrong { background:#fee2e2; border-color:#dc2626; color:#991b1b; }
+[data-theme="dark"] .tg-opt.tg-correct { background:#14532d; color:#86efac; }
+[data-theme="dark"] .tg-opt.tg-wrong { background:#450a0a; color:#fca5a5; }
+.tg-feedback { margin-top:.6rem; font-size:.8rem; padding:.5rem .7rem; border-radius:8px; display:none; }
+.tg-feedback.show { display:block; }
+
+.estrategia-card { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:.9rem 1rem; margin:.5rem 0; border-left:4px solid; }
+.ec-acc1 { border-left-color:var(--acc1); }
+.ec-acc2 { border-left-color:var(--acc2); }
+.ec-acc3 { border-left-color:var(--acc3); }
+.ec-acc4 { border-left-color:var(--acc4); }
+.estrategia-card h4 { font-family:'Cinzel',serif; font-size:.85rem; font-weight:800; color:var(--acc1); margin-bottom:.35rem; }
+.estrategia-card p { font-size:.82rem; color:var(--txt2); line-height:1.65; margin:0; }
+.estrategia-card .ec-ex { font-size:.78rem; color:var(--muted); margin-top:.4rem; font-style:italic; padding-top:.4rem; border-top:1px dashed var(--border); }
+
+.participacao-mapa { background:linear-gradient(135deg,#0a1a0a,#1a0a1a); border-radius:18px; padding:1.3rem; margin:.9rem 0; }
+.pm-title { font-family:'Cinzel',serif; color:#f5e6c8; font-size:.9rem; font-weight:800; margin-bottom:.9rem; text-align:center; }
+.pm-levels { display:flex; flex-direction:column; gap:.45rem; }
+.pm-level { background:rgba(255,255,255,.07); border:1.5px solid rgba(196,134,10,.25); border-radius:11px; padding:.65rem .85rem; display:flex; align-items:center; gap:.65rem; cursor:pointer; transition:all .2s; }
+.pm-level:hover { background:rgba(196,134,10,.15); border-color:rgba(196,134,10,.6); }
+.pm-level.active-level { background:rgba(196,134,10,.2); border-color:var(--gold); }
+.pm-icon { font-size:1.4rem; flex-shrink:0; }
+.pm-info h5 { color:#f5e6c8; font-size:.82rem; font-weight:800; font-family:'Cinzel',serif; }
+.pm-info p { color:rgba(245,230,200,.65); font-size:.74rem; margin-top:.1rem; }
+.pm-detail { display:none; margin-top:.5rem; padding:.55rem .7rem; background:rgba(0,0,0,.35); border-radius:8px; font-size:.75rem; color:rgba(245,230,200,.85); line-height:1.6; }
+.pm-level.active-level .pm-detail { display:block; }
+
+.argumento-builder { background:var(--bg2); border:2px solid var(--acc1); border-radius:16px; padding:1.2rem; margin:.9rem 0; }
+.ab-title { font-family:'Cinzel',serif; font-size:.88rem; font-weight:800; color:var(--acc1); margin-bottom:.7rem; }
+.ab-steps { display:flex; flex-direction:column; gap:.5rem; }
+.ab-step { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:.7rem .9rem; }
+.ab-step-num { font-size:.65rem; font-weight:900; text-transform:uppercase; letter-spacing:.08em; color:var(--gold); margin-bottom:.25rem; font-family:'Inter',sans-serif; }
+.ab-step-name { font-family:'Cinzel',serif; font-size:.82rem; font-weight:800; color:var(--acc1); margin-bottom:.2rem; }
+.ab-step-desc { font-size:.78rem; color:var(--txt2); line-height:1.6; }
+.ab-step-ex { font-size:.75rem; color:var(--muted); font-style:italic; margin-top:.3rem; padding-top:.3rem; border-top:1px dashed var(--border); }
+
 </style>
 </head>
 <body>
@@ -2752,13 +2880,1446 @@ footer strong { color: var(--gold); }
     </div>
   </div></div>
 </div></div></section><!-- /c07 -->
-<section id="c08" style="min-height:1px;background:var(--bg)"></section>
-<section id="c09" style="min-height:1px;background:var(--bg2)"></section>
-<section id="c10" style="min-height:1px;background:var(--bg)"></section>
-<section id="c11" style="min-height:1px;background:var(--bg2)"></section>
-<section id="c12" style="min-height:1px;background:var(--bg)"></section>
-<section id="c13" style="min-height:1px;background:var(--bg2)"></section>
-<section id="c14" style="min-height:1px;background:var(--bg)"></section>
+<!-- ====================== BLOCO III HEADER ====================== -->
+<section style="background:linear-gradient(135deg,#1a0a00 0%,#2a1500 40%,#0a0a1a 100%);padding:2.2rem 1.5rem 1.8rem;text-align:center">
+  <div style="font-family:'Cinzel',serif;font-size:.68rem;color:rgba(196,134,10,.85);letter-spacing:.3em;text-transform:uppercase;margin-bottom:.4rem">Bloco III &middot; T&oacute;picos 8 ao 11</div>
+  <h2 style="font-family:'Cinzel',serif;font-size:clamp(1.3rem,5vw,2rem);font-weight:900;color:#f5e6c8;margin-bottom:.4rem">&#127963; Literatura: Origens e Tradi&ccedil;&atilde;o</h2>
+  <p style="color:rgba(245,230,200,.68);font-style:italic;font-size:.88rem;font-family:'Crimson Pro',Georgia,serif">"A literatura &eacute; a mem&oacute;ria da humanidade &mdash; ela lembra o que nenhum arquivo guarda."</p>
+</section>
+<hr class="rainbow-div">
+
+<!-- ====================== T08: O QUE E LITERATURA ====================== -->
+<section id="c08" class="sec-rel" style="background:var(--bg)">
+<div class="sfloat-wrap" id="sf08"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 08 &middot; Bloco III</div>
+  <h2>&#128218; O que &eacute; Literatura?</h2>
+  <p>Defini&ccedil;&atilde;o e historicidade &middot; Matrizes e procedimentos est&eacute;ticos &middot; Literatura como pr&aacute;tica social</p>
+</div>
+<div class="block-tabs-wrap" id="tabs08">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs08',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs08',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs08',2,this)">&#127918; Quiz</button>
+  </div>
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c08')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">"O que &eacute; literatura?" &eacute; uma das perguntas mais antigas da humanidade. E a resposta muda conforme a &eacute;poca, a cultura e quem pergunta. Hoje vamos entrar nesse debate!</div>
+    <div class="sec-mascot-hint">Clique para curiosidades &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128218; Definindo o indefin&iacute;vel</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>A <strong>literatura</strong> &eacute; uma forma de arte que usa a <strong>linguagem verbal</strong> como mat&eacute;ria-prima para criar experi&ecirc;ncias est&eacute;ticas, explorar a condi&ccedil;&atilde;o humana, questionar a realidade e transmitir valores culturais e hist&oacute;ricos. Mas essa defini&ccedil;&atilde;o &eacute; parcial: a literatura &eacute; tamb&eacute;m um <strong>campo de disputa</strong> &mdash; sobre o que merece ser chamado liter&aacute;rio, quem tem o direito de escrever e quais vozes s&atilde;o reconhecidas.</p>
+    </div>
+    <p style="margin-top:.8rem">A palavra "literatura" deriva do latim <em>littera</em> (letra). Hist&oacute;ricamente, nem tudo que consideramos literatura hoje foi reconhecido como tal em sua &eacute;poca: cantigas medievais eram m&uacute;sica popular, contos orais ind&iacute;genas eram cerimoniais, e folhetins do s&eacute;culo XIX eram entretenimento de massa.</p>
+    <div class="img-link-btn fi" onclick="openGoogleImg('literatura conceito arte linguagem verbal exemplos')">&#128444;&#65039; Ver imagens: <strong>Literatura como arte da linguagem</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127775; O texto liter&aacute;rio x o texto n&atilde;o liter&aacute;rio</h3>
+    <p>N&atilde;o existe uma fronteira r&iacute;gida, mas algumas caracter&iacute;sticas distinguem o texto liter&aacute;rio:</p>
+    <div class="comp-table-wrap fi">
+      <table class="comp-table">
+        <tr><th>Texto liter&aacute;rio</th><th>Texto n&atilde;o liter&aacute;rio</th></tr>
+        <tr><td>Fun&ccedil;&atilde;o est&eacute;tica predominante: a forma importa tanto quanto o conte&uacute;do</td><td>Fun&ccedil;&atilde;o instrumental: comunica informa&ccedil;&atilde;o ou a&ccedil;&atilde;o objetiva</td></tr>
+        <tr><td>Linguagem conotativa: rica em figuras, imagens, ambiguidade</td><td>Linguagem denotativa: precisa, clara, sem duplo sentido</td></tr>
+        <tr><td>Polivalente: admite m&uacute;ltiplas interpreta&ccedil;&otilde;es</td><td>Monovalente: tem interpreta&ccedil;&atilde;o &uacute;nica e correta</td></tr>
+        <tr><td>Ficcional: cria mundos poss&iacute;veis, mesmo quando baseado em fatos reais</td><td>Factual: descreve e informa sobre o mundo real</td></tr>
+        <tr><td>Aut&ocirc;nomo: n&atilde;o precisa do contexto imediato para funcionar</td><td>Contextual: perde sentido fora do contexto de origem</td></tr>
+      </table>
+    </div>
+    <div class="tip-box">
+      <strong>Aten&ccedil;&atilde;o:</strong> Essas fronteiras s&atilde;o sempre porosas. Um relat&oacute;rio policial pode ter valor liter&aacute;rio. Uma cr&ocirc;nica jornal&iacute;stica pode ser grande literatura. O que define &eacute; <em>como</em> a linguagem &eacute; trabalhada.
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127942; Por que ler literatura?</h3>
+    <p>O cr&iacute;tico Antonio Candido afirmou que a literatura &eacute; um direito humano: ela humaniza porque nos coloca em contato com outras experi&ecirc;ncias, nos ensina a sentir o que n&atilde;o vivemos e nos faz mais compreensivos com o outro. Mas a literatura tamb&eacute;m pode desumanizar &mdash; quando reproduz preconceitos e silencia vozes.</p>
+    <div class="trovador-grid">
+      <div class="trov-card">
+        <div class="trov-icon">&#10024;</div>
+        <div class="trov-name">Humaniza&ccedil;&atilde;o</div>
+        <div class="trov-desc">Permite viver mil vidas al&eacute;m da nossa, desenvolvendo empatia e compreens&atilde;o do outro.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128269;</div>
+        <div class="trov-name">Cr&iacute;tica social</div>
+        <div class="trov-desc">Questiona injusti&ccedil;as, nomeia opresses e imagina mundos mais justos ou denuncia o atual.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127758;</div>
+        <div class="trov-name">Mem&oacute;ria cultural</div>
+        <div class="trov-desc">Preserva modos de sentir, ver e nomear o mundo de &eacute;pocas passadas.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128161;</div>
+        <div class="trov-name">Prazer est&eacute;tico</div>
+        <div class="trov-desc">O simples prazer da linguagem bem feita &eacute; uma das experi&ecirc;ncias mais ricas da exist&ecirc;ncia humana.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128172;</div>
+        <div class="trov-name">Autoconhecimento</div>
+        <div class="trov-desc">Ao ler sobre o outro, descobrimos quem somos. A literatura &eacute; um espelho e uma janela ao mesmo tempo.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128293;</div>
+        <div class="trov-name">Resist&ecirc;ncia</div>
+        <div class="trov-desc">Em per&iacute;odos de oppress&atilde;o, a literatura foi muitas vezes o &uacute;nico espa&ccedil;o de liberdade dispon&iacute;vel.</div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('Antonio Candido literatura direito humano')">&#128444;&#65039; Ver imagens: <strong>Antonio Candido e o direito &agrave; literatura</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128260; Historicidade e c&acirc;none liter&aacute;rio</h3>
+    <p>O <strong>c&acirc;none liter&aacute;rio</strong> &eacute; o conjunto de obras e autores considerados fundamentais e representativos de uma literatura nacional. Mas quem decide o que entra no c&acirc;none? Historicamente, esse poder estava nas m&atilde;os de academias, universidades e cr&iacute;ticos que eram, em sua maioria, homens brancos europeus.</p>
+    <div class="example-box">
+      <div class="eb-label">Quest&atilde;o cr&iacute;tica</div>
+      <p>Se o c&acirc;none liter&aacute;rio brasileiro fosse constitu&iacute;do por mulheres, negros e ind&iacute;genas na mesma propor&ccedil;&atilde;o em que existem na sociedade brasileira, que autores e obras estariam no centro? Que textos consideramos "grandes" diz muito sobre quem t&ecirc;m poder de defini&ccedil;&atilde;o.</p>
+    </div>
+    <div class="interactive-box fi">
+      <div class="ib-title">&#127918; Debate interativo: o que &eacute; liter&aacute;rio?</div>
+      <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.8rem">Para cada item abaixo, selecione se voc&ecirc; considera literatura ou n&atilde;o:</p>
+      <div class="int-question" id="iqlit01">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Uma letra de rap com m&eacute;tricas complexas e cr&iacute;tica social &eacute; literatura?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'correct','iqlit01','Sim! O rap &eacute; plenamente liter&aacute;rio. Herda tradi&ccedil;&otilde;es da poesia oral, usa figuras de linguagem sofisticadas e cumpre fun&ccedil;&otilde;es sociais da literatura (humanizar, denunciar, resistir). A pergunta revela preconceitos sobre o que &eacute; &ldquo;erudito&rdquo;.')">Sim, &eacute; literatura</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqlit01','Interessante! Mas o que impede o rap de ser literatura? Pense nos crit&eacute;rios: uso expressivo da linguagem, fun&ccedil;&atilde;o est&eacute;tica, crit&iacute;ca social. O rap cumpre todos esses crit&eacute;rios com maestria.')">N&atilde;o, &eacute; s&oacute; m&uacute;sica</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqlit01','Essa hesita&ccedil;&atilde;o &eacute; produtiva! A fronteira entre literatura e m&uacute;sica sempre foi tenue: as cantigas medievais eram ao mesmo tempo poesia e m&uacute;sica. O rap segue essa tradi&ccedil;&atilde;o.')">Depende de cada caso</button>
+        </div>
+        <div class="int-feedback" id="fb-iqlit01"></div>
+      </div>
+      <div class="int-question" id="iqlit02" style="margin-top:.6rem">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">As narrativas orais ind&iacute;genas s&atilde;o literatura brasileira?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'correct','iqlit02','Exatamente! As narrativas ind&iacute;genas s&atilde;o a literatura original do territ&oacute;rio que hoje chamamos de Brasil. Ignor&aacute;-las &eacute; reproduzir a vis&atilde;o colonial de que a cultura come&ccedil;a com a escrita europeia.')">Sim, s&atilde;o a literatura origin&aacute;ria do pa&iacute;s</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqlit02','Essa vis&atilde;o &eacute; colonial. A escrita &eacute; apenas um suporte; a oralidade tamb&eacute;m produz textos sofisticados e complexos. Excluir as narrativas ind&iacute;genas por serem orais &eacute; um preconceito que reproduz a ideia de que s&oacute; a cultura europeia &eacute; v&aacute;lida.')">N&atilde;o, literatura precisa ser escrita</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqlit02','Essa hesita&ccedil;&atilde;o vale a pena examinar! O que voc&ecirc; acha que falta para as narrativas ind&iacute;genas serem literatura? A resposta &agrave; essa pergunta revela muito sobre os preconceitos incorporados na defini&ccedil;&atilde;o de &ldquo;literatura&rdquo;.')">N&atilde;o sei, &eacute; diferente</button>
+        </div>
+        <div class="int-feedback" id="fb-iqlit02"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=o+que+e+literatura+conceito+Antonio+Candido')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>O que &eacute; literatura? Com Antonio Candido</strong><span>YouTube &middot; Teoria liter&aacute;ria</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=canone+literario+critica+quem+decide+literatura+brasileira')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>C&acirc;none liter&aacute;rio: quem decide o que &eacute; literatura?</strong><span>YouTube &middot; Debate cr&iacute;tico</span></div><span class="res-tag rt-yt">YT</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t08 -->
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 08</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Antonio Candido afirma que a literatura &eacute; um direito humano. Explique essa ideia com suas palavras e d&ecirc; um exemplo de como a literatura pode humanizar quem a l&ecirc;. J&aacute; leu algo que mudou sua forma de ver o mundo?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Escolha um exemplo de texto n&atilde;o convencional (letra de m&uacute;sica, conto oral, relato de vida, legenda de foto) e analise se ele pode ser considerado literatura usando os crit&eacute;rios estudados. Justifique sua posi&ccedil;&atilde;o.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">O que &eacute; o c&acirc;none liter&aacute;rio e por que ele &eacute; politicamente disputado? Quais grupos hist&oacute;ricamente foram exclu&iacute;dos do c&acirc;none brasileiro e por qu&ecirc;? Como isso vem mudando nos &uacute;ltimos anos?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">A literatura pode desumanizar al&eacute;m de humanizar? D&ecirc; um exemplo hist&oacute;rico ou contempor&acirc;neo de texto que usa a linguagem liter&aacute;ria para refor&ccedil;ar preconceitos ou excluir grupos sociais.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Compare um texto liter&aacute;rio e um n&atilde;o liter&aacute;rio sobre o mesmo tema. Identifique as diferen&ccedil;as de linguagem, estrutura e efeito sobre o leitor. O que a compara&ccedil;&atilde;o revela sobre o que torna um texto liter&aacute;rio?</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz08">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 08</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn08">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb08" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q08_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">Segundo Antonio Candido, a literatura &eacute; um direito humano porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q08_1',0,2,'quiz08','C: Candido defende que a literatura, assim como alimento e moradia, &eacute; uma necessidade b&aacute;sica: ela humaniza e &eacute; essencial para a constru&ccedil;&atilde;o de uma sociedade justa.')"><span class="opt-letter">A)</span><span>Produz entretenimento acess&iacute;vel</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_1',1,2,'quiz08','C: A gratuidade n&atilde;o &eacute; o argumento central de Candido.')"><span class="opt-letter">B)</span><span>Todo livro deve ser gratuito</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_1',2,2,'quiz08','Correto! Para Candido, a literatura humaniza ao nos colocar em contato com experi&ecirc;ncias que n&atilde;o vivemos, desenvolvendo empatia e compreens&atilde;o. Neg&aacute;-la &eacute; uma forma de mutila&ccedil;&atilde;o cultural.')"><span class="opt-letter">C)</span><span>Ela humaniza ao nos expor a outras experi&ecirc;ncias, sendo t&atilde;o essencial quanto alimento ou moradia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_1',3,2,'quiz08','C: A justificativa de Candido vai al&eacute;m do valor hist&oacute;rico.')"><span class="opt-letter">D)</span><span>Ela preserva a hist&oacute;ria dos pa&iacute;ses</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q08_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q08_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">O c&acirc;none liter&aacute;rio &eacute; politicamente disputado porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q08_2',0,1,'quiz08','B: Foram historicamente grupos de homens brancos europeus que definiram o c&acirc;none.')"><span class="opt-letter">A)</span><span>Os livros s&atilde;o caros e disputados no mercado</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_2',1,1,'quiz08','Correto! O c&acirc;none reflete escolhas ideol&oacute;gicas: as obras valorizadas tendem a reproduzir as perspectivas dos grupos que t&ecirc;m poder de canoniza&ccedil;&atilde;o, excluindo vozes femininas, negras, ind&iacute;genas e perif&eacute;ricas.')"><span class="opt-letter">B)</span><span>Quem define o c&acirc;none tem poder de determinar quais vozes s&atilde;o consideradas importantes e quais s&atilde;o silenciadas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_2',2,1,'quiz08','B: Dificuldade gramatical n&atilde;o &eacute; o crit&eacute;rio da canonicidade.')"><span class="opt-letter">C)</span><span>Os textos can&ocirc;nicos s&atilde;o os mais gramaticalmente dif&iacute;ceis</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_2',3,1,'quiz08','B: O problema n&atilde;o &eacute; a exist&ecirc;ncia de um c&acirc;none, mas os crit&eacute;rios e o poder de quem o define.')"><span class="opt-letter">D)</span><span>Todos os autores querem entrar no c&acirc;none ao mesmo tempo</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q08_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q08_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">O texto liter&aacute;rio se diferencia do n&atilde;o liter&aacute;rio principalmente por:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q08_3',0,2,'quiz08','C: Extens&atilde;o n&atilde;o &eacute; crit&eacute;rio liter&aacute;rio; h&aacute; poes&iacute;as de dois versos e relat&oacute;rios de centenas de p&aacute;ginas.')"><span class="opt-letter">A)</span><span>Ser mais extenso e complexo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_3',1,2,'quiz08','C: Texto liter&aacute;rio pode ser baseado em fatos reais (literatura de testemunho, por exemplo).')"><span class="opt-letter">B)</span><span>Tratar apenas de assuntos fict&iacute;cios</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_3',2,2,'quiz08','Correto! A fun&ccedil;&atilde;o est&eacute;tica predominante &eacute; a marca do texto liter&aacute;rio: a forma importa tanto quanto o conte&uacute;do, a linguagem &eacute; conotativa e o texto admite m&uacute;ltiplas interpreta&ccedil;&otilde;es.')"><span class="opt-letter">C)</span><span>Ter fun&ccedil;&atilde;o est&eacute;tica predominante, com linguagem conotativa e abertura a m&uacute;ltiplas interpreta&ccedil;&otilde;es</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_3',3,2,'quiz08','C: A publica&ccedil;&atilde;o em livro n&atilde;o &eacute; crit&eacute;rio; um relato oral pode ser liter&aacute;rio e uma bula publicada n&atilde;o &eacute;.')"><span class="opt-letter">D)</span><span>Ser publicado em livro por editora</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q08_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q08_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">A <strong>historicidade</strong> da literatura significa que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q08_4',0,0,'quiz08','Correto! A literatura muda com o tempo: o que era popular vira cl&aacute;ssico, o que era marginal vira can&ocirc;nico, e vice-versa. Os procedimentos est&eacute;ticos tamb&eacute;m evoluem conforme as &eacute;pocas e culturas.')"><span class="opt-letter">A)</span><span>O que &eacute; considerado literatura muda conforme o tempo, a cultura e as rela&ccedil;&otilde;es de poder</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_4',1,0,'quiz08','A: Apenas textos antigos n&atilde;o s&atilde;o necessariamente literatura; &eacute; o uso est&eacute;tico da linguagem que conta.')"><span class="opt-letter">B)</span><span>Somente textos hist&oacute;ricos t&ecirc;m valor liter&aacute;rio</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_4',2,0,'quiz08','A: A hist&oacute;ria &eacute; uma disciplina diferente; historicidade da literatura refere-se &agrave; mudan&ccedil;a do que se considera liter&aacute;rio ao longo do tempo.')"><span class="opt-letter">C)</span><span>Literatura e Hist&oacute;ria s&atilde;o a mesma disciplina</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_4',3,0,'quiz08','A: N&atilde;o &eacute; a antiguidade que determina o valor; a historicidade &eacute; sobre como os crit&eacute;rios mudam.')"><span class="opt-letter">D)</span><span>Quanto mais antigo o texto, mais liter&aacute;rio ele &eacute;</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q08_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q08_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Por que as narrativas orais ind&iacute;genas devem ser consideradas literatura brasileira?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q08_5',0,3,'quiz08','D: Essa &eacute; a perspectiva decolonial correta: literatura n&atilde;o se define pelo suporte (escrita) mas pelo uso est&eacute;tico e social da linguagem verbal. As narrativas ind&iacute;genas cumprem esse papel h&aacute; mileni os antes da coloniza&ccedil;&atilde;o.')"><span class="opt-letter">A)</span><span>Porque s&atilde;o simples e f&aacute;ceis de entender</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_5',1,3,'quiz08','D: A origem europeia n&atilde;o &eacute; requisito; &eacute; exatamente o oposto &mdash; a origin&aacute;ria do territ&oacute;rio precede a coloniza&ccedil;&atilde;o.')"><span class="opt-letter">B)</span><span>Porque foram influenciadas pela literatura europeia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_5',2,3,'quiz08','D: Essa afirmativa &eacute; etnocentrista e incorreta; as narrativas ind&iacute;genas s&atilde;o extremamente complexas e sofisticadas.')"><span class="opt-letter">C)</span><span>Porque s&atilde;o primitivas e precisam ser preservadas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q08_5',3,3,'quiz08','Correto! S&atilde;o a literatura original do territ&oacute;rio brasileiro, com estruturas narrativas, recursos po&eacute;ticos e fun&ccedil;&otilde;es sociais complexas. Ignor&aacute;-las reproduz a viol&ecirc;ncia colonial de apagar a cultura dos primeiros habitantes.')"><span class="opt-letter">D)</span><span>Porque s&atilde;o a literatura original do territ&oacute;rio, com estruturas narrativas e recursos po&eacute;ticos complexos anteriores &agrave; coloniza&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q08_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr08"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 08!</div><button class="qrb-retry" onclick="resetQuiz('quiz08')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c08 -->
+<hr class="rainbow-div">
+
+<!-- ====================== T09: LIT BRASILEIRA QUINHENTISMO ====================== -->
+<section id="c09" class="sec-rel" style="background:var(--bg2)">
+<div class="sfloat-wrap" id="sf09"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 09 &middot; Bloco III</div>
+  <h2>&#9981; Literatura Brasileira: das origens ao Quinhentismo</h2>
+  <p>Carta de Pero Vaz de Caminha &middot; Quinhentismo &middot; Primeiros registros em portugu&ecirc;s sobre o Brasil</p>
+</div>
+<div class="block-tabs-wrap" id="tabs09">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs09',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs09',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs09',2,this)">&#127918; Quiz</button>
+  </div>
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c09')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">A literatura brasileira come&ccedil;a com uma carta de invas&atilde;o. Pero Vaz de Caminha n&atilde;o estava tentando fazer literatura &mdash; estava prestando contas ao rei. Mas o resultado &eacute; o texto fundador do Brasil.</div>
+    <div class="sec-mascot-hint">Clique para curiosidades &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#9981; O Quinhentismo (s&eacute;culo XVI)</h3>
+    <div class="concept-box">
+      <div class="cb-title">O que &eacute; o Quinhentismo?</div>
+      <p>O <strong>Quinhentismo</strong> &eacute; o per&iacute;odo inicial da literatura brasileira, compreendendo os textos produzidos no s&eacute;culo XVI (1500s) sobre o Brasil por cronistas, viajantes, missioneiros e colonizadores europeus. N&atilde;o &eacute; uma escola liter&aacute;ria com caracter&iacute;sticas est&eacute;ticas definidas, mas uma fase documental e de reconhecimento. A maioria dos textos t&ecirc;m car&aacute;ter <strong>informativo, documental e catequizador</strong>.</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card">
+        <h4>&#128220; Literatura de informa&ccedil;&atilde;o</h4>
+        <p>Cartas, relatos de viagens, cr&ocirc;nicas. Descrevem o territ&oacute;rio, os povos ind&iacute;genas, a fauna e a flora. O olhar &eacute; sempre o do colonizador europeu, de modo que essas descri&ccedil;&otilde;es revelam tanto sobre a Europa quanto sobre o Brasil.</p>
+      </div>
+      <div class="info-card">
+        <h4>&#9895;&#65039; Literatura de catequese</h4>
+        <p>Textos religiosos escritos por jesu&iacute;tas para a convers&atilde;o dos ind&iacute;genas. Jos&eacute; de Anchieta &eacute; o nome central: escreveu poemas, di&aacute;logos e pe&ccedil;as de teatro em portugu&ecirc;s, espanhol, latim e tupi.</p>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('quinhentismo literatura brasileira sec XVI mapas colonizacao')">&#128444;&#65039; Ver imagens: <strong>Quinhentismo e coloniza&ccedil;&atilde;o do Brasil</strong></div>
+  </div>
+
+  <!-- CARTA DE CAMINHA INTERATIVA -->
+  <div class="card fi">
+    <h3>&#128220; A Carta de Pero Vaz de Caminha (1500)</h3>
+    <p>Escrita em 1&ordm; de maio de 1500 e endere&ccedil;ada ao Rei D. Manuel I de Portugal, a <strong>Carta de Caminha</strong> &eacute; considerada o <strong>atestado de nascimento do Brasil</strong> e o documento fundador da literatura brasileira.</p>
+
+    <!-- ROTA INTERATIVA -->
+    <div class="scroll-map fi">
+      <div class="sm-title">&#9981; Rota da Expedi&ccedil;&atilde;o de Cabral (1500) &mdash; Clique em cada etapa</div>
+      <div class="sm-route">
+        <div class="sm-stop" onclick="toggleSmStop(this)">
+          <div class="sm-num">1</div>
+          <div class="sm-info"><h5>Lisboa, Portugal &mdash; 9 mar. 1500</h5><p>Partida de Pedro &Aacute;lvares Cabral com 13 naus e cerca de 1.500 homens.</p></div>
+          <div class="sm-detail">A frota seguia oficialmente rumo &agrave; &Iacute;ndia pelo caminho aberto por Vasco da Gama. A desvio para o oeste &eacute; at&eacute; hoje debatido: foi acidental ou intencional? O escrivão Caminha estava entre os tripulantes.</div>
+        </div>
+        <div class="sm-stop" onclick="toggleSmStop(this)">
+          <div class="sm-num">2</div>
+          <div class="sm-info"><h5>Monte Pascoal, Bahia &mdash; 22 abr. 1500</h5><p>Avistamento da costa brasileira. Um monte coberto de verde.</p></div>
+          <div class="sm-detail">Os marinheiros avistaram terra e chamaram de "Monte Pascoal" por ser a semana de P&aacute;scoa. Caminha descreve: "Vi terra! Primeiro avistamos um grande monte, muito alto e redondo, e de outras serras mais baixas ao sul..." A emo&ccedil;&atilde;o da descoberta &eacute; palp&aacute;vel.</div>
+        </div>
+        <div class="sm-stop" onclick="toggleSmStop(this)">
+          <div class="sm-num">3</div>
+          <div class="sm-info"><h5>Porto Seguro, Bahia &mdash; 24 abr. 1500</h5><p>Primeiro contato com os povos Tupiniquim.</p></div>
+          <div class="sm-detail">Caminha descreve o primeiro contato com os Tupiniquim com mescla de fascina&ccedil;&atilde;o, etnocentrismo e curiosidade. Nota a nudez dos ind&iacute;genas, suas pinturas corporais, suas belas formas. O olhar &eacute; colonial mas n&atilde;o desprovido de humanidade.</div>
+        </div>
+        <div class="sm-stop" onclick="toggleSmStop(this)">
+          <div class="sm-num">4</div>
+          <div class="sm-info"><h5>Primeira missa &mdash; 26 abr. 1500</h5><p>A primeira missa em solo brasileiro, descrita em detalhes.</p></div>
+          <div class="sm-detail">Caminha descreve com emo&ccedil;&atilde;o a primeira missa celebrada no Brasil pelo Frei Henrique de Coimbra. Ind&iacute;genas observavam sem entender. Esse momento marca a sobreposi&ccedil;&atilde;o da religi&atilde;o europeia sobre as espiritualidades locais.</div>
+        </div>
+        <div class="sm-stop" onclick="toggleSmStop(this)">
+          <div class="sm-num">5</div>
+          <div class="sm-info"><h5>Carta ao Rei &mdash; 1&ordm; mai. 1500</h5><p>Caminha finaliza e envia a carta a D. Manuel I via navio.</p></div>
+          <div class="sm-detail">A carta s&oacute; seria publicada em 1817, mais de 300 anos depois, pelo historiador Jos&eacute; de Azeredo Coutinho. Ficou guardada no Arquivo Nacional da Torre do Tombo em Lisboa. Hoje &eacute; Patrim&ocirc;nio da Humanidade pela UNESCO.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="parchment-text fi">
+      "Senhor, posto que o Capit&atilde;o-Mor desta Vossa frota [...] Assim, Senhor, que a inten&ccedil;&atilde;o de minha conta a Vossa Alteza &eacute; dizer desta terra o que vi e mais o que me parece.<br><br>
+      [...] A feição deles &eacute; serem pardos, um tanto avermelhados, de bons rostos e bons narizes, bem-feitos. Andam nus, sem nenhuma cobertura, nem est&imath;mam nenhuma cousa cobrir nem mostrar suas vergonhas..."
+      <div class="parchment-attr">Pero Vaz de Caminha, Carta ao Rei D. Manuel I, 1500 (excerto adaptado)</div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('Carta Pero Vaz de Caminha manuscrito original')">&#128444;&#65039; Ver imagens: <strong>Carta de Caminha &mdash; manuscrito original</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#9895;&#65039; Jos&eacute; de Anchieta: o poeta do Brasil colonial</h3>
+    <p><strong>Jos&eacute; de Anchieta</strong> (1534&ndash;1597) &eacute; o autor mais importante do per&iacute;odo do Quinhentismo. Jesu&iacute;ta espanhol nascido nas Ilhas Can&aacute;rias, chegou ao Brasil em 1553 e passou o resto da vida catequizando ind&iacute;genas. Sua import&acirc;ncia liter&aacute;ria vem de ter sido o primeiro a produzir obras em tupi &mdash; uma forma de se comunicar com os nativos que, paradoxalmente, tamb&eacute;m era instrumento de domina&ccedil;&atilde;o cultural.</p>
+    <div class="trovador-grid">
+      <div class="trov-card">
+        <div class="trov-icon">&#128196;</div>
+        <div class="trov-name">Gram&aacute;tica do Tupi</div>
+        <div class="trov-desc">Primeiro estudo gramatical de uma l&iacute;ngua ind&iacute;gena. Fundamental para a catequese mas tamb&eacute;m para o registro ling&uuml;&iacute;stico.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127917;</div>
+        <div class="trov-name">Autos e pe&ccedil;as teatrais</div>
+        <div class="trov-desc">Escreveu pe&ccedil;as bil&iacute;ngues (portugu&ecirc;s/tupi) para catequiza&ccedil;&atilde;o. Mistura de elementos europeus e ind&iacute;genas.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127913;</div>
+        <div class="trov-name">Poemas em lat&iacute;m e portugu&ecirc;s</div>
+        <div class="trov-desc">Produziu uma vasta obra po&eacute;tica religiosa, incluindo o famoso poema &agrave; Virgem Maria escrito na areia.</div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('Jose de Anchieta jesuita Brasil colonial catequese')">&#128444;&#65039; Ver imagens: <strong>Jos&eacute; de Anchieta no Brasil colonial</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Carta+Pero+Vaz+Caminha+analise+literatura+brasileira')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Carta de Caminha: an&aacute;lise liter&aacute;ria</strong><span>YouTube &middot; Quinhentismo</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=quinhentismo+literatura+informacao+catequese+anchieta')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Quinhentismo: informa&ccedil;&atilde;o e catequese</strong><span>YouTube &middot; Resumo completo</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('primeira missa no Brasil Victor Meirelles pintura')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>Pintura: Primeira Missa no Brasil (Victor Meirelles)</strong><span>Google Imagens &middot; Arte e hist&oacute;ria</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t09 -->
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 09</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Releia o trecho da Carta de Caminha sobre os ind&iacute;genas. Que elementos do discurso colonial est&atilde;o presentes? Como a descri&ccedil;&atilde;o dos ind&iacute;genas revela o ponto de vista do colonizador europeu? O que Caminha deixa de mencionar ou registrar?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">A Carta de Caminha ficou guardada por 317 anos antes de ser publicada. Que import&acirc;ncia tem esse fato para entendermos a constru&ccedil;&atilde;o da mem&oacute;ria e da identidade nacional brasileira? Por que publicar (ou n&atilde;o publicar) um texto &eacute; um ato pol&iacute;tico?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Jos&eacute; de Anchieta usou a l&iacute;ngua tupi para catequizar os ind&iacute;genas. Isso &eacute; um gesto de respeito pela cultura nativa ou uma forma de domina&ccedil;&atilde;o mais eficiente? Argumente apresentando os dois lados desta quest&atilde;o.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">O Quinhentismo divide-se em literatura de informa&ccedil;&atilde;o e literatura de catequese. O que esse fato revela sobre os objetivos da coloniza&ccedil;&atilde;o portuguesa no Brasil? Como esses dois tipos de texto servem ao projeto colonial?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Se os Tupiniquim que encontraram Cabral em 1500 tivessem escrito uma carta ao seu pr&oacute;prio rei descrevendo os portugueses, como seria essa carta? Que aspectos eles provavelmente notariam e como os descreveriam? (Exerc&iacute;cio de imagina&ccedil;&atilde;o hist&oacute;rica)</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz09">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 09</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn09">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb09" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q09_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A Carta de Pero Vaz de Caminha &eacute; considerada o "atestado de nascimento do Brasil" porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q09_1',0,2,'quiz09','C: A carta &eacute; o primeiro documento escrito sobre o Brasil, produzido por um membro da expedi&ccedil;&atilde;o de Cabral em 1500, descrevendo o territ&oacute;rio, os habitantes e o primeiro contato.')"><span class="opt-letter">A)</span><span>Foi o primeiro texto escrito por um brasileiro</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_1',1,2,'quiz09','C: Caminha era escrivão, n&atilde;o liter&aacute;to; a cart&atilde;o &eacute; fundadora por ser o primeiro registro escrito sobre o Brasil.')"><span class="opt-letter">B)</span><span>&Eacute; a primeira obra liter&aacute;ria escrita com inten&ccedil;&atilde;o art&iacute;stica no Brasil</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_1',2,2,'quiz09','Correto! &Eacute; o primeiro documento escrito (1500) sobre o territ&oacute;rio, os habitantes e o momento do encontro entre europeus e ind&iacute;genas, funcionando como registro fundador.')"><span class="opt-letter">C)</span><span>&Eacute; o primeiro documento escrito sobre o territ&oacute;rio e os habitantes, registrando o momento fundador do Brasil colonial</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_1',3,2,'quiz09','C: A carta n&atilde;o criou o Brasil como na&ccedil;&atilde;o; ela o registrou como territ&oacute;rio recentemente "descoberto".')"><span class="opt-letter">D)</span><span>Foi assinada pelos l&iacute;deres ind&iacute;genas e portugueses como tratado de paz</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q09_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q09_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">O Quinhentismo se divide em literatura de informa&ccedil;&atilde;o e literatura de catequese. O que os une &eacute;:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q09_2',0,3,'quiz09','D: Ambos servem ao projeto colonial: informa&ccedil;&atilde;o para conhecer e controlar o territ&oacute;rio; catequese para converter e dominar os habitantes.')"><span class="opt-letter">A)</span><span>Serem escritos em portugu&ecirc;s por autores brasileiros</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_2',1,3,'quiz09','D: Nem todos os textos do Quinhentismo t&ecirc;m inten&ccedil;&atilde;o liter&aacute;ria; o valor est&eacute;tico &eacute; frequentemente secund&aacute;rio.')"><span class="opt-letter">B)</span><span>Terem inten&ccedil;&atilde;o liter&aacute;ria e valor est&eacute;tico explícito</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_2',2,3,'quiz09','D: Os textos foram escritos por europeus (portugueses, espanhois, jesu&iacute;tas), n&atilde;o por ind&iacute;genas.')"><span class="opt-letter">C)</span><span>Serem produzidos pelos pr&oacute;prios ind&iacute;genas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_2',3,3,'quiz09','Correto! Ambos servem ao projeto colonial europeu: o primeiro para conhecer e controlar o territ&oacute;rio e seus recursos; o segundo para converter os habitantes e garantir sua submiss&atilde;o &agrave; ordem europeia.')"><span class="opt-letter">D)</span><span>Serem produ&ccedil;&otilde;es a servi&ccedil;o do projeto colonial europeu de conhecimento e controle do territ&oacute;rio e seus habitantes</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q09_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q09_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">Jos&eacute; de Anchieta &eacute; central no Quinhentismo porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q09_3',0,2,'quiz09','C: Anchieta produziu a primeira gram&aacute;tica do tupi e escreveu em m&uacute;ltiplas l&iacute;nguas, criando uma literatura de mediac&atilde;o entre culturas.')"><span class="opt-letter">A)</span><span>Nasceu no Brasil e representou a perspectiva nativa</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_3',1,2,'quiz09','C: Anchieta era jesu&iacute;ta, n&atilde;o colonizador; sua missc&atilde;o era religi&oacute;-cultural, n&atilde;o militar.')"><span class="opt-letter">B)</span><span>Liderou militarmente a coloniza&ccedil;&atilde;o do territ&oacute;rio</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_3',2,2,'quiz09','Correto! Anchieta foi o primeiro a produzir gram&aacute;tica da l&iacute;ngua tupi, escrever pe&ccedil;as teatrais bil&iacute;ngues e criar uma literatura de catequese que tentava mediar entre as culturas europeia e ind&iacute;gena.')"><span class="opt-letter">C)</span><span>Produziu a primeira gram&aacute;tica tupi e escreveu em portugu&ecirc;s, latim e tupi, criando uma literatura de media&ccedil;&atilde;o cultural</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_3',3,2,'quiz09','C: Anchieta foi reconhecido como beato pela Igreja Cat&oacute;lica, n&atilde;o pela Academia Portuguesa.')"><span class="opt-letter">D)</span><span>Foi o primeiro premio liter&aacute;rio da Academia Portuguesa</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q09_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q09_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">A descri&ccedil;&atilde;o dos ind&iacute;genas por Caminha como "gente de tal inocência que seriam logo crist&atilde;os" revela:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q09_4',0,0,'quiz09','Correto! O discurso colonial de Caminha v&ecirc; nos ind&iacute;genas uma "folha em branco" a ser preenchida pelo eurocentrismo. A "inocência" &eacute; lida como aus&ecirc;ncia de cultura, e a facilidade de convers&atilde;o como confirma&ccedil;&atilde;o da superioridade europeia.')"><span class="opt-letter">A)</span><span>O etnocentrismo colonial: os ind&iacute;genas s&atilde;o vistos como "folha em branco" a ser preenchida pela cultura europeia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_4',1,0,'quiz09','A: Caminha demonstra curiosidade e at&eacute; admira&ccedil;&atilde;o est&eacute;tica, mas seu olhar &eacute; inequivocamente colonial e etnocentrista.')"><span class="opt-letter">B)</span><span>O respeito genuino de Caminha pela cultura ind&iacute;gena</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_4',2,0,'quiz09','A: Caminha n&atilde;o era historiador; o "facilmente crist&atilde;os" revela um projeto de domina&ccedil;&atilde;o cultural, n&atilde;o observa&ccedil;&atilde;o neutral.')"><span class="opt-letter">C)</span><span>Uma an&aacute;lise cient&iacute;fica e neutra dos costumes nativos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_4',3,0,'quiz09','A: O texto n&atilde;o &eacute; fict&iacute;cio; &eacute; um relato real que, por&eacute;m, revela muito sobre as ideologias do colonizador.')"><span class="opt-letter">D)</span><span>A fic&ccedil;&atilde;o liter&aacute;ria do escrivão sobre um povo imagin&aacute;rio</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q09_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q09_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">A Carta de Caminha ficou guardada por 317 anos. Que implica&ccedil;&atilde;o isso tem?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q09_5',0,1,'quiz09','B: O que circula ou n&atilde;o circula como texto fundador de uma na&ccedil;&atilde;o &eacute; uma decis&atilde;o pol&iacute;tica que molda a mem&oacute;ria nacional.')"><span class="opt-letter">A)</span><span>N&atilde;o tem implica&ccedil;&otilde;es: o texto importa apenas pelo conte&uacute;do, n&atilde;o pela data de publica&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_5',1,1,'quiz09','Correto! A circula&ccedil;&atilde;o (ou n&atilde;o) de um texto &eacute; um ato pol&iacute;tico. Publicar a carta em 1817 coincidia com o projeto de constru&ccedil;&atilde;o da identidade nacional brasileira ap&oacute;s a independ&ecirc;ncia. A escolha de qual texto funda a na&ccedil;&atilde;o molda quem a na&ccedil;&atilde;o acredita ser.')"><span class="opt-letter">B)</span><span>A data de publica&ccedil;&atilde;o &eacute; um ato pol&iacute;tico: textos s&atilde;o publicados quando atendem a interesses de constru&ccedil;&atilde;o de identidade nacional</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_5',2,1,'quiz09','B: A demora n&atilde;o foi por perda; era um arquivo real protegido. A publica&ccedil;&atilde;o tardia foi uma escolha pol&iacute;tica.')"><span class="opt-letter">C)</span><span>A carta foi perdida e reencontrada por acaso em um arquivo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q09_5',3,1,'quiz09','B: Historicamente o armazenamento n&atilde;o era o problema; a n&atilde;o circula&ccedil;&atilde;o do texto por s&eacute;culos foi uma escolha.  ')"><span class="opt-letter">D)</span><span>Na &eacute;poca n&atilde;o havia tecnologia para reproduzir textos</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q09_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr09"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 09!</div><button class="qrb-retry" onclick="resetQuiz('quiz09')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c09 -->
+<hr class="rainbow-div">
+
+<!-- ====================== T10: LIT PORTUGUESA TROVADORISMO ====================== -->
+<section id="c10" class="sec-rel" style="background:var(--bg)">
+<div class="sfloat-wrap" id="sf10"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 10 &middot; Bloco III</div>
+  <h2>&#127963; Literatura Portuguesa: origens e influ&ecirc;ncias</h2>
+  <p>Trovadorismo &middot; Humanismo &middot; Conex&otilde;es com a tradi&ccedil;&atilde;o lus&oacute;fona</p>
+</div>
+<div class="block-tabs-wrap" id="tabs10">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs10',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs10',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs10',2,this)">&#127918; Quiz</button>
+  </div>
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c10')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Para entender a literatura brasileira, precisamos entender a portuguesa. Afinal, a l&iacute;ngua que falamos, a forma como rimamos, a tradi&ccedil;&atilde;o que herdamos: tudo come&ccedil;a nos trovadores medievais de Portugal.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127963; Das origens ao Renascimento: a linha do tempo</h3>
+    <div class="timeline-lit">
+      <div class="tl-lit-item">
+        <div class="tl-lit-date">S&eacute;c. XII &mdash; 1189</div>
+        <h4>Primeiro texto em portugu&ecirc;s</h4>
+        <p>O "Cancioneiro da Ajuda" registra cantigas do final do s&eacute;culo XII. A <em>Cantiga da Ribeirinha</em>, de Paio Soares de Taveirós, datada de cerca de 1189, &eacute; frequentemente apontada como o primeiro texto em portugu&ecirc;s-galego. A l&iacute;ngua j&aacute; começa como instrumento de arte.</p>
+      </div>
+      <div class="tl-lit-item">
+        <div class="tl-lit-date">S&eacute;c. XII-XIV &mdash; Trovadorismo</div>
+        <h4>Era dos trovadores</h4>
+        <p>Os trovadores medievais galego-portugueses criaram uma rica tradi&ccedil;&atilde;o po&eacute;tica oral e musical. Os principais g&ecirc;neros eram cantigas de amor (lirismo masculino), cantigas de amigo (perspectiva feminina) e cantigas de escarnho e maldizer (s&aacute;tira social e pol&iacute;tica).</p>
+      </div>
+      <div class="tl-lit-item">
+        <div class="tl-lit-date">S&eacute;c. XIV-XV &mdash; Prosa medieval</div>
+        <h4>Crônicas e novelas de cavalaria</h4>
+        <p>Fernão Lopes escreve as primeiras grandes cr&ocirc;nicas hist&oacute;ricas portuguesas com valor liter&aacute;rio reconhecido. As novelas de cavalaria (Amadis de Gaula) fixam os temas do amor cort&ecirc;s e da queda heroica.</p>
+      </div>
+      <div class="tl-lit-item">
+        <div class="tl-lit-date">S&eacute;c. XV-XVI &mdash; Humanismo</div>
+        <h4>Gil Vicente e o humanismo portugu&ecirc;s</h4>
+        <p>O humanismo traz o homem para o centro da reflex&atilde;o, questionando as certezas medievais. Gil Vicente &eacute; o maior dramaturgo portugu&ecirc;s da &eacute;poca: suas pe&ccedil;as s&atilde;o ferinas cr&iacute;ticas sociais contra o clero, a nobreza e a burguesia.</p>
+      </div>
+      <div class="tl-lit-item">
+        <div class="tl-lit-date">S&eacute;c. XVI &mdash; Classicismo</div>
+        <h4>Cam&otilde;es e o Classicismo portugu&ecirc;s</h4>
+        <p>Lu&iacute;s de Cam&otilde;es (1524/1525&ndash;1580) &eacute; o maior escritor em l&iacute;ngua portuguesa. Escreveu Os Lus&iacute;adas (epopeia nacional sobre as Grandes Navega&ccedil;&otilde;es) e uma vasta obra l&iacute;rica (sonetos). Influenciou toda a literatura em portugu&ecirc;s at&eacute; hoje.</p>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('trovadores medievais Portugal cancioneiro miniatura')">&#128444;&#65039; Ver imagens: <strong>Trovadores medievais portugueses &mdash; iluminuras</strong></div>
+  </div>
+
+  <!-- TIPOS DE CANTIGAS INTERATIVO -->
+  <div class="card fi">
+    <h3>&#127913; Os tipos de cantigas trovadorescas</h3>
+    <p>Clique em cada tipo para ver caracter&iacute;sticas e um exemplo:</p>
+    <div class="trovador-grid">
+      <div class="lit-period-card" onclick="toggleLPC(this)">
+        <div class="lpc-header">
+          <div class="lpc-era">Amor</div>
+          <div class="lpc-txt"><div class="lpc-title">Cantiga de Amor</div><div class="lpc-sub">Trovador → Senhor</div></div>
+          <div class="lpc-arrow">&#9658;</div>
+        </div>
+        <div class="lpc-body">
+          <p style="font-size:.83rem;color:var(--txt2);line-height:1.65">O trovador canta seu amor n&atilde;o correspondido por uma mulher nobre ("senhor"). Tom de sofrimento e suplicidade (<em>coita amorosa</em>). A mulher &eacute; intoc&aacute;vel e perfeita. A poesia &eacute; masculina, no sentido de que &eacute; um homem falando de seu amor.</p>
+          <div class="parchment-text" style="font-size:.82rem;margin:.6rem 0">"Ai flores, ai flores do verde pino,<br>se sabedes novas do meu amigo?<br>Ai Deus, e u &eacute;?"<br><span style="font-size:.68rem;color:var(--muted);font-style:normal">&mdash; D. Dinis (rei trovador, s&eacute;c. XIII&ndash;XIV)</span></div>
+        </div>
+      </div>
+      <div class="lit-period-card" onclick="toggleLPC(this)">
+        <div class="lpc-header">
+          <div class="lpc-era" style="background:linear-gradient(135deg,var(--acc3),#4a8a30)">Amigo</div>
+          <div class="lpc-txt"><div class="lpc-title">Cantiga de Amigo</div><div class="lpc-sub">Voz feminina</div></div>
+          <div class="lpc-arrow">&#9658;</div>
+        </div>
+        <div class="lpc-body">
+          <p style="font-size:.83rem;color:var(--txt2);line-height:1.65">O trovador (homem) assume a voz de uma mulher que chora a aus&ecirc;ncia do amado. Tom mais popular, com refer&ecirc;ncias &agrave; natureza (mar, rio, flores). Dialoga com a tradi&ccedil;&atilde;o oral da poes&iacute;a feminina popular ib&eacute;rica.</p>
+          <div class="parchment-text" style="font-size:.82rem;margin:.6rem 0">"Levad', amigo, que dormides as manhanas frias,<br>todalas aves do mundo d'amor cantavam."<br><span style="font-size:.68rem;color:var(--muted);font-style:normal">&mdash; Nuno Fernandes Torneol (s&eacute;c. XIII)</span></div>
+        </div>
+      </div>
+      <div class="lit-period-card" onclick="toggleLPC(this)">
+        <div class="lpc-header">
+          <div class="lpc-era" style="background:linear-gradient(135deg,var(--acc1),#6a0000)">S&aacute;tira</div>
+          <div class="lpc-txt"><div class="lpc-title">Cantiga de Escarnho</div><div class="lpc-sub">Cr&iacute;tica e humor</div></div>
+          <div class="lpc-arrow">&#9658;</div>
+        </div>
+        <div class="lpc-body">
+          <p style="font-size:.83rem;color:var(--txt2);line-height:1.65">As cantigas de escarnho e maldizer s&atilde;o s&aacute;tiras a pessoas reais (outros trovadores, cl&eacute;rigos, nobres). O escarnho usa ironia e ambiguidade; o maldizer &eacute; direto e violento. Revelam conflitos sociais reais da corte medieval.</p>
+          <div class="parchment-text" style="font-size:.82rem;margin:.6rem 0">"Quand' eu vejo as froles do campo,<br>que par&ecirc;cem riso, e alegria,<br>cuido-se de vós, mia senhor."<br><span style="font-size:.68rem;color:var(--muted);font-style:normal">&mdash; Paio Soares de Taveirós (s&eacute;c. XII&ndash;XIII)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128081; Cam&otilde;es: o poeta e o per&iacute;odo</h3>
+    <p>Lu&iacute;s de Cam&otilde;es &eacute; a figura central da literatura portuguesa e uma das maiores da l&iacute;ngua portuguesa. Sua obra divide-se em:</p>
+    <div class="grid2">
+      <div class="info-card">
+        <h4>&#127760; Os Lus&iacute;adas (1572)</h4>
+        <p>Epopeia em dez cantos que narra as Grandes Navega&ccedil;&otilde;es portuguesas, especialmente a viagem de Vasco da Gama &agrave; &Iacute;ndia. Usa a estrutura cl&aacute;ssica de Homero e Virg&iacute;lio para glorificar Portugal. &Eacute; o texto fundador da identidade nacional portuguesa.</p>
+      </div>
+      <div class="info-card">
+        <h4>&#10024; Poes&iacute;a l&iacute;rica</h4>
+        <p>Sonetos que exploram o amor como for&ccedil;a paradoxal ("Amor &eacute; fogo que arde sem se ver"). Retoma a tradi&ccedil;&atilde;o trovadoresca e a refunda sob influ&ecirc;ncia renascentista italiana (Petrarca). Marca toda a poes&iacute;a em portugu&ecirc;s at&eacute; hoje.</p>
+      </div>
+    </div>
+    <div class="parchment-text fi">
+      "Amor &eacute; fogo que arde sem se ver;<br>
+      &Eacute; ferida que d&oacute;i e n&atilde;o se sente;<br>
+      &Eacute; um contentamento descontente;<br>
+      &Eacute; dor que desatina sem doer."
+      <div class="parchment-attr">Lu&iacute;s de Cam&otilde;es, Soneto XI (s&eacute;c. XVI)</div>
+    </div>
+    <div class="interactive-box fi">
+      <div class="ib-title">&#127918; Identifique as figuras de linguagem no soneto de Cam&otilde;es</div>
+      <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.8rem">Releia os versos acima e responda:</p>
+      <div class="int-question" id="iqcam01">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">"Amor &eacute; fogo que arde sem se ver" usa principalmente qual figura?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqcam01','N&atilde;o. Ifonema seria repeti&ccedil;&atilde;o de sons; o verso usa imagem metaf&oacute;rica.')">Aliteração</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqcam01','Correto! Met&aacute;fora: amor identificado com fogo, sem marca de compara&ccedil;&atilde;o (&quot;como&quot; ou &quot;parece&quot;). O fogo tamb&eacute;m &eacute; qualificado com paradoxo: arde sem ser visto.')">Metáfora + paradoxo</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqcam01','N&atilde;o. Lit&oacute;te negaria o contr&aacute;rio; aqui h&aacute; afirma&ccedil;&atilde;o direta por imagem metaf&oacute;rica.')">Litote</button>
+        </div>
+        <div class="int-feedback" id="fb-iqcam01"></div>
+      </div>
+      <div class="int-question" id="iqcam02" style="margin-top:.6rem">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">"contentamento descontente" e "dor que desatina sem doer" s&atilde;o exemplos de:</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqcam02','N&atilde;o. Hipérbole exagera; esses pares unem opostos sem exagero quantitativo.')">Hip&eacute;rbole</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqcam02','Correto! Oximoro (ou antítese radical): une dois conceitos contradit&oacute;rios num s&oacute; sintagma (&quot;contentamento descontente&quot;). &Eacute; o recurso preferido de Cam&otilde;es para expressar a natureza paradoxal do amor.')">Oximoro / paradoxo</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqcam02','N&atilde;o. Gradação organizaria em escala; aqui os termos s&atilde;o contradit&oacute;rios, n&atilde;o progressivos.')">Gradação</button>
+        </div>
+        <div class="int-feedback" id="fb-iqcam02"></div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('Luis de Camoens retrato poeta Os Lusiadas')">&#128444;&#65039; Ver imagens: <strong>Lu&iacute;s de Cam&otilde;es &mdash; retratos e Os Lus&iacute;adas</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=trovadorismo+cantigas+amor+amigo+escarnho+portugues')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Trovadorismo: cantigas e tipos</strong><span>YouTube &middot; Literatura medieval</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Camoes+Os+Lusiadas+analise+literatura+portuguesa')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Cam&otilde;es e Os Lus&iacute;adas: an&aacute;lise</strong><span>YouTube &middot; Classicismo portugu&ecirc;s</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('Gil Vicente teatro humanismo portugal sec XVI')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>Gil Vicente e o teatro humanista portugu&ecirc;s</strong><span>Google Imagens</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t10 -->
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 10</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Compare uma cantiga de amor com uma cantiga de amigo em termos de: (a) quem &eacute; o eu-l&iacute;rico; (b) qual &eacute; o destinat&aacute;rio do poema; (c) qual &eacute; o tom predominante; (d) quais elementos da natureza ou do cotidiano s&atilde;o usados.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Cam&otilde;es usou o oximoro (contraditor&iacute;o: "contentamento descontente") para definir o amor. Por que essa figura &eacute; t&atilde;o eficaz para expressar a experi&ecirc;ncia amorosa? Voc&ecirc; consegue criar um oximoro pr&oacute;prio para definir uma emo&ccedil;&atilde;o complexa?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Os Lus&iacute;adas &eacute; uma epopeia que glorifica as conquistas portuguesas. Do ponto de vista dos povos encontrados durante as Grandes Navega&ccedil;&otilde;es, como esses mesmos eventos poderiam ser narrados? Que vozes est&atilde;o ausentes da epopeia de Cam&otilde;es?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">A l&iacute;ngua portuguesa descende da tradi&ccedil;&atilde;o galego-portuguesa dos trovadores medievais. Pesquise e identifique pelo menos 3 palavras ou express&otilde;es do portugu&ecirc;s atual que t&ecirc;m origem no per&iacute;odo medieval (podem ser expressões, constru&ccedil;&otilde;es gramaticais ou metáforas).</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Gil Vicente criticou o clero e a nobreza em suas pe&ccedil;as, mesmo vivendo numa sociedade controlada pela Igreja e pelo rei. Como &eacute; poss&iacute;vel que um artista critique o poder da sua pr&oacute;pria &eacute;poca? Que riscos corriam os artistas cr&iacute;ticos na Idade M&eacute;dia e no per&iacute;odo colonial?</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz10">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 10</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn10">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb10" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q10_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A cantiga de amigo difere da cantiga de amor principalmente porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q10_1',0,1,'quiz10','B: As cantigas de amigo assumem a perspectiva feminina, com a mulher lamentando a aus&ecirc;ncia do amado, mesmo sendo escritas por trovadores homens.')"><span class="opt-letter">A)</span><span>&Eacute; escrita por mulheres</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_1',1,1,'quiz10','Correto! A cantiga de amigo assume a voz feminina: &eacute; o trovador (homem) que fala pela perspectiva de uma mulher que chora a aus&ecirc;ncia do amado, com tom mais popular e refer&ecirc;ncias &agrave; natureza.')"><span class="opt-letter">B)</span><span>Assume a perspectiva feminina, com a voz de uma mulher que chora a aus&ecirc;ncia do amado</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_1',2,1,'quiz10','B: As cantigas de amigo n&atilde;o s&atilde;o religiosas; s&atilde;o l&iacute;ricas profanas, muitas vezes com refer&ecirc;ncias naturais.')"><span class="opt-letter">C)</span><span>&Eacute; sempre religiosa e dedicada a santos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_1',3,1,'quiz10','B: O escarnho &eacute; outro tipo de cantiga, satírica; a de amigo &eacute; l&iacute;rica e sentimental.')"><span class="opt-letter">D)</span><span>&Eacute; sat&iacute;rica e cr&iacute;tica a personagens reais</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q10_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q10_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">Os Lus&iacute;adas de Cam&otilde;es &eacute; uma epopeia que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q10_2',0,2,'quiz10','C: Os Lus&iacute;adas narram as Grandes Navega&ccedil;&otilde;es, especialmente a viagem de Vasco da Gama &agrave; &Iacute;ndia, usando a estrutura cl&aacute;ssica das epopeias de Homero e Virg&iacute;lio.')"><span class="opt-letter">A)</span><span>Critica as Grandes Navega&ccedil;&otilde;es portuguesas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_2',1,2,'quiz10','C: Os Lus&iacute;adas &eacute; uma epopeia, n&atilde;o teatro; &eacute; Gil Vicente o grande dramaturgo portugu&ecirc;s da &eacute;poca.')"><span class="opt-letter">B)</span><span>&Eacute; uma pe&ccedil;a teatral sobre a Idade M&eacute;dia portuguesa</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_2',2,2,'quiz10','Correto! Os Lus&iacute;adas &eacute; uma epopeia em dez cantos que glorifica as Grandes Navega&ccedil;&otilde;es portuguesas usando a estrutura cl&aacute;ssica de Homero (Il&iacute;ada) e Virg&iacute;lio (Eneida), tornando-se o texto fundador da identidade nacional portuguesa.')"><span class="opt-letter">C)</span><span>Glorifica as Grandes Navega&ccedil;&otilde;es usando a estrutura cl&aacute;ssica hom&eacute;rica e virgiliana</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_2',3,2,'quiz10','C: A obra de Cam&otilde;es n&atilde;o trata dos trovadores medievais; ela &eacute; do per&iacute;odo Classicista.')"><span class="opt-letter">D)</span><span>Re&uacute;ne as melhores cantigas de amor medievais portuguesas</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q10_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q10_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">A cantiga de escarnho e maldizer &eacute; importante porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q10_3',0,2,'quiz10','C: As cantigas de escarnho criticavam cl&eacute;rigos, nobres e outros trovadores, revelando conflitos e hip&oacute;crisias da sociedade medieval portugu&ecirc;sa.')"><span class="opt-letter">A)</span><span>&Eacute; o tipo mais antigo de cantiga trovadoresca</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_3',1,2,'quiz10','C: O humor das cantigas n&atilde;o era apenas entretenimento; tinha fun&ccedil;&atilde;o cr&iacute;tica e social.')"><span class="opt-letter">B)</span><span>Era o g&ecirc;nero mais popular entre o povo humilde</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_3',2,2,'quiz10','Correto! As cantigas sat&iacute;ricas revelam os conflitos reais da sociedade medieval: cr&iacute;ticas a cl&eacute;rigos hipócritas, nobres covardes e trovadores ruins. S&atilde;o documentos hist&oacute;ricos e sociológicos al&eacute;m de textos liter&aacute;rios.')"><span class="opt-letter">C)</span><span>Revela conflitos reais da sociedade medieval: s&atilde;o documentos hist&oacute;rico-sociais al&eacute;m de textos liter&aacute;rios</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_3',3,2,'quiz10','C: Fernão Lopes &eacute; o cronista; Cam&otilde;es &eacute; o l&iacute;rico e autor de epopeia.')"><span class="opt-letter">D)</span><span>Foi criada exclusivamente por Cam&otilde;es e Fernão Lopes</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q10_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q10_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">O humanismo portugu&ecirc;s (s&eacute;c. XV-XVI) caracteriza-se por:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q10_4',0,0,'quiz10','Correto! O humanismo coloca o ser humano no centro da reflex&atilde;o (em vez de Deus), questiona a autoridade da Igreja e valorizas o conhecimento cl&aacute;ssico greco-romano. Em Gil Vicente, isso se manifesta na cr&iacute;tica social das institui&ccedil;&otilde;es religiosas e aristoc&aacute;ticas.')"><span class="opt-letter">A)</span><span>Colocar o ser humano no centro da reflex&atilde;o, questionar a autoridade eclesi&aacute;stica e valorizar o conhecimento cl&aacute;ssico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_4',1,0,'quiz10','A: O humanismo &eacute; uma ruptura com o teocentrismo medieval, n&atilde;o sua continuidade.')"><span class="opt-letter">B)</span><span>Refor&ccedil;ar os valores religiosos medievais e a autoridade da Igreja</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_4',2,0,'quiz10','A: O humanismo &eacute; anterior ao romantismo; s&atilde;o per&iacute;odos distintos separados por s&eacute;culos.')"><span class="opt-letter">C)</span><span>Priorizar a emo&ccedil;&atilde;o rom&acirc;ntica em detrimento da raz&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_4',3,0,'quiz10','A: O humanismo valoriza o conhecimento cl&aacute;ssico (greco-romano), n&atilde;o o rejeita.')"><span class="opt-letter">D)</span><span>Rejeitar a cultura greco-romana como pag&atilde;</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q10_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q10_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Por que a tradi&ccedil;&atilde;o trovadoresca portuguesa &eacute; importante para entender a literatura brasileira?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q10_5',0,3,'quiz10','D: A l&iacute;ngua, as formas po&eacute;ticas (soneto, redondilha), o amor cort&ecirc;s e a ironia s&atilde;o h&eran&ccedil;as medievais que chegaram ao Brasil com a coloniza&ccedil;&atilde;o e se transformaram em contato com as culturas ind&iacute;genas e africanas.')"><span class="opt-letter">A)</span><span>Porque os trovadores medievais viveram no Brasil</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_5',1,3,'quiz10','D: N&atilde;o h&aacute; influ&ecirc;ncia direta das cantigas na mpb; &eacute; uma rela&ccedil;&atilde;o hist&oacute;rica e lingu&iacute;stica mais ampla.')"><span class="opt-letter">B)</span><span>Porque as cantigas trovadorescas foram cantadas no Brasil colonial</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_5',2,3,'quiz10','D: O Quinhentismo brasileiro &eacute; um per&iacute;odo pr&oacute;prio, n&atilde;o o mesmo que o Trovadorismo portugu&ecirc;s.')"><span class="opt-letter">C)</span><span>Porque o Trovadorismo e o Quinhentismo brasileiro s&atilde;o o mesmo per&iacute;odo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q10_5',3,3,'quiz10','Correto! A l&iacute;ngua portuguesa, com toda a sua riqueza hist&oacute;rica, suas formas po&eacute;ticas e tradi&ccedil;&otilde;es retorica herdadas do medieval, chegou ao Brasil com a coloniza&ccedil;&atilde;o. Entender as origens &eacute; entender a base sobre a qual a literatura brasileira se construiu e com a qual rompeu.')"><span class="opt-letter">D)</span><span>Porque a l&iacute;ngua portuguesa com suas formas po&eacute;ticas e tradi&ccedil;&otilde;es retorica chegou ao Brasil com a coloniza&ccedil;&atilde;o e &eacute; a base sobre a qual a literatura brasileira se construiu</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q10_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr10"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 10!</div><button class="qrb-retry" onclick="resetQuiz('quiz10')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c10 -->
+<hr class="rainbow-div">
+
+<!-- ====================== T11: LIT INDIGENA ====================== -->
+<section id="c11" class="sec-rel" style="background:var(--bg2)">
+<div class="sfloat-wrap" id="sf11"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 11 &middot; Bloco III</div>
+  <h2>&#127807; Literatura Ind&iacute;gena Brasileira</h2>
+  <p>Voz do colonizado e do colonizador &middot; Textos e narrativas ind&iacute;genas &middot; Perspectivas decoloniais</p>
+</div>
+<div class="block-tabs-wrap" id="tabs11">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs11',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs11',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs11',2,this)">&#127918; Quiz</button>
+  </div>
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c11')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Quando falamos de literatura ind&iacute;gena, estamos falando de mais de 300 povos, mais de 150 l&iacute;nguas e mais de 12.000 anos de produ&ccedil;&atilde;o cultural no territ&oacute;rio brasileiro. Nenhuma outra literatura &eacute; mais antiga nem mais rica em diversidade.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127807; O que &eacute; a literatura ind&iacute;gena brasileira?</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>A <strong>literatura ind&iacute;gena brasileira</strong> &eacute; o conjunto de produ&ccedil;&otilde;es verbais (orais, escritas ou m&iacute;sticas) dos povos origin&aacute;rios do Brasil, que incluem mitos de origem, narrativas cosmogônicas, cantos cerimoniais, hist&oacute;rias de heróis, poes&iacute;a oral e, mais recentemente, literatura escrita contempor&acirc;nea por autores ind&iacute;genas. &Eacute; uma literatura <strong>plural</strong>, pois engloba mais de 300 povos com l&iacute;nguas, cosmovisões e tradi&ccedil;&otilde;es distintas.</p>
+    </div>
+    <p style="margin-top:.8rem">O reconhecimento da literatura ind&iacute;gena como literatura &eacute; tamb&eacute;m um ato pol&iacute;tico: durante s&eacute;culos, as narrativas ind&iacute;genas foram tratadas como "mitos primitivos" ou "folclore", n&atilde;o como literatura. Esse preconceito &eacute; um reflexo do etnocentrismo colonial.</p>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128218; Dois olhares sobre o mesmo territ&oacute;rio</h3>
+    <p>Compare como o mesmo territ&oacute;rio &eacute; percebido por dois registros distintos:</p>
+    <div class="indig-card fi">
+      <h4>&#127807; Perspectiva ind&iacute;gena (Yanomami, adaptado)</h4>
+      <p>"A floresta n&atilde;o &eacute; apenas &aacute;rvores. A floresta pensa. A floresta &eacute; o corpo de um ser vivo imenso. Quando o branco corta uma &aacute;rvore, ela grita. N&oacute;s ouvimos. Mas o branco n&atilde;o ouve porque aprendeu a n&atilde;o ouvir."<br><br>
+      <em>&mdash; Baseado nos relatos de Davi Kopenawa, lider e xamã Yanomami, em "A Queda do C&eacute;u" (2010)</em></p>
+    </div>
+    <div class="fragment-box">
+      <div style="font-size:.65rem;font-weight:900;text-transform:uppercase;color:var(--acc1);margin-bottom:.3rem">Perspectiva colonial (s&eacute;c. XVI)</div>
+      <p style="font-family:'Crimson Pro',Georgia,serif;font-style:italic;font-size:.9rem;line-height:1.75">"... &eacute; uma terra boa, &agrave;s &aacute;guas muito boa e muito frescas, conforme as c&aacute;lidas, muita gente, muitas &aacute;rvores, muito para aproveitar... em suma, tudo se v&ecirc; ali pela muita esp&eacute;cie e riqueza que em ela h&aacute;."<br><br><em>&mdash; Pero Vaz de Caminha, 1500 (a floresta como recurso a "aproveitar")</em></p>
+    </div>
+    <div class="tip-box" style="margin-top:.8rem">
+      <strong>Para refletir:</strong> O texto de Caminha v&ecirc; a floresta como recurso econ&ocirc;mico ("aproveitar"). O texto Yanomami v&ecirc; a floresta como ser vivo. Essa diferen&ccedil;a de cosmovis&atilde;o &eacute; at&eacute; hoje um conflito pol&iacute;tico fundamental no Brasil (desmata&ccedil;&atilde;o vs. preserve&ccedil;&atilde;o de terras ind&iacute;genas).
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127775; Autores ind&iacute;genas contempor&acirc;neos</h3>
+    <p>Nas &uacute;ltimas d&eacute;cadas, uma nova gera&ccedil;&atilde;o de escritores ind&iacute;genas assumiu a caneta e a tela para narrar suas pr&oacute;prias hist&oacute;rias. N&atilde;o &eacute; mais apenas a literatura <em>sobre</em> os ind&iacute;genas &mdash; &eacute; a literatura <em>dos</em> ind&iacute;genas.</p>
+    <div class="trovador-grid">
+      <div class="trov-card">
+        <div class="trov-icon">&#127807;</div>
+        <div class="trov-name">Ailton Krenak</div>
+        <div class="trov-desc">Escritor, filósofo e lider do povo Krenak (MG). "Ideias para adiar o fim do mundo" (2019) &eacute; um bestseller nacional. Defende uma ontologia (forma de ser no mundo) radicalmente diferente da ocidental.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127908;</div>
+        <div class="trov-name">Davi Kopenawa</div>
+        <div class="trov-desc">Lder e xam&atilde; Yanomami. "A Queda do C&eacute;u" (2010, com Bruce Albert) &eacute; um dos textos mais importantes sobre a cosmologia ind&iacute;gena e a den&uacute;ncia do desmata&ccedil;&atilde;o da Amaz&ocirc;nia.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#10024;</div>
+        <div class="trov-name">Daniel Munduruku</div>
+        <div class="trov-desc">Escritor Munduruku (PA). Autor de mais de 50 livros, especialista em literatura infantil ind&iacute;gena. Pioneiro em levar as narrativas ind&iacute;genas para o contexto escolar brasileiro.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128196;</div>
+        <div class="trov-name">Eliane Potiguara</div>
+        <div class="trov-desc">Escritora Potiguara (PB/PA). "Metade cara, metade m&aacute;scara" (1994) &eacute; considerado o primeiro livro de autoria ind&iacute;gena publicado no Brasil. Fala sobre a dor da coloniza&ccedil;&atilde;o e a busca de identidade.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127756;</div>
+        <div class="trov-name">Jaider Esbell</div>
+        <div class="trov-desc">Artista plástico, escritor e ativista Macuxi (RR, 1979-2021). Sua arte e literatura misturavam cosmologia ind&iacute;gena com estética contempor&acirc;nea. Representou o Brasil na Bienal de Veneza.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127942;</div>
+        <div class="trov-name">Literatura ind&iacute;gena escolar</div>
+        <div class="trov-desc">A Lei 11.645/2008 tornou obrigat&oacute;rio o ensino de hist&oacute;ria e cultura ind&iacute;gena e afro-brasileira nas escolas. Isso transformou a produ&ccedil;&atilde;o e circula&ccedil;&atilde;o da literatura ind&iacute;gena no Brasil.</div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('Ailton Krenak Daniel Munduruku escritores indigenas brasileiros')">&#128444;&#65039; Ver imagens: <strong>Escritores ind&iacute;genas brasileiros contempor&acirc;neos</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128260; Perspectivas decoloniais na literatura</h3>
+    <p>A <strong>perspectiva decolonial</strong> na literatura questiona:</p>
+    <div class="grid2">
+      <div class="info-card">
+        <h4>Quem narra?</h4>
+        <p>Durante s&eacute;culos, os ind&iacute;genas foram narrados por outros (colonizadores, antrop&oacute;logos, missioneiros). A literatura ind&iacute;gena contempor&acirc;nea recupera o direito de narrar a pr&oacute;pria hist&oacute;ria.</p>
+      </div>
+      <div class="info-card">
+        <h4>Qual &eacute; o centro?</h4>
+        <p>A literatura brasileira convencional toma a Europa como ponto de partida. A perspectiva decolonial questiona esse centro e coloca as cosmovisões ind&iacute;genas e africanas como perspectivas ig ualmente v&aacute;lidas.</p>
+      </div>
+      <div class="info-card">
+        <h4>O que &eacute; conhecimento?</h4>
+        <p>O conhecimento cient&iacute;fico europeu n&atilde;o &eacute; a &uacute;nica forma v&aacute;lida de conhecer o mundo. Os saberes ind&iacute;genas sobre ecologia, medicina e cosmologia s&atilde;o formas leg&iacute;timas e sofisticadas de conhecimento.</p>
+      </div>
+      <div class="info-card">
+        <h4>O que &eacute; progresso?</h4>
+        <p>A ideia de que a civiliza&ccedil;&atilde;o ocidental representa o topo do progresso humano &eacute; questionada. Para os Yanomami, o "progresso" que destri a floresta &eacute; a pr&oacute;pria destrui&ccedil;&atilde;o do mundo.</p>
+      </div>
+    </div>
+    <div class="parchment-text fi" style="border-left-color:var(--acc3)">
+      "N&oacute;s, ind&iacute;genas, j&aacute; vivemos o fim do mundo. Para n&oacute;s, o apocalipse j&aacute; aconteceu &mdash; em 1500."
+      <div class="parchment-attr" style="color:var(--acc3)">Ailton Krenak, "Ideias para adiar o fim do mundo" (2019)</div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Ailton+Krenak+literatura+indigena+brasileira+palestra')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Ailton Krenak: literatura e cosmovis&atilde;o ind&iacute;gena</strong><span>YouTube &middot; Palestra ou entrevista</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=Daniel+Munduruku+literatura+indigena+escola+criancas')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Daniel Munduruku e a literatura ind&iacute;gena na escola</strong><span>YouTube &middot; Entrevista</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('narrativas indigenas mitos origem Brasil povos originarios')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>Narrativas ind&iacute;genas brasileiras &mdash; imagens</strong><span>Google Imagens</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t11 -->
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 11</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Compare os dois olhares sobre a floresta (Yanomami e Caminha) apresentados no conte&uacute;do. Quais valores est&atilde;o por tr&aacute;s de cada perspectiva? Como essa diferen&ccedil;a de cosmovis&atilde;o explica conflitos atuais sobre terras ind&iacute;genas e desmata&ccedil;&atilde;o?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Ailton Krenak afirma que "para n&oacute;s, o apocalipse j&aacute; aconteceu &mdash; em 1500." Explique essa afirmativa. O que foi perdido pelos povos ind&iacute;genas com a coloniza&ccedil;&atilde;o? Por que isso &eacute; relevante para entender a literatura ind&iacute;gena contempor&acirc;nea?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Por que o reconhecimento da literatura ind&iacute;gena como literatura (e n&atilde;o como "mito" ou "folclore") &eacute; um ato pol&iacute;tico? O que muda quando chamamos um texto ind&iacute;gena de "literatura"?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">A Lei 11.645/2008 tornou obrigat&oacute;rio o ensino de hist&oacute;ria e cultura ind&iacute;gena nas escolas. Voc&ecirc; j&aacute; estudou literatura ind&iacute;gena antes deste material? O que voc&ecirc; sabia? O que n&atilde;o sabia? Por que essa lei demorou tanto para ser aprovada no Brasil?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Pesquise uma lenda ou narrativa de um povo ind&iacute;gena brasileiro (qualquer povo: Guarani, Yanomami, Tupiniquim, Macuxi, etc.). Resuma a narrativa e analise: que valores, que vis&atilde;o de mundo e que rela&ccedil;&atilde;o com a natureza ela expressa? Como ela se diferencia das narrativas europeias que voc&ecirc; conhece?</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz11">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 11</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn11">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb11" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q11_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A literatura ind&iacute;gena brasileira &eacute; descrita como "plural" porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q11_1',0,2,'quiz11','C: A pluralidade da literatura ind&iacute;gena vem da diversidade de mais de 300 povos com l&iacute;nguas, cosmovisões e tradi&ccedil;&otilde;es distintas.')"><span class="opt-letter">A)</span><span>Tem muitos autores publicando ao mesmo tempo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_1',1,2,'quiz11','C: A pluralidade &eacute; &eacute;tnica e cosmol&oacute;gica, n&atilde;o apenas de g&ecirc;neros liter&aacute;rios.')"><span class="opt-letter">B)</span><span>Engloba muitos g&ecirc;neros textuais diferentes</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_1',2,2,'quiz11','Correto! Engloba mais de 300 povos com l&iacute;nguas distintas, cosmovisões pr&oacute;prias e tradi&ccedil;&otilde;es narrativas espec&iacute;ficas. N&atilde;o existe "a" literatura ind&iacute;gena, mas muitas literaturas ind&iacute;genas.')"><span class="opt-letter">C)</span><span>Engloba mais de 300 povos com l&iacute;nguas, cosmovisões e tradi&ccedil;&otilde;es narrativas distintas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_1',3,2,'quiz11','C: A diversidade n&atilde;o &eacute; regional, mas &eacute;tnica e cultural.')"><span class="opt-letter">D)</span><span>Abrange todas as regi&otilde;es geogr&aacute;ficas do Brasil</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q11_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q11_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">Qual a import&acirc;ncia da Lei 11.645/2008 para a literatura ind&iacute;gena brasileira?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q11_2',0,1,'quiz11','B: A lei tornou obrigat&oacute;rio o ensino de hist&oacute;ria e cultura ind&iacute;gena, criando demanda para produ&ccedil;&atilde;o e circula&ccedil;&atilde;o de literatura ind&iacute;gena nas escolas.')"><span class="opt-letter">A)</span><span>Proibiu que n&atilde;o-ind&iacute;genas escrevessem sobre povos ind&iacute;genas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_2',1,1,'quiz11','Correto! Ao tornar obrigat&oacute;rio o ensino de hist&oacute;ria e cultura ind&iacute;gena nas escolas, a lei criou demanda para a produ&ccedil;&atilde;o e circula&ccedil;&atilde;o de literatura ind&iacute;gena no contexto escolar brasileiro.')"><span class="opt-letter">B)</span><span>Ao tornar obrigat&oacute;rio o ensino de cultura ind&iacute;gena nas escolas, criou demanda para produ&ccedil;&atilde;o e circula&ccedil;&atilde;o de literatura ind&iacute;gena</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_2',2,1,'quiz11','B: A lei &eacute; sobre ensino na escola, n&atilde;o sobre terras ind&iacute;genas.')"><span class="opt-letter">C)</span><span>Demarcou terras ind&iacute;genas em todo o pa&iacute;s</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_2',3,1,'quiz11','B: A lei n&atilde;o trata de edi&ccedil;&atilde;o de livros, mas de conte&uacute;do curricular.')"><span class="opt-letter">D)</span><span>Financiou a edi&ccedil;&atilde;o de 1.000 livros ind&iacute;genas por ano</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q11_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q11_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">A frase de Ailton Krenak "para n&oacute;s, o apocalipse j&aacute; aconteceu &mdash; em 1500" significa que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q11_3',0,0,'quiz11','Correto! Da perspectiva ind&iacute;gena, a coloniza&ccedil;&atilde;o de 1500 foi o fim do mundo que j&aacute; conheciam: perda das terras, das l&iacute;nguas, das espiritualidades e de mais de 90% da popula&ccedil;&atilde;o ind&iacute;gena em poucos s&eacute;culos.')"><span class="opt-letter">A)</span><span>Da perspectiva ind&iacute;gena, a coloniza&ccedil;&atilde;o de 1500 representou a destrui&ccedil;&atilde;o do seu mundo: terras, l&iacute;nguas, espiritualidades e vidas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_3',1,0,'quiz11','A: Krenak n&atilde;o faz previs&atilde;o de fim do mundo; ele diz que, para os ind&iacute;genas, ele j&aacute; aconteceu.')"><span class="opt-letter">B)</span><span>O mundo vai acabar em breve por causa do desmatamento</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_3',2,0,'quiz11','A: 1500 n&atilde;o foi um momento positivo para os povos originários do Brasil.')"><span class="opt-letter">C)</span><span>1500 foi um ano de abertura e encontro de civilizações</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_3',3,0,'quiz11','A: Krenak n&atilde;o est&aacute; falando de catastrofismo ambiental, mas de colonialismo hist&oacute;rico.')"><span class="opt-letter">D)</span><span>A coloniza&ccedil;&atilde;o trouxe benef&iacute;cios que os ind&iacute;genas ainda n&atilde;o perceberam</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q11_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q11_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">Por que chamar as narrativas ind&iacute;genas de "mito" em vez de "literatura" pode ser um ato de preconceito?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q11_4',0,2,'quiz11','C: O termo &quot;mito&quot;, quando usado pejorativamente, implica falsidade e primitividade. Reservar o termo &quot;literatura&quot; para os textos europeus &eacute; reproduzir a hierarquia colonial que desvalorizava as produ&ccedil;&otilde;es culturais dos povos colonizados.')"><span class="opt-letter">A)</span><span>Porque mitos s&atilde;o sempre hist&oacute;rias falsas sem valor cultural</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_4',1,2,'quiz11','C: A origem &eacute; irrelevante para o valor; o preconceito est&aacute; no tratamento hier&aacute;rquico das produ&ccedil;&otilde;es culturais.')"><span class="opt-letter">B)</span><span>Porque os mitos ind&iacute;genas t&ecirc;m origem n&atilde;o-humana</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_4',2,2,'quiz11','Correto! Reservar &quot;literatura&quot; para a produ&ccedil;&atilde;o europeia escrita e chamar as produ&ccedil;&otilde;es ind&iacute;genas de &quot;mito primitivo&quot; &eacute; reproduzir a hierarquia colonial que atribui maior valor &agrave;s produ&ccedil;&otilde;es ocidentais.')"><span class="opt-letter">C)</span><span>Porque reservar &quot;literatura&quot; apenas para textos europeus reproduz a hierarquia colonial que desvaloriza produ&ccedil;&otilde;es culturais n&atilde;o ocidentais</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_4',3,2,'quiz11','C: N&atilde;o &eacute; uma quest&atilde;o de direitos autorais, mas de reconhecimento cultural e pol&iacute;tico.')"><span class="opt-letter">D)</span><span>Porque os mitos ind&iacute;genas n&atilde;o t&ecirc;m direitos autorais</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q11_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q11_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">A perspectiva decolonial na literatura questiona principalmente:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q11_5',0,3,'quiz11','D: A perspectiva decolonial questiona quem narra, qual &eacute; o centro, o que &eacute; conhecimento leg&iacute;timo e o que &eacute; progresso, desafiando a supremacia cultural europeia na produ&ccedil;&atilde;o e avalia&ccedil;&atilde;o liter&aacute;ria.')"><span class="opt-letter">A)</span><span>A validade gramatical dos textos ind&iacute;genas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_5',1,3,'quiz11','D: A perspectiva decolonial n&atilde;o nega a Europa, mas questiona sua supremacia como &uacute;nica perspectiva v&aacute;lida.')"><span class="opt-letter">B)</span><span>A exist&ecirc;ncia da literatura europeia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_5',2,3,'quiz11','D: N&atilde;o &eacute; uma quest&atilde;o econ&ocirc;mica apenas, mas epist&ecirc;mica e cultural.')"><span class="opt-letter">C)</span><span>A distribui&ccedil;&atilde;o de recursos financeiros na ind&uacute;stria editorial</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q11_5',3,3,'quiz11','Correto! A perspectiva decolonial questiona as hierarquias: quem tem direito de narrar, qual perspectiva &eacute; central, quais formas de conhecimento s&atilde;o v&aacute;lidas e quem define o que &eacute; progresso ou civiliza&ccedil;&atilde;o.')"><span class="opt-letter">D)</span><span>As hierarquias culturais que colocam a perspectiva europeia como central e &uacute;nica v&aacute;lida, questionando quem narra, o que &eacute; conhecimento e o que &eacute; progresso</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q11_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr11"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Bloco III conclu&iacute;do!</div><div class="qrb-sub">T&oacute;picos 8 a 11 finalizados!</div><button class="qrb-retry" onclick="resetQuiz('quiz11')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c11 -->
+<!-- ====================== BLOCO IV HEADER ====================== -->
+<section style="background:linear-gradient(135deg,#0a1a1a 0%,#1a1a00 50%,#0a0a1a 100%);padding:2.2rem 1.5rem 1.8rem;text-align:center">
+  <div style="font-family:'Cinzel',serif;font-size:.68rem;color:rgba(100,220,200,.85);letter-spacing:.3em;text-transform:uppercase;margin-bottom:.4rem">Bloco IV &middot; T&oacute;picos 12 ao 14</div>
+  <h2 style="font-family:'Cinzel',serif;font-size:clamp(1.3rem,5vw,2rem);font-weight:900;color:#f5e6c8;margin-bottom:.4rem">&#128483;&#65039; Oralidade e Participa&ccedil;&atilde;o Social</h2>
+  <p style="color:rgba(245,230,200,.68);font-style:italic;font-size:.88rem;font-family:'Crimson Pro',Georgia,serif">"A palavra &eacute; o instrumento mais poderoso que existe. Quem aprende a us&aacute;-la bem transforma o mundo."</p>
+</section>
+<hr class="rainbow-div">
+
+<!-- ====================== T12: PARTICIPACAO E DEBATE ====================== -->
+<section id="c12" class="sec-rel" style="background:var(--bg)">
+<div class="sfloat-wrap" id="sf12"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 12 &middot; Bloco IV</div>
+  <h2>&#128483;&#65039; Participa&ccedil;&atilde;o social e pr&aacute;ticas de oralidade: o debate</h2>
+  <p>Canais de participa&ccedil;&atilde;o &middot; Gr&ecirc;mio estudantil &middot; Conselhos &middot; F&oacute;runs de discuss&atilde;o</p>
+</div>
+<div class="block-tabs-wrap" id="tabs12">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs12',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs12',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs12',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <!-- CONTEUDO T12 -->
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c12')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Debater n&atilde;o &eacute; brigar. &Eacute; construir conhecimento com quem pensa diferente de voc&ecirc;. Aprenda isso e voc&ecirc; vai arrasar em qualquer f&oacute;rum, conselho, assembl&eacute;ia ou reuni&atilde;o que entrar.</div>
+    <div class="sec-mascot-hint">Clique para curiosidades &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127963; Participa&ccedil;&atilde;o social: o que &eacute; e por que importa</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>A <strong>participa&ccedil;&atilde;o social</strong> &eacute; o exerc&iacute;cio ativo da cidadania por meio de envolvimento em espa&ccedil;os coletivos de decis&atilde;o, debate e constru&ccedil;&atilde;o de pautas comuns. Ela pode ocorrer na escola (gr&ecirc;mio, conselho de classe), na comunidade (associa&ccedil;&otilde;es, coletivos), no munic&iacute;pio (conselhos municipais, audi&ecirc;ncias p&uacute;blicas) e no pa&iacute;s (portais de e-cidadania, peti&ccedil;&otilde;es, manifesta&ccedil;&otilde;es). &Eacute; a <strong>democracia sendo praticada</strong>, n&atilde;o apenas eleita.</p>
+    </div>
+    <p style="margin-top:.8rem">A Constitui&ccedil;&atilde;o Federal de 1988 garante a participação social como direito. A aus&ecirc;ncia de participação — o chamado <strong>abstencionismo c&iacute;vico</strong> — enfraquece a democracia e deixa o espa&ccedil;o p&uacute;blico para quem quer us&aacute;-lo em benef&iacute;cio pr&oacute;prio.</p>
+  </div>
+
+  <!-- MAPA DE PARTICIPACAO INTERATIVO -->
+  <div class="participacao-mapa fi">
+    <div class="pm-title">&#127968; Onde posso participar? Clique para saber mais</div>
+    <div class="pm-levels">
+      <div class="pm-level" onclick="togglePMLevel(this)">
+        <div class="pm-icon">&#127979;</div>
+        <div class="pm-info"><h5>Na escola</h5><p>Gr&ecirc;mio estudantil, conselho de classe, assembl&eacute;ias</p></div>
+        <div class="pm-detail">O <strong>Gr&ecirc;mio Estudantil</strong> &eacute; garantido pela Lei Federal 7.398/1985. Tem poder de represent&atilde;o dos estudantes, organiza&ccedil;&atilde;o de eventos e participa em decis&otilde;es da escola. O <strong>Conselho de Classe</strong> re&uacute;ne professores, alunos e direção para avaliar o desempenho escolar. A sua voz conta!</div>
+      </div>
+      <div class="pm-level" onclick="togglePMLevel(this)">
+        <div class="pm-icon">&#127968;</div>
+        <div class="pm-info"><h5>Na comunidade</h5><p>Associa&ccedil;&otilde;es de moradores, coletivos, movimentos</p></div>
+        <div class="pm-detail">As <strong>associa&ccedil;&otilde;es de moradores</strong> representam bairros junto ao poder p&uacute;blico. <strong>Coletivos culturais e sociais</strong> organizam a&ccedil;&otilde;es como hortas comunit&aacute;rias, rodas de conversa e movimentos de cultura. <strong>Movimentos sociais</strong> atuam em pautas espec&iacute;ficas: ambiental, feminista, negro, LGBTQIA+.</div>
+      </div>
+      <div class="pm-level" onclick="togglePMLevel(this)">
+        <div class="pm-icon">&#127963;</div>
+        <div class="pm-info"><h5>No munic&iacute;pio</h5><p>Conselhos municipais, audi&ecirc;ncias p&uacute;blicas, Or&ccedil;amento Participativo</p></div>
+        <div class="pm-detail">Os <strong>Conselhos Municipais</strong> (sa&uacute;de, educa&ccedil;&atilde;o, assist&ecirc;ncia social) t&ecirc;m cadeiras reservadas para a sociedade civil. <strong>Audi&ecirc;ncias P&uacute;blicas</strong> s&atilde;o obrigat&oacute;rias antes de grandes obras e mudan&ccedil;as legais. O <strong>Or&ccedil;amento Participativo</strong> permite que moradores votem em prioridades de investimento.</div>
+      </div>
+      <div class="pm-level" onclick="togglePMLevel(this)">
+        <div class="pm-icon">&#127758;</div>
+        <div class="pm-info"><h5>No pa&iacute;s</h5><p>Portais digitais, peti&ccedil;&otilde;es, consultas p&uacute;blicas</p></div>
+        <div class="pm-detail">O <strong>Portal e-Cidadania</strong> (senado.leg.br/ecidadania) permite acompanhar e sugerir projetos de lei. O portal <strong>Participa + Brasil</strong> abre consultas p&uacute;blicas. As <strong>peti&ccedil;&otilde;es online</strong> em plataformas como Change.org podem gerar press&atilde;o pol&iacute;tica real. <strong>Redes sociais</strong> tamb&eacute;m s&atilde;o espa&ccedil;os de disputa pol&iacute;tica.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- O DEBATE COMO GENERO ORAL -->
+  <div class="card fi">
+    <h3>&#127908; O debate como g&ecirc;nero oral</h3>
+    <div class="concept-box">
+      <div class="cb-title">O que &eacute; o debate?</div>
+      <p>O <strong>debate</strong> &eacute; um g&ecirc;nero oral de car&aacute;ter argumentativo em que dois ou mais participantes defendem posi&ccedil;&otilde;es sobre um mesmo tema diante de uma audi&ecirc;ncia, seguindo regras de turno, tempo e conduta. Difere da simples discuss&atilde;o informal: exige <strong>prepara&ccedil;&atilde;o pr&eacute;via</strong>, <strong>argumentos fundamentados</strong>, <strong>escuta atenta</strong> e <strong>respeito ao oponente</strong>.</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card"><h4>&#9654;&#65039; Debate regrado</h4><p>Tempo de fala controlado, temas pr&eacute;-definidos, mediador neutro. Usado em competi&ccedil;&otilde;es acad&ecirc;micas, debates pol&iacute;ticos e f&oacute;runs formais. O objetivo &eacute; <em>vencer</em> com argumento.</p></div>
+      <div class="info-card"><h4>&#128483;&#65039; Debate deliberativo</h4><p>N&atilde;o h&aacute; necessariamente lados fixos. O objetivo &eacute; <em>decidir coletivamente</em> a melhor a&ccedil;&atilde;o. Usado em conselhos, gr&ecirc;mios e assembl&eacute;ias. A escuta &eacute; fundamental.</p></div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('debate estudantil escola forum discussao oralidade')">&#128444;&#65039; Ver imagens: <strong>Debate estudantil e f&oacute;runs de oralidade</strong></div>
+  </div>
+
+  <!-- ESTRUTURA DO DEBATE -->
+  <div class="card fi">
+    <h3>&#127775; Como estruturar um debate eficaz</h3>
+    <div class="argumento-builder fi">
+      <div class="ab-title">&#128293; Estrutura de um argumento s&oacute;lido (modelo PEEL)</div>
+      <div class="ab-steps">
+        <div class="ab-step">
+          <div class="ab-step-num">Passo 1</div>
+          <div class="ab-step-name">P &mdash; Ponto (afirma&ccedil;&atilde;o)</div>
+          <div class="ab-step-desc">Declare sua posi&ccedil;&atilde;o de forma clara e direta. Sem ambigu&iacute;dade.</div>
+          <div class="ab-step-ex">Ex: "A implementa&ccedil;&atilde;o de gr&ecirc;mios estudantis melhora o ambiente escolar."</div>
+        </div>
+        <div class="ab-step">
+          <div class="ab-step-num">Passo 2</div>
+          <div class="ab-step-name">E &mdash; Evid&ecirc;ncia (dado ou exemplo)</div>
+          <div class="ab-step-desc">Apresente dados, pesquisas, casos concretos ou exemplos que sustentam sua posi&ccedil;&atilde;o.</div>
+          <div class="ab-step-ex">Ex: "Pesquisa da UNESCO (2019) mostra que escolas com participa&ccedil;&atilde;o estudantil ativa t&ecirc;m at&eacute; 30% menos evas&atilde;o."</div>
+        </div>
+        <div class="ab-step">
+          <div class="ab-step-num">Passo 3</div>
+          <div class="ab-step-name">E &mdash; Explica&ccedil;&atilde;o (conex&atilde;o)</div>
+          <div class="ab-step-desc">Explique como a evid&ecirc;ncia sustenta o seu ponto. N&atilde;o deixe o leitor fazer essa conex&atilde;o sozinho.</div>
+          <div class="ab-step-ex">Ex: "Isso demonstra que quando estudantes t&ecirc;m voz, sentem-se pertencentes ao espa&ccedil;o escolar e s&atilde;o mais motivados a permanecer."</div>
+        </div>
+        <div class="ab-step">
+          <div class="ab-step-num">Passo 4</div>
+          <div class="ab-step-name">L &mdash; Link (retorno &agrave; tese)</div>
+          <div class="ab-step-desc">Conclua retomando sua afirma&ccedil;&atilde;o inicial, mostrando que a evid&ecirc;ncia e a explica&ccedil;&atilde;o a confirmam.</div>
+          <div class="ab-step-ex">Ex: "Portanto, a exist&ecirc;ncia de gr&ecirc;mio &eacute; um investimento direto na qualidade do ambiente escolar."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRATICA DE DEBATE INTERATIVO -->
+    <div class="debate-arena fi">
+      <div class="da-title">&#9876;&#65039; Arena do Debate: Gr&ecirc;mio estudantil deve ter poder de veto sobre o regimento escolar?</div>
+      <div class="debate-sides">
+        <div class="debate-side ds-pro">
+          <div class="ds-label">&#128994; A favor</div>
+          <ul class="ds-arg" style="padding-left:.9rem">
+            <li>Garante representa&ccedil;&atilde;o real dos estudantes nas regras que os afetam</li>
+            <li>Desenvolve protagonismo e responsabilidade c&iacute;vica</li>
+            <li>Evita regras autoritárias e desconectadas da realidade escolar</li>
+          </ul>
+        </div>
+        <div class="debate-side ds-con">
+          <div class="ds-label">&#128308; Contra</div>
+          <ul class="ds-arg" style="padding-left:.9rem">
+            <li>Pode gerar impasse e impedir necessárias atualiza&ccedil;&otilde;es disciplinares</li>
+            <li>Exige maturidade pol&iacute;tica que nem sempre existe</li>
+            <li>Responsabilidade legal recai sobre a dire&ccedil;&atilde;o, n&atilde;o sobre os estudantes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="int-question" id="iqd01">
+        <p style="font-size:.84rem;font-weight:700;color:rgba(245,230,200,.9);margin-bottom:.4rem">Qual argumento da Arena &eacute; mais s&oacute;lido do ponto de vista do modelo PEEL?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'correct','iqd01','Correto! A afirma&ccedil;&atilde;o &quot;garante representa&ccedil;&atilde;o real&quot; precisa ser desenvolvida com evid&ecirc;ncias e explica&ccedil;&atilde;o. Como est&aacute;, &eacute; uma afirma&ccedil;&atilde;o sem suporte. Mas &eacute; a que tem maior potencial de se tornar um argumento s&oacute;lido com dados. O que todos esses argumentos faltam &eacute; a etapa de evid&ecirc;ncia.')">A favor: &quot;Garante representa&ccedil;&atilde;o real dos estudantes&quot;</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqd01','Observa&ccedil;&atilde;o v&aacute;lida! &quot;Responsabilidade legal recai sobre a dire&ccedil;&atilde;o&quot; &eacute; um argumento factual que pode ser verificado juridicamente. Mas ainda falta explicar por que isso IMPEDIRIA o veto, e n&atilde;o apenas modificaria a responsabilidade compartilhada.')">Contra: &quot;Responsabilidade legal recai sobre a dire&ccedil;&atilde;o&quot;</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqd01','Excelente postura! Na pr&aacute;tica, um debate real precisa de evid&ecirc;ncias (pesquisas, casos de outras escolas, dados legu&iacute;sticos). Todos os argumentos da Arena s&atilde;o afirma&ccedil;&otilde;es sem suporte emp&iacute;rico ainda &mdash; o que os torna fr&aacute;geis.')">Nenhum est&aacute; completo sem evid&ecirc;ncias</button>
+        </div>
+        <div class="int-feedback" id="fb-iqd01"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=debate+estudantil+oralidade+como+fazer+estrutura')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Como fazer um debate estudantil</strong><span>YouTube &middot; T&eacute;cnicas de oralidade</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=gremio+estudantil+participacao+escola+como+organizar')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Gr&ecirc;mio estudantil: como organizar e participar</strong><span>YouTube &middot; Participa&ccedil;&atilde;o cidad&atilde;</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('gremio estudantil assembleia escola participacao')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>Gr&ecirc;mio e assembl&eacute;ias escolares</strong><span>Google Imagens</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t12 -->
+
+  <!-- ATIVIDADES T12 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 12</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Voc&ecirc; j&aacute; participou de algum espa&ccedil;o coletivo de decis&atilde;o (gr&ecirc;mio, conselho, assembl&eacute;ia de bairro, reuni&atilde;o de pais)? Descreva a experi&ecirc;ncia. Se nunca participou, explique por que e o que te impediria ou motivaria a participar.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Usando o modelo PEEL (Ponto, Evidência, Explica&ccedil;&atilde;o, Link), construa um argumento completo sobre um tema que voc&ecirc; considera importante para melhorar sua escola. Cada etapa deve ter pelo menos 2 linhas.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Qual &eacute; a diferen&ccedil;a entre debate regrado e debate deliberativo? Em que situa&ccedil;&otilde;es da vida real cada um &eacute; mais adequado? D&ecirc; um exemplo de cada tipo em contextos pr&aacute;ticos da sua realidade.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">O abstencionismo c&iacute;vico (n&atilde;o participar de espa&ccedil;os democr&aacute;ticos) &eacute; uma atitude politicamente neutra? Argumente apresentando as consequências dessa aus&ecirc;ncia para a democracia e para a comunidade afetada.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Pesquise sobre o portal e-Cidadania do Senado Federal (senado.leg.br/ecidadania). O que &eacute; poss&iacute;vel fazer nesse portal? Como um jovem de 16 anos pode usar esse espa&ccedil;o para participar da pol&iacute;tica nacional sem votar?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q06</div><div class="q-text">Prepare um debate em sala sobre o seguinte tema: "As redes sociais s&atilde;o mais eficazes que os canais tradicionais de participa&ccedil;&atilde;o pol&iacute;tica." Escolha um lado (a favor ou contra), construa 3 argumentos no modelo PEEL e anote-os no caderno para apresentar em sala.</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <!-- QUIZ T12 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz12">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 12</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn12">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb12" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q12_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">O Gr&ecirc;mio Estudantil nas escolas brasileiras &eacute; garantido por:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q12_1',0,2,'quiz12','C: O Gr&ecirc;mio Estudantil &eacute; um direito garantido pela Lei Federal 7.398/1985, que assegura aos estudantes o direito de se organizar autonomamente.')"><span class="opt-letter">A)</span><span>Uma decis&atilde;o discricion&aacute;ria da dire&ccedil;&atilde;o de cada escola</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_1',1,2,'quiz12','C: N&atilde;o h&aacute; decreto presidencial espec&iacute;fico; &eacute; a lei federal que garante.')"><span class="opt-letter">B)</span><span>Um decreto presidencial recente</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_1',2,2,'quiz12','Correto! A Lei Federal 7.398/1985 garante aos estudantes do ensino m&eacute;dio o direito de se organizar em gr&ecirc;mios estudantis livres, autônomos e independentes da dire&ccedil;&atilde;o escolar.')"><span class="opt-letter">C)</span><span>A Lei Federal 7.398/1985, que assegura o direito de organiza&ccedil;&atilde;o autônoma dos estudantes</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_1',3,2,'quiz12','C: A Constitui&ccedil;&atilde;o garante a liberdade de associa&ccedil;&atilde;o, mas &eacute; a Lei 7.398/1985 que especifica o gr&ecirc;mio estudantil.')"><span class="opt-letter">D)</span><span>A Constitui&ccedil;&atilde;o Federal de 1988</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q12_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q12_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">A diferen&ccedil;a principal entre debate regrado e debate deliberativo &eacute; que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q12_2',0,1,'quiz12','B: O debate regrado busca &quot;vencer&quot; com argumento; o deliberativo busca &quot;decidir&quot; coletivamente.')"><span class="opt-letter">A)</span><span>O regrado &eacute; informal; o deliberativo &eacute; formal</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_2',1,1,'quiz12','Correto! No debate regrado h&aacute; lados fixos e o objetivo &eacute; vencer com argumento; no deliberativo o objetivo &eacute; construir uma decis&atilde;o coletiva, o que exige mais abertura &agrave; escuta e &agrave; modifica&ccedil;&atilde;o de posi&ccedil;&otilde;es.')"><span class="opt-letter">B)</span><span>O regrado tem lados fixos e objetivo de vencer; o deliberativo busca construir decis&atilde;o coletiva</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_2',2,1,'quiz12','B: Ambos s&atilde;o oralidade argumentativa; n&atilde;o se distinguem pela escrita.')"><span class="opt-letter">C)</span><span>O regrado &eacute; oral; o deliberativo &eacute; escrito</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_2',3,1,'quiz12','B: O debate regrado pode ter resultado imediato por voto da audi&ecirc;ncia; o deliberativo busca consenso ou delibera&ccedil;&atilde;o coletiva.')"><span class="opt-letter">D)</span><span>O regrado n&atilde;o tem vencedor; o deliberativo elege um vencedor</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q12_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q12_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">No modelo PEEL de constru&ccedil;&atilde;o de argumentos, a etapa &quot;E&quot; (Evid&ecirc;ncia) serve para:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q12_3',0,2,'quiz12','C: A evid&ecirc;ncia sustenta a afirma&ccedil;&atilde;o com dados, pesquisas ou casos concretos, dando credibilidade ao argumento.')"><span class="opt-letter">A)</span><span>Repetir a afirma&ccedil;&atilde;o principal com outras palavras</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_3',1,2,'quiz12','C: A explica&ccedil;&atilde;o conecta evid&ecirc;ncia e ponto; a evid&ecirc;ncia &eacute; o dado concreto que sustenta.')"><span class="opt-letter">B)</span><span>Explicar por que a afirma&ccedil;&atilde;o &eacute; verdadeira</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_3',2,2,'quiz12','Correto! A evid&ecirc;ncia &eacute; o dado concreto (pesquisa, caso, estatística, exemplo real) que sustenta e credencia a afirma&ccedil;&atilde;o. Sem evid&ecirc;ncia, um argumento &eacute; apenas uma opini&atilde;o.')"><span class="opt-letter">C)</span><span>Apresentar dados, pesquisas ou exemplos concretos que sustentam a afirma&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_3',3,2,'quiz12','C: O &quot;link&quot; &eacute; o &uacute;ltimo passo do PEEL, n&atilde;o a evid&ecirc;ncia.')"><span class="opt-letter">D)</span><span>Retomar a tese principal e concluir o argumento</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q12_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q12_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">O abstencionismo c&iacute;vico (n&atilde;o participar dos espa&ccedil;os democr&aacute;ticos) pode ser considerado uma:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q12_4',0,2,'quiz12','C: A aus&ecirc;ncia de participa&ccedil;&atilde;o tamb&eacute;m &eacute; uma decis&atilde;o pol&iacute;tica: ela deixa o espa&ccedil;o p&uacute;blico para quem quer usar em benef&iacute;cio pr&oacute;prio.')"><span class="opt-letter">A)</span><span>Atitude completamente neutra que n&atilde;o afeta a democracia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_4',1,2,'quiz12','C: Absten&ccedil;&atilde;o n&atilde;o &eacute; um direito absoluto sem consequ&ecirc;ncias; ela tem impactos reais nos processos democr&aacute;ticos.')"><span class="opt-letter">B)</span><span>Direito absoluto sem nenhuma consequ&ecirc;ncia pol&iacute;tica</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_4',2,2,'quiz12','Correto! A absten&ccedil;&atilde;o fortalece quem j&aacute; est&aacute; no poder e quer que os espa&ccedil;os p&uacute;blicos permane&ccedil;am pouco contestados. &Eacute; uma decis&atilde;o pol&iacute;tica com consequências reais, ainda que involunt&aacute;rias.')"><span class="opt-letter">C)</span><span>Decis&atilde;o pol&iacute;tica que fortalece quem j&aacute; est&aacute; no poder ao deixar espa&ccedil;os democr&aacute;ticos sem contesta&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_4',3,2,'quiz12','C: Poucos estudantes participam, n&atilde;o por proibi&ccedil;&atilde;o, mas por desconhecimento ou desinteresse.')"><span class="opt-letter">D)</span><span>Uma pr&aacute;tica proibida pela Constitui&ccedil;&atilde;o Federal</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q12_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q12_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">O portal e-Cidadania do Senado Federal permite que cidad&atilde;os:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q12_5',0,2,'quiz12','C: O e-Cidadania &eacute; uma plataforma de participa&ccedil;&atilde;o digital que permite acompanhar, comentar e sugerir projetos de lei, al&eacute;m de participar de consultas p&uacute;blicas.')"><span class="opt-letter">A)</span><span>Votar nas elei&ccedil;&otilde;es municipais online</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_5',1,2,'quiz12','C: O e-Cidadania &eacute; do Senado, n&atilde;o dos vereadores.')"><span class="opt-letter">B)</span><span>Contratar servi&ccedil;os p&uacute;blicos online</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_5',2,2,'quiz12','Correto! O portal e-Cidadania (senado.leg.br/ecidadania) permite que qualquer cidad&atilde;o acompanhe a tramita&ccedil;&atilde;o de projetos de lei, envie sugest&otilde;es legislativas, comente e vote em consultas p&uacute;blicas.')"><span class="opt-letter">C)</span><span>Acompanhar, comentar e sugerir projetos de lei, participando da atividade legislativa</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q12_5',3,2,'quiz12','C: O portal &eacute; de participa&ccedil;&atilde;o civil, n&atilde;o de den&uacute;ncias policiais.')"><span class="opt-letter">D)</span><span>Fazer den&uacute;ncias de crimes para a pol&iacute;cia federal</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q12_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr12"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 12!</div><button class="qrb-retry" onclick="resetQuiz('quiz12')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c12 -->
+<hr class="rainbow-div">
+
+<!-- ====================== T13: ESCUTA E TURNO ====================== -->
+<section id="c13" class="sec-rel" style="background:var(--bg2)">
+<div class="sfloat-wrap" id="sf13"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 13 &middot; Bloco IV</div>
+  <h2>&#128266; Escuta atenta, turno e tempo de fala</h2>
+  <p>Exerc&iacute;cios de escuta &middot; Argumenta&ccedil;&atilde;o respeitosa &middot; Estrat&eacute;gias de negocia&ccedil;&atilde;o</p>
+</div>
+<div class="block-tabs-wrap" id="tabs13">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs13',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs13',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs13',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <!-- CONTEUDO T13 -->
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c13')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">A habilidade mais rara em debates n&atilde;o &eacute; falar bem. &Eacute; escutar bem. A maioria das pessoas n&atilde;o escuta para entender: escuta para responder. Isso destr&oacute;i qualquer debate s&eacute;rio.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <!-- ESCUTA ATIVA -->
+  <div class="card fi">
+    <h3>&#128266; Escuta ativa: muito mais que ouvir</h3>
+    <div class="concept-box">
+      <div class="cb-title">O que &eacute; escuta ativa?</div>
+      <p>A <strong>escuta ativa</strong> &eacute; a pr&aacute;tica consciente de prestar aten&ccedil;&atilde;o plena ao que o outro diz, sem interromper, sem formular a resposta enquanto o outro fala, sem descartar o argumento antes de compreend&ecirc;-lo. Desenvolvida pelo psicólogo Carl Rogers, &eacute; hoje uma compet&ecirc;ncia fundamental em negocia&ccedil;&otilde;es, debates, gest&atilde;o de conflitos e lideran&ccedil;a.</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card"><h4>&#10004;&#65039; O que &eacute; escuta ativa</h4>
+        <ul style="padding-left:.9rem;font-size:.82rem;color:var(--txt2);line-height:1.8">
+          <li>Contato visual e postura receptiva</li>
+          <li>Deixar o outro concluir antes de responder</li>
+          <li>Fazer perguntas para confirmar compreens&atilde;o</li>
+          <li>Resumir o que o outro disse antes de discordar</li>
+          <li>Reconhecer pontos v&aacute;lidos no argumento oposto</li>
+        </ul>
+      </div>
+      <div class="info-card"><h4>&#10060; O que N&Atilde;O &eacute; escuta ativa</h4>
+        <ul style="padding-left:.9rem;font-size:.82rem;color:var(--txt2);line-height:1.8">
+          <li>Interromper antes de o outro terminar</li>
+          <li>Ficar preparando a resposta enquanto o outro fala</li>
+          <li>Usar o celular enquanto algu&eacute;m apresenta</li>
+          <li>Desqualificar o orador antes de ouvir o argumento</li>
+          <li>Fingir que ouviu sem realmente processar</li>
+        </ul>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('escuta ativa comunicação debate habilidades')">&#128444;&#65039; Ver imagens: <strong>Escuta ativa em debate e negocia&ccedil;&atilde;o</strong></div>
+  </div>
+
+  <!-- TURNO E TEMPO DE FALA -->
+  <div class="card fi">
+    <h3>&#9200; Turno e tempo de fala</h3>
+    <p>Em qualquer espa&ccedil;o de fala coletiva (debate, assembleia, conselho), as <strong>regras de turno</strong> e <strong>tempo de fala</strong> s&atilde;o instrumentos de equidade: elas garantem que todos possam se expressar, n&atilde;o apenas os mais extrovertidos ou os que t&ecirc;m mais poder social.</p>
+    <div class="trovador-grid">
+      <div class="trov-card">
+        <div class="trov-icon">&#9654;&#65039;</div>
+        <div class="trov-name">Pedido de palavra</div>
+        <div class="trov-desc">Sinalizar que quer falar sem interromper quem est&aacute; falando. Em assembleias: levantar a m&atilde;o. Em debates digitais: usar a fun&ccedil;&atilde;o "levantar a m&atilde;o".</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#9203;</div>
+        <div class="trov-name">Respeito ao tempo</div>
+        <div class="trov-desc">Cada participante t&ecirc;m um tempo limitado. Ultrapassá-lo &eacute; tomar o tempo do outro. Cronômetro e mediador s&atilde;o instrumentos de justi&ccedil;a, n&atilde;o de censura.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128260;</div>
+        <div class="trov-name">Direito de r&eacute;plica</div>
+        <div class="trov-desc">Ap&oacute;s ouvir um argumento contra o seu ponto, voc&ecirc; tem o direito de responder diretamente. A r&eacute;plica deve ser direta e focada no argumento, n&atilde;o na pessoa.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128483;&#65039;</div>
+        <div class="trov-name">Papel do mediador</div>
+        <div class="trov-desc">O mediador (moderador) controla os turnos, o tempo e a conduta. N&atilde;o &eacute; juiz do conte&uacute;do &mdash; &eacute; guardião das regras do espa&ccedil;o.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOGO: SIMULADOR DE TURNO -->
+  <div class="turno-game fi" id="tg01">
+    <div class="tg-title">&#127918; Simulador de Debate: escolha a melhor resposta para cada situa&ccedil;&atilde;o</div>
+    <p style="font-size:.82rem;color:var(--txt2);margin-bottom:.8rem">Voc&ecirc; est&aacute; num debate sobre uniforme escolar. Seu oponente acabou de falar. Escolha a melhor resposta:</p>
+    <div class="tg-convo" id="tg01-conv">
+      <div class="tg-msg left"><div class="tg-speaker">Oponente</div>"O uniforme escolar reduz a desigualdade vis&iacute;vel entre alunos de diferentes classes sociais e cria senso de pertencimento."</div>
+    </div>
+    <div id="tg01-q">
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.5rem">Qual &eacute; a melhor forma de iniciar a sua r&eacute;plica?</p>
+      <div class="tg-options" id="tg01-opts">
+        <button class="tg-opt" onclick="checkTurno(this,'tg01',0,'correct','Excelente! Reconhecer o ponto v&aacute;lido do oponente antes de discordar &eacute; uma estrat&eacute;gia de escuta ativa que demonstra boa-f&eacute; e fortalece sua cr&iacute;tica. O debate evolui quando partimos do que &eacute; compartilhado.')">A) "Voc&ecirc; tem raz&atilde;o que a desigualdade vis&iacute;vel &eacute; um problema real. Por&eacute;m, o uniforme resolve o sintoma sem atacar a causa..."</button>
+        <button class="tg-opt" onclick="checkTurno(this,'tg01',1,'wrong','N&atilde;o &eacute; a melhor estrat&eacute;gia. Atacar a pessoa em vez do argumento &eacute; chamado de &quot;ad hominem&quot; e desqualifica sua argumenta&ccedil;&atilde;o perante a audi&ecirc;ncia.')">B) "Voc&ecirc; s&oacute; defende uniforme porque nunca foi pobre de verdade!"</button>
+        <button class="tg-opt" onclick="checkTurno(this,'tg01',2,'wrong','Essa estrat&eacute;gia evita o debate real. Introduzir um tema inteiramente novo sem responder ao argumento apresentado demonstra que voc&ecirc; n&atilde;o tem como refutar o ponto.')">C) "Mudan&ccedil;o de assunto: o problema real &eacute; a merenda escolar, muito mais importante que uniforme."</button>
+        <button class="tg-opt" onclick="checkTurno(this,'tg01',3,'wrong','Repetir seu ponto sem responder ao argumento do oponente n&atilde;o avança o debate. A audi&ecirc;ncia percebe que voc&ecirc; n&atilde;o ouviu o que foi dito.')">D) "Como j&aacute; disse, uniforme limita a express&atilde;o individual dos alunos."</button>
+      </div>
+      <div class="tg-feedback" id="tg01-fb"></div>
+    </div>
+  </div>
+
+  <!-- ESTRATEGIAS LINGUISTICAS -->
+  <div class="card fi">
+    <h3>&#128295; Estrat&eacute;gias lingu&iacute;sticas de negocia&ccedil;&atilde;o</h3>
+    <p>A <strong>EM13LP25</strong> destaca o uso de estrat&eacute;gias lingu&iacute;sticas espec&iacute;ficas para o apoio e considera&ccedil;&atilde;o do discurso do outro. Conhe&ccedil;a as principais:</p>
+    <div class="estrategia-card ec-acc1 fi">
+      <h4>&#128269; Pedir esclarecimento</h4>
+      <p>Demonstra que voc&ecirc; ouviu e quer entender melhor antes de responder. N&atilde;o &eacute; fraqueza &mdash; &eacute; rigor intelectual.</p>
+      <div class="ec-ex">Ex: "Quando voc&ecirc; diz que o uniforme &lsquo;reduz a desigualdade&rsquo;, voc&ecirc; est&aacute; se referindo a dados emp&iacute;ricos ou a uma percep&ccedil;&atilde;o geral?"</div>
+    </div>
+    <div class="estrategia-card ec-acc2 fi">
+      <h4>&#128260; Retomar a fala do outro (paráfrase)</h4>
+      <p>Confirmar que entendeu antes de discordar evita mal-entendidos e demons tra boa-f&eacute;.</p>
+      <div class="ec-ex">Ex: "Se entendi corretamente, voc&ecirc; defende que o uniforme &eacute; uma solu&ccedil;&atilde;o eficaz para a desigualdade escolar. &Eacute; isso?"</div>
+    </div>
+    <div class="estrategia-card ec-acc3 fi">
+      <h4>&#10004;&#65039; Endossar e complementar</h4>
+      <p>Reconhecer o que &eacute; v&aacute;lido no argumento do outro antes de adicionar ou divergir. Constr&oacute;i di&aacute;logo produtivo.</p>
+      <div class="ec-ex">Ex: "Concordo que a visibilidade da desigualdade &eacute; um problema s&eacute;rio. Al&eacute;m disso, acredito que o uniforme poderia ser complementado com pol&iacute;ticas de..."</div>
+    </div>
+    <div class="estrategia-card ec-acc4 fi">
+      <h4>&#128260; Enfraquecer com dados</h4>
+      <p>Usar evid&ecirc;ncias para questionar a premissa do argumento oposit&oacute;rio, sem ataque pessoal.</p>
+      <div class="ec-ex">Ex: "Pesquisas em pa&iacute;ses onde o uniforme &eacute; obrigat&oacute;rio, como o Jap&atilde;o, mostram que a desigualdade econ&ocirc;mica entre alunos continua vis&iacute;vel em outros elementos, como material escolar e calçados."</div>
+    </div>
+    <div class="estrategia-card ec-acc1 fi">
+      <h4>&#9654;&#65039; Reformular a pr&oacute;pria posi&ccedil;&atilde;o</h4>
+      <p>Ap&oacute;s ouvir um argumento forte, &eacute; intelectualmente honesto modificar ou matizar a pr&oacute;pria posi&ccedil;&atilde;o. Isso n&atilde;o &eacute; fraqueza &mdash; &eacute; rigoro e boa-f&eacute;.</p>
+      <div class="ec-ex">Ex: "Ap&oacute;s ouvir o seu argumento, percebo que minha posi&ccedil;&atilde;o inicial era muito absoluta. Prefiro dizer que o uniforme pode ser &uacute;til em contextos espec&iacute;ficos, mas n&atilde;o como solu&ccedil;&atilde;o universal."</div>
+    </div>
+
+    <div class="img-link-btn fi" onclick="openGoogleImg('estrategias comunicacao debate negociacao linguagem')">&#128444;&#65039; Ver imagens: <strong>Estrat&eacute;gias de comunica&ccedil;&atilde;o e negocia&ccedil;&atilde;o</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=escuta+ativa+comunicacao+nao+violenta+debate')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Escuta ativa e comunica&ccedil;&atilde;o n&atilde;o violenta</strong><span>YouTube &middot; Habilidades sociais</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+responder+argumentos+debate+refutacao+tecnica')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Como refutar argumentos de forma respeitosa</strong><span>YouTube &middot; T&eacute;cnicas de debate</span></div><span class="res-tag rt-yt">YT</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t13 -->
+
+  <!-- ATIVIDADES T13 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 13</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Pense numa situa&ccedil;&atilde;o recente em que voc&ecirc; ou algu&eacute;m que conhece n&atilde;o praticou escuta ativa (interrompeu, preparou a resposta enquanto o outro falava, desqualificou sem ouvir). Analise: que estrat&eacute;gia de escuta ativa poderia ter melhorado o resultado dessa intera&ccedil;&atilde;o?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Por que as regras de turno de fala s&atilde;o instrumentos de equidade e n&atilde;o de censura? Pense em situa&ccedil;&otilde;es onde, sem regras de turno, certas vozes naturalmente dominariam a conversa e outras seriam silenciadas.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Reescreva as seguintes respostas de debate usando estrat&eacute;gias de escuta ativa e negocia&ccedil;&atilde;o: (a) "Voc&ecirc; &eacute; completamente idiota se acredita nisso!" → (b) "Como j&aacute; disse, minha posi&ccedil;&atilde;o &eacute; correta." → (c) "Mudan&ccedil;a de assunto: fala sobre algo que n&atilde;o tem nada a ver."</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">A estrat&eacute;gia de &quot;retomar a fala do outro&quot; (paráfrase) antes de discordar &eacute; considerada um sinal de boa-f&eacute; intelectual. Por que? Como essa estrat&eacute;gia pode mudar a din&acirc;mica de um debate ou de uma negocia&ccedil;&atilde;o?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Simule um di&aacute;logo de debate entre duas pessoas com posi&ccedil;&otilde;es opostas sobre um tema que voc&ecirc; escolher (pode ser qualquer tema de interesse social). Escreva pelo menos 4 turnos de fala (2 por pessoa), usando as estrat&eacute;gias lingu&iacute;sticas estudadas. Indique, entre colchetes, qual estrat&eacute;gia cada fala usa.</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <!-- QUIZ T13 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz13">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 13</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn13">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb13" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q13_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A escuta ativa se diferencia da escuta comum porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q13_1',0,2,'quiz13','C: Escuta ativa &eacute; pr&aacute;tica consciente de aten&ccedil;&atilde;o plena: sem interrup&ccedil;&atilde;o, sem formular respostas enquanto o outro fala, com confirma&ccedil;&atilde;o de compreens&atilde;o.')"><span class="opt-letter">A)</span><span>&Eacute; mais r&aacute;pida e eficiente do que a escuta comum</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_1',1,2,'quiz13','C: A escuta ativa pode ser aplicada em qualquer situa&ccedil;&atilde;o; n&atilde;o se limita a debates formais.')"><span class="opt-letter">B)</span><span>S&oacute; &eacute; usada em debates formais e profissionais</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_1',2,2,'quiz13','Correto! A escuta ativa &eacute; a pr&aacute;tica consciente de aten&ccedil;&atilde;o plena ao que o outro diz: sem interromper, sem preparar a resposta enquanto o outro fala, confirmando a compreens&atilde;o antes de responder.')"><span class="opt-letter">C)</span><span>Envolve aten&ccedil;&atilde;o plena, sem interrupção e com confirma&ccedil;&atilde;o de compreens&atilde;o antes de responder</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_1',3,2,'quiz13','C: Escuta ativa pode ser praticada por qualquer pessoa; n&atilde;o exige treinamento profissional.')"><span class="opt-letter">D)</span><span>Exige treinamento profissional e n&atilde;o pode ser aprendida naturalmente</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q13_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q13_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">A estrat&eacute;gia de retomar a fala do oponente com par&aacute;frase antes de discordar serve principalmente para:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q13_2',0,1,'quiz13','B: A par&aacute;frase confirma a compreens&atilde;o, demonstra boa-f&eacute; e evita desentendimentos que desperdi&ccedil;am tempo de debate.')"><span class="opt-letter">A)</span><span>Ganhar tempo para formular uma resposta</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_2',1,1,'quiz13','Correto! Ao parafrasear o argumento do oponente antes de discordar, demonstra-se que o ouviu com aten&ccedil;&atilde;o, confirma-se a compreens&atilde;o e evita-se o risco de discutir um argumento diferente do que foi realmente apresentado.')"><span class="opt-letter">B)</span><span>Demonstrar que ouviu com aten&ccedil;&atilde;o, confirmar a compreens&atilde;o e evitar mal-entendidos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_2',2,1,'quiz13','B: Parafrasear n&atilde;o &eacute; concordar; &eacute; confirmar que entendeu antes de discordar.')"><span class="opt-letter">C)</span><span>Concordar com o oponente antes de mudar de assunto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_2',3,1,'quiz13','B: Parafrasear demonstra respeito e rigor intelectual, n&atilde;o desvio da posi&ccedil;&atilde;o.')"><span class="opt-letter">D)</span><span>Demonstrar que j&aacute; mudou de posi&ccedil;&atilde;o ap&oacute;s ouvir o argumento</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q13_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q13_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">O argumento "ad hominem" &eacute; uma falha de debate porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q13_3',0,2,'quiz13','C: Ad hominem ataca a pessoa em vez do argumento, o que &eacute; logicamente irrelevante (o car&aacute;ter do orador n&atilde;o determina a validade do argumento) e desqualifica quem o usa.')"><span class="opt-letter">A)</span><span>Usa termos t&eacute;cnicos demais que a audi&ecirc;ncia n&atilde;o entende</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_3',1,2,'quiz13','C: A origem do argumento &eacute; irrelevante para sua validade; a falha do ad hominem &eacute; atacar a pessoa, n&atilde;o o argumento.')"><span class="opt-letter">B)</span><span>Usa dados de fontes duvidosas para fundamentar a cr&iacute;tica</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_3',2,2,'quiz13','Correto! Ad hominem (do latim: "contra o homem") &eacute; atacar a pessoa que apresenta o argumento em vez de refutar o pr&oacute;prio argumento. &Eacute; uma fal&aacute;cia: o car&aacute;ter ou as circunst&acirc;ncias do orador s&atilde;o irrelevantes para a validade l&oacute;gica do que ele afirma.')"><span class="opt-letter">C)</span><span>Ataca a pessoa que apresenta o argumento em vez de refutar o pr&oacute;prio argumento</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_3',3,2,'quiz13','C: Ad hominem n&atilde;o &eacute; usar linguagem violenta; &eacute; uma fal&aacute;cia l&oacute;gica espec&iacute;fica.')"><span class="opt-letter">D)</span><span>Usa linguagem violenta e desrespeitosa</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q13_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q13_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">Por que reformular a pr&oacute;pria posi&ccedil;&atilde;o ap&oacute;s ouvir um argumento forte &eacute; sinal de rigor intelectual e n&atilde;o de fraqueza?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q13_4',0,3,'quiz13','D: Mudar de posi&ccedil;&atilde;o ap&oacute;s evid&ecirc;ncias &eacute; o que o m&eacute;todo cient&iacute;fico e o pensamento cr&iacute;tico exigem. Manter uma posi&ccedil;&atilde;o equivocada por orgulho &eacute; o que &eacute; fraqueza.')"><span class="opt-letter">A)</span><span>Porque demonstra que voc&ecirc; desistiu do debate</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_4',1,3,'quiz13','D: A reformula&ccedil;&atilde;o n&atilde;o &eacute; m&eacute;rito do oponente; &eacute; coerência intelectual do pr&oacute;prio debatedor.')"><span class="opt-letter">B)</span><span>Porque &eacute; uma estrat&eacute;gia para confundir o oponente</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_4',2,3,'quiz13','D: Nem sempre mudar &eacute; concordar; pode ser qualificar, matizar ou reconhecer limites da posi&ccedil;&atilde;o original.')"><span class="opt-letter">C)</span><span>Porque significa que voc&ecirc; j&aacute; concordou com o oponente</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_4',3,3,'quiz13','Correto! Mudar de posi&ccedil;&atilde;o diante de evid&ecirc;ncias &eacute; o que o pensamento cr&iacute;tico exige. Manter uma posi&ccedil;&atilde;o demonstravelmente equivocada por orgulho &eacute; que &eacute; fraqueza intelectual.')"><span class="opt-letter">D)</span><span>Porque demonstra pensamento cr&iacute;tico: s&oacute; mant&eacute;m posi&ccedil;&otilde;es que resistem ao argumento oposto, n&atilde;o por orgulho</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q13_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q13_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Qual resposta de debate demonstra melhor uso das estrat&eacute;gias lingu&iacute;sticas estudadas?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q13_5',0,3,'quiz13','D: Essa resposta usa: par&aacute;frase (&quot;Se entendi...&quot;), reconhecimento do ponto v&aacute;lido (&quot;concordo que &eacute; um problema&quot;), e apresenta&ccedil;&atilde;o de evid&ecirc;ncia para questionar a solu&ccedil;&atilde;o proposta.')"><span class="opt-letter">A)</span><span>"Voc&ecirc; &eacute; completamente errado e n&atilde;o entende nada do assunto!"</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_5',1,3,'quiz13','D: Essa resposta ignora o que o oponente disse e apenas repete a pr&oacute;pria posi&ccedil;&atilde;o.')"><span class="opt-letter">B)</span><span>"Como j&aacute; expliquei, minha posi&ccedil;&atilde;o &eacute; a correta e n&atilde;o h&aacute; nada mais a discutir."</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_5',2,3,'quiz13','D: Essa resposta muda de assunto sem responder ao argumento apresentado.')"><span class="opt-letter">C)</span><span>"Mudan&ccedil;o de assunto: o que voc&ecirc; disse sobre isso n&atilde;o &eacute; relevante."</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q13_5',3,3,'quiz13','Correto! Essa resposta demonstra: paráfrase do argumento do oponente, reconhecimento do ponto v&aacute;lido (escuta ativa), e contesta&ccedil;&atilde;o fundamentada com dado concreto &mdash; as tr&ecirc;s marcas de boa pr&aacute;tica de debate.')"><span class="opt-letter">D)</span><span>"Se entendi corretamente, voc&ecirc; defende X. Concordo que &eacute; um problema real. Por&eacute;m, dados da pesquisa Y mostram que a solu&ccedil;&atilde;o proposta n&atilde;o atende a esse objetivo porque..."</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q13_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr13"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 13!</div><button class="qrb-retry" onclick="resetQuiz('quiz13')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c13 -->
+<hr class="rainbow-div">
+
+<!-- ====================== T14: TEMAS CONTROVERSOS ====================== -->
+<section id="c14" class="sec-rel" style="background:var(--bg)">
+<div class="sfloat-wrap" id="sf14"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 14 &middot; Bloco IV</div>
+  <h2>&#9878;&#65039; Discuss&atilde;o de temas controversos de interesse social</h2>
+  <p>Aprecia&ccedil;&atilde;o &eacute;tica e est&eacute;tica &middot; Posicionamento fundamentado &middot; Reflex&atilde;o cr&iacute;tica</p>
+</div>
+<div class="block-tabs-wrap" id="tabs14">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs14',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs14',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs14',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <!-- CONTEUDO T14 -->
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c14')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Tema "controverso" n&atilde;o significa que n&atilde;o h&aacute; resposta certa. Significa que pessoas razo&aacute;veis, com valores diferentes, chegam a conclus&otilde;es diferentes. Aprender a debater esses temas com rigor e respeito &eacute; uma das habilidades mais valiosas da vida adulta.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128300; O que torna um tema controverso?</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>Um tema &eacute; <strong>controverso</strong> quando envolve valores fundamentais em conflito (liberdade × seguran&ccedil;a, igualdade × m&eacute;rito, individual × coletivo), quando pessoas razo&aacute;veis e bem informadas chegam a conclus&otilde;es diferentes, e quando as respostas dependem de prioridades &eacute;ticas que n&atilde;o s&atilde;o meramente t&eacute;cnicas. Isso &eacute; diferente de temas que parecem controversos mas t&ecirc;m <strong>consenso cient&iacute;fico</strong> (mudan&ccedil;as clim&aacute;ticas, efic&aacute;cia das vacinas).</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card" style="border-color:var(--acc3)">
+        <h4 style="color:var(--acc3)">&#128994; Genuinamente controverso</h4>
+        <p>Envolve conflito de valores leg&iacute;timos. Pessoas informadas e de boa-f&eacute; divergem. Ex: cotas raciais em universidades, descriminaliza&ccedil;&atilde;o de drogas, pena de morte, aborto, licen&ccedil;a parental igualit&aacute;ria.</p>
+      </div>
+      <div class="info-card" style="border-color:var(--acc1)">
+        <h4 style="color:var(--acc1)">&#128308; Falsa controv&eacute;rsia</h4>
+        <p>Parece controverso mas tem consenso cient&iacute;fico. Criar "dois lados" &eacute; desinforma&ccedil;&atilde;o. Ex: "Vacinas causam autismo", "A Terra &eacute; plana", "As mudan&ccedil;as clim&aacute;ticas s&atilde;o inven&ccedil;&atilde;o".</p>
+      </div>
+    </div>
+    <div class="tip-box" style="margin-top:.8rem">
+      <strong>Aten&ccedil;&atilde;o cr&iacute;tica:</strong> Tratar falsa controv&eacute;rsia como controv&eacute;rsia leg&iacute;tima &eacute; um erro grave que alimenta a desinforma&ccedil;&atilde;o. Antes de debater qualquer tema, verifique: existe consenso cient&iacute;fico sobre os fatos? Se sim, a debate &eacute; sobre pol&iacute;ticas e valores, n&atilde;o sobre os fatos em si.
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('temas controversos debate sociedade valores etica')">&#128444;&#65039; Ver imagens: <strong>Temas controversos em debate p&uacute;blico</strong></div>
+  </div>
+
+  <!-- COMO POSICIONAR-SE -->
+  <div class="card fi">
+    <h3>&#128205; Como se posicionar de forma fundamentada</h3>
+    <p>Posicionar-se sobre temas controversos de forma respons&aacute;vel exige mais do que opini&atilde;o: exige processo.</p>
+    <div class="argumento-builder fi">
+      <div class="ab-title">&#9878;&#65039; Processo de posicionamento responsável</div>
+      <div class="ab-steps">
+        <div class="ab-step">
+          <div class="ab-step-num">Etapa 1</div>
+          <div class="ab-step-name">&#128300; Verificar os fatos</div>
+          <div class="ab-step-desc">Separe fatos (verificáveis e consensuais) de valores (prefer&ecirc;ncias e prioridades normativas). Certifique-se de que seus fatos est&atilde;o corretos antes de construir posi&ccedil;&atilde;o sobre eles.</div>
+          <div class="ab-step-ex">Ex: "O Brasil tem X% de jovens sem emprego" &eacute; um fato. "Isso &eacute; inaceit&aacute;vel" &eacute; um ju&iacute;zo de valor.</div>
+        </div>
+        <div class="ab-step">
+          <div class="ab-step-num">Etapa 2</div>
+          <div class="ab-step-name">&#127758; Entender os argumentos dos outros lados</div>
+          <div class="ab-step-desc">Antes de defender sua posi&ccedil;&atilde;o, compreenda genuinamente os melhores argumentos do lado oposto. Isso se chama &quot;lei da caridade&quot;: refute a vers&atilde;o mais forte do argumento, n&atilde;o a mais fr&aacute;gil.</div>
+          <div class="ab-step-ex">Ex: N&atilde;o refute a vers&atilde;o caricata da posi&ccedil;&atilde;o oposta (&quot;straw man&quot;); refute o melhor argumento que eles t&ecirc;m.</div>
+        </div>
+        <div class="ab-step">
+          <div class="ab-step-num">Etapa 3</div>
+          <div class="ab-step-name">&#9878;&#65039; Identificar seus valores</div>
+          <div class="ab-step-desc">Sua posi&ccedil;&atilde;o reflete seus valores. Seja transparente sobre eles: dizer "defendo X porque valorizo Y" &eacute; mais honesto do que fingir que sua posi&ccedil;&atilde;o &eacute; puramente t&eacute;cnica e neutra.</div>
+          <div class="ab-step-ex">Ex: "Defendo cotas raciais porque valorizo equidade de resultado, n&atilde;o apenas igualdade formal de acesso."</div>
+        </div>
+        <div class="ab-step">
+          <div class="ab-step-num">Etapa 4</div>
+          <div class="ab-step-name">&#128260; Manter abertura &agrave; revis&atilde;o</div>
+          <div class="ab-step-desc">Uma posi&ccedil;&atilde;o bem fundamentada &eacute; flex&iacute;vel: pode ser modificada por novos dados ou argumentos. Rigidez absoluta sinaliza dogmatismo, n&atilde;o convic&ccedil;&atilde;o.</div>
+          <div class="ab-step-ex">Ex: "Minha posi&ccedil;&atilde;o sobre X mudaria se fosse demonstrado que Y &eacute; falso."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALISE DE TEMAS INTERATIVA -->
+  <div class="interactive-box fi">
+    <div class="ib-title">&#127918; Controv&eacute;rsia real ou falsa? Classifique</div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.8rem">Classifique cada afirma&ccedil;&atilde;o como controv&eacute;rsia genuína ou falsa controv&eacute;rsia:</p>
+    <div class="int-question" id="iqc01">
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">"O aborto deve ser legal ou ilegal no Brasil?"</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'correct','iqc01','Correto! Trata-se de uma controv&eacute;rsia genuína: envolve conflito de valores fundamentais (autonomia da mulher × direito &agrave; vida, do embrião) sobre os quais pessoas bem informadas e de boa-f&eacute; divergem profundamente.')">Controv&eacute;rsia genuína</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqc01','H&aacute; consenso cient&iacute;fico sobre aspectos biol&oacute;gicos da quest&atilde;o, mas o debate pol&iacute;tico e &eacute;tico &eacute; genuinamente controverso: envolve valores sobre autonomia, vida e papel do Estado que n&atilde;o t&ecirc;m resposta cient&iacute;fica &uacute;nica.')">Falsa controv&eacute;rsia</button>
+      </div><div class="int-feedback" id="fb-iqc01"></div>
+    </div>
+    <div class="int-question" id="iqc02" style="margin-top:.6rem">
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">"As vacinas contra a Covid-19 s&atilde;o seguras e eficazes?"</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqc02','N&atilde;o. A efic&aacute;cia e seguran&ccedil;a das vacinas contra Covid-19 &eacute; objeto de amplo consenso cient&iacute;fico baseado em ensaios cl&iacute;nicos em larga escala. Tratar isso como &quot;dois lados iguais&quot; &eacute; desinforma&ccedil;&atilde;o.')">Controv&eacute;rsia genuína</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqc02','Correto! &Eacute; uma falsa controv&eacute;rsia: existe consenso cient&iacute;fico robusto sobre a seguran&ccedil;a e efic&aacute;cia das vacinas contra Covid-19. Criar &quot;dois lados iguais&quot; &eacute; uma estrat&eacute;gia de desinforma&ccedil;&atilde;o.')">Falsa controv&eacute;rsia</button>
+      </div><div class="int-feedback" id="fb-iqc02"></div>
+    </div>
+    <div class="int-question" id="iqc03" style="margin-top:.6rem">
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">"As cotas raciais em universidades p&uacute;blicas devem ser mantidas ou extintas?"</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'correct','iqc03','Correto! &Eacute; uma controv&eacute;rsia genuína: envolve conflito de valores (equidade versus m&eacute;rito, igualdade formal versus material) sobre os quais pessoas bem informadas, de boa-f&eacute; e com diferentes prioridades &eacute;ticas divergem.')">Controv&eacute;rsia genuína</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqc03','H&aacute; dados sobre o impacto das cotas, mas a quest&atilde;o de mant&ecirc;-las ou extin&shy;gui-las envolve um conflito de valores (equidade × m&eacute;rito) que vai al&eacute;m dos dados: &eacute; uma controv&eacute;rsia genuína.')">Falsa controv&eacute;rsia</button>
+      </div><div class="int-feedback" id="fb-iqc03"></div>
+    </div>
+  </div>
+
+  <!-- ETICA E ESTETICA -->
+  <div class="card fi">
+    <h3>&#127775; Aprecia&ccedil;&atilde;o &eacute;tica e est&eacute;tica</h3>
+    <p>Ao analisar qualquer texto ou manifesta&ccedil;&atilde;o cultural que aborde temas controversos, devemos exercer dois tipos de aprecia&ccedil;&atilde;o:</p>
+    <div class="grid2">
+      <div class="info-card">
+        <h4>&#9878;&#65039; Aprecia&ccedil;&atilde;o &eacute;tica</h4>
+        <p>Avalia os valores, o posicionamento e o impacto social do texto. Pergunta: que valores esse texto promove? A quem beneficia? Quem exclui ou prejudica? &Eacute; compatível com a dignidade humana?</p>
+      </div>
+      <div class="info-card">
+        <h4>&#127775; Aprecia&ccedil;&atilde;o est&eacute;tica</h4>
+        <p>Avalia a qualidade artística e lingu&iacute;stica do texto. Pergunta: como a linguagem foi trabalhada? Quais recursos expressivos foram usados? O texto &eacute; coeso, criativo, original?</p>
+      </div>
+    </div>
+    <div class="example-box" style="margin-top:.8rem">
+      <div class="eb-label">Exemplo: um rap com mensagem problem&aacute;tica</div>
+      <p>Um rap pode ser esteticamente brilhante (m&eacute;tricas complexas, flow impec&aacute;vel, imagens fortes) e ao mesmo tempo &eacute;ticamente problem&aacute;tico (conte&uacute;do misógino, racista ou que glorifica a viol&ecirc;ncia). A aprecia&ccedil;&atilde;o cr&iacute;tica consegue distinguir e nomear as duas dimens&otilde;es sem precisar negar nenhuma delas. &ldquo;Esse texto &eacute; tecnicamente extraordin&aacute;rio e eticamente question&aacute;vel&rdquo; &eacute; uma posi&ccedil;&atilde;o mais honesta do que simplesmente &ldquo;&eacute; horrível&rdquo; ou &ldquo;&eacute; perfeiro&rdquo;.</p>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('apreciacao etica estetica arte texto critica cultural')">&#128444;&#65039; Ver imagens: <strong>Aprecia&ccedil;&atilde;o &eacute;tica e est&eacute;tica na arte</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+debater+temas+polemicos+controversos+argumentacao')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Como debater temas controversos com rigor</strong><span>YouTube &middot; Argumenta&ccedil;&atilde;o e pensamento cr&iacute;tico</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=falsa+controversia+consenso+cientifico+desinformacao')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Falsa controv&eacute;rsia e consenso cient&iacute;fico</strong><span>YouTube &middot; Pensamento cr&iacute;tico</span></div><span class="res-tag rt-yt">YT</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t14 -->
+
+  <!-- ATIVIDADES T14 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 14</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Explique a diferen&ccedil;a entre controv&eacute;rsia genuína e falsa controv&eacute;rsia. Por que &eacute; importante fazer essa distin&ccedil;&atilde;o antes de entrar num debate? Crie um exemplo de cada tipo que seja relevante para a realidade dos jovens brasileiros hoje.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Escolha um tema genuinamente controverso que voc&ecirc; considera importante e aplique as 4 etapas do processo de posicionamento responsável: verificar fatos, entender os outros lados, identificar seus valores e manter abertura &agrave; revis&atilde;o. O processo mudou ou consolidou sua posi&ccedil;&atilde;o?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Analise uma obra de arte (m&uacute;sica, filme, livro, pintura) que voc&ecirc; conhece e que aborda um tema &eacute;ticamente complexo. Fa&ccedil;a uma aprecia&ccedil;&atilde;o dual: (a) avalie a qualidade est&eacute;tica (como a linguagem foi trabalhada); (b) avalie as quest&otilde;es &eacute;ticas que a obra levanta (que valores promove? a quem beneficia?).</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">O que &eacute; a &quot;lei da caridade&quot; no contexto de debates? Por que refutar a vers&atilde;o mais fraca do argumento oposto (&quot;straw man&quot; ou &quot;boneco de palha&quot;) &eacute; considerado uma fal&aacute;cia e n&atilde;o uma vit&oacute;ria? D&ecirc; um exemplo de cada.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Voc&ecirc; precisa apresentar os dois lados de um tema controverso para a sala (escolha: redes sociais com limite de idade, uso obrigat&oacute;rio de c&acirc;meras por pol&iacute;ciais, ou voto obrigat&oacute;rio para jovens de 16 anos). Escreva 3 argumentos a favor e 3 contra, todos no modelo PEEL. Em seguida, identifique que valores est&atilde;o em conflito em cada lado.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q06</div><div class="q-text">Reflita: &eacute; poss&iacute;vel se posicionar sobre um tema controverso de forma completamente neutra? Por qu&ecirc;? A neutralidade &eacute; sempre uma virtude no debate p&uacute;blico, ou existem situa&ccedil;&otilde;es em que "n&atilde;o ter posi&ccedil;&atilde;o" &eacute; em si uma posi&ccedil;&atilde;o política?</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <!-- QUIZ T14 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz14">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 14</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn14">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb14" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q14_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A principal caracter&iacute;stica de um tema genuinamente controverso &eacute;:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q14_1',0,1,'quiz14','B: A genuidade da controv&eacute;rsia est&aacute; no conflito de valores leg&iacute;timos, n&atilde;o na aus&ecirc;ncia de dados.')"><span class="opt-letter">A)</span><span>N&atilde;o ter dados disponíveis para embasar uma decis&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_1',1,1,'quiz14','Correto! Temas genuinamente controversos envolvem conflito de valores fundamentais (liberdade × seguran&ccedil;a, igualdade × m&eacute;rito) sobre os quais pessoas informadas e de boa-f&eacute; chegam a conclus&otilde;es diferentes.')"><span class="opt-letter">B)</span><span>Envolver conflito de valores fundamentais, fazendo com que pessoas informadas de boa-f&eacute; cheguem a conclus&otilde;es diferentes</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_1',2,1,'quiz14','B: A controv&eacute;rsia n&atilde;o &eacute; sobre a import&acirc;ncia, mas sobre o conflito de valores envolvido.')"><span class="opt-letter">C)</span><span>Ser muito importante para a sociedade</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_1',3,1,'quiz14','B: A m&iacute;dia pode criar falsas controv&eacute;rsias; a genuidade n&atilde;o depende da cobertura jornal&iacute;stica.')"><span class="opt-letter">D)</span><span>Ser abordado pela m&iacute;dia com diferentes opini&otilde;es</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q14_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q14_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">A &quot;falsa controv&eacute;rsia&quot; &eacute; problem&aacute;tica porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q14_2',0,2,'quiz14','C: Criar &quot;dois lados iguais&quot; sobre temas com consenso cient&iacute;fico &eacute; uma estrat&eacute;gia de desinforma&ccedil;&atilde;o que equipa a evidência a opini&atilde;o, confundindo a opini&atilde;o p&uacute;blica.')"><span class="opt-letter">A)</span><span>Torna os debates muito longos e cansativos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_2',1,2,'quiz14','C: A falsa controv&eacute;rsia n&atilde;o &eacute; necessariamente ilegal; &eacute; um problema &eacute;tico e epistemol&oacute;gico.')"><span class="opt-letter">B)</span><span>&Eacute; proibida pela legisla&ccedil;&atilde;o brasileira</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_2',2,2,'quiz14','Correto! Tratar temas com consenso cient&iacute;fico como &quot;dois lados iguais&quot; alimenta a desinforma&ccedil;&atilde;o ao equiparar evid&ecirc;ncia cient&iacute;fica a opini&atilde;o n&atilde;o fundamentada.')"><span class="opt-letter">C)</span><span>Alimenta desinforma&ccedil;&atilde;o ao equiparar evid&ecirc;ncia cient&iacute;fica a opini&atilde;o n&atilde;o fundamentada</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_2',3,2,'quiz14','C: A falsa controv&eacute;rsia n&atilde;o &eacute; sobre complexidade; &eacute; sobre apresentar como controverso o que tem consenso.')"><span class="opt-letter">D)</span><span>&Eacute; simplesmente um tema muito complexo para debater em sala</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q14_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q14_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">A &quot;lei da caridade&quot; nos debates significa:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q14_3',0,2,'quiz14','C: A lei da caridade intelectual exige que refutemos a vers&atilde;o mais forte e completa do argumento oposto, n&atilde;o uma vers&atilde;o simplificada e f&aacute;cil de derrotar.')"><span class="opt-letter">A)</span><span>Ser sempre gentil e educado com os adversários</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_3',1,2,'quiz14','C: A lei da caridade n&atilde;o &eacute; sobre concord&acirc;ncia, mas sobre honestidade intelectual na representa&ccedil;&atilde;o dos argumentos opostos.')"><span class="opt-letter">B)</span><span>Concordar com o adversário quando ele tem raz&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_3',2,2,'quiz14','Correto! A lei da caridade exige que refutemos a vers&atilde;o mais forte e completa do argumento oposto. Atacar a vers&atilde;o mais fraca ou caricata (&quot;straw man&quot;) &eacute; uma fal&aacute;cia que demonstra falta de honestidade intelectual.')"><span class="opt-letter">C)</span><span>Refutar a vers&atilde;o mais forte do argumento oposto, n&atilde;o a mais fraca ou caricata</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_3',3,2,'quiz14','C: A lei da caridade &eacute; sobre como representar os argumentos opostos, n&atilde;o sobre ceder.')"><span class="opt-letter">D)</span><span>Ceder parte da sua posi&ccedil;&atilde;o para chegar a um acordo</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q14_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q14_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">A aprecia&ccedil;&atilde;o &eacute;tica e a aprecia&ccedil;&atilde;o est&eacute;tica de um texto s&atilde;o:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q14_4',0,2,'quiz14','C: Um texto pode ser esteticamente brilhante e eticamente problem&aacute;tico (ou vice-versa). Distinguir as duas dimens&otilde;es permite uma an&aacute;lise mais honesta e completa.')"><span class="opt-letter">A)</span><span>Sempre id&ecirc;nticas: um bom texto &eacute; necessariamente &eacute;tico e est&eacute;tico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_4',1,2,'quiz14','C: A est&eacute;tica n&atilde;o &eacute; sempre mais importante; as duas dimens&otilde;es s&atilde;o distintas e igualmente relevantes.')"><span class="opt-letter">B)</span><span>Hierarquizadas: a aprecia&ccedil;&atilde;o est&eacute;tica &eacute; sempre mais importante</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_4',2,2,'quiz14','Correto! S&atilde;o dimens&otilde;es distintas: a est&eacute;tica avalia a qualidade artística da linguagem; a &eacute;tica avalia os valores e impactos sociais. Um texto pode ser brilhante em uma e problem&aacute;tico na outra.')"><span class="opt-letter">C)</span><span>Dimens&otilde;es distintas: um texto pode ser esteticamente brilhante e eticamente problem&aacute;tico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_4',3,2,'quiz14','C: Aprecia&ccedil;&atilde;o est&eacute;tica analisa a qualidade da linguagem, n&atilde;o a veracidade dos fatos.')"><span class="opt-letter">D)</span><span>Distintas: a &eacute;tica avalia os fatos; a est&eacute;tica avalia os valores</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q14_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q14_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Por que ser transparente sobre os pr&oacute;prios valores ao se posicionar em debates &eacute; considerado mais honesto do que fingir neutralidade?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q14_5',0,3,'quiz14','D: Toda posi&ccedil;&atilde;o em debates sobre valores envolve prioriza&ccedil;&otilde;es que n&atilde;o s&atilde;o meramente t&eacute;cnicas. Fingir neutralidade esconde essas prioriza&ccedil;&otilde;es, enquanto ser transparente permite que os interlocutores avaliem o argumento pelo que &eacute;.')"><span class="opt-letter">A)</span><span>Porque deixa claro que voc&ecirc; n&atilde;o sabe responder de forma neutra</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_5',1,3,'quiz14','D: Ser transparente sobre valores n&atilde;o significa ser subjetivo sem controle; significa reconhecer que escolhas de valores est&atilde;o sempre presentes.')"><span class="opt-letter">B)</span><span>Porque demonstra que voc&ecirc; &eacute; mais emocional do que racional</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_5',2,3,'quiz14','D: Transparência n&atilde;o &eacute; fraqueza; &eacute; integridade intelectual.')"><span class="opt-letter">C)</span><span>Porque convence mais facilmente a audi&ecirc;ncia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q14_5',3,3,'quiz14','Correto! Toda posi&ccedil;&atilde;o sobre valores envolve prioriza&ccedil;&otilde;es que n&atilde;o s&atilde;o puramente t&eacute;cnicas. Fingir neutralidade esconde essas escolhas e impede que os interlocutores avaliem os pressupostos. Transparência &eacute; integridade intelectual.')"><span class="opt-letter">D)</span><span>Porque toda posi&ccedil;&atilde;o em debates sobre valores envolve prioriza&ccedil;&otilde;es &eacute;ticas; fingir neutralidade oculta essas escolhas e impede a avalia&ccedil;&atilde;o honesta dos argumentos</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q14_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr14"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Bloco IV conclu&iacute;do!</div><div class="qrb-sub">T&oacute;picos 12, 13 e 14 finalizados!</div><button class="qrb-retry" onclick="resetQuiz('quiz14')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c14 -->
 <section id="c15" style="min-height:1px;background:var(--bg2)"></section>
 <section id="c16" style="min-height:1px;background:var(--bg)"></section>
 <section id="c17" style="min-height:1px;background:var(--bg2)"></section>
@@ -3551,7 +5112,14 @@ const secMascotMsgs = {
   c04:["Michel Foucault disse que o discurso não apenas descreve a realidade, mas a cria. Pesado, né?","Silêncio também é discurso. O que a mídia não noticia é tão poderoso quanto o que noticia.","O contradiscurso é o ato de resistência mais poderoso que existe: usar as palavras do sistema contra ele."],
   c05:["A palavra 'ironia' vem do grego 'eironeia': dissimulação. Os gregos já ironizavam há 2.500 anos!","A polissemia é a razão pela qual os advogados ganham tanto dinheiro: palavras têm múltiplos sentidos legais.","O duplo sentido é a base de quase todo humor humano. Somos uma espécie de trocadilhos."],
   c06:["A palavra 'saudade' é um exemplo de conotação cultural: não tem tradução perfeita em nenhuma língua!","Conotação é o que transforma poesia em arte: as palavras escolhidas valem mais do que seu significado literal.","O funk e o rap são mestres da conotação: cada letra esconde camadas de significado que o ouvido desatento não capta."],
-  c07:["George Orwell disse: 'Se o pensamento corrompe a linguagem, a linguagem também corrompe o pensamento.'","Escolher a palavra 'eliminado' em vez de 'morto' já muda todo o sentido de uma manchete de jornal.","A publicidade é a arte de usar as palavras certas para fazer você comprar o que não precisa!"]
+  c07:["George Orwell disse: 'Se o pensamento corrompe a linguagem, a linguagem também corrompe o pensamento.'","Escolher a palavra 'eliminado' em vez de 'morto' já muda todo o sentido de uma manchete de jornal.","A publicidade é a arte de usar as palavras certas para fazer você comprar o que não precisa!"],
+  c08:["Sabia que a primeira obra literária da humanidade, a Epopeia de Gilgamesh, tem mais de 4.000 anos e fala de amizade e da busca pela imortalidade?","A pergunta 'o que é literatura?' não tem resposta definitiva. Isso é exatamente o que a torna fascinante!","Aristóteles disse que a literatura imita a realidade. Mas às vezes a realidade imita a literatura..."],
+  c09:["A Carta de Caminha ficou guardada no Arquivo da Torre do Tombo por 317 anos antes de ser publicada!","O Brasil tem a única literatura nacional do mundo que começa com uma carta de invasão colonial. Irônico, né?","Pero Vaz de Caminha era escrivão, não literato, mas sua Carta é considerada o atestado de nascimento da literatura brasileira."],
+  c10:["O primeiro texto escrito em português data de 1214 — isso é há mais de 800 anos!","Dom Dinis, rei de Portugal, era trovador! Ele escreveu mais de 100 cantigas. Rei e poeta!","Camões perdeu um olho numa batalha em Ceuta antes de escrever Os Lusíadas. Dedicação ou loucura?"],
+  c11:["Os povos Yanomami têm palavras para mais de 400 plantas medicinais sem equivalente em português.","O livro 'Ideias para adiar o fim do mundo', de Ailton Krenak, foi um bestseller no Brasil em 2019.","A lenda do Guaraná dos povos Sateré-Mawé diz que a planta nasceu dos olhos de uma criança."],
+  c12:["O Grêmio Estudantil é um direito garantido pela Lei Federal 7.398/1985. Você sabia disso?","O maior debate parlamentar da história do Brasil durou mais de 14 horas seguidas em 2019!","Sócrates usava o debate como ferramenta filosófica. A diferença: ele não precisava ganhar, precisava descobrir a verdade."],
+  c13:["Pesquisas mostram que humanos pensam 3x mais rápido do que falam. Por isso é tão difícil escutar de verdade.","A escuta ativa foi desenvolvida como técnica terapêutica por Carl Rogers nos anos 1950. Hoje é essencial em negociações.","No Senado Romano, havia a regra de que todos deviam falar antes de votar. A gente perdeu isso."],
+  c14:["O filósofo John Rawls propôs um experimento mental: defenda suas ideias sem saber que papel você ocuparia na sociedade resultante.","Controverso não é sinônimo de errado. Muitas verdades históricas foram controversas antes de serem aceitas.","A palavra 'polêmica' vem do grego polemos: guerra. Mas a boa polêmica é uma guerra de ideias, não de pessoas."]
 };
 let secMascotIdx = {};
 function pauloMascotClick(secId) {
@@ -3573,7 +5141,14 @@ const sfSyms = {
   sf04:['⚔️','🏰','🗡️','📢','🌿','👑','🛡️','🌙'],
   sf05:['😏','🎭','🌀','🤔','😂','💬','🔮','🗣️'],
   sf06:['🎨','✨','💡','🔤','📖','🌈','🖊️','💭'],
-  sf07:['🧩','⚡','🎯','🔬','📝','💫','🌟','🔍']
+  sf07:['🧩','⚡','🎯','🔬','📝','💫','🌟','🔍'],
+  sf08:['📚','🏛️','⚜','🎭','🗺️','📜','🏰','✨'],
+  sf09:['⛵','🗺️','📜','🌊','⚔️','🌿','🦜','🌴'],
+  sf10:['🎵','🏰','👑','⚔️','🪶','📜','🌊','🌹'],
+  sf11:['🌿','🌳','🌊','🔥','🦋','🌺','🐦','💚'],
+  sf12:['🗣️','⚖️','🏛️','📢','🤝','💬','👥','🎙️'],
+  sf13:['👂','💭','🧘','🎧','📝','⏱️','🤔','💡'],
+  sf14:['⚖️','🔥','💬','🌐','📣','🌍','🤝','💡']
 };
 Object.keys(sfSyms).forEach(id => {
   const wrap = document.getElementById(id);
@@ -3691,6 +5266,61 @@ window.addEventListener('load', () => {
   // Init block 2 word compares (start hidden)
   document.querySelectorAll('.wc-explain').forEach(e => { e.style.display = 'none'; });
 });
+
+/* ============================================================
+   BLOCK 3 JAVASCRIPT
+   ============================================================ */
+
+/* Literature Period Card expand/collapse */
+function toggleLPC(card) {
+  const wasOpen = card.classList.contains('expanded');
+  // Close all in same grid
+  const parent = card.closest('.trovador-grid');
+  if(parent) {
+    parent.querySelectorAll('.lit-period-card').forEach(c => c.classList.remove('expanded'));
+  }
+  if(!wasOpen) card.classList.add('expanded');
+}
+
+/* Scroll Map stops */
+function toggleSmStop(stop) {
+  const wasActive = stop.classList.contains('active');
+  const route = stop.closest('.sm-route');
+  if(route) route.querySelectorAll('.sm-stop').forEach(s => s.classList.remove('active'));
+  if(!wasActive) stop.classList.add('active');
+}
+
+/* ============================================================
+   BLOCK 4 JAVASCRIPT
+   ============================================================ */
+
+/* Participation map levels */
+function togglePMLevel(el) {
+  const wasActive = el.classList.contains('active-level');
+  el.closest('.pm-levels').querySelectorAll('.pm-level').forEach(l => l.classList.remove('active-level'));
+  if(!wasActive) el.classList.add('active-level');
+}
+
+/* Turno game (debate simulator) */
+function checkTurno(btn, gameId, idx, result, msg) {
+  const opts = document.getElementById(gameId + '-opts');
+  if(!opts || opts.dataset.answered) return;
+  opts.dataset.answered = '1';
+  opts.querySelectorAll('.tg-opt').forEach(b => { b.disabled = true; });
+  btn.classList.add(result === 'correct' ? 'tg-correct' : 'tg-wrong');
+  const fb = document.getElementById(gameId + '-fb');
+  if(fb) {
+    fb.textContent = (result === 'correct' ? '✅ Boa estratégia! ' : '❌ Cuidado! ') + msg;
+    fb.classList.add('show');
+    fb.style.background = result === 'correct' ? '#dcfce7' : '#fee2e2';
+    fb.style.color = result === 'correct' ? '#14532d' : '#991b1b';
+    fb.style.borderLeft = '3px solid ' + (result === 'correct' ? '#16a34a' : '#dc2626');
+    fb.style.borderRadius = '8px';
+    fb.style.padding = '.6rem .8rem';
+    fb.style.fontSize = '.8rem';
+  }
+  pauloReact(result === 'correct');
+}
 </script>
 </body>
 </html>
