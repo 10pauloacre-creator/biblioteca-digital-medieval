@@ -904,66 +904,6 @@ body{background:#080300;color:var(--text);}
 
 <script>
 /* ══════════════════════════════
-   TORCH FIRE CANVAS
-══════════════════════════════ */
-function initFire(canvas) {
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const particles = [];
-  const N = 22;
-
-  function newP() {
-    return {
-      x: W/2 + (Math.random()-.5)*10,
-      y: H - 4,
-      vx: (Math.random()-.5)*.8,
-      vy: -(Math.random()*1.4+.5),
-      life: 1,
-      decay: Math.random()*.028+.012,
-      size: Math.random()*5+3,
-      hue: Math.random()*30, // 0=red, 30=orange
-    };
-  }
-  for(let i=0;i<N;i++){const p=newP();p.life=Math.random();particles.push(p);}
-
-  function frame() {
-    ctx.clearRect(0,0,W,H);
-    // Emit new
-    if(particles.length < N+5) particles.push(newP());
-
-    particles.forEach((p,i)=>{
-      p.x += p.vx + Math.sin(Date.now()*.003+i)*.3;
-      p.y += p.vy;
-      p.life -= p.decay;
-      if(p.life<=0){particles[i]=newP();return;}
-
-      const alpha = p.life;
-      const size  = p.size * p.life;
-      // color: yellow → orange → red as life decreases
-      const l = p.life;
-      let r,g,b;
-      if(l>.6){r=255;g=Math.round(180+75*(l-.6)/.4);b=20;}
-      else if(l>.3){r=255;g=Math.round(80+100*(l-.3)/.3);b=0;}
-      else{r=Math.round(200+55*(l/.3));g=20;b=0;}
-
-      const grd=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,size);
-      grd.addColorStop(0,`rgba(${r},${g},${b},${alpha})`);
-      grd.addColorStop(.6,`rgba(${r},${Math.round(g*.5)},0,${alpha*.6})`);
-      grd.addColorStop(1,`rgba(${r},0,0,0)`);
-      ctx.beginPath();ctx.arc(p.x,p.y,size,0,Math.PI*2);
-      ctx.fillStyle=grd;ctx.fill();
-    });
-    requestAnimationFrame(frame);
-  }
-  frame();
-}
-
-window.addEventListener('DOMContentLoaded',()=>{
-  initFire(document.getElementById('fire-l'));
-  initFire(document.getElementById('fire-r'));
-});
-
-/* ══════════════════════════════
    SCREEN TRANSITIONS
 ══════════════════════════════ */
 let currentSerie = 0;
