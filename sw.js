@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'bdm-shell-v6';
+const SHELL_CACHE = 'bdm-shell-v7';
 const BOOKS_CACHE = 'bdm-books-v1';
 
 // Arquivos essenciais do app (carregados na instalação)
