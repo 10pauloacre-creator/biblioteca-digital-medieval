@@ -7,7 +7,11 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(git commit -m 'fix: corrige theme_color e background_color para #080300 \\(remover linha azul no topo\\) *)"
+      "Bash(git commit -m 'fix: corrige theme_color e background_color para #080300 \\(remover linha azul no topo\\) *)",
+      "Bash(git commit -m 'feat: adiciona meta tags Open Graph e Twitter Card com placa.png como preview *)",
+      "Bash(magick --version)",
+      "Bash(convert --version)",
+      "Bash(ffmpeg -version)"
     ]
   }
 }
