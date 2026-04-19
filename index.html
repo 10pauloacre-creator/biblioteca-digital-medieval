@@ -99,9 +99,8 @@ body{background:#080300;color:var(--text);}
   height:35%;
   background:linear-gradient(180deg,
     transparent 0%,
-    rgba(30,14,4,.6) 30%,
-    rgba(20,8,2,.95) 70%,
-    #060200 100%);
+    rgba(10,4,0,.2) 50%,
+    rgba(10,4,0,.45) 100%);
 }
 /* Table surface */
 .bg-table{
@@ -110,21 +109,22 @@ body{background:#080300;color:var(--text);}
   width:min(340px,90vw);height:12px;
   background:linear-gradient(180deg,#5a3010,#3a1c08);
   border-radius:3px 3px 0 0;
-  box-shadow:0 4px 30px rgba(0,0,0,.7);
+  box-shadow:0 4px 30px rgba(0,0,0,.4);
+  opacity:.4;
 }
 .bg-table-body{
   position:absolute;bottom:0;left:50%;z-index:2;
   transform:translateX(-50%);
   width:min(340px,90vw);height:28%;
-  background:linear-gradient(180deg,#3a1c08,#200d04);
+  background:linear-gradient(180deg,rgba(30,12,4,.15),rgba(10,4,0,.3));
 }
 
 /* Vignette */
 .bg-vignette{
   position:absolute;inset:0;z-index:3;pointer-events:none;
   background:
-    radial-gradient(ellipse 100% 100% at 50% 50%,transparent 30%,rgba(4,2,0,.7) 100%),
-    linear-gradient(0deg,rgba(5,2,0,.8) 0%,transparent 30%);
+    radial-gradient(ellipse 100% 100% at 50% 50%,transparent 40%,rgba(4,2,0,.4) 100%),
+    linear-gradient(0deg,rgba(5,2,0,.35) 0%,transparent 25%);
 }
 
 /* ── Torch ── */
@@ -204,10 +204,15 @@ body{background:#080300;color:var(--text);}
 
 /* ── Books on table ── */
 .books-scene{
-  display:flex;align-items:flex-end;gap:clamp(16px,5vw,36px);
-  width:100%;max-width:min(460px,96vw);
+  position:absolute;
+  bottom:262px;
+  right:2px;
+  display:flex;align-items:flex-end;
+  gap:clamp(4px,2vw,10px);
+  width:415px;
   justify-content:center;
-  padding:0 12px;
+  padding:0;
+  z-index:10;
 }
 
 /* ── Quote plaque ── */
@@ -526,16 +531,19 @@ body{background:#080300;color:var(--text);}
   width:min(420px,96vw);
   margin:0 auto 18px;
   animation:revealUp .7s .1s ease-out both;
+  filter:none;
 }
 .placa-img{
   width:100%;height:auto;
   display:block;
-  filter:drop-shadow(0 4px 18px rgba(0,0,0,.7));
+  filter:none;
+  mix-blend-mode:normal;
+  isolation:isolate;
 }
 
 /* ── Serie image buttons ── */
 .serie-btn{
-  width:clamp(90px,26vw,140px);
+  width:clamp(100px,30vw,140px);
   cursor:pointer;
   animation:bookFloat 3.5s ease-in-out infinite;
   filter:drop-shadow(0 12px 20px rgba(0,0,0,.8));
@@ -549,6 +557,26 @@ body{background:#080300;color:var(--text);}
   animation-play-state:paused;
 }
 .serie-img{width:100%;height:auto;display:block;}
+
+/* ── Pilha de livros (decorativa) ── */
+.pilha-livros{
+  position:absolute;
+  bottom:156px;
+  right:-58px;
+  width:152px;
+  z-index:11;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.8));
+}
+.pilha-livros::after{
+  content:'';
+  position:absolute;
+  bottom:-6px;left:10%;
+  width:80%;height:10px;
+  background:radial-gradient(ellipse 80% 100% at 50% 0%,rgba(0,0,0,.55),transparent);
+  border-radius:50%;
+  z-index:-1;
+}
+.pilha-livros img{width:100%;height:auto;display:block;}
 </style>
 </head>
 <body>
@@ -588,109 +616,7 @@ body{background:#080300;color:var(--text);}
   </div>
 </div>
 
-<!-- ════════════════════════════════════════
-     SCREEN 1 — LANDING
-════════════════════════════════════════ -->
-<section id="screen-landing" class="screen">
 
-  <!-- Background layers -->
-  <div class="bg-base"></div>
-  <div class="bg-arch"></div>
-  <div class="bg-arch-border"></div>
-
-  <!-- Bookshelf SVG silhouettes -->
-  <div class="bg-shelf-l">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="shelfGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#120700" stop-opacity=".95"/>
-          <stop offset="100%" stop-color="#120700" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#shelfGrad)"/>
-      <!-- shelf boards -->
-      <rect x="0" y="20%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="0" y="40%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="0" y="60%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="0" y="80%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <!-- book spines -->
-      <rect x="0" y="20%" width="9"  height="20%" fill="#3a1a06" opacity=".7"/>
-      <rect x="10" y="21%" width="7" height="18%" fill="#1a2a08" opacity=".7"/>
-      <rect x="18" y="20%" width="11" height="20%" fill="#2a0a10" opacity=".7"/>
-      <rect x="30" y="22%" width="8" height="18%" fill="#4a2a0a" opacity=".7"/>
-      <rect x="39" y="20%" width="10" height="20%" fill="#0a1a3a" opacity=".7"/>
-      <rect x="50" y="21%" width="7" height="18%" fill="#3a1006" opacity=".7"/>
-      <rect x="58" y="20%" width="12" height="20%" fill="#1a1a0a" opacity=".7"/>
-      <rect x="0" y="40%" width="12" height="20%" fill="#0a2a10" opacity=".7"/>
-      <rect x="13" y="41%" width="8" height="19%" fill="#3a1a06" opacity=".7"/>
-      <rect x="22" y="40%" width="10" height="20%" fill="#2a0a0a" opacity=".7"/>
-      <rect x="33" y="42%" width="7" height="18%" fill="#4a3010" opacity=".7"/>
-      <rect x="41" y="40%" width="11" height="20%" fill="#1a0a3a" opacity=".7"/>
-      <rect x="53" y="41%" width="8" height="18%" fill="#3a2006" opacity=".7"/>
-      <rect x="0" y="60%" width="10" height="20%" fill="#2a1a06" opacity=".7"/>
-      <rect x="11" y="62%" width="7" height="18%" fill="#0a2a1a" opacity=".7"/>
-      <rect x="19" y="60%" width="12" height="20%" fill="#3a0a10" opacity=".7"/>
-      <rect x="32" y="61%" width="9" height="19%" fill="#4a2a08" opacity=".7"/>
-      <rect x="42" y="60%" width="11" height="20%" fill="#1a1a2a" opacity=".7"/>
-    </svg>
-  </div>
-  <div class="bg-shelf-r">
-    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="shelfGradR" x1="1" y1="0" x2="0" y2="0">
-          <stop offset="0%" stop-color="#120700" stop-opacity=".95"/>
-          <stop offset="100%" stop-color="#120700" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#shelfGradR)"/>
-      <rect x="10%" y="20%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="10%" y="40%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="10%" y="60%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="10%" y="80%" width="90%" height="5px" fill="#1e0c04" opacity=".8"/>
-      <rect x="59" y="20%" width="9"  height="20%" fill="#3a1a06" opacity=".7"/>
-      <rect x="49" y="21%" width="9"  height="18%" fill="#1a2a08" opacity=".7"/>
-      <rect x="38" y="20%" width="10" height="20%" fill="#2a0a10" opacity=".7"/>
-      <rect x="28" y="22%" width="9"  height="18%" fill="#4a2a0a" opacity=".7"/>
-      <rect x="18" y="20%" width="9"  height="20%" fill="#0a1a3a" opacity=".7"/>
-      <rect x="8"  y="21%" width="9"  height="18%" fill="#3a1006" opacity=".7"/>
-      <rect x="60" y="40%" width="8"  height="20%" fill="#0a2a10" opacity=".7"/>
-      <rect x="49" y="41%" width="10" height="19%" fill="#3a1a06" opacity=".7"/>
-      <rect x="37" y="40%" width="11" height="20%" fill="#2a0a0a" opacity=".7"/>
-      <rect x="27" y="42%" width="9"  height="18%" fill="#4a3010" opacity=".7"/>
-      <rect x="16" y="40%" width="10" height="20%" fill="#1a0a3a" opacity=".7"/>
-      <rect x="7"  y="41%" width="8"  height="18%" fill="#3a2006" opacity=".7"/>
-      <rect x="56" y="60%" width="12" height="20%" fill="#2a1a06" opacity=".7"/>
-      <rect x="43" y="62%" width="12" height="18%" fill="#0a2a1a" opacity=".7"/>
-      <rect x="31" y="60%" width="11" height="20%" fill="#3a0a10" opacity=".7"/>
-      <rect x="20" y="61%" width="10" height="19%" fill="#4a2a08" opacity=".7"/>
-      <rect x="9"  y="60%" width="10" height="20%" fill="#1a1a2a" opacity=".7"/>
-    </svg>
-  </div>
-
-  <div class="bg-floor"></div>
-  <div class="bg-table"></div>
-  <div class="bg-table-body"></div>
-  <div class="bg-vignette"></div>
-
-  <!-- TORCH LEFT -->
-  <div class="torch torch-l">
-    <div class="torch-glow" style="position:fixed;left:0;top:30%;width:130px;height:130px;background:radial-gradient(circle,rgba(255,120,20,.13),transparent 70%);pointer-events:none;"></div>
-    <div style="position:relative;">
-      <div class="torch-fire-wrap"><canvas id="fire-l" width="34" height="56"></canvas></div>
-      <div class="torch-head"></div>
-      <div class="torch-mount"></div>
-    </div>
-  </div>
-
-  <!-- TORCH RIGHT -->
-  <div class="torch torch-r">
-    <div class="torch-glow" style="position:fixed;right:0;top:30%;width:130px;height:130px;background:radial-gradient(circle,rgba(255,120,20,.13),transparent 70%);pointer-events:none;"></div>
-    <div style="position:relative;">
-      <div class="torch-fire-wrap"><canvas id="fire-r" width="34" height="56"></canvas></div>
-      <div class="torch-head"></div>
-      <div class="torch-mount"></div>
-    </div>
-  </div>
 
   <!-- Content -->
   <div class="landing-inner">
@@ -718,11 +644,9 @@ body{background:#080300;color:var(--text);}
 
     </div><!-- /books-scene -->
 
-    <!-- Quote plaque -->
-    <div class="quote-plaque" style="animation:revealUp .7s .7s ease-out both;">
-      <p class="quote-text">"O saber é a luz que atravessa as sombras do esquecimento."</p>
-      <div class="quote-divider">✦ ✦ ✦</div>
-      <p class="quote-prof">Prof. Paulo Roberto Ramalho Magalhães</p>
+    <!-- Pilha de livros separada -->
+    <div class="pilha-livros">
+      <img src="assets/images/pilhadelivros.png" alt="">
     </div>
 
   </div><!-- /landing-inner -->
@@ -1188,6 +1112,133 @@ window.addEventListener('DOMContentLoaded',()=>{
   });
 })();
 </script>
+
+<!-- ══ MODO POSICIONAMENTO REMOVIDO ══
+<style>
+#pos-painel{
+  position:fixed;top:8px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.92);color:#ffe87a;
+  font:bold 12px/1.7 monospace;padding:8px 14px;border-radius:8px;
+  border:1px solid #c9a84c;z-index:99999;text-align:left;
+  pointer-events:none;white-space:pre;
+}
+.drag-handle-resize{
+  position:absolute;bottom:-10px;right:-10px;
+  width:24px;height:24px;background:#c9a84c;border-radius:50%;
+  cursor:se-resize;z-index:99999;border:2px solid #fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;line-height:1;touch-action:none;
+}
+.draggable-el{ outline:2px dashed #c9a84c; touch-action:none; user-select:none; }
+</style>
+<div id="pos-painel">Toque num elemento para mover</div>
+<script>
+(function(){
+  const painel = document.getElementById('pos-painel');
+  const sw = ()=>window.innerWidth;
+  const sh = ()=>window.innerHeight;
+
+  function makeDraggable(el, label){
+    // Garante posição absoluta independente
+    el.style.position = 'absolute';
+    el.style.left = 'auto';
+    el.classList.add('draggable-el');
+
+    // Botão de redimensionar
+    const rh = document.createElement('div');
+    rh.className = 'drag-handle-resize';
+    rh.textContent = '⤡';
+    el.appendChild(rh);
+
+    function getTouch(e){ return e.touches ? e.touches[0] : e; }
+
+    function updateInfo(){
+      const r = el.getBoundingClientRect();
+      const bot = Math.round(sh() - r.bottom);
+      const rig = Math.round(sw() - r.right);
+      const wid = Math.round(r.width);
+      painel.textContent =
+        label + '\n' +
+        'bottom: ' + bot + 'px\n' +
+        'right:  ' + rig + 'px\n' +
+        'width:  ' + wid + 'px';
+    }
+
+    // ── Arrastar ──
+    let drag=false, ox=0, oy=0;
+
+    function onDragStart(e){
+      if(e.target===rh) return;
+      drag = true;
+      const t = getTouch(e);
+      const r = el.getBoundingClientRect();
+      ox = t.clientX - r.left;
+      oy = t.clientY - r.top;
+      el.style.animation = 'none';
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    function onDragMove(e){
+      if(!drag) return;
+      const t = getTouch(e);
+      const newL = t.clientX - ox;
+      const newT = t.clientY - oy;
+      el.style.right  = Math.round(sw() - newL - el.offsetWidth)  + 'px';
+      el.style.bottom = Math.round(sh() - newT - el.offsetHeight) + 'px';
+      updateInfo();
+      e.preventDefault();
+    }
+    function onDragEnd(){ drag = false; }
+
+    el.addEventListener('mousedown',  onDragStart);
+    el.addEventListener('touchstart', onDragStart, {passive:false});
+    document.addEventListener('mousemove',  onDragMove);
+    document.addEventListener('touchmove',  onDragMove, {passive:false});
+    document.addEventListener('mouseup',    onDragEnd);
+    document.addEventListener('touchend',   onDragEnd);
+
+    // ── Redimensionar ──
+    let resize=false, rx=0, rw=0;
+
+    rh.addEventListener('mousedown', e=>{
+      resize=true; rx=e.clientX; rw=el.offsetWidth;
+      e.stopPropagation(); e.preventDefault();
+    });
+    rh.addEventListener('touchstart', e=>{
+      resize=true; rx=e.touches[0].clientX; rw=el.offsetWidth;
+      e.stopPropagation(); e.preventDefault();
+    },{passive:false});
+    document.addEventListener('mousemove', e=>{
+      if(!resize) return;
+      el.style.width = Math.max(40, rw+(e.clientX-rx))+'px';
+      updateInfo();
+    });
+    document.addEventListener('touchmove', e=>{
+      if(!resize) return;
+      el.style.width = Math.max(40, rw+(e.touches[0].clientX-rx))+'px';
+      updateInfo(); e.preventDefault();
+    },{passive:false});
+    document.addEventListener('mouseup',  ()=>resize=false);
+    document.addEventListener('touchend', ()=>resize=false);
+
+    // Inicializa posição atual como bottom/right absolutos
+    const r0 = el.getBoundingClientRect();
+    el.style.bottom = Math.round(sh() - r0.bottom) + 'px';
+    el.style.right  = Math.round(sw() - r0.right)  + 'px';
+    el.style.top    = 'auto';
+    el.style.transform = 'none';
+  }
+
+  // Aplica à pilha de livros
+  const pilha = document.querySelector('.pilha-livros');
+  if(pilha) makeDraggable(pilha, '📚 pilha-livros');
+
+  // Aplica ao bloco dos 3 livros (move os 3 juntos)
+  const scene = document.querySelector('.books-scene');
+  if(scene) makeDraggable(scene, '📖 books-scene (3 livros)');
+})();
+</script>
+══ FIM MODO POSICIONAMENTO ══ -->
 
 </body>
 </html>
