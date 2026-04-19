@@ -1055,8 +1055,57 @@ window.addEventListener('DOMContentLoaded',()=>{
 })();
 </script>
 
-<!-- SERVICE WORKER -->
-<script>if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));</script>
+<!-- SERVICE WORKER + CACHE TOTAL + PERIODIC SYNC -->
+<script>
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+
+  window.addEventListener('load', async () => {
+    let reg;
+    try { reg = await navigator.serviceWorker.register('./sw.js'); } catch(e) { return; }
+
+    // Escuta mensagem do SW avisando que há novos livros
+    navigator.serviceWorker.addEventListener('message', e => {
+      if(e.data && e.data.type === 'BDM_NEW_BOOKS') showUpdateToast();
+    });
+
+    // Quando um novo SW assume, recarrega para servir conteúdo atualizado
+    reg.addEventListener('controllerchange', () => {
+      if(!document._bdmReloading){ document._bdmReloading=true; location.reload(); }
+    });
+
+    // Periodic Background Sync: verifica novos livros 1x por dia (Android Chrome)
+    if('periodicSync' in reg) {
+      try {
+        const perm = await navigator.permissions.query({ name: 'periodic-background-sync' });
+        if(perm.state === 'granted') {
+          await reg.periodicSync.register('bdm-update-check', {
+            minInterval: 24 * 60 * 60 * 1000
+          });
+        }
+      } catch(e) {}
+    }
+
+    // Background Sync ao recuperar conexão
+    if('sync' in reg) {
+      try { await reg.sync.register('bdm-update-check'); } catch(e) {}
+    }
+
+    // Pede ao SW para cachear a mídia grande (vídeo) em background
+    if(reg.active) reg.active.postMessage('CACHE_MEDIA');
+  });
+
+  // Toast discreto quando novos livros são detectados em background
+  function showUpdateToast() {
+    const t = document.getElementById('back-toast');
+    if(!t) return;
+    const orig = t.textContent;
+    t.textContent = '⚜ Novos pergaminhos adicionados ao acervo ⚜';
+    t.classList.add('show');
+    setTimeout(() => { t.classList.remove('show'); t.textContent = orig; }, 4000);
+  }
+})();
+</script>
 
 <!-- PWA SISTEMA -->
 <script>
