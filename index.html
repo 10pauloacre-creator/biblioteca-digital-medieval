@@ -612,7 +612,7 @@ body{background:#080300;color:var(--text);}
   transition:opacity .7s ease;
 }
 #splash-screen.fade-out{opacity:0;}
-#splash-screen img{
+#splash-video{
   width:100%;height:100%;
   display:block;
   object-fit:cover;
@@ -624,7 +624,7 @@ body{background:#080300;color:var(--text);}
 
 <!-- Splash screen -->
 <div id="splash-screen">
-  <img src="assets/images/splash-screen.png" alt="">
+  <video id="splash-video" src="assets/gif/intro.mp4" autoplay muted playsinline></video>
 </div>
 
 <!-- Background video -->
@@ -1070,11 +1070,15 @@ async function updateAvailability(){
 window.addEventListener('DOMContentLoaded',()=>{
   startBgMusic();
   const splash=document.getElementById('splash-screen');
-  if(splash){
-    setTimeout(()=>{
+  const splashVideo=document.getElementById('splash-video');
+  if(splash&&splashVideo){
+    const dismiss=()=>{
       splash.classList.add('fade-out');
       setTimeout(()=>splash.remove(),750);
-    },1400);
+    };
+    splashVideo.addEventListener('ended',dismiss,{once:true});
+    // fallback: se o vídeo não carregar, some após 5s
+    setTimeout(()=>{if(document.getElementById('splash-screen'))dismiss();},5000);
   }
 });
 </script>
