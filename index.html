@@ -604,9 +604,10 @@ body{background:#080300;color:var(--text);}
 .pilha-livros img{width:100%;height:auto;display:block;}
 
 /* ══════════════════════════════
-   PORTRAIT — celular vertical (reforço)
+   PORTRAIT — celular vertical
+   largura <= 600px  E  altura >= 500px
 ══════════════════════════════ */
-@media screen and (orientation:portrait) and (max-width:600px){
+@media screen and (max-width:600px) and (min-height:500px){
   .plaque-img-wrapper{
     max-height:min(220px,28vh);
     margin:40px auto 12px;
@@ -628,15 +629,16 @@ body{background:#080300;color:var(--text);}
 
 /* ══════════════════════════════
    LANDSCAPE — celular horizontal
+   altura <= 480px  E  largura >= 480px
 ══════════════════════════════ */
-@media screen and (orientation:landscape) and (max-height:500px){
+@media screen and (max-height:480px) and (min-width:480px){
   .landing-inner{
     padding:4px max(12px,2vw) 4px;
     justify-content:flex-start;
   }
   .plaque-img-wrapper{
-    max-height:min(120px,10vh);
-    margin:2px auto 6px;
+    max-height:min(120px,30vh);
+    margin:6px auto 6px;
     width:min(400px,50vw);
   }
   .books-scene{
