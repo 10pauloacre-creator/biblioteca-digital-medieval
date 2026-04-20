@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Câmara do Mago Supremo — Biblioteca Digital Medieval</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#c9a84c;--gold-l:#f0d060;--gold-b:#ffe87a;
+  --ember:#ff6a1a;--text:#f5e8c0;--text-m:#c9a870;--text-d:#7a5c30;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;font-family:'IM Fell English',serif;background:#080300;color:var(--text);}
+body{overflow-y:auto;}
+#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;}
+
+.page{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:16px 16px 40px;}
+
+/* ── Header ── */
+.top-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;margin-bottom:1.2rem;
+  border-bottom:1px solid rgba(201,168,76,.25);
+}
+.nav-btn{
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;font-weight:700;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.08));
+  border:1px solid rgba(201,168,76,.4);color:var(--gold-l);
+  border-radius:4px;padding:6px 12px;cursor:pointer;transition:all .2s;
+}
+.nav-btn:hover{background:rgba(201,168,76,.25);}
+.nav-btn.danger{border-color:rgba(180,60,60,.4);color:#f08080;background:rgba(180,20,20,.1);}
+
+.page-title{
+  font-family:'Cinzel Decorative',serif;font-weight:900;
+  font-size:clamp(1rem,4vw,1.4rem);letter-spacing:.06em;
+  background:linear-gradient(135deg,#f9e3a0,#f2c25c,#b98b28);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ── Stats ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.4rem;}
+@media(max-width:500px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+.stat-box{
+  background:linear-gradient(135deg,rgba(22,11,3,.98),rgba(14,7,1,.98));
+  border:1px solid rgba(201,168,76,.2);border-radius:5px;
+  padding:.9rem;text-align:center;
+}
+.stat-num{font-family:'Cinzel Decorative',serif;font-size:1.5rem;color:var(--gold-l);}
+.stat-lbl{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.12em;color:var(--text-d);margin-top:.2rem;}
+
+/* ── Search ── */
+.search-row{display:flex;gap:.8rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.search-input{
+  flex:1;min-width:180px;padding:.6rem .9rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:4px;color:var(--text);
+  font-family:'IM Fell English',serif;font-size:.9rem;
+  outline:none;
+}
+.search-input:focus{border-color:var(--gold);}
+.search-select{
+  padding:.6rem .9rem;background:rgba(255,255,255,.04);
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:4px;color:var(--text);
+  font-family:'IM Fell English',serif;font-size:.9rem;
+  outline:none;-webkit-appearance:none;cursor:pointer;
+}
+.search-select option{background:#1a0e04;}
+
+/* ── Student grid ── */
+.students-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;}
+.student-card{
+  background:linear-gradient(145deg,#1c1006,#0e0803);
+  border:1px solid rgba(50,30,8,.6);border-radius:5px;
+  padding:1rem;cursor:pointer;
+  transition:transform .25s,box-shadow .25s,border-color .25s;
+  display:flex;align-items:center;gap:.9rem;
+}
+.student-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 24px rgba(0,0,0,.6),0 0 16px rgba(201,168,76,.15);
+  border-color:rgba(201,168,76,.4);
+}
+
+.s-avatar{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  border:2px solid rgba(201,168,76,.4);
+  background:linear-gradient(135deg,#2a1400,#1a0a00);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel Decorative',serif;font-size:.9rem;
+  color:var(--gold-l);overflow:hidden;
+}
+.s-avatar img{width:100%;height:100%;object-fit:cover;}
+
+.s-info{flex:1;min-width:0;}
+.s-name{
+  font-family:'Cinzel',serif;font-weight:700;font-size:.82rem;
+  color:#d5c090;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:.2rem;
+}
+.s-meta{font-size:.72rem;color:var(--text-d);}
+.s-badge{
+  font-size:.55rem;font-family:'Cinzel',serif;letter-spacing:.1em;
+  background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(201,168,76,.1));
+  border:1px solid rgba(201,168,76,.3);border-radius:8px;
+  padding:2px 7px;color:var(--gold);margin-top:.25rem;display:inline-block;
+}
+
+/* ── Upload modal ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:2000;background:rgba(4,2,0,.92);
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  max-width:420px;width:90%;max-height:90vh;overflow-y:auto;
+  background:linear-gradient(160deg,#1e1004,#130a02);
+  border:2px solid var(--gold);border-radius:8px;padding:1.8rem 1.5rem;
+  box-shadow:0 0 60px rgba(201,168,76,.3);
+}
+.modal-title{font-family:'Cinzel Decorative',serif;font-size:1rem;font-weight:900;color:var(--gold-l);text-align:center;margin-bottom:1.2rem;}
+.field{margin-bottom:.9rem;}
+.field label{display:block;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.14em;color:var(--text-d);margin-bottom:.35rem;}
+.field input,.field select{
+  width:100%;padding:.6rem .85rem;background:rgba(255,255,255,.04);
+  border:1px solid rgba(201,168,76,.3);border-radius:4px;
+  color:var(--text);font-family:'IM Fell English',serif;font-size:.92rem;
+  outline:none;-webkit-appearance:none;
+}
+.field input:focus,.field select:focus{border-color:var(--gold);}
+.field select option{background:#1a0e04;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+
+/* Upload avatar */
+.upload-zone{
+  border:2px dashed rgba(201,168,76,.3);border-radius:5px;
+  padding:1.2rem;text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s;
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:var(--text-d);
+}
+.upload-zone:hover{border-color:var(--gold);background:rgba(201,168,76,.05);}
+.upload-zone input{display:none;}
+.upload-preview{
+  width:70px;height:70px;border-radius:50%;margin:0 auto .7rem;
+  border:2px solid rgba(201,168,76,.4);overflow:hidden;
+  background:linear-gradient(135deg,#2a1400,#1a0a00);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel Decorative',serif;font-size:1.2rem;color:var(--gold-l);
+}
+.upload-preview img{width:100%;height:100%;object-fit:cover;}
+
+.modal-actions{display:flex;gap:.7rem;margin-top:1rem;}
+.btn-action{
+  flex:1;padding:.65rem;border:none;border-radius:4px;cursor:pointer;
+  font-family:'Cinzel',serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;
+  transition:all .15s;
+}
+.btn-gold{background:linear-gradient(135deg,#c9a84c,#f0d060,#8a6414);color:#1a0800;}
+.btn-gold:hover{box-shadow:0 4px 16px rgba(201,168,76,.5);}
+.btn-gold:disabled{opacity:.5;cursor:not-allowed;}
+.btn-outline{background:transparent;border:1px solid rgba(201,168,76,.35);color:var(--text-m);}
+.btn-red{background:rgba(180,20,20,.15);border:1px solid rgba(180,60,60,.35);color:#f08080;}
+
+.msg{padding:.55rem .85rem;border-radius:4px;font-size:.75rem;margin-bottom:.8rem;font-family:'Cinzel',serif;display:none;}
+.msg.error{background:rgba(180,20,20,.15);border:1px solid rgba(180,60,60,.4);color:#f08080;}
+.msg.success{background:rgba(20,100,20,.15);border:1px solid rgba(60,160,60,.4);color:#80d080;}
+.msg.show{display:block;}
+
+.empty-state{text-align:center;padding:2rem;color:var(--text-d);font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.1em;}
+
+@keyframes revealUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<video id="bg-video" autoplay muted loop playsinline>
+  <source src="../assets/gif/vide-de-fundo.mp4" type="video/mp4">
+</video>
+
+<div class="page">
+  <div class="top-nav">
+    <span class="page-title">👑 Câmara do Mago Supremo</span>
+    <div style="display:flex;gap:.5rem;">
+      <button class="nav-btn" onclick="window.location.href='perfil.html'">Meu Perfil</button>
+      <button class="nav-btn" onclick="window.location.href='../index.html'">Biblioteca</button>
+      <button class="nav-btn danger" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num" id="stat-total">—</div><div class="stat-lbl">ALUNOS</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-s1">—</div><div class="stat-lbl">1ª SÉRIE</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-s2">—</div><div class="stat-lbl">2ª SÉRIE</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-s3">—</div><div class="stat-lbl">3ª SÉRIE</div></div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-row">
+    <input class="search-input" id="search-nome" type="text" placeholder="Buscar por nome…" oninput="filterStudents()"/>
+    <select class="search-select" id="filter-serie" onchange="filterStudents()">
+      <option value="">Todas as séries</option>
+      <option value="1ª Série">1ª Série</option>
+      <option value="2ª Série">2ª Série</option>
+      <option value="3ª Série">3ª Série</option>
+    </select>
+  </div>
+
+  <!-- Grid -->
+  <div class="students-grid" id="students-grid">
+    <div class="empty-state">Carregando os pergaminhos…</div>
+  </div>
+</div>
+
+<!-- Modal de edição/avatar -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title-text">Editar Aluno</div>
+    <div id="msg-modal" class="msg"></div>
+
+    <!-- Avatar upload -->
+    <div class="field">
+      <label>BRASÃO PESSOAL (AVATAR)</label>
+      <div class="upload-zone" onclick="document.getElementById('avatar-file').click()">
+        <div class="upload-preview" id="upload-preview">
+          <img id="preview-img" style="display:none" alt=""/>
+          <span id="preview-initials">?</span>
+        </div>
+        <div>Clique para selecionar imagem</div>
+        <div style="margin-top:.3rem;opacity:.6;">(JPG ou PNG, máx 2MB)</div>
+        <input type="file" id="avatar-file" accept="image/jpeg,image/png" onchange="onFileSelect(event)"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>NOME COMPLETO</label>
+      <input id="edit-nome" type="text"/>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>SÉRIE</label>
+        <select id="edit-serie">
+          <option value="">—</option>
+          <option value="1ª Série">1ª Série</option>
+          <option value="2ª Série">2ª Série</option>
+          <option value="3ª Série">3ª Série</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>TURMA</label>
+        <input id="edit-turma" type="text" placeholder="A, B, C…"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Nº CHAMADA</label>
+      <input id="edit-numero" type="number" min="1" max="60"/>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-action btn-red" onclick="confirmarDelete()">🗑 Remover</button>
+      <button class="btn-action btn-outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn-action btn-gold" id="btn-save" onclick="saveStudent()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../assets/js/supabase-config.js"></script>
+<script>
+const { createClient } = supabase;
+const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+
+let allStudents = [];
+let editingId   = null;
+let newAvatarFile = null;
+
+(async () => {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+
+  const { data: me } = await db.from('profiles').select('role').eq('id', session.user.id).single();
+  if (me?.role !== 'admin') { window.location.href = 'perfil.html'; return; }
+
+  await loadStudents();
+})();
+
+async function loadStudents() {
+  const { data, error } = await db.from('profiles')
+    .select('*').order('nome_completo', { ascending: true });
+  if (error) { document.getElementById('students-grid').innerHTML = '<div class="empty-state">Erro ao carregar.</div>'; return; }
+
+  allStudents = data || [];
+  updateStats();
+  renderStudents(allStudents);
+}
+
+function updateStats() {
+  const alunos = allStudents.filter(s => s.role !== 'admin');
+  document.getElementById('stat-total').textContent = alunos.length;
+  document.getElementById('stat-s1').textContent = alunos.filter(s => s.serie === '1ª Série').length;
+  document.getElementById('stat-s2').textContent = alunos.filter(s => s.serie === '2ª Série').length;
+  document.getElementById('stat-s3').textContent = alunos.filter(s => s.serie === '3ª Série').length;
+}
+
+function filterStudents() {
+  const q     = document.getElementById('search-nome').value.toLowerCase();
+  const serie = document.getElementById('filter-serie').value;
+  const filtered = allStudents.filter(s => {
+    const matchNome  = !q || s.nome_completo.toLowerCase().includes(q);
+    const matchSerie = !serie || s.serie === serie;
+    return matchNome && matchSerie && s.role !== 'admin';
+  });
+  renderStudents(filtered);
+}
+
+function renderStudents(students) {
+  const grid = document.getElementById('students-grid');
+  if (!students.length) { grid.innerHTML = '<div class="empty-state">Nenhum aluno encontrado.</div>'; return; }
+
+  grid.innerHTML = students.map(s => {
+    const parts = (s.nome_completo||'').split(' ').filter(Boolean);
+    const ini   = parts.length >= 2 ? parts[0][0]+parts[parts.length-1][0] : parts[0]?.[0] || '?';
+    const avatarHtml = s.avatar_url
+      ? `<img src="${s.avatar_url}" alt="">`
+      : `<span>${ini.toUpperCase()}</span>`;
+    return `
+      <div class="student-card" onclick="openEdit('${s.id}')">
+        <div class="s-avatar">${avatarHtml}</div>
+        <div class="s-info">
+          <div class="s-name">${s.nome_completo || '(sem nome)'}</div>
+          <div class="s-meta">${s.serie||'—'} ${s.turma ? '· Turma '+s.turma : ''}</div>
+          <div class="s-meta">Nº ${s.numero_chamada ?? '—'}</div>
+          ${s.nome_completo ? '' : '<div class="s-badge">PERFIL INCOMPLETO</div>'}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function openEdit(uid) {
+  const s = allStudents.find(x => x.id === uid);
+  if (!s) return;
+  editingId     = uid;
+  newAvatarFile = null;
+
+  document.getElementById('modal-title-text').textContent = s.nome_completo || 'Editar Aluno';
+  document.getElementById('edit-nome').value   = s.nome_completo || '';
+  document.getElementById('edit-serie').value  = s.serie         || '';
+  document.getElementById('edit-turma').value  = s.turma         || '';
+  document.getElementById('edit-numero').value = s.numero_chamada || '';
+  document.getElementById('msg-modal').className = 'msg';
+
+  // Avatar preview
+  const previewImg = document.getElementById('preview-img');
+  const previewIni = document.getElementById('preview-initials');
+  if (s.avatar_url) {
+    previewImg.src = s.avatar_url; previewImg.style.display='block'; previewIni.style.display='none';
+  } else {
+    const parts = (s.nome_completo||'').split(' ').filter(Boolean);
+    const ini   = parts.length >= 2 ? parts[0][0]+parts[parts.length-1][0] : parts[0]?.[0] || '?';
+    previewIni.textContent = ini.toUpperCase(); previewImg.style.display='none'; previewIni.style.display='block';
+  }
+  document.getElementById('avatar-file').value = '';
+  document.getElementById('modal-edit').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-edit').classList.remove('open');
+  editingId = null; newAvatarFile = null;
+}
+
+function onFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { alert('Arquivo muito grande. Máximo 2MB.'); return; }
+  newAvatarFile = file;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById('preview-img');
+    img.src = ev.target.result; img.style.display='block';
+    document.getElementById('preview-initials').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveStudent() {
+  const nome   = document.getElementById('edit-nome').value.trim();
+  const serie  = document.getElementById('edit-serie').value;
+  const turma  = document.getElementById('edit-turma').value.trim();
+  const numero = parseInt(document.getElementById('edit-numero').value) || null;
+  const btn    = document.getElementById('btn-save');
+  const msg    = document.getElementById('msg-modal');
+
+  if (!nome) { msg.textContent='Nome obrigatório.'; msg.className='msg error show'; return; }
+  btn.disabled=true; btn.textContent='Salvando…'; msg.className='msg';
+
+  let avatar_url = allStudents.find(s=>s.id===editingId)?.avatar_url || null;
+
+  // Upload avatar se novo arquivo selecionado
+  if (newAvatarFile) {
+    const ext  = newAvatarFile.name.split('.').pop();
+    const path = `${editingId}.${ext}`;
+    const { error: uploadError } = await db.storage.from('avatares').upload(path, newAvatarFile, { upsert: true });
+    if (uploadError) {
+      msg.textContent='Erro no upload: '+uploadError.message; msg.className='msg error show';
+      btn.disabled=false; btn.textContent='Salvar'; return;
+    }
+    const { data: urlData } = db.storage.from('avatares').getPublicUrl(path);
+    avatar_url = urlData.publicUrl + '?t=' + Date.now();
+  }
+
+  const { error } = await db.from('profiles').update({
+    nome_completo: nome, serie: serie||null, turma: turma||null,
+    numero_chamada: numero, avatar_url
+  }).eq('id', editingId);
+
+  if (error) {
+    msg.textContent=error.message; msg.className='msg error show';
+    btn.disabled=false; btn.textContent='Salvar';
+  } else {
+    closeModal();
+    await loadStudents();
+  }
+}
+
+async function confirmarDelete() {
+  if (!confirm('Remover este aluno permanentemente? Esta ação não pode ser desfeita.')) return;
+  await db.from('profiles').delete().eq('id', editingId);
+  closeModal();
+  await loadStudents();
+}
+
+async function doLogout() {
+  await db.auth.signOut();
+  window.location.href = '../index.html';
+}
+
+document.getElementById('modal-edit').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-edit')) closeModal();
+});
+</script>
+</body>
+</html>
