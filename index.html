@@ -609,22 +609,44 @@ body{background:#080300;color:var(--text);}
   position:fixed;inset:0;z-index:99997;
   background:#080300;
   pointer-events:none;
-  transition:opacity .7s ease;
 }
-#splash-screen.fade-out{opacity:0;}
-#splash-video{
+#splash-bg-img,#splash-video{
+  position:absolute;inset:0;
   width:100%;height:100%;
   display:block;
   object-fit:cover;
   object-position:center center;
 }
+#splash-video{opacity:0;transition:opacity .25s ease;}
 </style>
 </head>
 <body>
 
 <!-- Splash screen -->
 <div id="splash-screen">
-  <video id="splash-video" src="assets/gif/intro.mp4" autoplay muted playsinline></video>
+  <img id="splash-bg-img" src="assets/images/splash-screen.png" alt="">
+  <video id="splash-video" src="assets/gif/intro.mp4" playsinline preload="auto"></video>
+  <div id="splash-tap" style="
+    position:absolute;inset:0;display:none;flex-direction:column;
+    align-items:center;justify-content:center;gap:18px;cursor:pointer;z-index:2;
+  ">
+    <div style="
+      font-family:'UnifrakturMaguntia',serif;
+      font-size:clamp(1.6rem,7vw,2.4rem);
+      color:#f0d060;
+      text-shadow:0 0 20px rgba(255,180,40,.9),0 0 50px rgba(255,120,20,.6);
+      letter-spacing:.06em;text-align:center;padding:0 24px;
+    ">Toque para entrar</div>
+    <div style="
+      width:54px;height:54px;border-radius:50%;
+      border:2px solid rgba(201,168,76,.7);
+      background:radial-gradient(circle at 40% 35%,#2a1400,#0e0700);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;color:#f0d060;
+      box-shadow:0 0 24px rgba(201,168,76,.5);
+      animation:ctaGlow 2s ease-in-out infinite;
+    ">▶</div>
+  </div>
 </div>
 
 <!-- Background video -->
@@ -1071,14 +1093,36 @@ window.addEventListener('DOMContentLoaded',()=>{
   startBgMusic();
   const splash=document.getElementById('splash-screen');
   const splashVideo=document.getElementById('splash-video');
+  const splashTap=document.getElementById('splash-tap');
   if(splash&&splashVideo){
+    // remove splash instantaneamente — último frame do vídeo coincide com landing
     const dismiss=()=>{
-      splash.classList.add('fade-out');
-      setTimeout(()=>splash.remove(),750);
+      splashVideo.pause();
+      splash.remove();
     };
     splashVideo.addEventListener('ended',dismiss,{once:true});
-    // fallback: se o vídeo não carregar, some após 5s
-    setTimeout(()=>{if(document.getElementById('splash-screen'))dismiss();},5000);
+
+    const startVideo=()=>{
+      if(splashTap) splashTap.style.display='none';
+      splashVideo.play().then(()=>{
+        splashVideo.style.opacity='1';
+      }).catch(()=>{
+        splashVideo.muted=true;
+        splashVideo.play().then(()=>splashVideo.style.opacity='1').catch(()=>dismiss());
+      });
+    };
+
+    // tenta autoplay com som
+    splashVideo.play().then(()=>{
+      splashVideo.style.opacity='1';
+    }).catch(()=>{
+      // bloqueado: mostra imagem de fundo + botão "toque para entrar"
+      if(splashTap) splashTap.style.display='flex';
+      splashTap.addEventListener('click',startVideo,{once:true});
+    });
+
+    // fallback de segurança: some após 30s no máximo
+    setTimeout(()=>{if(document.getElementById('splash-screen'))dismiss();},30000);
   }
 });
 </script>
