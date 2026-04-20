@@ -5,7 +5,7 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "any",
+  "orientation": "portrait",
   "background_color": "#080300",
   "theme_color": "#080300",
   "lang": "pt-BR",
@@ -62,10 +62,11 @@
   ],
   "screenshots": [
     {
-      "src": "assets/icons/icon-512x512.png",
-      "sizes": "512x512",
+      "src": "assets/images/splash-screen.png",
+      "sizes": "1920x1080",
       "type": "image/png",
-      "form_factor": "narrow"
+      "form_factor": "narrow",
+      "label": "Biblioteca Digital Medieval"
     }
   ]
 }
