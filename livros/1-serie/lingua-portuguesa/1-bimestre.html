@@ -1051,6 +1051,60 @@ footer strong { color: var(--gold); }
 .ab-step-desc { font-size:.78rem; color:var(--txt2); line-height:1.6; }
 .ab-step-ex { font-size:.75rem; color:var(--muted); font-style:italic; margin-top:.3rem; padding-top:.3rem; border-top:1px dashed var(--border); }
 
+
+/* ===== BLOCK 5 STYLES ===== */
+.leitura-etapa { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:.9rem 1rem; margin:.55rem 0; display:flex; align-items:flex-start; gap:.7rem; transition:all .2s; cursor:pointer; }
+.leitura-etapa:hover { border-color:var(--gold); box-shadow:0 3px 12px var(--shadow); }
+.le-num { min-width:36px; height:36px; background:linear-gradient(135deg,var(--acc1),var(--acc2)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:.72rem; font-weight:800; color:#fff5e0; flex-shrink:0; }
+.le-body { flex:1; }
+.le-title { font-family:'Cinzel',serif; font-size:.85rem; font-weight:800; color:var(--acc1); margin-bottom:.2rem; }
+.le-desc { font-size:.8rem; color:var(--txt2); line-height:1.65; }
+.le-ex { font-size:.75rem; color:var(--muted); font-style:italic; margin-top:.3rem; }
+
+.fonte-card { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:.9rem 1rem; margin:.5rem 0; border-left:4px solid; transition:all .2s; }
+.fonte-card:hover { box-shadow:0 3px 12px var(--shadow); }
+.fonte-conf { border-left-color:var(--acc3); }
+.fonte-duvid { border-left-color:var(--acc1); }
+.fonte-card h4 { font-family:'Cinzel',serif; font-size:.85rem; font-weight:800; margin-bottom:.3rem; }
+.fonte-conf h4 { color:var(--acc3); }
+.fonte-duvid h4 { color:var(--acc1); }
+.fonte-card p { font-size:.8rem; color:var(--txt2); line-height:1.65; }
+.fonte-card ul { padding-left:.9rem; font-size:.8rem; color:var(--txt2); line-height:1.8; }
+
+.pesquisa-stepper { background:linear-gradient(135deg,#0a0a1a,#1a0a00); border-radius:18px; padding:1.3rem; margin:.9rem 0; }
+.ps-title { font-family:'Cinzel',serif; color:#f5e6c8; font-size:.9rem; font-weight:800; margin-bottom:.9rem; text-align:center; }
+.ps-steps { display:flex; flex-direction:column; gap:.4rem; }
+.ps-step { background:rgba(255,255,255,.07); border:1.5px solid rgba(196,134,10,.25); border-radius:10px; padding:.65rem .85rem; cursor:pointer; transition:all .2s; display:flex; align-items:flex-start; gap:.6rem; }
+.ps-step:hover { background:rgba(196,134,10,.12); border-color:rgba(196,134,10,.55); }
+.ps-step.active { background:rgba(196,134,10,.2); border-color:var(--gold); }
+.ps-num { background:var(--gold); color:#1a0800; border-radius:50%; width:24px; height:24px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:.7rem; font-family:'Cinzel',serif; margin-top:.1rem; }
+.ps-info h5 { color:#f5e6c8; font-size:.82rem; font-weight:800; font-family:'Cinzel',serif; }
+.ps-info p { color:rgba(245,230,200,.65); font-size:.73rem; margin-top:.1rem; line-height:1.5; }
+.ps-detail { display:none; margin-top:.45rem; padding:.5rem .65rem; background:rgba(0,0,0,.3); border-radius:7px; font-size:.75rem; color:rgba(245,230,200,.85); line-height:1.65; }
+.ps-step.active .ps-detail { display:block; }
+
+.lit-comp-card { background:var(--card); border:1px solid var(--border); border-radius:15px; overflow:hidden; margin:.6rem 0; transition:all .2s; }
+.lit-comp-card:hover { box-shadow:0 4px 18px var(--shadow); border-color:var(--gold); }
+.lcc-header { padding:.8rem 1rem; display:flex; align-items:center; gap:.6rem; cursor:pointer; }
+.lcc-era-badge { background:linear-gradient(135deg,var(--acc1),var(--acc2)); color:#fff5e0; border-radius:8px; padding:.3rem .6rem; font-family:'Cinzel',serif; font-size:.65rem; font-weight:800; flex-shrink:0; }
+.lcc-title { font-family:'Cinzel',serif; font-size:.85rem; font-weight:800; color:var(--acc1); }
+.lcc-arrow { margin-left:auto; color:var(--gold); transition:transform .2s; }
+.lit-comp-card.open .lcc-arrow { transform:rotate(90deg); }
+.lcc-body { display:none; padding:.9rem 1rem; border-top:1px solid var(--border); animation:tabFadeIn .2s ease; }
+.lit-comp-card.open .lcc-body { display:block; }
+.lcc-fragment { background:var(--parchment); border-left:3px solid var(--gold); border-radius:0 10px 10px 0; padding:.75rem .9rem; margin:.5rem 0; font-family:'Crimson Pro',Georgia,serif; font-style:italic; font-size:.88rem; line-height:1.8; color:var(--txt); }
+.lcc-analysis { font-size:.8rem; color:var(--txt2); line-height:1.65; margin-top:.5rem; }
+.lcc-analysis strong { color:var(--acc1); }
+
+.duvida-resolver { background:var(--bg2); border:2px solid var(--acc2); border-radius:16px; padding:1.2rem; margin:.9rem 0; }
+.dr-title { font-family:'Cinzel',serif; font-size:.88rem; font-weight:800; color:var(--acc2); margin-bottom:.7rem; }
+.dr-grid { display:grid; grid-template-columns:1fr; gap:.5rem; }
+@media(min-width:500px){ .dr-grid { grid-template-columns:1fr 1fr; } }
+.dr-item { background:var(--card); border:1px solid var(--border); border-radius:11px; padding:.75rem .85rem; display:flex; align-items:flex-start; gap:.55rem; }
+.dr-icon { font-size:1.4rem; flex-shrink:0; }
+.dr-text h5 { font-family:'Cinzel',serif; font-size:.8rem; font-weight:800; color:var(--acc2); margin-bottom:.2rem; }
+.dr-text p { font-size:.77rem; color:var(--txt2); line-height:1.6; margin:0; }
+
 </style>
 </head>
 <body>
@@ -4320,9 +4374,732 @@ footer strong { color: var(--gold); }
     </div>
   </div></div>
 </div></div></section><!-- /c14 -->
-<section id="c15" style="min-height:1px;background:var(--bg2)"></section>
-<section id="c16" style="min-height:1px;background:var(--bg)"></section>
-<section id="c17" style="min-height:1px;background:var(--bg2)"></section>
+<!-- ====================== BLOCO V HEADER ====================== -->
+<section style="background:linear-gradient(135deg,#001a1a 0%,#001a00 50%,#1a1a00 100%);padding:2.2rem 1.5rem 1.8rem;text-align:center">
+  <div style="font-family:'Cinzel',serif;font-size:.68rem;color:rgba(100,255,200,.8);letter-spacing:.3em;text-transform:uppercase;margin-bottom:.4rem">Bloco V &middot; T&oacute;picos 15 ao 17</div>
+  <h2 style="font-family:'Cinzel',serif;font-size:clamp(1.3rem,5vw,2rem);font-weight:900;color:#f5e6c8;margin-bottom:.4rem">&#128300; Estrat&eacute;gias de Leitura e Literatura Comparada</h2>
+  <p style="color:rgba(245,230,200,.68);font-style:italic;font-size:.88rem;font-family:'Crimson Pro',Georgia,serif">"Ler bem &eacute; resistir &agrave; primeira impress&atilde;o e mergulhar no que est&aacute; por baixo das palavras."</p>
+</section>
+<hr class="rainbow-div">
+
+<!-- ====================== T15 ====================== -->
+<section id="c15" class="sec-rel" style="background:var(--bg2)">
+<div class="sfloat-wrap" id="sf15"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 15 &middot; Bloco V</div>
+  <h2>&#128300; Estrat&eacute;gias de leitura e resolu&ccedil;&atilde;o de d&uacute;vidas textuais</h2>
+  <p>Uso de diferentes fontes &middot; Consulta a dicion&aacute;rios e enciclop&eacute;dias &middot; Compreens&atilde;o aprofundada</p>
+</div>
+<div class="block-tabs-wrap" id="tabs15">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs15',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs15',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs15',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <!-- CONTEUDO T15 -->
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c15')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Ler um texto &eacute; f&aacute;cil. Ler um texto <em>bem</em> &eacute; uma arte. Neste t&oacute;pico voc&ecirc; vai aprender estrat&eacute;gias que transformam uma leitura superficial numa an&aacute;lise profunda.</div>
+    <div class="sec-mascot-hint">Clique para curiosidades &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128300; Por que precisamos de estrat&eacute;gias de leitura?</h3>
+    <div class="concept-box">
+      <div class="cb-title">O problema da leitura passiva</div>
+      <p>A maioria das pessoas l&ecirc; de forma <strong>passiva</strong>: percorre as palavras sem ativar estratégias de compreens&atilde;o, sem questionar o texto, sem relacionar com conhecimentos anteriores. O resultado &eacute; uma leitura que deixa pouco rastro. Leitura <strong>ativa e estrat&eacute;gica</strong> &eacute; aquela em que o leitor usa ferramentas conscientes para construir sentido.</p>
+    </div>
+    <p style="margin-top:.8rem">As estrat&eacute;gias de leitura s&atilde;o especialmente importantes ao encontrar um <strong>texto dif&iacute;cil</strong>: vocabul&aacute;rio desconhecido, estrutura complexa, refer&ecirc;ncias culturais que voc&ecirc; n&atilde;o domina. Saber como resolver essas d&uacute;vidas &eacute; o que separa leitores medianos de leitores eficazes.</p>
+  </div>
+
+  <!-- ETAPAS DE LEITURA -->
+  <div class="card fi">
+    <h3>&#127775; Etapas da leitura estrat&eacute;gica</h3>
+    <p>Clique em cada etapa para ver detalhes:</p>
+
+    <div class="leitura-etapa fi" onclick="toggleLE(this)">
+      <div class="le-num">1</div>
+      <div class="le-body">
+        <div class="le-title">Pr&eacute;-leitura: ative seus conhecimentos</div>
+        <div class="le-desc">Antes de ler, olhe o t&iacute;tulo, subt&iacute;tulo, autor, data, fonte. Pergunte-se: o que j&aacute; sei sobre este tema? Que tipo de texto &eacute; este? Qual &eacute; a inten&ccedil;&atilde;o provável? Essa prepara&ccedil;&atilde;o melhora muito a compreens&atilde;o.</div>
+        <div class="le-ex" style="display:none">&#128444;&#65039; <em>Pr&aacute;tica:</em> Antes de ler uma reportagem sobre intelig&ecirc;ncia artificial, liste 3 coisas que j&aacute; sabe sobre o tema e 3 perguntas que gostaria de responder com a leitura.</div>
+      </div>
+    </div>
+
+    <div class="leitura-etapa fi" onclick="toggleLE(this)">
+      <div class="le-num">2</div>
+      <div class="le-body">
+        <div class="le-title">Leitura global: o todo antes da parte</div>
+        <div class="le-desc">Na primeira leitura, n&atilde;o pare em cada palavra dif&iacute;cil. Percorra o texto inteiro para ter uma vis&atilde;o geral do que se trata. Identifique a estrutura, os t&oacute;picos principais e a tese central. Depois volte &agrave;s partes problem&aacute;ticas.</div>
+        <div class="le-ex" style="display:none">&#128444;&#65039; <em>Pr&aacute;tica:</em> Leia o primeiro e o &uacute;ltimo par&aacute;grafo de qualquer texto primeiro. Nos textos argumentativos, eles costumam conter a tese e a conclus&atilde;o.</div>
+      </div>
+    </div>
+
+    <div class="leitura-etapa fi" onclick="toggleLE(this)">
+      <div class="le-num">3</div>
+      <div class="le-body">
+        <div class="le-title">Leitura anal&iacute;tica: aprofunde a compreens&atilde;o</div>
+        <div class="le-desc">Releia com l&aacute;pis na m&atilde;o. Sublinhe as ideias principais, circule palavras desconhecidas, fa&ccedil;a anota&ccedil;&otilde;es nas margens, identifique as rela&ccedil;&otilde;es entre as ideias. Pergunte: o autor prova o que afirma? Que evid&ecirc;ncias usa? H&aacute; contradições?</div>
+        <div class="le-ex" style="display:none">&#128444;&#65039; <em>Pr&aacute;tica:</em> Use o m&eacute;todo Cornell: divida a p&aacute;gina em 3 &aacute;reas (anota&ccedil;&otilde;es principais, perguntas-chave e resumo) para organizar a leitura.</div>
+      </div>
+    </div>
+
+    <div class="leitura-etapa fi" onclick="toggleLE(this)">
+      <div class="le-num">4</div>
+      <div class="le-body">
+        <div class="le-title">Resolu&ccedil;&atilde;o de d&uacute;vidas: use as fontes certas</div>
+        <div class="le-desc">Palavra desconhecida? Consulte o dicion&aacute;rio. Conceito n&atilde;o familiar? Consulte uma enciclop&eacute;dia confi&aacute;vel. Refer&ecirc;ncia hist&oacute;rica ou cultural? Pesquise em fontes prim&aacute;rias ou acad&ecirc;micas. A ordem importa: evite consultar antes de tentar inferir pelo contexto.</div>
+        <div class="le-ex" style="display:none">&#128444;&#65039; <em>Pr&aacute;tica:</em> Para palavras, tente primeiro inferir o significado pelo contexto. Para conceitos, use o Dic Infopédia ou Aurélio online. Para temas hist&oacute;ricos, use a Enciclopédia Britannica ou artigos do Scielo.</div>
+      </div>
+    </div>
+
+    <div class="leitura-etapa fi" onclick="toggleLE(this)">
+      <div class="le-num">5</div>
+      <div class="le-body">
+        <div class="le-title">Leitura cr&iacute;tica: questione o texto</div>
+        <div class="le-desc">Todo texto tem um ponto de vista. Pergunte: quem escreveu? Para quem? Com que objetivo? Que voc&ecirc; fica sem saber ap&oacute;s ler? O que &eacute; silenciado? H&aacute; outras perspectivas que complementariam ou contradizem este texto?</div>
+        <div class="le-ex" style="display:none">&#128444;&#65039; <em>Pr&aacute;tica:</em> Ap&oacute;s ler uma not&iacute;cia, busque o mesmo evento em dois outros ve&iacute;culos com linhas editoriais diferentes. Compare o que cada um enfatiza e o que cada um omite.</div>
+      </div>
+    </div>
+
+    <div class="leitura-etapa fi" onclick="toggleLE(this)">
+      <div class="le-num">6</div>
+      <div class="le-body">
+        <div class="le-title">P&oacute;s-leitura: consolide e aplique</div>
+        <div class="le-desc">Escreva com suas pr&oacute;prias palavras o que aprendeu. Relacione com outros textos e conhecimentos. Formule perguntas para aprofundar. Discuta com algu&eacute;m. A escrita e a discuss&atilde;o ap&oacute;s a leitura s&atilde;o os melhores mecanismos de consolida&ccedil;&atilde;o do conhecimento.</div>
+        <div class="le-ex" style="display:none">&#128444;&#65039; <em>Pr&aacute;tica:</em> Ap&oacute;s qualquer leitura importante, escreva um par&aacute;grafo resumindo a ideia central com suas pr&oacute;prias palavras. N&atilde;o use o texto como muleta: cubra-o e escreva.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOLUCAO DE DUVIDAS INTERATIVA -->
+  <div class="duvida-resolver fi">
+    <div class="dr-title">&#128300; Resolva a d&uacute;vida certa com a ferramenta certa</div>
+    <div class="dr-grid">
+      <div class="dr-item">
+        <div class="dr-icon">&#128218;</div>
+        <div class="dr-text"><h5>Palavra desconhecida</h5><p>Dicion&aacute;rio Aurélio online, Houaiss, Dic Infopédia (portugu&ecirc;s europeu). Para termos t&eacute;cnicos, dicion&aacute;rios especializados da &aacute;rea.</p></div>
+      </div>
+      <div class="dr-item">
+        <div class="dr-icon">&#128300;</div>
+        <div class="dr-text"><h5>Conceito abstrato</h5><p>Enciclop&eacute;dia Britannica, Stanford Encyclopedia of Philosophy, artigos do Scielo para conceitos acadêmicos.</p></div>
+      </div>
+      <div class="dr-item">
+        <div class="dr-icon">&#127981;</div>
+        <div class="dr-text"><h5>Dado ou estatística</h5><p>IBGE, IPEA, portais do governo, relat&oacute;rios de &oacute;rg&atilde;os internacionais (ONU, UNESCO, Banco Mundial). Evite dados sem fonte identificada.</p></div>
+      </div>
+      <div class="dr-item">
+        <div class="dr-icon">&#127963;</div>
+        <div class="dr-text"><h5>Refer&ecirc;ncia hist&oacute;rica</h5><p>Fontes prim&aacute;rias digitalizadas (Biblioteca Nacional, Arquivo Nacional), artigos acad&ecirc;micos peer-reviewed, obras de historiadores reconhecidos.</p></div>
+      </div>
+      <div class="dr-item">
+        <div class="dr-icon">&#127907;</div>
+        <div class="dr-text"><h5>Obra liter&aacute;ria</h5><p>Domínio p&uacute;blico digital (Wikisource, Project Gutenberg, Biblioteca Digital Mundial). Cr&iacute;tica liter&aacute;ria em revistas especializadas.</p></div>
+      </div>
+      <div class="dr-item">
+        <div class="dr-icon">&#127758;</div>
+        <div class="dr-text"><h5>Not&iacute;cia recente</h5><p>Veículos com política editorial clara e corpo jornalístico identificado. Consulte pelo menos 2 fontes independentes. Use agências de checagem para verificar.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOGO: INFERENCIA DE VOCABULARIO -->
+  <div class="interactive-box fi">
+    <div class="ib-title">&#127918; Inferência de Vocabulário pelo Contexto</div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.8rem">Leia o trecho e use o contexto para inferir o significado da palavra em destaque <em>antes</em> de consultar o dicionário:</p>
+
+    <div class="int-question" id="iqv01">
+      <p style="font-size:.9rem;color:var(--txt);line-height:1.8;margin-bottom:.6rem;font-family:'Crimson Pro',Georgia,serif;font-style:italic">"O texto era <strong>hermético</strong> demais para o público leigo: cheio de jargões técnicos, referências obscuras e uma sintaxe tão elaborada que parecia esconder mais do que revelar."</p>
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Pelo contexto, "herm&eacute;tico" significa provavelmente:</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqv01','Não. Pelo contexto (&quot;difícil para o público leigo&quot;, &quot;jargões técnicos&quot;, &quot;obscuro&quot;), o texto &eacute; impenetrável por sua complexidade, não por sua brevidade.')">Muito curto e incompleto</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqv01','Correto! Pelo contexto — &quot;jargões t&eacute;cnicos&quot;, &quot;referências obscuras&quot;, &quot;parecia esconder mais do que revelar&quot; — &quot;herm&eacute;tico&quot; significa fechado, impenetrável, de difícil acesso. A etimologia confirma: Hermes Trismegisto era o deus do conhecimento oculto.')">Fechado, impenetrável, de difícil acesso</button>
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqv01','Não. O contexto não aponta para beleza, mas para impenetrabilidade e dificuldade de compreensão.')">Muito belo e elaborado esteticamente</button>
+      </div>
+      <div class="int-feedback" id="fb-iqv01"></div>
+    </div>
+
+    <div class="int-question" id="iqv02" style="margin-top:.7rem">
+      <p style="font-size:.9rem;color:var(--txt);line-height:1.8;margin-bottom:.6rem;font-family:'Crimson Pro',Georgia,serif;font-style:italic">"Sua argumentação era <strong>lapidar</strong>: precisa, concisa, polida como uma pedra preciosa. Cada palavra no lugar exato, sem nada sobrando."</p>
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Pelo contexto, "lapidar" significa:</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqv02','Não. O contexto fala em precisão e concisão, não em extensão. &quot;Sem nada sobrando&quot; indica exatamente o contrário.')">Longa e detalhada</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqv02','Correto! &quot;Lapidar&quot; vem de &quot;lapidação&quot; — o processo de polir pedras preciosas. Pelo contexto (&quot;precisa, concisa, polida como pedra preciosa, cada palavra no lugar exato&quot;), o significado é perfeito, refinado e definitivo.')">Perfeita, refinada, concisa e definitiva</button>
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqv02','Não. O contexto compara explicitamente à pedra preciosa polida, não à pedra bruta informe.')">Grossa e sem refinamento</button>
+      </div>
+      <div class="int-feedback" id="fb-iqv02"></div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=estrategias+de+leitura+compreensao+textual+ensino+medio')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Estratégias de leitura e compreens&atilde;o textual</strong><span>YouTube &middot; T&eacute;cnicas de estudo</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+ler+texto+dificil+estrategia+leitura+critica')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Como ler textos difíceis: leitura crítica</strong><span>YouTube &middot; Método de estudo</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('estrategias leitura mapa mental anotacoes Cornell')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>M&eacute;todo Cornell e anota&ccedil;&otilde;es de leitura</strong><span>Google Imagens &middot; T&eacute;cnicas visuais</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div>
+
+  <!-- ATIVIDADES T15 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 15</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Aplique as 6 etapas da leitura estrat&eacute;gica a um texto que o professor indicar (ou a um artigo jornal&iacute;stico sobre um tema de interesse social). Para cada etapa, registre no caderno o que fez e o que descobriu.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Qual &eacute; a diferen&ccedil;a entre leitura passiva e leitura ativa? Descreva como cada tipo se manifesta na sua rotina de estudo. Que mudanças voc&ecirc; poderia fazer imediatamente para tornar sua leitura mais estrat&eacute;gica?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Voc&ecirc; encontrou a frase "a argum&eacute;tica do texto era aporética e pouco ep&iacute;dica" num texto acad&ecirc;mico. Descreva o processo de resolu&ccedil;&atilde;o de d&uacute;vida passo a passo: qual ferramenta usaria para cada palavra? Em que ordem consultaria as fontes?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">A etapa de "leitura cr&iacute;tica" pede que voc&ecirc; questione o que &eacute; silenciado num texto. Escolha uma not&iacute;cia que voc&ecirc; leu recentemente e analise: que perspectivas est&atilde;o ausentes? Que perguntas essa not&iacute;cia n&atilde;o responde? Que fontes complementares voc&ecirc; consultaria?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Compare a qualidade de informa&ccedil;&atilde;o sobre um mesmo tema cient&iacute;fico em tr&ecirc;s fontes diferentes: (a) um post do Instagram sem fonte identificada; (b) uma mat&eacute;ria do portal do IBGE; (c) um artigo peer-reviewed do Scielo. O que cada fonte oferece? Em que situa&ccedil;&otilde;es cada uma seria (in)adequada?</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <!-- QUIZ T15 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz15">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 15</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn15">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb15" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q15_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A "leitura global" na estrat&eacute;gia de leitura ativa serve para:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q15_1',0,1,'quiz15','B: Na leitura global, percorre-se o texto inteiro sem parar nos detalhes para ter uma vis&atilde;o geral antes de aprofundar nas partes.')"><span class="opt-letter">A)</span><span>Ler palavra por palavra com m&aacute;xima aten&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_1',1,1,'quiz15','Correto! A leitura global percorre o texto inteiro para ter vis&atilde;o do todo antes das partes. &Eacute; a primeira leitura: r&aacute;pida, para identificar a estrutura, os t&oacute;picos principais e a tese central.')"><span class="opt-letter">B)</span><span>Ter uma vis&atilde;o geral do texto antes de aprofundar nas partes problem&aacute;ticas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_1',2,1,'quiz15','B: A leitura cr&iacute;tica &eacute; uma etapa posterior; a global &eacute; a primeira etapa, de vis&atilde;o geral.')"><span class="opt-letter">C)</span><span>Questionar a perspectiva ideol&oacute;gica do texto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_1',3,1,'quiz15','B: A pr&eacute;-leitura &eacute; a que examina metadados (autor, fonte, data); a global &eacute; a leitura do texto em si.')"><span class="opt-letter">D)</span><span>Examinar o t&iacute;tulo, autor e data antes de ler o texto</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q15_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q15_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">Qual &eacute; a melhor estrat&eacute;gia ao encontrar uma palavra desconhecida durante a leitura?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q15_2',0,2,'quiz15','C: Tentar inferir pelo contexto desenvolve voc&atilde;o e intelig&ecirc;ncia lingual. S&oacute; depois confirmar no dicion&aacute;rio.')"><span class="opt-letter">A)</span><span>Parar imediatamente e consultar o dicion&aacute;rio antes de continuar</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_2',1,2,'quiz15','C: Ignorar sistematicamente prejudica a compreens&atilde;o acumulada; a estrat&eacute;gia &eacute; tentar inferir e confirmar depois.')"><span class="opt-letter">B)</span><span>Ignorar a palavra e continuar sem resolv&ecirc;-la</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_2',2,2,'quiz15','Correto! Tentar inferir pelo contexto &eacute; a estrat&eacute;gia mais eficaz: desenvolve o vocab&uacute;lario ativamente e n&atilde;o interrompe o fluxo de leitura. Confirmar no dicion&aacute;rio ap&oacute;s a leitura consolida o aprendizado.')"><span class="opt-letter">C)</span><span>Tentar inferir o significado pelo contexto e confirmar no dicion&aacute;rio ap&oacute;s a leitura</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_2',3,2,'quiz15','C: Substituir a palavra muda o texto original; o objetivo &eacute; compreender, n&atilde;o reescrever.')"><span class="opt-letter">D)</span><span>Substituir a palavra por um sin&ocirc;nimo que voc&ecirc; j&aacute; conhece</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q15_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q15_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">Para verificar dados e estat&iacute;sticas sobre a popula&ccedil;&atilde;o brasileira, a fonte mais confi&aacute;vel &eacute;:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q15_3',0,2,'quiz15','C: O IBGE &eacute; o Instituto Brasileiro de Geografia e Estat&iacute;stica, &oacute;rg&atilde;o oficial produtor de dados populacionais do pa&iacute;s.')"><span class="opt-letter">A)</span><span>Um post viral de rede social com mais de 1 milh&atilde;o de curtidas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_3',1,2,'quiz15','C: A Wikipedia pode citar o IBGE, mas &eacute; melhor ir diretamente &agrave; fonte primária.')"><span class="opt-letter">B)</span><span>Artigo da Wikipedia sobre o Brasil</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_3',2,2,'quiz15','Correto! O IBGE (ibge.gov.br) &eacute; o &oacute;rg&atilde;o oficial que produz dados populacionais, econ&ocirc;micos e geogr&aacute;ficos do Brasil. &Eacute; sempre a fonte prim&aacute;ria mais confi&aacute;vel para dados nacionais.')"><span class="opt-letter">C)</span><span>Portal do IBGE (ibge.gov.br)</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_3',3,2,'quiz15','C: Portais de entretenimento n&atilde;o s&atilde;o fontes primárias de dados.')"><span class="opt-letter">D)</span><span>Portal de not&iacute;cias de entretenimento</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q15_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q15_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">A "p&oacute;s-leitura" &eacute; considerada fundamental para a consolida&ccedil;&atilde;o do conhecimento porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q15_4',0,2,'quiz15','C: A escrita e a discuss&atilde;o obrigam a reorganizar e expressar ativamente o que foi aprendido, que &eacute; o mecanismo mais eficaz de mem&oacute;ria de longo prazo.')"><span class="opt-letter">A)</span><span>Permite ler mais r&aacute;pido na pr&oacute;xima vez</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_4',1,2,'quiz15','C: A p&oacute;s-leitura n&atilde;o &eacute; sobre verificar; &eacute; sobre processar, reorganizar e aplicar.')"><span class="opt-letter">B)</span><span>Serve para verificar se o texto tinha erros</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_4',2,2,'quiz15','Correto! A escrita com as pr&oacute;prias palavras e a discuss&atilde;o ap&oacute;s a leitura obrigam a reorganizar o conhecimento ativamente, que &eacute; o mecanismo cognitivo mais eficaz para a consolida&ccedil;&atilde;o na mem&oacute;ria de longo prazo.')"><span class="opt-letter">C)</span><span>Escrever e discutir ap&oacute;s ler obrigam a reorganizar ativamente o conhecimento, consolidando-o na mem&oacute;ria</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_4',3,2,'quiz15','C: A p&oacute;s-leitura independe de outros leitores; pode ser feita individualmente por escrita.')"><span class="opt-letter">D)</span><span>Exige sempre encontrar outros leitores para discutir</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q15_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q15_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">A "leitura passiva" se caracteriza principalmente por:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q15_5',0,1,'quiz15','B: Ler lentamente pode ser ativo ou passivo; o problema n&atilde;o &eacute; a velocidade.')"><span class="opt-letter">A)</span><span>Ler muito lentamente e parar em cada v&iacute;rgula</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_5',1,1,'quiz15','Correto! Na leitura passiva, o leitor percorre as palavras sem estratégias conscientes de compreens&atilde;o: n&atilde;o questiona, n&atilde;o relaciona, n&atilde;o anota. O resultado &eacute; baixa reten&ccedil;&atilde;o e compreens&atilde;o superficial.')"><span class="opt-letter">B)</span><span>Percorrer as palavras sem estratégias conscientes de compreens&atilde;o, questionamento ou rela&ccedil;&atilde;o com conhecimentos anteriores</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_5',2,1,'quiz15','B: Tomar notas &eacute; exatamente o oposto de leitura passiva.')"><span class="opt-letter">C)</span><span>Tomar muitas notas durante a leitura</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q15_5',3,1,'quiz15','B: Ler em voz alta pode ser ativo ou passivo; n&atilde;o define o tipo de leitura.')"><span class="opt-letter">D)</span><span>Ler em voz alta em vez de silenciosamente</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q15_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr15"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 15!</div><button class="qrb-retry" onclick="resetQuiz('quiz15')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section>
+<hr class="rainbow-div">
+
+<!-- ====================== T16 ====================== -->
+<section id="c16" class="sec-rel" style="background:var(--bg)">
+<div class="sfloat-wrap" id="sf16"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 16 &middot; Bloco V</div>
+  <h2>&#127758; Planejamento de estudos: situa&ccedil;&otilde;es individuais e coletivas</h2>
+  <p>Sele&ccedil;&atilde;o de fontes confi&aacute;veis &middot; Crit&eacute;rios de pesquisa &middot; Organiza&ccedil;&atilde;o do conhecimento</p>
+</div>
+<div class="block-tabs-wrap" id="tabs16">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs16',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs16',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs16',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <!-- CONTEUDO T16 -->
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c16')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Pesquisar n&atilde;o &eacute; googlar e copiar o primeiro resultado. &Eacute; uma habilidade que exige crit&eacute;rios, avalia&ccedil;&atilde;o de fontes e organiza&ccedil;&atilde;o do conhecimento. Quem pesquisa mal, estuda o dobro e aprende a metade.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128200; Por que planejar os estudos?</h3>
+    <div class="concept-box">
+      <div class="cb-title">O problema dos estudos sem planejamento</div>
+      <p>Estudar sem planejamento &eacute; como dirigir sem destino: gasta energia, consome tempo e dificilmente chega onde precisa. O <strong>planejamento de estudos</strong> n&atilde;o &eacute; rigidez — &eacute; consciência: saber o que estudar, em que ordem, por quanto tempo, com quais fontes e com qual objetivo.</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card"><h4>&#128100; Estudo individual</h4><p>Mais autônomo, permite o ritmo pr&oacute;prio. Exige autodisciplina e capacidade de identificar as pr&oacute;prias lacunas. Técnicas: m&eacute;todo Pomodoro, revis&atilde;o espa&ccedil;ada, flashcards, mapas mentais.</p></div>
+      <div class="info-card"><h4>&#128101; Estudo coletivo</h4><p>Troca de perspectivas, divisão do trabalho. Exige organiza&ccedil;&atilde;o e responsabilidade. Cada integrante deve preparar conteúdo; n&atilde;o &eacute; apenas para "tirar d&uacute;vidas". O ensino mútuo &eacute; o aprendizado mais duradouro.</p></div>
+    </div>
+  </div>
+
+  <!-- ETAPAS DA PESQUISA -->
+  <div class="card fi">
+    <h3>&#128300; Etapas de uma pesquisa confi&aacute;vel</h3>
+    <div class="pesquisa-stepper fi">
+      <div class="ps-title">&#127775; Clique em cada etapa para ver detalhes</div>
+      <div class="ps-steps">
+        <div class="ps-step" onclick="togglePSStep(this)">
+          <div class="ps-num">1</div>
+          <div class="ps-info"><h5>Defina claramente a pergunta</h5><p>Pesquisa vaga produz resultado vago.</p></div>
+          <div class="ps-detail">Em vez de pesquisar "literatura indígena", pesquise "narrativas mitológicas dos povos Guarani sobre a cria&ccedil;&atilde;o do mundo". Perguntas específicas geram resultados específicos e relevantes. Anote a pergunta antes de iniciar a busca.</div>
+        </div>
+        <div class="ps-step" onclick="togglePSStep(this)">
+          <div class="ps-num">2</div>
+          <div class="ps-info"><h5>Avalie a qualidade das fontes</h5><p>Nem toda fonte é igualmente confi&aacute;vel.</p></div>
+          <div class="ps-detail">Critérios para avaliar uma fonte: autor identificado e qualificado? Data recente (ou justificadamente histórica)? Fontes e referências citadas? Revisão por pares (no caso de artigos científicos)? Interesse comercial ou ideológico explícito? Em caso de dúvida: cruce com outras fontes independentes.</div>
+        </div>
+        <div class="ps-step" onclick="togglePSStep(this)">
+          <div class="ps-num">3</div>
+          <div class="ps-info"><h5>Diversifique os tipos de fonte</h5><p>Fontes diferentes revelam aspectos diferentes.</p></div>
+          <div class="ps-detail">Use fontes primárias (o texto original), fontes secundárias (análises e interpretações) e fontes terciárias (sínteses, enciclopédias) de forma complementar. Nunca use apenas um tipo. Para temas polêmicos, busque fontes com perspectivas diferentes.</div>
+        </div>
+        <div class="ps-step" onclick="togglePSStep(this)">
+          <div class="ps-num">4</div>
+          <div class="ps-info"><h5>Tome notas com atribuição</h5><p>Registre de onde veio cada informa&ccedil;&atilde;o.</p></div>
+          <div class="ps-detail">Anote sempre: autor, título, data e URL/local da fonte. Isso previne plágio involuntário e permite verificação posterior. Diferencie claramente no caderno o que é citação direta (entre aspas) e o que é paráfrase/resumo (suas palavras).</div>
+        </div>
+        <div class="ps-step" onclick="togglePSStep(this)">
+          <div class="ps-num">5</div>
+          <div class="ps-info"><h5>Sintetize e critique</h5><p>Pesquisa não termina com coleta de informação.</p></div>
+          <div class="ps-detail">Após coletar informações de múltiplas fontes, sintetize: o que elas têm em comum? Onde divergem? Quais perguntas ainda não foram respondidas? A síntese é o momento em que o conhecimento deixa de ser das fontes e passa a ser seu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FONTES: CONFIAVEIS VS DUVIDOSAS -->
+  <div class="card fi">
+    <h3>&#127756; Fontes confi&aacute;veis x fontes duvid&oacute;sas</h3>
+    <div class="grid2">
+      <div class="fonte-card fonte-conf">
+        <h4>&#128994; Fontes geralmente confi&aacute;veis</h4>
+        <ul>
+          <li>Portais governamentais (ibge.gov.br, gov.br, senado.leg.br)</li>
+          <li>Artigos peer-reviewed (Scielo, Google Acad&ecirc;mico)</li>
+          <li>Enciclopédias acad&ecirc;micas (Britannica, Dicion&aacute;rio Houaiss)</li>
+          <li>Ve&iacute;culos jornal&iacute;sticos com equipe editorial identificada</li>
+          <li>Livros de editoras reconhecidas com ISBN</li>
+          <li>Portais de universidades (.edu, .ac.br, .usp.br)</li>
+        </ul>
+      </div>
+      <div class="fonte-card fonte-duvid">
+        <h4>&#128308; Fontes de uso cauteloso</h4>
+        <ul>
+          <li>Wikipedia (bom para contextualiza&ccedil;&atilde;o; ruim como fonte &uacute;nica)</li>
+          <li>Blogs e sites sem autoria identificada</li>
+          <li>Post de rede social sem refer&ecirc;ncia</li>
+          <li>Sites de marketing com linguagem sensacionalista</li>
+          <li>V&iacute;deos no YouTube sem identifica&ccedil;&atilde;o do autor/especialista</li>
+          <li>Grupos de WhatsApp (alto risco de desinforma&ccedil;&atilde;o)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- JOGO: CLASSIFIQUE A FONTE -->
+    <div class="interactive-box fi" style="margin-top:.9rem">
+      <div class="ib-title">&#127918; Avalie a qualidade da fonte</div>
+      <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.8rem">Avalie se cada fonte &eacute; adequada para um trabalho escolar:</p>
+      <div class="int-question" id="iqf01">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Um artigo de 2023, com autor identificado (doutor em Literatura), publicado na Revista de Letras da USP, com refer&ecirc;ncias bibliogr&aacute;ficas completas.</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'correct','iqf01','Correto! &Eacute; uma fonte de alta confiabilidade: autor qualificado (doutor), publicação peer-reviewed de universidade reconhecida, data recente e referências completas.')">Excelente fonte</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqf01','N&atilde;o. Artigos acadêmicos peer-reviewed da USP são fontes de alta credibilidade, independentemente do tema.')">Fonte ruim: assunto muito específico</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqf01','Não. A especificidade acadêmica é uma vantagem, não um problema.')">Fonte regular: pode ser melhor</button>
+        </div>
+        <div class="int-feedback" id="fb-iqf01"></div>
+      </div>
+      <div class="int-question" id="iqf02" style="margin-top:.6rem">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Um post do Instagram de um influenciador com 2 milh&otilde;es de seguidores afirmando que "estudos mostram" determinada coisa, sem citar qual estudo.</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqf02','Não. Número de seguidores não é indicador de confiabilidade. A ausência de referência à fonte do &quot;estudo&quot; é um sinal de alerta grave.')">Fonte confi&aacute;vel pela popularidade</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqf02','Correto! A expressão &quot;estudos mostram&quot; sem citar qual estudo é um padrão clássico de desinformação. Sem fonte identificável, o dado não pode ser verificado ou refutado.')">Fonte inadequada: dado sem refer&ecirc;ncia verific&aacute;vel</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqf02','N&atilde;o. Para trabalhos escolares, fontes sem referências identificadas são inadequadas independentemente da plataforma.')">Fonte regular: vai bem como apoio</button>
+        </div>
+        <div class="int-feedback" id="fb-iqf02"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORGANIZACAO DO TEMPO -->
+  <div class="card fi">
+    <h3>&#9200; T&eacute;cnicas de organiza&ccedil;&atilde;o do estudo</h3>
+    <div class="trovador-grid">
+      <div class="trov-card">
+        <div class="trov-icon">&#127813;</div>
+        <div class="trov-name">M&eacute;todo Pomodoro</div>
+        <div class="trov-desc">25 min de foco total + 5 min de pausa. Ap&oacute;s 4 ciclos, pausa longa de 20-30 min. Ideal para tarefas que exigem concentra&ccedil;&atilde;o sustentada como leitura analítica.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128256;</div>
+        <div class="trov-name">Revis&atilde;o espa&ccedil;ada</div>
+        <div class="trov-desc">Revisar o conte&uacute;do em intervalos crescentes (1 dia, 3 dias, 1 semana, 1 mês). Explora a &quot;curva do esquecimento&quot; de Ebbinghaus. A revis&atilde;o no momento certo consolida por mais tempo.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127760;</div>
+        <div class="trov-name">Mapa mental</div>
+        <div class="trov-desc">Organiza&ccedil;&atilde;o visual de conceitos em torno de uma ideia central. Excelente para lit&eacute;ratura comparada, rela&ccedil;&otilde;es entre temas e prepara&ccedil;&atilde;o de redações.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128196;</div>
+        <div class="trov-name">Flashcards</div>
+        <div class="trov-desc">Fichas de pergunta/resposta para memorização ativa. Aplicativos como Anki usam repeti&ccedil;&atilde;o espa&ccedil;ada automaticamente. &Oacute;timos para vocabul&aacute;rio liter&aacute;rio e figuras de linguagem.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127908;</div>
+        <div class="trov-name">Ensino m&uacute;tuo</div>
+        <div class="trov-desc">Explicar o conte&uacute;do para outra pessoa. &Eacute; a t&eacute;cnica de maior reten&ccedil;&atilde;o de conhecimento (at&eacute; 90%, contra 5-10% de leitura passiva).</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#128221;</div>
+        <div class="trov-name">Cornell Notes</div>
+        <div class="trov-desc">P&aacute;gina dividida em 3 &aacute;reas: anota&ccedil;&otilde;es principais (direita), perguntas-chave (esquerda) e resumo (baixo). Facilita revis&atilde;o e localiza&ccedil;&atilde;o r&aacute;pida de informa&ccedil;&otilde;es.</div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('tecnicas de estudo pomodoro mapa mental flashcards Cornell')">&#128444;&#65039; Ver imagens: <strong>T&eacute;cnicas de estudo: guia visual</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+avaliar+fontes+confiabilidade+pesquisa+escolar')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Como avaliar fontes: confiabilidade na pesquisa</strong><span>YouTube &middot; Compet&ecirc;ncia informacional</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=metodo+pomodoro+tecnicas+estudo+revisao+espacada')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Método Pomodoro e Revis&atilde;o Espa&ccedil;ada</strong><span>YouTube &middot; T&eacute;cnicas de estudo</span></div><span class="res-tag rt-yt">YT</span></div>
+    </div>
+  </div>
+  </div></div>
+
+  <!-- ATIVIDADES T16 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 16</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Crie um plano de estudo semanal para a semana antes da sua pr&oacute;xima prova de L&iacute;ngua Portuguesa, usando pelo menos 3 t&eacute;cnicas estudadas (Pomodoro, mapa mental, flashcards, Cornell Notes, ensino m&uacute;tuo, revis&atilde;o espa&ccedil;ada). Justifique por que escolheu cada t&eacute;cnica para cada conte&uacute;do específico.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Avalie 5 fontes diferentes sobre um mesmo tema de sua escolha. Para cada fonte, aplique os crit&eacute;rios: autor identificado e qualificado? Data adequada? Refer&ecirc;ncias citadas? Interesse comercial? Classifique cada uma como "excelente", "boa", "regular" ou "inadequada" e justifique.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Pesquise o tema "intertextualidade no cinema brasileiro" seguindo as 5 etapas da pesquisa confiável estudadas. Registre no caderno: a pergunta refinada, as fontes consultadas com avalia&ccedil;&atilde;o de cada uma, as informa&ccedil;&otilde;es relevantes encontradas e a síntese final em seus pr&oacute;prios termos.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">Qual &eacute; a diferen&ccedil;a entre estudo individual e estudo coletivo? Em que tipos de tarefa e conte&uacute;do cada um &eacute; mais eficaz? Como organizar um grupo de estudos produtivo para que n&atilde;o seja apenas "conversa e entretenimento"?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">O "ensino m&uacute;tuo" tem a maior taxa de reten&ccedil;&atilde;o de conhecimento de todas as t&eacute;cnicas de estudo. Explique por que ensinar alguém &eacute; mais eficaz do que apenas ler ou ouvir. Experimente: explique o conceito de intertextualidade para um familiar que n&atilde;o estudou esse tema e registre o que descobriu sobre o pr&oacute;prio conhecimento.</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <!-- QUIZ T16 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz16">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 16</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn16">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb16" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q16_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">O m&eacute;todo Pomodoro &eacute; baseado em:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q16_1',0,1,'quiz16','B: 25 min de foco + 5 min de pausa &eacute; o ciclo Pomodoro. O nome vem de um timer de cozinha em formato de tomate (pomodoro) usado pelo criador Francesco Cirillo.')"><span class="opt-letter">A)</span><span>Estudar 2 horas seguidas sem interrup&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_1',1,1,'quiz16','Correto! O m&eacute;todo Pomodoro alterna 25 minutos de foco total com 5 minutos de pausa, usando a fragmenta&ccedil;&atilde;o do tempo para manter a concentra&ccedil;&atilde;o e prevenir a fadiga cognitiva.')"><span class="opt-letter">B)</span><span>25 minutos de foco total alternados com 5 minutos de pausa</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_1',2,1,'quiz16','B: A revis&atilde;o espa&ccedil;ada &eacute; uma t&eacute;cnica diferente baseada em intervalos crescentes entre as revis&otilde;es.')"><span class="opt-letter">C)</span><span>Revisar o conte&uacute;do em intervalos crescentes ao longo de dias</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_1',3,1,'quiz16','B: Flashcards s&atilde;o fichas de pergunta/resposta; n&atilde;o descrevem o Pomodoro.')"><span class="opt-letter">D)</span><span>Criar fichas de pergunta e resposta para memoriza&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q16_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q16_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">A t&eacute;cnica de "revis&atilde;o espa&ccedil;ada" &eacute; baseada em:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q16_2',0,2,'quiz16','C: A revis&atilde;o espa&ccedil;ada explora a &quot;curva do esquecimento&quot; de Ebbinghaus: rever o conte&uacute;do no momento em que est&aacute; prestes a esquecer &eacute; o que consolida na mem&oacute;ria de longo prazo.')"><span class="opt-letter">A)</span><span>Revisar todo o conte&uacute;do na noite anterior &agrave; prova</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_2',1,2,'quiz16','C: Frequência m&aacute;xima sem considerar os momentos ideais de revisão &eacute; menos eficiente do que a revisão espaçada.')"><span class="opt-letter">B)</span><span>Rever o conte&uacute;do o maior n&uacute;mero de vezes poss&iacute;vel por dia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_2',2,2,'quiz16','Correto! A revis&atilde;o espa&ccedil;ada usa intervalos crescentes (1 dia, 3 dias, 1 semana, 1 m&ecirc;s) baseados na curva do esquecimento de Ebbinghaus. Rever no momento ideal consolida na mem&oacute;ria de longo prazo.')"><span class="opt-letter">C)</span><span>Rever o conte&uacute;do em intervalos crescentes baseados na curva do esquecimento</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_2',3,2,'quiz16','C: Ler o material em v&aacute;rios locais diferentes &eacute; outra t&eacute;cnica (varia&ccedil;&atilde;o de contexto), n&atilde;o a revis&atilde;o espa&ccedil;ada.')"><span class="opt-letter">D)</span><span>Ler o mesmo material em ambientes diferentes</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q16_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q16_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">Qual dos seguintes &eacute; um crit&eacute;rio v&aacute;lido para avaliar a confiabilidade de uma fonte?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q16_3',0,3,'quiz16','D: Autor identificado com qualifica&ccedil;&atilde;o na &aacute;rea, data recente e referências verificáveis são critérios fundamentais de confiabilidade.')"><span class="opt-letter">A)</span><span>N&uacute;mero de curtidas e compartilhamentos nas redes sociais</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_3',1,3,'quiz16','D: Formato do site n&atilde;o define confiabilidade; sites profissionais podem publicar desinforma&ccedil;&atilde;o.')"><span class="opt-letter">B)</span><span>Design bonito e profissional do site</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_3',2,3,'quiz16','D: Linguagem simples pode indicar boa comunica&ccedil;&atilde;o, mas n&atilde;o confiabilidade.')"><span class="opt-letter">C)</span><span>Linguagem simples e f&aacute;cil de entender</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_3',3,3,'quiz16','Correto! Autor identificado e qualificado, data recente e refer&ecirc;ncias verificáveis são critérios objetivos de confiabilidade que podem ser verificados e permitem checar a veracidade das informa&ccedil;&otilde;es.')"><span class="opt-letter">D)</span><span>Autor identificado e qualificado, data recente e referências citadas e verificáveis</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q16_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q16_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">Por que o "ensino m&uacute;tuo" (explicar o conte&uacute;do para outra pessoa) &eacute; a t&eacute;cnica de maior reten&ccedil;&atilde;o de conhecimento?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q16_4',0,2,'quiz16','C: Ao explicar, voc&ecirc; &eacute; for&ccedil;ado a reorganizar e articular ativamente o conhecimento, identificando as pr&oacute;prias lacunas. Esse processo ativo de recupera&ccedil;&atilde;o e express&atilde;o &eacute; o que consolida na mem&oacute;ria.')"><span class="opt-letter">A)</span><span>Porque gastar mais tempo com o conte&uacute;do sempre ajuda</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_4',1,2,'quiz16','C: A press&atilde;o social pode motivar, mas n&atilde;o &eacute; o mecanismo cognitivo que explica a alta reten&ccedil;&atilde;o.')"><span class="opt-letter">B)</span><span>Porque a press&atilde;o de ser julgado melhora a mem&oacute;ria</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_4',2,2,'quiz16','Correto! Ao explicar, somos for&ccedil;ados a reorganizar ativamente o conhecimento, identificar lacunas e articular as conex&otilde;es entre as ideias. Esse processamento ativo &eacute; o que produz reten&ccedil;&atilde;o de at&eacute; 90%, contra 5-10% da leitura passiva.')"><span class="opt-letter">C)</span><span>Porque ao explicar somos for&ccedil;ados a reorganizar ativamente o conhecimento, identificando lacunas e articulando conex&otilde;es</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_4',3,2,'quiz16','C: O movimento n&atilde;o &eacute; o fator cognitivo; &eacute; a reorganiza&ccedil;&atilde;o ativa do conhecimento ao explicar.')"><span class="opt-letter">D)</span><span>Porque explica&ccedil;&otilde;es orais ativam mais partes do c&eacute;rebro pelo movimento</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q16_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q16_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">A express&atilde;o "estudos mostram que..." sem citar qual estudo &eacute; um sinal de:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q16_5',0,2,'quiz16','C: &quot;Estudos mostram que...&quot; sem referência é um padrão clássico de desinformação: invoca autoridade científica sem permitir verificação.')"><span class="opt-letter">A)</span><span>Alta credibilidade: indica que muitos estudos corroboram a afirma&ccedil;&atilde;o</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_5',1,2,'quiz16','C: Popularidade não é sinônimo de credibilidade; fontes populares frequentemente usam esse recurso de forma enganosa.')"><span class="opt-letter">B)</span><span>Linguagem popular aceita em todas as fontes jornal&iacute;sticas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_5',2,2,'quiz16','Correto! "Estudos mostram" sem identificar qual estudo, de qual instituição, de qual data &eacute; uma apela&ccedil;&atilde;o &agrave; autoridade cient&iacute;fica sem possibilidade de verificação. &Eacute; um sinal clássico de desinformação.')"><span class="opt-letter">C)</span><span>Desinforma&ccedil;&atilde;o: invoca autoridade cient&iacute;fica sem permitir verificação do estudo citado</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q16_5',3,2,'quiz16','C: N&atilde;o &eacute; um problema de formatação, mas de ausência de refer&ecirc;ncia verificável.')"><span class="opt-letter">D)</span><span>Erro de formatação corrigível com a cita&ccedil;&atilde;o adequada</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q16_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr16"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 16!</div><button class="qrb-retry" onclick="resetQuiz('quiz16')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section>
+<hr class="rainbow-div">
+
+<!-- ====================== T17 ====================== -->
+<section id="c17" class="sec-rel" style="background:var(--bg2)">
+<div class="sfloat-wrap" id="sf17"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 17 &middot; Bloco V</div>
+  <h2>&#127917; Literatura comparada: textos liter&aacute;rios em diferentes tempos</h2>
+  <p>Rela&ccedil;&otilde;es entre literatura e outras linguagens artísticas &middot; Permanências e rupturas</p>
+</div>
+<div class="block-tabs-wrap" id="tabs17">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs17',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs17',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs17',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <!-- CONTEUDO T17 -->
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c17')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Literatura comparada &eacute; a disciplina que pergunta: o que os textos de diferentes &eacute;pocas, culturas e linguagens t&ecirc;m em comum? E o que os torna radicalmente diferentes? &Eacute; uma viagem pelo tempo e pelo espa&ccedil;o da cultura humana.</div>
+    <div class="sec-mascot-hint">Clique para curiosidades &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127917; O que &eacute; Literatura Comparada?</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>A <strong>literatura comparada</strong> &eacute; uma abordagem de estudo que analisa rela&ccedil;&otilde;es entre textos de diferentes &eacute;pocas, culturas, línguas e linguagens art&iacute;sticas. N&atilde;o busca provar que um texto &eacute; melhor que outro, mas compreender como obras distintas dialogam, influenciam-se e transformam-se mutuamente. &Eacute; a intertextualidade aplicada em escala hist&oacute;rica e transnacional.</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card"><h4>&#9200; Comparação diacrônica</h4><p>Entre textos de &eacute;pocas diferentes. Como o mesmo tema (amor, morte, poder) &eacute; tratado em diferentes períodos históricos? O que revela sobre as mudan&ccedil;as culturais?</p></div>
+      <div class="info-card"><h4>&#127758; Comparação transcultural</h4><p>Entre literaturas de culturas diferentes. Como a tragédia grega dialoga com o teatro N&ocirc; japon&ecirc;s? Como o conto popular africano ressurge no realismo m&aacute;gico latinoamericano?</p></div>
+      <div class="info-card"><h4>&#127917; Comparação intermidiática</h4><p>Entre linguagens artísticas diferentes. Como um romance &eacute; transformado numa pe&ccedil;a de teatro, num filme, numa s&eacute;rie ou num game? O que cada mídia acrescenta e perde?</p></div>
+      <div class="info-card"><h4>&#128260; Comparação de g&ecirc;neros</h4><p>Entre gêneros textuais que tratam do mesmo tema. Como uma not&iacute;cia, um conto e uma can&ccedil;&atilde;o abordam a mesma injustição social de formas diferentes?</p></div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('literatura comparada analise textos diferentes epocas culturas')">&#128444;&#65039; Ver imagens: <strong>Literatura comparada: exemplos visuais</strong></div>
+  </div>
+
+  <!-- ANALISE COMPARATIVA INTERATIVA -->
+  <div class="card fi">
+    <h3>&#128196; O amor impossível: uma cadeia comparativa</h3>
+    <p>Clique em cada era para ver o fragmento e a an&aacute;lise:</p>
+
+    <div class="lit-comp-card fi" onclick="toggleLCC(this)">
+      <div class="lcc-header">
+        <div class="lcc-era-badge">S&eacute;c. XIII</div>
+        <div class="lcc-title">Cantiga de Amor Trovadoresca</div>
+        <div class="lcc-arrow">&#9658;</div>
+      </div>
+      <div class="lcc-body">
+        <div class="lcc-fragment">"Ai flores, ai flores do verde pino,<br>se sabedes novas do meu amigo?<br>Ai Deus, e u &eacute;?"<br><span style="font-size:.7rem;color:var(--muted);font-style:normal">&mdash; D. Dinis (adaptado)</span></div>
+        <div class="lcc-analysis"><strong>An&aacute;lise:</strong> Linguagem arcaica galego-portuguesa. A mulher dirige-se &agrave;s flores como mediadoras. Tom de sofrimento (coita amorosa). A saudade e a aus&ecirc;ncia do amado s&atilde;o o tema central. Forma poética musical (cantiga). <strong>Contexto:</strong> corte medieval, amor cort&ecirc;s como c&oacute;digo social.</div>
+      </div>
+    </div>
+
+    <div class="lit-comp-card fi" onclick="toggleLCC(this)">
+      <div class="lcc-header">
+        <div class="lcc-era-badge" style="background:linear-gradient(135deg,var(--acc4),#2a5a9a)">S&eacute;c. XVI</div>
+        <div class="lcc-title">Cam&otilde;es — Soneto cl&aacute;ssico</div>
+        <div class="lcc-arrow">&#9658;</div>
+      </div>
+      <div class="lcc-body">
+        <div class="lcc-fragment">"Amor &eacute; fogo que arde sem se ver;<br>&Eacute; ferida que d&oacute;i e n&atilde;o se sente;<br>&Eacute; um contentamento descontente;<br>&Eacute; dor que desatina sem doer."<br><span style="font-size:.7rem;color:var(--muted);font-style:normal">&mdash; Lu&iacute;s de Cam&otilde;es</span></div>
+        <div class="lcc-analysis"><strong>An&aacute;lise:</strong> Forma soneto (14 versos, herança italiana). S&eacute;rie de oximoros (contradições) que definem o amor como paradoxo. Influência de Petrarca (Renascimento). Tom mais intelectual e filosófico. <strong>Permanência:</strong> mesma dor do amor impossível da cantiga; <strong>Ruptura:</strong> forma est&eacute;tica muito mais elaborada, influ&ecirc;ncia do humanismo.</div>
+      </div>
+    </div>
+
+    <div class="lit-comp-card fi" onclick="toggleLCC(this)">
+      <div class="lcc-header">
+        <div class="lcc-era-badge" style="background:linear-gradient(135deg,var(--acc1),#6a0000)">S&eacute;c. XIX</div>
+        <div class="lcc-title">Romantismo — Castro Alves (adaptado)</div>
+        <div class="lcc-arrow">&#9658;</div>
+      </div>
+      <div class="lcc-body">
+        <div class="lcc-fragment">"P&aacute;lida &agrave; luz da l&acirc;mpada sombria,<br>Sobre o leito de flores reclinada,<br>Como p&aacute;lida est&aacute;s e quase fria,<br>Como a noite do amor abandonada!"</div>
+        <div class="lcc-analysis"><strong>An&aacute;lise:</strong> Romantismo brasileiro: emo&ccedil;&atilde;o intensa, imagens de morte e amor. A mulher &eacute; descrita em sua aus&ecirc;ncia/morte. Métrica regular (decassílabos). <strong>Permanência:</strong> amor como sofrimento vem do Trovadorismo. <strong>Ruptura:</strong> imagens muito mais dramáticas e sensuais; in&shy;flu&ecirc;ncia do Romantismo europeu.</div>
+      </div>
+    </div>
+
+    <div class="lit-comp-card fi" onclick="toggleLCC(this)">
+      <div class="lcc-header">
+        <div class="lcc-era-badge" style="background:linear-gradient(135deg,var(--acc3),#1a5a30)">S&eacute;c. XX-XXI</div>
+        <div class="lcc-title">Letra de rap contempor&acirc;neo (estilo)</div>
+        <div class="lcc-arrow">&#9658;</div>
+      </div>
+      <div class="lcc-body">
+        <div class="lcc-fragment">"Sinto tua falta nas madrugadas frias,<br>nas m&uacute;sicas que a gente ouvia,<br>no c&ocirc;modo que chamava de nosso —<br>hoje &eacute; s&oacute; vazio com cheiro de ausência."<br><span style="font-size:.7rem;color:var(--muted);font-style:normal">&mdash; Estilo contempor&acirc;neo (exemplo criado para fins did&aacute;ticos)</span></div>
+        <div class="lcc-analysis"><strong>An&aacute;lise:</strong> Linguagem coloquial contempor&acirc;nea. Imagens do cotidiano (madrugadas, m&uacute;sicas, c&ocirc;modo). Ausência do amado como tema central — <em>exatamente como na cantiga medieval</em>. <strong>Permanência:</strong> a saudade do ausente, a dor do amor perdido — 800 anos de cadeia intertextual. <strong>Ruptura:</strong> forma livre, linguagem oral, imagens urbanas.</div>
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top:.9rem">
+      <strong>Pense:</strong> 800 anos separam a cantiga medieval do rap contemporâneo. Mas o tema &eacute; o mesmo: a dor da aus&ecirc;ncia de quem amamos. Isso que &eacute; a permanência na literatura: os temas humanos fundamentais transcendem &eacute;pocas, culturas e linguagens.
+    </div>
+  </div>
+
+  <!-- LITERATURA E OUTRAS LINGUAGENS -->
+  <div class="card fi">
+    <h3>&#127917; Literatura e outras linguagens art&iacute;sticas</h3>
+    <p>A literatura n&atilde;o existe num vácuo: ela sempre dialogou com outras linguagens art&iacute;sticas. Veja algumas rela&ccedil;&otilde;es fundamentais:</p>
+    <div class="trovador-grid">
+      <div class="trov-card">
+        <div class="trov-icon">&#127916;</div>
+        <div class="trov-nome">Literatura e Cinema</div>
+        <div class="trov-desc">O cinema &eacute; a arte do s&eacute;c. XX que mais se alimentou da literatura. Adapta&ccedil;&otilde;es traduzem narrativas verbais em imagem+som. Cada adaptação &eacute; uma nova leitura criativa do original.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127913;</div>
+        <div class="trov-nome">Literatura e M&uacute;sica</div>
+        <div class="trov-desc">Do Trovadorismo ao rap: letra e melodia s&atilde;o indissoci&aacute;veis. A MPB brasileira &eacute; um dos maiores exemplos mundiais de fusão entre poesia erudita e m&uacute;sica popular.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127917;</div>
+        <div class="trov-nome">Literatura e Teatro</div>
+        <div class="trov-desc">O teatro &eacute; a forma mais antiga de literatura performática. Shakespeare, Gil Vicente, Bertolt Brecht: o palco transformou textos em experi&ecirc;ncias coletivas de &eacute;pocas inteiras.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127760;</div>
+        <div class="trov-nome">Literatura e Artes visuais</div>
+        <div class="trov-desc">Iluminuras medievais ilustravam manuscritos. Gravuras de Gust. Doré visuazilam Dante. Hoje, ilustra&ccedil;&otilde;es, quadrinhos e concept art de games s&atilde;o novas formas de literatura visual.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127918;</div>
+        <div class="trov-nome">Literatura e Games</div>
+        <div class="trov-desc">RPGs e jogos narrativos s&atilde;o a nova forma de literatura interativa. Games como "The Last of Us" e "Detroit: Become Human" levantam quest&otilde;es literárias e filosóficas complexas.</div>
+      </div>
+      <div class="trov-card">
+        <div class="trov-icon">&#127900;</div>
+        <div class="trov-nome">Literatura e Dan&ccedil;a/Per&shy;formance</div>
+        <div class="trov-desc">O slam de poesia une literatura e performance corporal. A capoeira angola incorpora narrativa oral. Culturas ind&iacute;genas integram literatura, dan&ccedil;a e ritual num &uacute;nico evento.</div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('literatura cinema teatro musica linguagens artisticas comparacao')">&#128444;&#65039; Ver imagens: <strong>Literatura e outras linguagens art&iacute;sticas</strong></div>
+  </div>
+
+  <!-- JOGO COMPARACAO DE TEXTOS -->
+  <div class="interactive-box fi">
+    <div class="ib-title">&#127918; An&aacute;lise Comparativa: identifique a perman&ecirc;ncia e a ruptura</div>
+    <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.8rem">Leia os dois fragmentos e responda:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.8rem">
+      <div class="fragment-box" style="grid-column:1">
+        <div style="font-size:.64rem;font-weight:900;color:var(--acc4);text-transform:uppercase;margin-bottom:.3rem">Texto A &middot; S&eacute;c. XVI</div>
+        <p style="font-family:'Crimson Pro',serif;font-style:italic;font-size:.87rem;line-height:1.75">"Mudam-se os tempos, mudam-se as vontades,<br>Muda-se o ser, muda-se a confian&ccedil;a;<br>Todo o mundo &eacute; composto de mudan&ccedil;a,<br>Tomando sempre novas qualidades."<br><span style="font-size:.68rem;color:var(--muted);font-style:normal">&mdash; Cam&otilde;es</span></p>
+      </div>
+      <div class="fragment-box" style="grid-column:2;border-left-color:var(--acc3)">
+        <div style="font-size:.64rem;font-weight:900;color:var(--acc3);text-transform:uppercase;margin-bottom:.3rem">Texto B &middot; S&eacute;c. XXI (est.)</div>
+        <p style="font-family:'Crimson Pro',serif;font-style:italic;font-size:.87rem;line-height:1.75">"N&atilde;o adianta correr do que vai mudar;<br>o tempo n&atilde;o espera teu sorriso partir.<br>Tudo que fica tem que aprender a ir<br>e tudo que vai tem que aprender a chegar."<br><span style="font-size:.68rem;color:var(--muted);font-style:normal">&mdash; Estilo contemporâneo (exemplo did&aacute;tico)</span></p>
+      </div>
+    </div>
+    <div class="int-question" id="iqlit01">
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">O tema que conecta os dois textos (perm&acirc;nencia entre s&eacute;culos) &eacute;:</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqlit01','Não. Nenhum dos textos trata especificamente de amor romântico; ambos tratam do tempo e da mudança.')">O amor rom&acirc;ntico e a saudade</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqlit01','Correto! Ambos tratam da inevitabilidade da mudança e da passagem do tempo — um tema humano universal que atravessa séculos. Isso é a permanência temática na literatura comparada.')">A inevitabilidade da mudan&ccedil;a e a passagem do tempo</button>
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqlit01','Não. A crítica social não é o tema central de nenhum dos dois fragmentos.')">A cr&iacute;tica social &agrave;s injusti&ccedil;as</button>
+      </div>
+      <div class="int-feedback" id="fb-iqlit01"></div>
+    </div>
+    <div class="int-question" id="iqlit02" style="margin-top:.6rem">
+      <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">A principal ruptura entre os dois textos est&aacute; em:</p>
+      <div class="int-opts">
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqlit02','Não. O tema &eacute; o que os une (permanência); a ruptura está na forma, não no tema.')">O tema: o A &eacute; sobre mudança e o B &eacute; sobre estabilidade</button>
+        <button class="int-opt" onclick="checkInt(this,'correct','iqlit02','Correto! O Texto A usa forma clássica (soneto com metros regulares, sintaxe elaborada, vocabulário quinhentista). O B usa forma contemporânea (verso livre, linguagem coloquial, imagens do cotidiano). Mesma essência temática, formas radicalmente distintas.')">A forma e a linguagem: o A usa forma cl&aacute;ssica elaborada e o B usa forma contempor&acirc;nea e coloquial</button>
+        <button class="int-opt" onclick="checkInt(this,'wrong','iqlit02','Não. Ambos são líricos (expressão de sentimento); a diferença não é de g&ecirc;nero literário.')">O g&ecirc;nero: o A &eacute; &eacute;pico e o B &eacute; l&iacute;rico</button>
+      </div>
+      <div class="int-feedback" id="fb-iqlit02"></div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=literatura+comparada+analise+textos+diferentes+epocas')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Literatura comparada: como analisar</strong><span>YouTube &middot; Teoria liter&aacute;ria</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=literatura+cinema+adaptacao+analise+comparativa+obras')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Literatura e cinema: a arte da adapta&ccedil;&atilde;o</strong><span>YouTube &middot; Comparação intermidi&aacute;tica</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('literatura comparada infografico permanencias rupturas historia')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>Perman&ecirc;ncias e rupturas liter&aacute;rias</strong><span>Google Imagens &middot; Resumo visual</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div>
+
+  <!-- ATIVIDADES T17 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 17</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Escolha um tema humano universal (amor, morte, injustição, liberdade, identidade) e fa&ccedil;a uma análise comparativa diacrônica: encontre pelo menos 3 textos (de épocas diferentes) que tratam desse tema. Identifique as permanências (o que persiste) e as rupturas (o que muda) entre eles.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Escolha uma adaptação que você conhece: um livro virou filme, uma música virou poema, um conto foi adaptado para série. Analise: o que a adaptação preservou do original? O que foi perdido? O que foi acrescentado pela nova linguagem? A adaptação foi fiel ou criativa?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Analise a cadeia comparativa apresentada no conteúdo (cantiga medieval → Camões → Romantismo → rap contemporâneo). Escreva um parágrafo sobre o que esse exemplo revela sobre a natureza da literatura: por que certos temas persistem por séculos enquanto as formas mudam radicalmente?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">Faça uma análise comparativa transcultural: pesquise como o tema da "vingança" é tratado na tragédia grega (ex: Medeia), no cinema de ação americano e numa música de rap brasileiro que você conhece. Que semelhanças e diferenças você encontra nas três culturas e épocas?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Escolha um game narrativo, uma série ou um filme que você considera literariamente rico. Analise: que temas literários clássicos ele aborda? Que recursos narrativos usa? Ele se relaciona com obras literárias anteriores? Justifique por que essa obra merece ser tratada como "literatura" no sentido amplo do termo.</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <!-- QUIZ T17 -->
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz17">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 17</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn17">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb17" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q17_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">A literatura comparada &eacute; uma abordagem que:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q17_1',0,2,'quiz17','C: A literatura comparada analisa rela&ccedil;&otilde;es entre obras de diferentes &eacute;pocas, culturas e linguagens, buscando permanências, rupturas e influências m&uacute;tuas.')"><span class="opt-letter">A)</span><span>Compara obras para determinar qual &eacute; a melhor</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_1',1,2,'quiz17','C: A literatura comparada n&atilde;o se limita a textos do mesmo país; ela &eacute; por defini&ccedil;&atilde;o transcultural.')"><span class="opt-letter">B)</span><span>Analisa apenas textos do mesmo pa&iacute;s e &eacute;poca</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_1',2,2,'quiz17','Correto! A literatura comparada analisa rela&ccedil;&otilde;es entre obras de diferentes &eacute;pocas, culturas, línguas e linguagens artísticas, buscando compreender permanências, rupturas e influências m&uacute;tuas.')"><span class="opt-letter">C)</span><span>Analisa rela&ccedil;&otilde;es entre obras de diferentes &eacute;pocas, culturas e linguagens, buscando perm&acirc;nencias, rupturas e influ&ecirc;ncias m&uacute;tuas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_1',3,2,'quiz17','C: A literatura comparada vai al&eacute;m da intertextualidade em sentido estrito; analisa rela&ccedil;&otilde;es mais amplas de influência cultural e artística.')"><span class="opt-letter">D)</span><span>&Eacute; outra denomina&ccedil;&atilde;o para intertextualidade</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q17_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q17_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">A "perm&acirc;nencia" na literatura comparada refere-se a:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q17_2',0,1,'quiz17','B: A permanência &eacute; o que transcende épocas: temas humanos universais que aparecem em textos de qualquer cultura ou período.')"><span class="opt-letter">A)</span><span>Textos que permanecem iguais ao longo dos s&eacute;culos sem mudar</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_2',1,1,'quiz17','Correto! Permanência é o que persiste entre obras de épocas e culturas diferentes: temas humanos universais (amor, morte, identidade, injustiça) que aparecem em textos medievais, clássicos e contemporâneos porque refletem a condição humana.')"><span class="opt-letter">B)</span><span>Os temas e quest&otilde;es humanas universais que persistem em obras de diferentes &eacute;pocas e culturas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_2',2,1,'quiz17','B: Obras cl&aacute;ssicas são exemplos de permanência, mas o conceito é mais amplo: qualquer elemento temático que transcende épocas.')"><span class="opt-letter">C)</span><span>As obras cl&aacute;ssicas que nunca sa&iacute;ram de moda</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_2',3,1,'quiz17','B: Obras salvas por institui&ccedil;&otilde;es é uma questão de can&ocirc;ne, n&atilde;o de permanência como categoria da literatura comparada.')"><span class="opt-letter">D)</span><span>As obras preservadas por institui&ccedil;&otilde;es culturais</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q17_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q17_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">A comparação diacrônica em literatura analisa:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q17_3',0,0,'quiz17','Correto! Diacrônico refere-se ao eixo do tempo. A comparação diacrônica analisa como um mesmo tema ou forma é tratado em épocas históricas diferentes, revelando o que muda e o que persiste.')"><span class="opt-letter">A)</span><span>Obras de &eacute;pocas diferentes para identificar perm&acirc;nencias e rupturas ao longo do tempo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_3',1,0,'quiz17','A: Obras simultâneas de culturas diferentes seria comparação transcultural, n&atilde;o diacrônica.')"><span class="opt-letter">B)</span><span>Obras de países diferentes no mesmo per&iacute;odo hist&oacute;rico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_3',2,0,'quiz17','A: Comparação entre linguagens diferentes seria a abordagem intermidiática.')"><span class="opt-letter">C)</span><span>A mesma obra em diferentes linguagens art&iacute;sticas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_3',3,0,'quiz17','A: Comparação de gêneros é outra categoria; a diacrônica foca no eixo temporal.')"><span class="opt-letter">D)</span><span>Diferentes g&ecirc;neros textuais sobre o mesmo tema</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q17_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q17_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">O que revela a cadeia comparativa cantiga medieval &rarr; Cam&otilde;es &rarr; Romantismo &rarr; rap contempor&acirc;neo?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q17_4',0,2,'quiz17','C: A cadeia revela que temas humanos universais (saudade, dor do amor) persistem por séculos enquanto as formas literárias se transformam radicalmente com cada época e cultura.')"><span class="opt-letter">A)</span><span>Que a literatura medieval &eacute; superior &agrave;s formas contempor&acirc;neas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_4',1,2,'quiz17','C: A cadeia mostra exatamente o contrário: h&aacute; continuidade temática profunda entre séculos distintos.')"><span class="opt-letter">B)</span><span>Que a literatura portuguesa e o rap n&atilde;o t&ecirc;m nada em comum</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_4',2,2,'quiz17','Correto! A cadeia demonstra a permanência temática (a dor da ausência, a saudade do amado) ao longo de 800 anos, enquanto as formas, linguagens e contextos mudam radicalmente de época para época.')"><span class="opt-letter">C)</span><span>Que temas humanos universais (saudade, dor da aus&ecirc;ncia) persistem por séculos enquanto as formas se transformam</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_4',3,2,'quiz17','C: A literatura evolui em formas e contextos; n&atilde;o regride nem avança em dir&ccedil;&atilde;o a um ideal fixo.')"><span class="opt-letter">D)</span><span>Que a literatura contempor&acirc;nea &eacute; inferior &agrave;s formas cl&aacute;ssicas</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q17_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q17_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Por que uma adapta&ccedil;&atilde;o de livro para filme &eacute; considerada uma forma de literatura comparada intermidi&aacute;tica?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q17_5',0,3,'quiz17','D: A adaptação traduz o texto verbal para a linguagem audiovisual, transformando a experi&ecirc;ncia literária. Analisar o que muda, o que persiste e o que cada mídia acrescenta é o objeto da comparação intermidiática.')"><span class="opt-letter">A)</span><span>Porque filmes baseados em livros sempre s&atilde;o melhores</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_5',1,3,'quiz17','D: N&atilde;o é uma quest&atilde;o legal; &eacute; uma quest&atilde;o de análise das transformações entre linguagens.')"><span class="opt-letter">B)</span><span>Porque o autor do livro deve autorizar e ganhar direitos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_5',2,3,'quiz17','D: A fidelidade n&atilde;o &eacute; o crit&eacute;rio; a análise compara o que cada mídia faz com o mesmo material narrativo.')"><span class="opt-letter">C)</span><span>Porque permite verificar se o diretor foi fiel ao livro</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q17_5',3,3,'quiz17','Correto! A comparação intermidiática analisa como a passagem de uma linguagem (literatura verbal) para outra (audiovisual) transforma a experiência: o que a imagem e o som acrescentam, o que a palavra escrita perde e o que ganha em cada mídia.')"><span class="opt-letter">D)</span><span>Porque analisa como a passagem de uma linguagem para outra transforma a experi&ecirc;ncia: o que cada m&iacute;dia acrescenta, preserva e perde do texto original</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q17_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr17"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Bloco V conclu&iacute;do!</div><div class="qrb-sub">T&oacute;picos 15, 16 e 17 finalizados!</div><button class="qrb-retry" onclick="resetQuiz('quiz17')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section>
 <section id="c18" style="min-height:1px;background:var(--bg)"></section>
 <section id="c19" style="min-height:1px;background:var(--bg2)"></section>
 
@@ -5119,7 +5896,10 @@ const secMascotMsgs = {
   c11:["Os povos Yanomami têm palavras para mais de 400 plantas medicinais sem equivalente em português.","O livro 'Ideias para adiar o fim do mundo', de Ailton Krenak, foi um bestseller no Brasil em 2019.","A lenda do Guaraná dos povos Sateré-Mawé diz que a planta nasceu dos olhos de uma criança."],
   c12:["O Grêmio Estudantil é um direito garantido pela Lei Federal 7.398/1985. Você sabia disso?","O maior debate parlamentar da história do Brasil durou mais de 14 horas seguidas em 2019!","Sócrates usava o debate como ferramenta filosófica. A diferença: ele não precisava ganhar, precisava descobrir a verdade."],
   c13:["Pesquisas mostram que humanos pensam 3x mais rápido do que falam. Por isso é tão difícil escutar de verdade.","A escuta ativa foi desenvolvida como técnica terapêutica por Carl Rogers nos anos 1950. Hoje é essencial em negociações.","No Senado Romano, havia a regra de que todos deviam falar antes de votar. A gente perdeu isso."],
-  c14:["O filósofo John Rawls propôs um experimento mental: defenda suas ideias sem saber que papel você ocuparia na sociedade resultante.","Controverso não é sinônimo de errado. Muitas verdades históricas foram controversas antes de serem aceitas.","A palavra 'polêmica' vem do grego polemos: guerra. Mas a boa polêmica é uma guerra de ideias, não de pessoas."]
+  c14:["O filósofo John Rawls propôs um experimento mental: defenda suas ideias sem saber que papel você ocuparia na sociedade resultante.","Controverso não é sinônimo de errado. Muitas verdades históricas foram controversas antes de serem aceitas.","A palavra 'polêmica' vem do grego polemos: guerra. Mas a boa polêmica é uma guerra de ideias, não de pessoas."],
+  c15:["Sabia que ler apenas o título e a conclusão de um artigo científico é uma das causas mais comuns de desinformação acadêmica?","O dicionário Aurélio foi lançado em 1975. O Houaiss (o mais completo do português) tem mais de 228.000 verbetes!","A técnica de leitura dinâmica foi desenvolvida nos anos 1950 por Evelyn Wood. Mas cuidado: velocidade sem compreensão é inútil."],
+  c16:["O viés de confirmação nos faz preferir fontes que confirmam o que já acreditamos. Isso é a raiz de boa parte da desinformação.","A Wikipedia tem mais de 6,7 milhões de artigos em inglês e é editada por voluntários. Incrível e perigoso ao mesmo tempo.","O método científico exige que as fontes sejam verificáveis e replicáveis. Fonte anônima nunca é suficiente para um argumento."],
+  c17:["Borges dizia que a literatura é um espelho que reflecte um leitor diferente a cada vez. Você é o que você leu.","A adaptação de Shakespeare para o Kabuki japonês e para o Cinema de Bollywood mostra como a literatura transcende culturas.","'Romeu e Julieta' foi baseado em 'Pyramus e Thisbe' de Ovídio. Shakespeare era um mestre da intertextualidade!"]
 };
 let secMascotIdx = {};
 function pauloMascotClick(secId) {
@@ -5148,7 +5928,10 @@ const sfSyms = {
   sf11:['🌿','🌳','🌊','🔥','🦋','🌺','🐦','💚'],
   sf12:['🗣️','⚖️','🏛️','📢','🤝','💬','👥','🎙️'],
   sf13:['👂','💭','🧘','🎧','📝','⏱️','🤔','💡'],
-  sf14:['⚖️','🔥','💬','🌐','📣','🌍','🤝','💡']
+  sf14:['⚖️','🔥','💬','🌐','📣','🌍','🤝','💡'],
+  sf15:['📖','🔍','💡','📝','🗒️','🧐','📚','🔎'],
+  sf16:['🔬','📡','🌐','📰','💻','📊','🧪','🔭'],
+  sf17:['🎭','🌍','🎨','📜','🎬','🎵','🖼️','✨']
 };
 Object.keys(sfSyms).forEach(id => {
   const wrap = document.getElementById(id);
