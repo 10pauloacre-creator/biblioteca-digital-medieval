@@ -7,9 +7,9 @@
 //   Periodic Background Sync → verifica novos livros 1x/dia
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v9';
+const SW_VERSION   = 'v10';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
-const MEDIA_CACHE  = 'bdm-media-v2';             // vídeo/webm — persiste entre updates
+const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
 const VALID_CACHES = [SHELL_CACHE, MEDIA_CACHE, BOOKS_CACHE];
 
@@ -28,6 +28,7 @@ const SHELL_ASSETS = [
   './assets/images/pilhadelivros.png',
   './assets/images/mensagem-pra-baixar.png',
   './assets/images/bota\u00e3o-baixar.png',
+  './assets/images/splash-screen.png',
   './assets/icons/icon-192x192.png',
   './assets/icons/icon-512x512.png',
   './assets/icons/apple-touch-icon.png',
@@ -239,22 +240,43 @@ async function networkFirst(request, cacheName) {
   }
 }
 
-// ── Vídeo: Cache-first com suporte a Range requests
+// ── Vídeo: Cache-first com suporte a Range requests (streaming offline)
 async function handleMedia(request) {
   const cache = await caches.open(MEDIA_CACHE);
 
-  // Tenta match com Range (Chrome slica automaticamente)
-  const cached = await cache.match(request);
-  if (cached) return cached;
-
-  // Tenta o arquivo completo (sem Range)
+  // Busca o arquivo completo no cache (armazenado sem Range header)
   const fullCached = await cache.match(new Request(request.url));
-  if (fullCached) return fullCached;
 
-  // Rede como fallback
+  if (fullCached) {
+    // Se o browser pediu um Range, fatiamos manualmente do ArrayBuffer
+    const rangeHeader = request.headers.get('range');
+    if (rangeHeader) {
+      try {
+        const blob      = await fullCached.clone().blob();
+        const total     = blob.size;
+        const [, s, e]  = /bytes=(\d*)-(\d*)/.exec(rangeHeader);
+        const start     = s ? parseInt(s) : 0;
+        const end       = e ? parseInt(e) : total - 1;
+        const sliced    = blob.slice(start, end + 1);
+        return new Response(sliced, {
+          status: 206,
+          headers: {
+            'Content-Type':  fullCached.headers.get('Content-Type') || 'video/mp4',
+            'Content-Range': `bytes ${start}-${end}/${total}`,
+            'Content-Length': String(end - start + 1),
+            'Accept-Ranges': 'bytes',
+          },
+        });
+      } catch {
+        return fullCached; // fallback: entrega a resposta completa
+      }
+    }
+    return fullCached;
+  }
+
+  // Não está no cache — baixa da rede e armazena o arquivo completo
   try {
-    const response = await fetch(request);
-    // Só guarda resposta completa (não parcial 206)
+    const response = await fetch(new Request(request.url));
     if (response && response.status === 200) {
       cache.put(new Request(request.url), response.clone());
     }
