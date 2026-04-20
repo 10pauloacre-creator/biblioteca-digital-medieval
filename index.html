@@ -601,9 +601,31 @@ body{background:#080300;color:var(--text);}
   z-index:-1;
 }
 .pilha-livros img{width:100%;height:auto;display:block;}
+
+/* ══════════════════════════════
+   SPLASH SCREEN
+══════════════════════════════ */
+#splash-screen{
+  position:fixed;inset:0;z-index:99997;
+  background:#080300;
+  pointer-events:none;
+  transition:opacity .7s ease;
+}
+#splash-screen.fade-out{opacity:0;}
+#splash-screen img{
+  width:100%;height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center center;
+}
 </style>
 </head>
 <body>
+
+<!-- Splash screen -->
+<div id="splash-screen">
+  <img src="assets/images/splash-screen.png" alt="">
+</div>
 
 <!-- Background video -->
 <video id="bg-video" autoplay muted loop playsinline>
@@ -1046,8 +1068,14 @@ async function updateAvailability(){
    INIT
 ══════════════════════════════ */
 window.addEventListener('DOMContentLoaded',()=>{
-  // Sempre começa na tela inicial (landing)
   startBgMusic();
+  const splash=document.getElementById('splash-screen');
+  if(splash){
+    setTimeout(()=>{
+      splash.classList.add('fade-out');
+      setTimeout(()=>splash.remove(),750);
+    },1400);
+  }
 });
 </script>
 
