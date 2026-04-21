@@ -287,13 +287,23 @@ function showMsg(id, text, type) {
 }
 
 async function redirectAfterLogin(user) {
-  const { data: profile } = await db.from('profiles').select('nome_completo,role').eq('id', user.id).single();
-  if (profile?.role === 'admin') {
-    window.location.href = 'admin.html';
-  } else if (!profile?.nome_completo) {
-    window.location.href = 'cadastro.html';
-  } else {
-    window.location.href = '../index.html';
+  try {
+    const { data: profile, error } = await db.from('profiles').select('nome_completo,role').eq('id', user.id).single();
+    if (error) throw error;
+    if (profile?.role === 'admin') {
+      window.location.href = 'admin.html';
+    } else if (!profile?.nome_completo) {
+      window.location.href = 'cadastro.html';
+    } else {
+      window.location.href = '../index.html';
+    }
+  } catch(e) {
+    // Tabela profiles não existe ainda ou erro de schema — redireciona para cadastro
+    if (user.email === window.ADMIN_EMAIL) {
+      window.location.href = 'admin.html';
+    } else {
+      window.location.href = 'cadastro.html';
+    }
   }
 }
 
