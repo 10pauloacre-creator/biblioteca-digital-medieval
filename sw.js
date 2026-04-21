@@ -7,7 +7,7 @@
 //   Periodic Background Sync → verifica novos livros 1x/dia
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v11';
+const SW_VERSION   = 'v12';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -32,6 +32,11 @@ const SHELL_ASSETS_OPTIONAL = [
   './assets/images/mensagem-pra-baixar.png',
   './assets/images/bota\u00e3o-baixar.png',
   './assets/images/splash-screen.png',
+  './assets/images/splash-screen-pc.png',
+  './assets/images/splash-screen-mobile.jpeg',
+  './assets/images/login.png',
+  './assets/images/perfil.png',
+  './assets/images/forasteiro.png',
   './assets/icons/icon-192x192.png',
   './assets/icons/icon-512x512.png',
   './assets/icons/apple-touch-icon.png',
@@ -60,6 +65,8 @@ const AUDIO_ASSETS = [
 const MEDIA_ASSETS = [
   './assets/gif/vide-de-fundo.mp4',
   './assets/gif/livro-abrindo.webm',
+  './assets/gif/intro-pc.mp4',
+  './assets/gif/intro-mobile.mp4',
 ];
 
 // ── Todos os livros HTML (pré-cache completo)

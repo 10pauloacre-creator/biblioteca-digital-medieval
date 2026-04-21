@@ -1471,7 +1471,10 @@ window.addEventListener('DOMContentLoaded',()=>{
   db.auth.onAuthStateChange((_e, session) => updateAuthBtn(session));
 
   /* ── Intro video ── */
+  let _introEnded = false;
   function _endIntro() {
+    if (_introEnded) return;
+    _introEnded = true;
     intro.style.transition = 'opacity .8s ease';
     intro.style.opacity = '0';
     setTimeout(() => {
@@ -1483,19 +1486,36 @@ window.addEventListener('DOMContentLoaded',()=>{
   window.skipIntro = _endIntro;
 
   function playIntro() {
+    _introEnded = false;
     splash.classList.add('hidden');
     intro.classList.remove('hidden');
     intro.style.opacity = '1';
     vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
-    vid.play().catch(() => {});
-    vid.addEventListener('ended', _endIntro, { once: true });
+    vid.load();
+    // Timeout de segurança: se o vídeo não começar em 4s, pula
+    const safetyTimer = setTimeout(_endIntro, 4000);
+    vid.addEventListener('canplay', () => {
+      clearTimeout(safetyTimer);
+      vid.play().catch(_endIntro);
+    }, { once: true });
+    vid.addEventListener('ended', () => { clearTimeout(safetyTimer); _endIntro(); }, { once: true });
+    // Se não disparar canplay em 4s, o safety timer já cuida
+  }
+
+  function hideSplash() {
+    splash.style.transition = 'opacity .6s'; splash.style.opacity = '0';
+    setTimeout(() => splash.classList.add('hidden'), 640);
   }
 
   /* ── Auto-seleciona série do aluno ── */
   window._goToSerie = async function(session) {
     try {
       const { data: p } = await db.from('profiles').select('serie,role').eq('id', session.user.id).single();
-      if (!p || p.role === 'admin') return; // admin vê landing normalmente
+      // Admin: mostra landing, marca bdm-nav para não tentar intro de novo
+      if (!p || p.role === 'admin') {
+        sessionStorage.setItem('bdm-nav', '1');
+        return;
+      }
       const map = {'1ª Série': 1, '2ª Série': 2, '3ª Série': 3};
       const n = map[p.serie];
       if (n) { window.bdmAllowedSerie = n; selectSerie(n); }
@@ -1507,8 +1527,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     // Visitante sem sessão
     if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
-      splash.style.transition = 'opacity .6s'; splash.style.opacity = '0';
-      setTimeout(() => splash.classList.add('hidden'), 640);
+      hideSplash();
       return;
     }
 
@@ -1519,16 +1538,15 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
 
     // Logado → esconde splash e atualiza botão
-    splash.style.transition = 'opacity .6s'; splash.style.opacity = '0';
-    setTimeout(() => splash.classList.add('hidden'), 640);
+    hideSplash();
     updateAuthBtn(session);
 
     if (doIntro || !sessionStorage.getItem('bdm-nav')) {
-      // Primeiro acesso ou login recente → intro → série
+      // Abertura do app ou login recente → intro → série
       window._bdmAfterIntro = () => window._goToSerie(session);
       playIntro();
     } else {
-      // Voltando de perfil/admin → vai direto pra série
+      // Voltando de perfil/admin dentro da mesma sessão → vai direto
       window._goToSerie(session);
     }
   });
