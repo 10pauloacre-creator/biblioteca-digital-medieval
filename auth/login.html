@@ -295,7 +295,7 @@ async function redirectAfterLogin(user) {
     } else if (!profile?.nome_completo) {
       window.location.href = 'cadastro.html';
     } else {
-      window.location.href = '../index.html';
+      window.location.href = '../index.html?intro=1';
     }
   } catch(e) {
     // Tabela profiles não existe ainda ou erro de schema — redireciona para cadastro

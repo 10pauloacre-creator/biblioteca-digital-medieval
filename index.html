@@ -688,36 +688,73 @@ body{background:#080300;color:var(--text);}
 
 /* ── Auth button (canto superior direito) ── */
 #auth-btn{
-  position:fixed;top:14px;right:16px;z-index:500;
-  display:flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.08));
-  border:1px solid rgba(201,168,76,.45);
-  border-radius:20px;padding:6px 12px 6px 8px;
-  cursor:pointer;transition:all .2s;text-decoration:none;
+  position:fixed;top:10px;right:12px;z-index:500;
+  cursor:pointer;transition:transform .2s,filter .2s;text-decoration:none;
+  display:block;
 }
-#auth-btn:hover{background:rgba(201,168,76,.28);box-shadow:0 0 14px rgba(201,168,76,.3);}
-#auth-avatar{
-  width:28px;height:28px;border-radius:50%;
-  border:1.5px solid rgba(201,168,76,.6);
-  background:linear-gradient(135deg,#2a1400,#1a0a00);
+#auth-btn:hover{transform:scale(1.06);filter:brightness(1.12) drop-shadow(0 0 10px rgba(201,168,76,.5));}
+#auth-btn img{height:48px;width:auto;display:block;}
+
+/* ── Splash screen ── */
+#screen-splash{
+  position:fixed;inset:0;z-index:9000;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel Decorative',serif;font-size:.65rem;color:var(--gold-l);
-  overflow:hidden;flex-shrink:0;
+  transition:opacity .8s ease;
 }
-#auth-avatar img{width:100%;height:100%;object-fit:cover;}
-#auth-label{
-  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;
-  color:var(--gold-l);white-space:nowrap;max-width:100px;
-  overflow:hidden;text-overflow:ellipsis;
+#screen-splash.hidden{opacity:0;pointer-events:none;}
+#splash-bg{
+  position:absolute;inset:0;
+  background-image:url('assets/images/splash-screen-pc.png');
+  background-size:cover;background-position:center;
 }
+@media(max-width:768px){
+  #splash-bg{background-image:url('assets/images/splash-screen-mobile.jpeg');}
+}
+#splash-btn{
+  position:relative;z-index:1;cursor:pointer;text-decoration:none;
+  transition:transform .25s,filter .25s;
+}
+#splash-btn:hover{transform:scale(1.06);filter:brightness(1.15) drop-shadow(0 0 24px rgba(201,168,76,.7));}
+#splash-btn img{width:min(320px,72vw);height:auto;display:block;}
+
+/* ── Intro video overlay ── */
+#screen-intro{
+  position:fixed;inset:0;z-index:8500;
+  background:#000;
+  transition:opacity .8s ease;
+}
+#screen-intro.hidden{opacity:0;pointer-events:none;}
+#intro-video{width:100%;height:100%;object-fit:cover;display:block;}
+#intro-skip{
+  position:absolute;bottom:28px;right:28px;
+  background:rgba(0,0,0,.55);color:var(--gold-l);
+  border:1px solid rgba(201,168,76,.45);
+  font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;
+  padding:9px 18px;border-radius:20px;cursor:pointer;
+  transition:background .2s;z-index:1;
+}
+#intro-skip:hover{background:rgba(201,168,76,.2);}
 </style>
 </head>
 <body>
 
+<!-- Splash screen -->
+<div id="screen-splash">
+  <div id="splash-bg"></div>
+  <a id="splash-btn" href="auth/login.html">
+    <img src="assets/images/login.png" alt="Entrar na Biblioteca">
+  </a>
+</div>
+
+<!-- Intro video overlay -->
+<div id="screen-intro" class="hidden">
+  <video id="intro-video" playsinline muted></video>
+  <button id="intro-skip" onclick="skipIntro()">Pular ▶</button>
+</div>
+
 <!-- Auth button -->
 <a id="auth-btn" href="auth/login.html">
-  <div id="auth-avatar"><span id="auth-initials">⚔</span></div>
-  <span id="auth-label">ENTRAR</span>
+  <img id="auth-img" src="assets/images/login.png" alt="Entrar">
 </a>
 
 <!-- Background video -->
@@ -1394,78 +1431,103 @@ window.addEventListener('DOMContentLoaded',()=>{
 })();
 </script>
 
-<!-- AUTH SESSION -->
+<!-- AUTH SESSION + SPLASH + INTRO -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="assets/js/supabase-config.js"></script>
 <script>
+/* ── Splash / Intro logic ── */
+(function(){
+  const isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
+  const params   = new URLSearchParams(window.location.search);
+  const doIntro  = params.get('intro') === '1';
+  const splash   = document.getElementById('screen-splash');
+  const intro    = document.getElementById('screen-intro');
+  const vid      = document.getElementById('intro-video');
+
+  if (doIntro) history.replaceState(null, '', window.location.pathname);
+
+  function hideIntro() {
+    intro.style.transition = 'opacity .8s ease';
+    intro.style.opacity = '0';
+    setTimeout(() => intro.classList.add('hidden'), 820);
+  }
+
+  window.skipIntro = hideIntro;
+
+  function playIntro() {
+    intro.classList.remove('hidden');
+    intro.style.opacity = '1';
+    vid.src = isMobile ? 'assets/intro-mobile.mp4' : 'assets/intro-pc.mp4';
+    vid.play().catch(() => {});
+    vid.addEventListener('ended', hideIntro, { once: true });
+  }
+
+  function hideSplash() {
+    splash.style.transition = 'opacity .6s ease';
+    splash.style.opacity = '0';
+    setTimeout(() => splash.classList.add('hidden'), 640);
+  }
+
+  // Se ?intro=1 → esconde splash, toca intro
+  if (doIntro) {
+    splash.classList.add('hidden');
+    playIntro();
+    return;
+  }
+
+  // Sem Supabase configurado → mantém splash visível
+  if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
+
+  const { createClient } = supabase;
+  const _db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+
+  _db.auth.getSession().then(({ data: { session } }) => {
+    if (session || sessionStorage.getItem('bdm-visitante') === '1') {
+      hideSplash(); // Já logado ou visitante → pula splash
+    }
+    // Não logado → splash permanece visível
+  });
+})();
+
+/* ── Auth button com imagens ── */
 (function(){
   if(!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
   const { createClient } = supabase;
   const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
 
-  async function updateAuthBtn(session) {
-    const btn    = document.getElementById('auth-btn');
-    const avatar = document.getElementById('auth-avatar');
-    const label  = document.getElementById('auth-label');
-    const ini    = document.getElementById('auth-initials');
-    if (!btn) return;
+  function setAuthImg(src, href) {
+    const btn = document.getElementById('auth-btn');
+    const img = document.getElementById('auth-img');
+    if (!btn || !img) return;
+    img.src = src;
+    btn.href = href;
+  }
 
+  async function updateAuthBtn(session) {
     if (!session) {
-      btn.href = 'auth/login.html';
-      label.textContent = 'ENTRAR';
-      ini.textContent = '⚔';
-      avatar.innerHTML = '<span id="auth-initials">⚔</span>';
+      setAuthImg('assets/images/login.png', 'auth/login.html');
       return;
     }
 
-    // Mostra estado logado imediatamente com fallback no e-mail
-    btn.href = 'auth/perfil.html';
-    const emailFallback = (session.user.email || '').split('@')[0].slice(0,8).toUpperCase();
-    ini.textContent = emailFallback[0] || '?';
-    label.textContent = emailFallback || 'PERFIL';
+    setAuthImg('assets/images/perfil.png', 'auth/perfil.html');
 
     try {
       const { data: profile } = await db.from('profiles')
-        .select('nome_completo,avatar_url,role').eq('id', session.user.id).single();
-
-      if (profile?.role === 'admin') btn.href = 'auth/admin.html';
-
-      if (profile?.avatar_url) {
-        avatar.innerHTML = `<img src="${profile.avatar_url}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-      } else if (profile?.nome_completo) {
-        const parts = profile.nome_completo.split(' ').filter(Boolean);
-        const initials = parts.length >= 2
-          ? parts[0][0] + parts[parts.length-1][0]
-          : parts[0]?.[0] || '?';
-        ini.textContent = initials.toUpperCase();
+        .select('role').eq('id', session.user.id).single();
+      if (profile?.role === 'admin') {
+        document.getElementById('auth-btn').href = 'auth/admin.html';
       }
-
-      const nome = profile?.nome_completo?.split(' ')[0] || emailFallback || 'Perfil';
-      label.textContent = profile?.role === 'admin' ? 'MAGO SUPREMO' : nome.toUpperCase();
-    } catch(e) {
-      // Perfil inacessível mas sessão válida — mantém fallback por email
-    }
+    } catch(e) {}
   }
 
   db.auth.getSession().then(({ data: { session } }) => {
     if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
-      // Modo visitante — mostra indicador especial
-      const btn   = document.getElementById('auth-btn');
-      const label = document.getElementById('auth-label');
-      const ini   = document.getElementById('auth-initials');
-      if (btn) {
-        btn.href = 'auth/login.html';
-        ini.textContent = '👁';
-        label.textContent = 'VISITANTE';
-        btn.style.borderColor = 'rgba(140,100,200,.5)';
-        btn.style.background  = 'linear-gradient(135deg,rgba(140,100,200,.15),rgba(100,60,160,.08))';
-        document.getElementById('auth-label').style.color = '#c8a8f0';
-        document.getElementById('auth-initials').style.color = '#c8a8f0';
-      }
+      setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
     } else {
       updateAuthBtn(session);
     }
   });
+
   db.auth.onAuthStateChange((_e, session) => updateAuthBtn(session));
 })();
 </script>
