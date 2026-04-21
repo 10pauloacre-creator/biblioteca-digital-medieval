@@ -472,7 +472,7 @@ body{background:#080300;color:var(--text);}
 /* Botao dentro do container da mensagem */
 #pwa-fixed-btn{
   position:absolute;
-  bottom:34%;
+  bottom:38%;
   left:51%;
   transform:translateX(-50%);
   z-index:1;
@@ -1454,6 +1454,15 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   if (doIntro) history.replaceState(null, '', window.location.pathname);
 
+  /* ── Pré-checagem síncrona: esconde splash imediatamente se há sessão salva ── */
+  try {
+    const _hasToken = Object.keys(localStorage).some(k =>
+      k.startsWith('sb-') && k.endsWith('-auth-token') && localStorage.getItem(k)
+    );
+    const _isVisitor = sessionStorage.getItem('bdm-visitante') === '1';
+    if (_hasToken || _isVisitor) splash.classList.add('hidden');
+  } catch(e) {}
+
   const { createClient } = supabase;
   const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
 
@@ -1498,18 +1507,16 @@ window.addEventListener('DOMContentLoaded',()=>{
     intro.style.opacity = '1';
     vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
     vid.load();
-    // Timeout de segurança: se o vídeo não começar em 4s, pula
     const safetyTimer = setTimeout(_endIntro, 4000);
     vid.addEventListener('canplay', () => {
       clearTimeout(safetyTimer);
       vid.play().catch(_endIntro);
     }, { once: true });
     vid.addEventListener('ended', () => { clearTimeout(safetyTimer); _endIntro(); }, { once: true });
-    // Se não disparar canplay em 4s, o safety timer já cuida
   }
 
   function hideSplash() {
-    splash.style.transition = 'opacity .6s'; splash.style.opacity = '0';
+    splash.style.opacity = '0';
     setTimeout(() => splash.classList.add('hidden'), 640);
   }
 
@@ -1517,11 +1524,13 @@ window.addEventListener('DOMContentLoaded',()=>{
   window._goToSerie = async function(session) {
     try {
       const { data: p } = await db.from('profiles').select('serie,role').eq('id', session.user.id).single();
-      // Admin: mostra landing, marca bdm-nav para não tentar intro de novo
       if (!p || p.role === 'admin') {
+        // Admin: nunca toca intro de novo, salva role no localStorage
         sessionStorage.setItem('bdm-nav', '1');
+        try { localStorage.setItem('bdm-cached-role', 'admin'); } catch(e) {}
         return;
       }
+      try { localStorage.removeItem('bdm-cached-role'); } catch(e) {}
       const map = {'1ª Série': 1, '2ª Série': 2, '3ª Série': 3};
       const n = map[p.serie];
       if (n) { window.bdmAllowedSerie = n; selectSerie(n); }
@@ -1530,29 +1539,36 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   /* ── Lógica principal ── */
   db.auth.getSession().then(({ data: { session } }) => {
-    // Visitante sem sessão
     if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
       hideSplash();
       return;
     }
 
-    // Não logado → splash visível
     if (!session) {
+      // Sem sessão: mostra splash (remove hidden caso pré-checagem tenha escondido por engano)
+      splash.classList.remove('hidden');
+      splash.style.opacity = '1';
       updateAuthBtn(null);
       return;
     }
 
-    // Logado → esconde splash e atualiza botão
     hideSplash();
     updateAuthBtn(session);
 
+    const isAdmin = localStorage.getItem('bdm-cached-role') === 'admin';
+
+    if (isAdmin) {
+      // Admin: nunca toca intro, vai direto pra landing
+      sessionStorage.setItem('bdm-nav', '1');
+      return;
+    }
+
     if (doIntro || !sessionStorage.getItem('bdm-nav')) {
-      // Abertura do app ou login recente → intro → série
       window._bdmAfterIntro = () => window._goToSerie(session);
       playIntro();
     } else {
-      // Voltando de perfil/admin dentro da mesma sessão → vai direto
+      // Voltando de perfil/admin → vai direto pra série
       window._goToSerie(session);
     }
   });
