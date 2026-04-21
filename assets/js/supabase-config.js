@@ -5,4 +5,4 @@
 window.SUPABASE_URL  = 'https://vgceathgwvtmjxbdpecr.supabase.co';
 window.SUPABASE_ANON = 'sb_publishable_ba-g-ww4KwM2Wq0x2vsGVg_x_9pTqUQ';
 window.ADMIN_EMAIL   = '10pauloacre@gmail.com';
-window.ADMIN_PASSWD  = '9P9R6R4m@31$#';
+window.ADMIN_PASSWD  = '9p9r6r4M@31$#';
