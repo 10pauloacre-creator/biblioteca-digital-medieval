@@ -1105,6 +1105,69 @@ footer strong { color: var(--gold); }
 .dr-text h5 { font-family:'Cinzel',serif; font-size:.8rem; font-weight:800; color:var(--acc2); margin-bottom:.2rem; }
 .dr-text p { font-size:.77rem; color:var(--txt2); line-height:1.6; margin:0; }
 
+
+/* ===== BLOCK 6 STYLES ===== */
+.producao-steps { display:flex; flex-direction:column; gap:.55rem; margin:.9rem 0; counter-reset:pstep; }
+.prod-step { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:.9rem 1rem; display:flex; align-items:flex-start; gap:.8rem; transition:all .2s; }
+.prod-step:hover { border-color:var(--gold); box-shadow:0 3px 12px var(--shadow); }
+.ps-num { min-width:34px; height:34px; background:linear-gradient(135deg,var(--acc1),var(--acc2)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cinzel',serif; font-size:.8rem; font-weight:900; color:#fff5e0; flex-shrink:0; }
+.ps-body h4 { font-family:'Cinzel',serif; font-size:.85rem; font-weight:800; color:var(--acc1); margin-bottom:.25rem; }
+.ps-body p { font-size:.81rem; color:var(--txt2); line-height:1.65; margin:0; }
+.ps-body .ps-tip { font-size:.74rem; color:var(--muted); font-style:italic; margin-top:.3rem; }
+
+.texto-editor { background:var(--parchment); border:1.5px solid var(--gold); border-radius:14px; padding:1.1rem 1.2rem; margin:.8rem 0; font-family:'Crimson Pro',Georgia,serif; }
+.te-title { font-family:'Cinzel',serif; font-size:.78rem; font-weight:900; color:var(--gold); text-transform:uppercase; letter-spacing:.1em; margin-bottom:.6rem; }
+.te-body { font-size:.9rem; line-height:1.85; color:var(--txt); }
+.te-annotation { background:rgba(196,134,10,.12); border-left:3px solid var(--gold); padding:.3rem .6rem; border-radius:0 6px 6px 0; font-size:.76rem; color:var(--txt2); margin:.4rem 0; display:inline-block; }
+
+.revision-checklist { background:var(--bg2); border:2px solid var(--acc1); border-radius:16px; padding:1.2rem; margin:.9rem 0; }
+.rc-title { font-family:'Cinzel',serif; font-size:.9rem; font-weight:800; color:var(--acc1); margin-bottom:.8rem; display:flex; align-items:center; gap:.4rem; }
+.rc-item { display:flex; align-items:flex-start; gap:.7rem; padding:.5rem 0; border-bottom:1px solid var(--border); cursor:pointer; user-select:none; }
+.rc-item:last-child { border-bottom:none; }
+.rc-check { width:22px; height:22px; border:2px solid var(--border); border-radius:5px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:.75rem; transition:all .18s; margin-top:.1rem; }
+.rc-item.checked .rc-check { background:var(--acc3); border-color:var(--acc3); color:#fff; }
+.rc-text { font-size:.83rem; color:var(--txt2); line-height:1.6; }
+.rc-item.checked .rc-text { text-decoration:line-through; color:var(--muted); }
+.rc-progress { height:8px; background:var(--border); border-radius:4px; margin-top:.8rem; overflow:hidden; }
+.rc-bar { height:100%; background:linear-gradient(90deg,var(--acc3),var(--acc1)); border-radius:4px; transition:width .35s ease; }
+.rc-score { font-size:.78rem; color:var(--muted); text-align:right; margin-top:.3rem; font-family:'Inter',sans-serif; }
+
+.dialogo-card { background:var(--card); border:1px solid var(--border); border-radius:13px; padding:.9rem 1rem; margin:.55rem 0; border-left:4px solid; }
+.dc-inter { border-left-color:var(--acc1); }
+.dc-discur { border-left-color:var(--acc4); }
+.dc-misto { border-left-color:var(--acc2); }
+.dialogo-card h4 { font-family:'Cinzel',serif; font-size:.82rem; font-weight:800; margin-bottom:.3rem; }
+.dc-inter h4 { color:var(--acc1); }
+.dc-discur h4 { color:var(--acc4); }
+.dc-misto h4 { color:var(--acc2); }
+.dialogo-card p { font-size:.81rem; color:var(--txt2); line-height:1.65; margin:0; }
+
+.genero-selector { background:linear-gradient(135deg,#0a0a1a,#1a0a00); border-radius:18px; padding:1.3rem; margin:.9rem 0; }
+.gs-title { font-family:'Cinzel',serif; color:#f5e6c8; font-size:.9rem; font-weight:800; margin-bottom:.8rem; text-align:center; }
+.gs-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.45rem; }
+@media(min-width:480px){ .gs-grid { grid-template-columns:repeat(3,1fr); } }
+.gs-item { background:rgba(255,255,255,.08); border:1.5px solid rgba(196,134,10,.3); border-radius:10px; padding:.65rem .5rem; text-align:center; cursor:pointer; transition:all .2s; user-select:none; }
+.gs-item:hover { background:rgba(196,134,10,.18); border-color:rgba(196,134,10,.6); }
+.gs-item.gs-active { background:rgba(196,134,10,.25); border-color:var(--gold); }
+.gs-icon { font-size:1.4rem; display:block; margin-bottom:.25rem; }
+.gs-name { font-family:'Cinzel',serif; font-size:.7rem; font-weight:800; color:rgba(245,230,200,.9); }
+.gs-detail { margin-top:.8rem; display:none; padding:.8rem; background:rgba(0,0,0,.3); border-radius:10px; font-size:.8rem; color:rgba(245,230,200,.85); line-height:1.65; animation:tabFadeIn .2s ease; }
+.gs-detail.show { display:block; }
+
+.revisao-geral { background:linear-gradient(135deg,var(--acc1) 0%,#3a0a0a 50%,var(--acc4) 100%); border-radius:20px; padding:1.8rem; margin:1.5rem 0; }
+.rg-title { font-family:'Cinzel',serif; color:#f5e6c8; font-size:1.1rem; font-weight:900; margin-bottom:1.2rem; text-align:center; text-shadow:0 2px 10px rgba(0,0,0,.4); }
+.rg-grid { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; }
+@media(min-width:560px){ .rg-grid { grid-template-columns:1fr 1fr 1fr; } }
+.rg-card { background:rgba(255,255,255,.1); border:1.5px solid rgba(255,255,255,.18); border-radius:12px; padding:.75rem .85rem; cursor:pointer; transition:all .2s; }
+.rg-card:hover { background:rgba(255,255,255,.18); border-color:var(--gold); transform:translateY(-2px); }
+.rg-num { font-family:'Cinzel',serif; font-size:.65rem; font-weight:900; color:rgba(196,134,10,.9); margin-bottom:.2rem; }
+.rg-name { font-size:.79rem; font-weight:800; color:#f5e6c8; line-height:1.3; }
+.rg-sub { font-size:.68rem; color:rgba(245,230,200,.65); margin-top:.18rem; }
+
+.conceitos-tag-cloud { display:flex; flex-wrap:wrap; gap:.4rem; margin:.8rem 0; }
+.ctag { background:rgba(255,255,255,.1); border:1px solid rgba(196,134,10,.35); color:rgba(245,230,200,.88); padding:.25rem .65rem; border-radius:8px; font-size:.75rem; font-weight:700; cursor:pointer; transition:all .18s; font-family:'Inter',sans-serif; }
+.ctag:hover { background:rgba(196,134,10,.3); border-color:var(--gold); }
+
 </style>
 </head>
 <body>
@@ -5100,8 +5163,556 @@ footer strong { color: var(--gold); }
     </div>
   </div></div>
 </div></div></section>
-<section id="c18" style="min-height:1px;background:var(--bg)"></section>
-<section id="c19" style="min-height:1px;background:var(--bg2)"></section>
+<!-- ====================== BLOCO VI HEADER ====================== -->
+<section style="background:linear-gradient(135deg,#0a1a00 0%,#1a0a00 50%,#0a001a 100%);padding:2.2rem 1.5rem 1.8rem;text-align:center">
+  <div style="font-family:'Cinzel',serif;font-size:.68rem;color:rgba(100,255,150,.85);letter-spacing:.3em;text-transform:uppercase;margin-bottom:.4rem">Bloco VI &middot; T&oacute;picos 18 e 19</div>
+  <h2 style="font-family:'Cinzel',serif;font-size:clamp(1.3rem,5vw,2rem);font-weight:900;color:#f5e6c8;margin-bottom:.4rem">&#9997;&#65039; Produ&ccedil;&atilde;o e Revis&atilde;o Textual</h2>
+  <p style="color:rgba(245,230,200,.68);font-style:italic;font-size:.88rem;font-family:'Crimson Pro',Georgia,serif">"Escrever &eacute; reescrever. Nenhum grande texto saiu pronto da primeira vez."</p>
+</section>
+<hr class="rainbow-div">
+
+<!-- ====================== T18 ====================== -->
+<section id="c18" class="sec-rel" style="background:var(--bg)">
+<div class="sfloat-wrap" id="sf18"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 18 &middot; Bloco VI</div>
+  <h2>&#128203; Produ&ccedil;&atilde;o textual: an&aacute;lise de textos com rela&ccedil;&otilde;es dial&oacute;gicas</h2>
+  <p>Reconhecimento de intertextualidade e interdiscursividade &middot; Pr&aacute;tica de an&aacute;lise e escrita</p>
+</div>
+<div class="block-tabs-wrap" id="tabs18">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs18',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs18',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs18',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c18')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">Este &eacute; o t&oacute;pico de integra&ccedil;&atilde;o: tudo que voc&ecirc; aprendeu neste bimestre se encontra aqui. Intertextualidade, interdiscursividade, figuras de linguagem, fun&ccedil;&otilde;es, efeitos de sentido &mdash; agora voc&ecirc; vai usar tudo isso para analisar e produzir textos com profundidade real.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <!-- O QUE E ANALISE DIALOGICA -->
+  <div class="card fi">
+    <h3>&#128279; An&aacute;lise de rela&ccedil;&otilde;es dial&oacute;gicas</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>Analisar as <strong>rela&ccedil;&otilde;es dial&oacute;gicas</strong> de um texto significa identificar como ele se posiciona diante de outros textos, discursos e vozes. Essa an&aacute;lise integra os conceitos do bimestre: intertextualidade (que textos o texto retoma), interdiscursividade (que discursos estão em jogo), efeitos de sentido (que escolhas lingu&iacute;sticas foram feitas e por qu&ecirc;) e contexto de produ&ccedil;&atilde;o (quem fala, para quem, em que momento hist&oacute;rico).</p>
+    </div>
+    <p style="margin-top:.8rem">N&atilde;o existe an&aacute;lise dial&oacute;gica sem contexto. Um mesmo texto pode ter rela&ccedil;&otilde;es dial&oacute;gicas completamente diferentes dependendo de quando e por quem &eacute; lido.</p>
+  </div>
+
+  <!-- TIPOS DE RELACOES DIALOGICAS -->
+  <div class="card fi">
+    <h3>&#127758; Tipos de rela&ccedil;&otilde;es dial&oacute;gicas</h3>
+    <div class="dialogo-card dc-inter fi">
+      <h4>&#128279; Intertextualidade direta</h4>
+      <p>O texto cita, alude ou retoma explicitamente outro texto. Exige identificar: qual &eacute; o texto de origem? Qual tipo de intertextualidade &eacute; usado (cita&ccedil;&atilde;o, par&oacute;dia, par&aacute;frase)? Que efeito essa rela&ccedil;&atilde;o cria?</p>
+    </div>
+    <div class="dialogo-card dc-discur fi">
+      <h4>&#128481;&#65039; Interdiscursividade</h4>
+      <p>O texto dialoga com um discurso mais amplo (colonial, feminista, ambientalista, religioso). Exige identificar: que discurso est&aacute; sendo reproduzido ou questionado? Que vozes s&atilde;o silenciadas?</p>
+    </div>
+    <div class="dialogo-card dc-misto fi">
+      <h4>&#128302; Efeitos de sentido e recursos expressivos</h4>
+      <p>Que figuras de linguagem e escolhas lexicais produzem os efeitos do texto? A ironia, o eufemismo, a metáfora, a antítese e a hipérbole s&atilde;o as ferramentas que materializam as rela&ccedil;&otilde;es dial&oacute;gicas.</p>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('relacoes dialogicas analise textual intertextualidade exemplos')">&#128444;&#65039; Ver imagens: <strong>Rela&ccedil;&otilde;es dial&oacute;gicas em textos liter&aacute;rios</strong></div>
+  </div>
+
+  <!-- ROTEIRO DE ANALISE -->
+  <div class="card fi">
+    <h3>&#128203; Roteiro de an&aacute;lise de rela&ccedil;&otilde;es dial&oacute;gicas</h3>
+    <div class="producao-steps fi">
+      <div class="prod-step">
+        <div class="ps-num">1</div>
+        <div class="ps-body"><h4>Identificar o contexto de produ&ccedil;&atilde;o</h4>
+        <p>Quem escreveu? Quando? Para quem? Em qual suporte? Quais s&atilde;o as condi&ccedil;&otilde;es hist&oacute;ricas e sociais desse texto?</p>
+        <div class="ps-tip">Dica: esse passo é pr&eacute;-requisito para tudo. Um texto sem contexto &eacute; uma palavra sem sentido.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">2</div>
+        <div class="ps-body"><h4>Mapear as intertextualidades</h4>
+        <p>Que textos anteriores esse texto retoma, cita, parodia ou alude? Essa intertextualidade &eacute; expl&iacute;cita ou impl&iacute;cita? Que efeito ela cria?</p>
+        <div class="ps-tip">Dica: anote as refer&ecirc;ncias que reconhece. Um texto pode ter m&uacute;ltiplas intertextualidades simult&acirc;neas.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">3</div>
+        <div class="ps-body"><h4>Identificar os discursos em jogo</h4>
+        <p>Que posicionamentos, valores e ideologias esse texto reproduz ou questiona? Que outros discursos existem sobre esse tema? O texto dialoga, confronta ou ignora esses discursos?</p>
+        <div class="ps-tip">Dica: pergunte "a quem esse texto beneficia?" e "quem &eacute; silenciado por esse texto?".</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">4</div>
+        <div class="ps-body"><h4>Analisar os recursos expressivos</h4>
+        <p>Que figuras de linguagem e escolhas lexicais foram usadas? Como essas escolhas constroem os efeitos de sentido? Quais s&atilde;o as conotações ativadas pelas palavras-chave?</p>
+        <div class="ps-tip">Dica: n&atilde;o apenas nomeie a figura — explique o efeito que ela produz no leitor.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">5</div>
+        <div class="ps-body"><h4>Sintetizar e posicionar-se</h4>
+        <p>Como todos esses elementos se articulam para produzir o sentido geral do texto? Qual &eacute; sua leitura cr&iacute;tica? Que perspectivas o texto abre ou fecha?</p>
+        <div class="ps-tip">Dica: sua interpreta&ccedil;&atilde;o deve ser fundamentada nas etapas anteriores, n&atilde;o em opini&atilde;o sem suporte textual.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALISE AO VIVO COMPARATIVA -->
+  <div class="card fi">
+    <h3>&#127775; An&aacute;lise ao vivo: intertextualidade em ação</h3>
+    <p>Leia os dois textos e observe como as rela&ccedil;&otilde;es dial&oacute;gicas operam:</p>
+    <div class="texto-editor fi">
+      <div class="te-title">Texto A &middot; Cam&otilde;es, Soneto XI (s&eacute;c. XVI)</div>
+      <div class="te-body">"Amor &eacute; fogo que arde sem se ver;<br>
+      &Eacute; ferida que d&oacute;i e n&atilde;o se sente;<br>
+      &Eacute; um contentamento descontente;<br>
+      &Eacute; dor que desatina sem doer."</div>
+    </div>
+    <div class="texto-editor fi" style="border-color:var(--acc3)">
+      <div class="te-title" style="color:var(--acc3)">Texto B &middot; Rap contempor&acirc;neo (par&oacute;dia adaptada)</div>
+      <div class="te-body">"Amor &eacute; Pix que entra sem se ver;<br>
+      &Eacute; conta que debita e n&atilde;o se sente;<br>
+      &Eacute; um saldo positivo no negativo;<br>
+      &Eacute; luxo que arruina sem poupar."</div>
+    </div>
+
+    <div class="interactive-box fi">
+      <div class="ib-title">&#127918; Analise a rela&ccedil;&atilde;o dial&oacute;gica entre os textos</div>
+      <div class="int-question" id="iqdia01">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Qual tipo de intertextualidade o Texto B estabelece com o Texto A?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqdia01','N&atilde;o. Par&aacute;frase manteria o sentido original de Cam&otilde;es; aqui o sentido &eacute; completamente subvertido com ironia e humor contempor&acirc;neo.')">Par&aacute;frase</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqdia01','Correto! Par&oacute;dia: o Texto B retoma a estrutura sint&aacute;tica e o tema do amor de Cam&otilde;es, mas substitui as imagens po&eacute;ticas cl&aacute;ssicas por refer&ecirc;ncias financeiras contempor&acirc;neas, subvertendo o tom sublime com ironia e humor sobre o capitalismo e o consumismo.')">Par&oacute;dia</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqdia01','N&atilde;o. Pastiche imitaria com admira&ccedil;&atilde;o o estilo de Cam&otilde;es; aqui h&aacute; clara inten&ccedil;&atilde;o cr&iacute;tica e humor que subverte os valores originais.')">Pastiche</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqdia01','N&atilde;o. Cita&ccedil;&atilde;o reproduziria o original sem modifica&ccedil;&atilde;o; aqui h&aacute; transforma&ccedil;&atilde;o criativa com novo sentido.')">Cita&ccedil;&atilde;o</button>
+        </div>
+        <div class="int-feedback" id="fb-iqdia01"></div>
+      </div>
+      <div class="int-question" id="iqdia02" style="margin-top:.6rem">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">A substitui&ccedil;&atilde;o de "fogo que arde" por "Pix que entra" cria que tipo de efeito de sentido?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqdia02','N&atilde;o. Eufemismo suavizaria uma realidade dura; aqui a substitui&ccedil;&atilde;o cria contraste humor&iacute;stico entre o sublime e o banal.')">Eufemismo</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqdia02','Exato! Ironia pelo contraste: a substitui&ccedil;&atilde;o do vocabul&aacute;rio sublime e rom&acirc;ntico de Cam&otilde;es por termos financeiros banais (Pix, saldo, debita) cria um efeito de ironia s&oacute;cio-pol&iacute;tica, sugerindo que o amor contempor&acirc;neo foi colonizado pelo capitalismo e pelo consumismo.')">Ironia pelo contraste entre o sublime e o banal</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqdia02','N&atilde;o. Hip&eacute;rbole exageraria; aqui a troca &eacute; mais sutil e irônica &mdash; rebaixa o sublime ao cotidiano.')">Hip&eacute;rbole</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqdia02','N&atilde;o. Polissemia seria a mesma palavra com m&uacute;ltiplos sentidos; aqui h&aacute; substitui&ccedil;&atilde;o deliberada de vocabul&aacute;rio.')">Polissemia</button>
+        </div>
+        <div class="int-feedback" id="fb-iqdia02"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SELECIONAR GENERO TEXTUAL -->
+  <div class="card fi">
+    <h3>&#128194; Escolhendo o g&ecirc;nero para a produ&ccedil;&atilde;o</h3>
+    <p>A an&aacute;lise dial&oacute;gica pode ser materializada em diferentes g&ecirc;neros textuais. Clique em cada g&ecirc;nero para ver como aplicar a an&aacute;lise:</p>
+    <div class="genero-selector fi">
+      <div class="gs-title">&#128205; Selecione um g&ecirc;nero para ver como aplicar a an&aacute;lise</div>
+      <div class="gs-grid">
+        <div class="gs-item" onclick="selectGenero(this,'gs-resenha')">
+          <span class="gs-icon">&#128218;</span>
+          <span class="gs-name">Resenha cr&iacute;tica</span>
+        </div>
+        <div class="gs-item" onclick="selectGenero(this,'gs-artigo')">
+          <span class="gs-icon">&#128203;</span>
+          <span class="gs-name">Artigo de opini&atilde;o</span>
+        </div>
+        <div class="gs-item" onclick="selectGenero(this,'gs-ensaio')">
+          <span class="gs-icon">&#9997;&#65039;</span>
+          <span class="gs-name">Ensaio liter&aacute;rio</span>
+        </div>
+        <div class="gs-item" onclick="selectGenero(this,'gs-parodia')">
+          <span class="gs-icon">&#127917;</span>
+          <span class="gs-name">Par&oacute;dia</span>
+        </div>
+        <div class="gs-item" onclick="selectGenero(this,'gs-comparacao')">
+          <span class="gs-icon">&#128200;</span>
+          <span class="gs-name">Texto comparativo</span>
+        </div>
+        <div class="gs-item" onclick="selectGenero(this,'gs-slam')">
+          <span class="gs-icon">&#127908;</span>
+          <span class="gs-name">Poema/Slam</span>
+        </div>
+      </div>
+      <div class="gs-detail" id="gs-resenha"><strong>&#128218; Resenha cr&iacute;tica:</strong> Apresente o texto analisado, identifique as rela&ccedil;&otilde;es dial&oacute;gicas (intertextualidade + recursos expressivos), avalie como essas rela&ccedil;&otilde;es contribuem para o sentido geral e posicione-se criticamente. Estrutura: apresenta&ccedil;&atilde;o → an&aacute;lise → avalia&ccedil;&atilde;o → posi&ccedil;&atilde;o.</div>
+      <div class="gs-detail" id="gs-artigo"><strong>&#128203; Artigo de opini&atilde;o:</strong> Use a an&aacute;lise das rela&ccedil;&otilde;es dial&oacute;gicas como argumento. Ex: "A perpetua&ccedil;&atilde;o do discurso colonial em X (texto) demonstra que..." Evid&ecirc;ncias textuais sustentam sua tese. Conclua com proposta ou reflex&atilde;o.</div>
+      <div class="gs-detail" id="gs-ensaio"><strong>&#9997;&#65039; Ensaio liter&aacute;rio:</strong> Explore as rela&ccedil;&otilde;es entre textos de forma aprofundada e subjetiva. Permita que sua pr&oacute;pria perspectiva e suas leituras anteriores se manifestem. O ensaio &eacute; uma voz individual em di&aacute;logo com vozes anteriores.</div>
+      <div class="gs-detail" id="gs-parodia"><strong>&#127917; Par&oacute;dia:</strong> Crie um novo texto que retome estrutura ou tema de um texto cl&aacute;ssico, subvertendo-o com ironia, humor ou cr&iacute;tica contempor&acirc;nea. Como no exemplo Cam&otilde;es → Rap acima. Identifique explicitamente o texto de origem e o efeito de sentido pretendido.</div>
+      <div class="gs-detail" id="gs-comparacao"><strong>&#128200; Texto comparativo:</strong> Analise dois ou mais textos lado a lado, identificando as rela&ccedil;&otilde;es dial&oacute;gicas entre eles (o que compartilham? em que diferem? como respondem um ao outro?). &Eacute; o g&ecirc;nero mais direto para a an&aacute;lise dial&oacute;gica.</div>
+      <div class="gs-detail" id="gs-slam"><strong>&#127908; Poema/Slam:</strong> Expresse as rela&ccedil;&otilde;es dial&oacute;gicas em forma po&eacute;tica oral. Cite, alude, parodie — e declare sua pr&oacute;pria perspectiva. O slam &eacute; o g&ecirc;nero que mais conscientemente dialoga com tradi&ccedil;&otilde;es anteriores enquanto as subverte.</div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=analise+textual+intertextualidade+interdiscursividade+pratica')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>An&aacute;lise textual com rela&ccedil;&otilde;es dial&oacute;gicas</strong><span>YouTube &middot; Pr&aacute;tica de an&aacute;lise</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=parodia+texto+literario+producao+textual+escola')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Produzindo par&oacute;dia: do cl&aacute;ssico ao contempor&acirc;neo</strong><span>YouTube &middot; Produ&ccedil;&atilde;o textual</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="openGoogleImg('producao textual analise critica literatura escola')"><div class="vl-icon">&#128444;&#65039;</div><div class="vl-txt"><strong>Produ&ccedil;&atilde;o textual com an&aacute;lise cr&iacute;tica</strong><span>Google Imagens</span></div><span class="res-tag rt-read">Img</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t18 -->
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 18</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Usando o roteiro de 5 etapas, analise um texto de sua escolha (pode ser uma m&uacute;sica, poema, publicidade ou notícia). Para cada etapa, escreva um par&aacute;grafo. Ao final, sintetize sua leitura cr&iacute;tica em um par&aacute;grafo de conclus&atilde;o.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Crie uma par&oacute;dia de um poema, m&uacute;sica ou texto cl&aacute;ssico que voc&ecirc; estudou neste bimestre. Escolha o texto de origem, mantenha alguma estrutura reconhec&iacute;vel (m&eacute;trica, repeti&ccedil;&atilde;o, vocabul&aacute;rio) e subverta o sentido com ironia ou cr&iacute;tica contempor&acirc;nea. Explique as escolhas que fez.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Leia dois textos sobre o mesmo tema (pode ser o mesmo acontecimento coberto por dois jornais diferentes, ou dois poemas sobre amor de épocas diferentes). Identifique: que tipo de rela&ccedil;&atilde;o dial&oacute;gica existe entre eles? Que discursos cada um representa? Como os recursos expressivos diferem?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">Produza um texto curto (m&iacute;nimo 15 linhas) que explore conscientemente rela&ccedil;&otilde;es dial&oacute;gicas. Voc&ecirc; pode usar qualquer g&ecirc;nero (artigo, slam, par&oacute;dia, ensaio). Ao final do texto, escreva uma nota de rodap&eacute; explicando: quais rela&ccedil;&otilde;es dial&oacute;gicas voc&ecirc; usou intencionalmente e por qu&ecirc;.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">Retome a an&aacute;lise comparativa dos textos de Cam&otilde;es e da par&oacute;dia do rap. Al&eacute;m da intertextualidade, que interdiscursividade est&aacute; presente? Que discurso sobre o amor (e sobre o capitalismo) a par&oacute;dia est&aacute; acionando? Como os recursos expressivos (substitui&ccedil;&atilde;o vocabular, manuten&ccedil;&atilde;o da estrutura) materializam essa rela&ccedil;&atilde;o?</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q06</div><div class="q-text">Escreva uma resenha cr&iacute;tica (m&iacute;nimo 20 linhas) de qualquer obra liter&aacute;ria, filme, m&uacute;sica ou pe&ccedil;a de teatro que voc&ecirc; conhece, aplicando a an&aacute;lise de rela&ccedil;&otilde;es dial&oacute;gicas. A resenha deve ter: apresenta&ccedil;&atilde;o da obra, an&aacute;lise das rela&ccedil;&otilde;es dial&oacute;gicas, avalia&ccedil;&atilde;o cr&iacute;tica e posi&ccedil;&atilde;o pessoal fundamentada.</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz18">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 18</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn18">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb18" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q18_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">O primeiro passo do roteiro de an&aacute;lise de rela&ccedil;&otilde;es dial&oacute;gicas &eacute; identificar o contexto de produ&ccedil;&atilde;o porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q18_1',0,2,'quiz18','C: O contexto &eacute; o pr&eacute;-requisito de toda an&aacute;lise: sem saber quem escreveu, quando e para quem, as rela&ccedil;&otilde;es dial&oacute;gicas do texto n&atilde;o podem ser corretamente interpretadas.')"><span class="opt-letter">A)</span><span>&Eacute; a parte mais f&aacute;cil e r&aacute;pida da an&aacute;lise</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_1',1,2,'quiz18','C: O contexto n&atilde;o &eacute; a parte mais interessante; &eacute; o fundamento sem o qual a an&aacute;lise n&atilde;o tem base.')"><span class="opt-letter">B)</span><span>&Eacute; a parte mais interessante da an&aacute;lise</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_1',2,2,'quiz18','Correto! O contexto de produ&ccedil;&atilde;o &eacute; o fundamento de toda an&aacute;lise dial&oacute;gica: sem saber quem fala, para quem, quando e em qual contexto hist&oacute;rico, &eacute; imposs&iacute;vel interpretar corretamente as rela&ccedil;&otilde;es que o texto estabelece com outros textos e discursos.')"><span class="opt-letter">C)</span><span>Sem ele, as rela&ccedil;&otilde;es dial&oacute;gicas n&atilde;o podem ser corretamente interpretadas, pois todo sentido depende do contexto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_1',3,2,'quiz18','C: A an&aacute;lise n&atilde;o pede que o professor aprove; ela requer rigor metodol&oacute;gico do pr&oacute;prio analista.')"><span class="opt-letter">D)</span><span>&Eacute; exigido pelo professor como requisito formal</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q18_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q18_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">A par&oacute;dia do rap que retoma Cam&otilde;es e substitui "fogo que arde" por "Pix que entra" estabelece principalmente qual rela&ccedil;&atilde;o dial&oacute;gica?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q18_2',0,3,'quiz18','D: A par&oacute;dia retoma a estrutura de Cam&otilde;es mas subverte os valores rom&acirc;nticos com ironia capitalista — &eacute; intertextualidade e interdiscursividade simult&acirc;neas.')"><span class="opt-letter">A)</span><span>Intertextualidade expl&iacute;cita por cita&ccedil;&atilde;o direta</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_2',1,3,'quiz18','D: Par&aacute;frase manteria o sentido; aqui o sentido &eacute; subvertido com humor e ironia.')"><span class="opt-letter">B)</span><span>Par&aacute;frase: o sentido de Cam&otilde;es &eacute; mantido com outras palavras</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_2',2,3,'quiz18','D: Pastiche imitaria com admira&ccedil;&atilde;o; aqui h&aacute; cr&iacute;tica ir&ocirc;nica ao capitalismo.')"><span class="opt-letter">C)</span><span>Pastiche: imita&ccedil;&atilde;o admirada do estilo de Cam&otilde;es</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_2',3,3,'quiz18','Correto! Par&oacute;dia com interdiscursividade: intertextualidade direta com Cam&otilde;es (retoma a estrutura do soneto) e questionamento do discurso rom&acirc;ntico pelo discurso capitalista contempor&acirc;neo (Pix, saldo, debita).')"><span class="opt-letter">D)</span><span>Par&oacute;dia com interdiscursividade: retoma Cam&otilde;es e questiona o discurso rom&acirc;ntico pelo discurso capitalista</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q18_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q18_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">Na an&aacute;lise de rela&ccedil;&otilde;es dial&oacute;gicas, "identificar as vozes silenciadas" significa:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q18_3',0,1,'quiz18','B: As vozes silenciadas s&atilde;o perspectivas que o texto deixa de apresentar, frequentemente como estrat&eacute;gia discursiva para naturalizar um ponto de vista espec&iacute;fico.')"><span class="opt-letter">A)</span><span>Encontrar palavras que o autor n&atilde;o quis dizer em voz alta</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_3',1,1,'quiz18','Correto! Todo texto faz escolhas de o que incluir e o que excluir. Identificar as vozes que o texto silencia &mdash; perspectivas marginalizadas, grupos exclu&iacute;dos, contraargumentos apagados &mdash; &eacute; uma das an&aacute;lises mais reveladoras de qualquer texto.')"><span class="opt-letter">B)</span><span>Identificar as perspectivas, grupos ou discursos que o texto exclui ou ignora como estrat&eacute;gia discursiva</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_3',2,1,'quiz18','B: Palavras n&atilde;o usadas &eacute; uma an&aacute;lise lingu&iacute;stica diferente; vozes silenciadas &eacute; an&aacute;lise discursiva.')"><span class="opt-letter">C)</span><span>Listar as palavras que o autor escolheu n&atilde;o usar no texto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_3',3,1,'quiz18','B: Erros gramaticais s&atilde;o diferentes de vozes silenciadas; esta &eacute; uma an&aacute;lise do conte&uacute;do discursivo, n&atilde;o formal.')"><span class="opt-letter">D)</span><span>Identificar os erros gramaticais que o autor cometeu</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q18_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q18_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">Por que a an&aacute;lise dos recursos expressivos deve ir al&eacute;m de apenas nomear as figuras de linguagem?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q18_4',0,2,'quiz18','C: Nomear &eacute; o primeiro passo; mas o que importa &eacute; como a figura opera no texto: que sentido ela cria, que efeito ela produz no leitor, por que o autor a escolheu.')"><span class="opt-letter">A)</span><span>Porque os nomes das figuras s&atilde;o muito dif&iacute;ceis de lembrar</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_4',1,2,'quiz18','C: O professor n&atilde;o &eacute; o crit&eacute;rio; a profundidade da an&aacute;lise &eacute;.')"><span class="opt-letter">B)</span><span>Porque o professor d&aacute; mais nota para quem escreve mais</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_4',2,2,'quiz18','Correto! Nomear a figura (metáfora, ironia, hipérbole) é apenas taxonomia. A análise real explica o EFEITO: o que essa figura produz no leitor? Como ela constrói sentido? Por que o autor a escolheu nesse contexto específico? Essa é a diferença entre análise superficial e crítica profunda.')"><span class="opt-letter">C)</span><span>Porque a an&aacute;lise real explica o efeito que a figura produz no leitor e como ela constr&oacute;i sentido no contexto espec&iacute;fico</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_4',3,2,'quiz18','C: O n&uacute;mero de figuras n&atilde;o garante qualidade; uma an&aacute;lise profunda de uma figura &eacute; mais valiosa do que listagem superficial de muitas.')"><span class="opt-letter">D)</span><span>Porque quanto mais figuras identificadas, melhor a nota</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q18_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q18_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Um slam que cita Cam&otilde;es, critica o racismo e usa ironia &eacute; um exemplo de:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q18_5',0,3,'quiz18','D: O slam que cita Cam&otilde;es estabelece intertextualidade; a cr&iacute;tica ao racismo aciona interdiscursividade (discurso antirracista em di&aacute;logo com o discurso colonial que hist&oacute;ricamente dom inou a literatura); a ironia &eacute; o recurso expressivo que materializa as rela&ccedil;&otilde;es.')"><span class="opt-letter">A)</span><span>Apenas intertextualidade expl&iacute;cita</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_5',1,3,'quiz18','D: H&aacute; tamb&eacute;m intertextualidade e recursos expressivos, n&atilde;o apenas interdiscursividade.')"><span class="opt-letter">B)</span><span>Apenas interdiscursividade</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_5',2,3,'quiz18','D: Essas rela&ccedil;&otilde;es coexistem no texto; n&atilde;o s&atilde;o excludentes.')"><span class="opt-letter">C)</span><span>Intertextualidade ou interdiscursividade, mas nunca as duas juntas</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q18_5',3,3,'quiz18','Correto! Intertextualidade (cita&ccedil;&atilde;o de Cam&otilde;es), interdiscursividade (discurso antirracista dialogando com o c&acirc;none liter&aacute;rio branco-europeu) e recursos expressivos (ironia) coexistem e se refor&ccedil;am no mesmo texto.')"><span class="opt-letter">D)</span><span>Intertextualidade, interdiscursividade e recursos expressivos coexistindo e se refor&ccedil;ando no mesmo texto</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q18_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr18"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Quiz conclu&iacute;do!</div><div class="qrb-sub">T&oacute;pico 18!</div><button class="qrb-retry" onclick="resetQuiz('quiz18')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c18 -->
+<hr class="rainbow-div">
+
+<!-- ====================== T19 ====================== -->
+<section id="c19" class="sec-rel" style="background:var(--bg2)">
+<div class="sfloat-wrap" id="sf19"></div>
+<div class="sec-content">
+<div class="csec-head fi">
+  <div class="csec-head-num">T&oacute;pico 19 &middot; Bloco VI</div>
+  <h2>&#128260; Revis&atilde;o e reescrita textual</h2>
+  <p>Coer&ecirc;ncia e adequa&ccedil;&atilde;o ao g&ecirc;nero &middot; Oficina de texto &middot; Revis&atilde;o em duplas</p>
+</div>
+<div class="block-tabs-wrap" id="tabs19">
+  <div class="block-tabs-nav">
+    <button class="btab-btn active" onclick="switchTab('tabs19',0,this)">&#128218; Conte&uacute;do</button>
+    <button class="btab-btn" onclick="switchTab('tabs19',1,this)">&#9997;&#65039; Atividades</button>
+    <button class="btab-btn" onclick="switchTab('tabs19',2,this)">&#127918; Quiz</button>
+  </div>
+
+  <div class="btab-panel active"><div class="wrap">
+  <div class="sec-mascot fi" onclick="pauloMascotClick('c19')">
+    <span class="sec-mascot-icon">&#129497;</span>
+    <div class="sec-mascot-body"><div class="sec-mascot-label">Prof. Paulo diz:</div>
+    <div class="sec-mascot-msg">A primeira vers&atilde;o nunca &eacute; a melhor. Todo escritor sabe disso. A revis&atilde;o n&atilde;o &eacute; fraqueza, &eacute; profissionalismo. E reescrever com o feedback de outra pessoa &eacute; uma das ferramentas mais poderosas que existem.</div>
+    <div class="sec-mascot-hint">Clique para mais &#128070;</div></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#128260; O que &eacute; revisar um texto?</h3>
+    <div class="concept-box">
+      <div class="cb-title">Defini&ccedil;&atilde;o</div>
+      <p>Revisar um texto &eacute; o processo de reler, questionar e aprimorar uma produ&ccedil;&atilde;o textual em m&uacute;ltiplos n&iacute;veis: da coer&ecirc;ncia global das ideias at&eacute; a escolha de palavras individuais, passando pela adequa&ccedil;&atilde;o ao g&ecirc;nero, pela coex&atilde;o (mecanismos que ligam as partes do texto) e pela adequa&ccedil;&atilde;o &agrave; norma culta quando o g&ecirc;nero o exige. <strong>Revisar n&atilde;o &eacute; apenas corrigir erros gramaticais</strong> &mdash; &eacute; aprofundar, reorganizar, ampliar e clarificar o pensamento.</p>
+    </div>
+    <div class="grid2" style="margin-top:.8rem">
+      <div class="info-card">
+        <h4>&#10060; Revis&atilde;o superficial</h4>
+        <p>Apenas verificar ortografia e pontua&ccedil;&atilde;o. N&atilde;o questiona se as ideias est&atilde;o bem desenvolvidas, se a estrutura &eacute; coerente, se o vocabul&aacute;rio &eacute; adequado ao g&ecirc;nero ou se a argumenta&ccedil;&atilde;o &eacute; s&oacute;lida.</p>
+      </div>
+      <div class="info-card">
+        <h4>&#10004;&#65039; Revis&atilde;o profunda</h4>
+        <p>Questiona todos os n&iacute;veis: as ideias est&atilde;o claras e desenvolvidas? A estrutura serve ao prop&oacute;sito? As transi&ccedil;&otilde;es s&atilde;o fluidas? O vocabul&aacute;rio &eacute; preciso? A voz autoral est&aacute; presente? O texto dialoga com o leitor previsto?</p>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('revisao textual processo reescrita oficina')">&#128444;&#65039; Ver imagens: <strong>Processo de revis&atilde;o e reescrita textual</strong></div>
+  </div>
+
+  <!-- CHECKLIST INTERATIVO -->
+  <div class="revision-checklist fi" id="rcl01">
+    <div class="rc-title">&#9989; Checklist de Revis&atilde;o &mdash; marque cada item conforme revisa</div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Coer&ecirc;ncia global:</strong> As ideias se relacionam logicamente do in&iacute;cio ao fim? O texto tem unidade temática?</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Estrutura do g&ecirc;nero:</strong> O texto segue a estrutura esperada do g&ecirc;nero escolhido (introdu&ccedil;&atilde;o, desenvolvimento, conclus&atilde;o; ou estrofe, refrão; ou apresenta&ccedil;&atilde;o, an&aacute;lise, avalia&ccedil;&atilde;o)?</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Coex&atilde;o:</strong> H&aacute; elementos de liga&ccedil;&atilde;o entre par&aacute;grafos e frases (conectivos, retomadas, progress&atilde;o tem&aacute;tica)? O leitor consegue acompanhar o racioc&iacute;nio?</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Argumenta&ccedil;&atilde;o:</strong> As afirma&ccedil;&otilde;es est&atilde;o fundamentadas? H&aacute; evid&ecirc;ncias, exemplos ou explica&ccedil;&otilde;es que sustentam os pontos principais?</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Vocabul&aacute;rio:</strong> As palavras escolhidas s&atilde;o precisas e adequadas ao g&ecirc;nero e ao leitor previsto? H&aacute; repeti&ccedil;&otilde;es desnecess&aacute;rias? H&aacute; palavras que poderiam ser trocadas por termos mais precisos?</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Voz autoral:</strong> O texto tem uma perspectiva genuína e reconhec&iacute;vel? As escolhas lingu&iacute;sticas revelam uma voz, ou parece gen&eacute;rico e impessoal?</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Norma culta (quando cabe):</strong> Ortografia, pontua&ccedil;&atilde;o, concordância e reg&ecirc;ncia est&atilde;o adequadas ao g&ecirc;nero? (N&atilde;o se aplica a g&ecirc;neros que intencionalmente fogem da norma, como slams ou textos coloquiais.)</div>
+    </div>
+    <div class="rc-item" onclick="toggleCheck(this,'rcl01')">
+      <div class="rc-check"></div>
+      <div class="rc-text"><strong>Adequa&ccedil;&atilde;o ao prop&oacute;sito:</strong> O texto cumpre o que se propõe? O leitor previsto vai entender e se engajar? O prop&oacute;sito comunicativo est&aacute; sendo atendido?</div>
+    </div>
+    <div class="rc-progress"><div class="rc-bar" id="rcl01-bar" style="width:0%"></div></div>
+    <div class="rc-score" id="rcl01-score">0 / 8 itens revisados</div>
+  </div>
+
+  <!-- OFICINA DE TEXTO -->
+  <div class="card fi">
+    <h3>&#127775; Oficina de texto: antes e depois</h3>
+    <p>Compare as duas vers&otilde;es do mesmo par&aacute;grafo e identifique as melhorias da revis&atilde;o:</p>
+    <div class="texto-editor fi">
+      <div class="te-title" style="color:var(--acc1)">Vers&atilde;o 1 &mdash; Rascunho inicial</div>
+      <div class="te-body">"A intertextualidade &eacute; quando um texto pega partes de outro texto. Isso acontece muito na literatura. Cam&otilde;es fez isso. O rap faz isso tamb&eacute;m. A intertextualidade &eacute; muito importante para entender os textos e &eacute; um conceito que todo mundo deveria saber."</div>
+    </div>
+    <div class="texto-editor fi" style="border-color:var(--acc3)">
+      <div class="te-title" style="color:var(--acc3)">Vers&atilde;o 2 &mdash; Ap&oacute;s revis&atilde;o</div>
+      <div class="te-body">"A intertextualidade &mdash; a propriedade pela qual todo texto dialoga com textos anteriores &mdash; &eacute; um fen&ocirc;meno que atravessa cinco s&eacute;culos de literatura em l&iacute;ngua portuguesa. Quando Cam&otilde;es retomou Petrarca no s&eacute;culo XVI, ou quando rappers contempor&acirc;neos subvertem o c&acirc;none em par&oacute;dias irônicas, ambos s&atilde;o parte de uma mesma cadeia de di&aacute;logos que constitui a pr&oacute;pria l&iacute;ngua como mem&oacute;ria viva."</div>
+    </div>
+    <div class="interactive-box fi">
+      <div class="ib-title">&#127918; O que mudou da Vers&atilde;o 1 para a Vers&atilde;o 2?</div>
+      <div class="int-question" id="iqrev01">
+        <p style="font-size:.84rem;font-weight:700;color:var(--txt);margin-bottom:.4rem">Qual a principal melhoria da Vers&atilde;o 2 em rela&ccedil;&atilde;o &agrave; Vers&atilde;o 1?</p>
+        <div class="int-opts">
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqrev01','N&atilde;o. A vers&atilde;o 2 &eacute; maior, mas o problema da 1 n&atilde;o era o tamanho: eram as repeti&ccedil;&otilde;es, a falta de desenvolvimento e a aus&ecirc;ncia de exemplos concretos.')">A vers&atilde;o 2 &eacute; maior</button>
+          <button class="int-opt" onclick="checkInt(this,'correct','iqrev01','Correto! A vers&atilde;o 2 eliminou repeti&ccedil;&otilde;es (&quot;intertextualidade&quot; repetida 3x), integrou exemplos concretos (Cam&otilde;es/Petrarca, rap), usou vocabul&aacute;rio mais preciso e construiu uma ideia articulada com in&iacute;cio, meio e progressão de pensamento.')">A vers&atilde;o 2 elimina repeti&ccedil;&otilde;es, usa exemplos concretos e constr&oacute;i uma ideia articulada com vocabul&aacute;rio mais preciso</button>
+          <button class="int-opt" onclick="checkInt(this,'wrong','iqrev01','N&atilde;o &eacute; a principal melhoria; as mudan&ccedil;as estruturais e de vocabul&aacute;rio s&atilde;o muito mais importantes do que a ortografia.')">A vers&atilde;o 2 corrige a ortografia</button>
+        </div>
+        <div class="int-feedback" id="fb-iqrev01"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVISAO EM DUPLAS -->
+  <div class="card fi">
+    <h3>&#128101; Revis&atilde;o em duplas: como funciona</h3>
+    <p>A revis&atilde;o de um texto por outra pessoa &eacute; uma das ferramentas mais eficazes de aprimoramento. Quem escreveu &eacute; "cego" a certos problemas do pr&oacute;prio texto — o leitor externo v&ecirc; o que o autor n&atilde;o consegue mais ver.</p>
+    <div class="producao-steps fi">
+      <div class="prod-step">
+        <div class="ps-num">1</div>
+        <div class="ps-body"><h4>Leitor faz leitura silenciosa completa</h4>
+        <p>Primeiro leia o texto inteiro sem marcar nada. Forme uma impress&atilde;o global antes de entrar nos detalhes.</p>
+        <div class="ps-tip">N&atilde;o comece a criticar na primeira linha. Contexto importa.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">2</div>
+        <div class="ps-body"><h4>Identifique o que funciona bem</h4>
+        <p>Antes de apontar problemas, indique o que est&aacute; forte: uma imagem eficaz, um argumento bem desenvolvido, uma escolha vocabular precisa.</p>
+        <div class="ps-tip">Feedback posi tivo antes do cr&iacute;tico cria abertura &agrave; revis&atilde;o.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">3</div>
+        <div class="ps-body"><h4>Aponte os problemas com perguntas</h4>
+        <p>Em vez de "isso está errado", prefira: "Aqui eu n&atilde;o entendi o que você quis dizer. Poderia desenvolver?" Perguntas s&atilde;o mais produtivas que julgamentos.</p>
+        <div class="ps-tip">Foque nos problemas mais importantes, n&atilde;o em todos.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">4</div>
+        <div class="ps-body"><h4>Sugira, n&atilde;o reescreva</h4>
+        <p>Sua fun&ccedil;&atilde;o como revisor &eacute; apontar onde melhorar, n&atilde;o reescrever o texto do outro. A voz autoral deve ser preservada.</p>
+        <div class="ps-tip">Se reescrever, o texto vira seu, n&atilde;o do colega.</div></div>
+      </div>
+      <div class="prod-step">
+        <div class="ps-num">5</div>
+        <div class="ps-body"><h4>Autor escuta sem defender</h4>
+        <p>Quem recebe o feedback deve escutar ativamente, anotar as observa&ccedil;&otilde;es e decidir depois (com calma) o que aceitar ou n&atilde;o na reescrita.</p>
+        <div class="ps-tip">Defender cada escolha imediatamente fecha a mente &agrave; revis&atilde;o.</div></div>
+      </div>
+    </div>
+    <div class="img-link-btn fi" onclick="openGoogleImg('revisao textual em dupla feedback colega escola')">&#128444;&#65039; Ver imagens: <strong>Revis&atilde;o de texto em duplas</strong></div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127916; Recursos</h3>
+    <div class="resource-grid">
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=como+revisar+texto+producao+textual+escola+tecnicas')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>T&eacute;cnicas de revis&atilde;o textual</strong><span>YouTube &middot; Produ&ccedil;&atilde;o e reescrita</span></div><span class="res-tag rt-yt">YT</span></div>
+      <div class="video-link" onclick="window.open('https://www.youtube.com/results?search_query=coesao+coerencia+textual+como+melhorar+texto')"><div class="vl-icon">&#9654;&#65039;</div><div class="vl-txt"><strong>Coes&atilde;o e coer&ecirc;ncia: como melhorar seu texto</strong><span>YouTube &middot; Lingu&iacute;stica textual</span></div><span class="res-tag rt-yt">YT</span></div>
+    </div>
+  </div>
+  </div></div><!-- /conteudo t19 -->
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="activity-section fi">
+      <div class="act-title">&#9997;&#65039; Atividades &middot; T&oacute;pico 19</div><div class="act-subtitle">Responder no caderno</div>
+      <div class="q-card"><div class="q-num">Q01</div><div class="q-text">Usando o Checklist de Revis&atilde;o, avalie um texto que voc&ecirc; escreveu neste bimestre. Para cada item do checklist, escreva uma frase identificando como esse aspecto est&aacute; (ou n&atilde;o est&aacute;) presente no seu texto. Ao final, identifique os 3 pontos que precisam de mais aten&ccedil;&atilde;o na reescrita.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q02</div><div class="q-text">Reescreva o seguinte par&aacute;grafo aplicando a revis&atilde;o profunda (elimine repeti&ccedil;&otilde;es, desenvolva as ideias, use vocabul&aacute;rio mais preciso, adicione exemplos): "A lit ertatura &eacute; muito importante. Todo mundo deveria ler. Quem l&ecirc; &eacute; mais inteligente. A literatura ensina muitas coisas. &Eacute; muito legal ler literatura."</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q03</div><div class="q-text">Forme uma dupla com um colega e troquem um texto que produziram durante o bimestre. Aplique o protocolo de revis&atilde;o em duplas: leia completamente, elogie o que funciona bem, aponte 3 problemas com perguntas (n&atilde;o julgamentos) e d&ecirc; no m&iacute;nimo 2 sugest&otilde;es. Anote o feedback recebido no caderno.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q04</div><div class="q-text">Por que revisar um texto em voz alta &eacute; uma t&eacute;cnica eficaz? O que o ouvido percebe que o olho n&atilde;o capta? Fa&ccedil;a o experimento: leia um trecho do seu texto em voz alta e anote os problemas que perceber que n&atilde;o havia notado durante a leitura silenciosa.</div><div class="q-caderno">&#128221; Caderno</div></div>
+      <div class="q-card"><div class="q-num">Q05</div><div class="q-text">O que &eacute; "voz autoral" e por que preserv&aacute;-la durante a revis&atilde;o &eacute; importante? Como um revisor pode ajudar sem apagar a voz do autor? Escreva uma reflex&atilde;o a partir da sua experi&ecirc;ncia com a revis&atilde;o em duplas.</div><div class="q-caderno">&#128221; Caderno</div></div>
+    </div>
+  </div></div>
+
+  <div class="btab-panel"><div class="wrap">
+    <div class="quiz-section fi" id="quiz19">
+      <div class="quiz-header"><div class="quiz-title">&#128202; Quiz &middot; T&oacute;pico 19</div><div class="quiz-score-box"><span>Acertos:</span><span class="score-num" id="sn19">0</span><span class="score-total"> / 5</span></div></div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qb19" style="width:0%"></div></div>
+      <div class="qmc-card mc-q" id="q19_1"><div class="qmc-num">Q1 de 5</div>
+        <div class="qmc-text">Revisar um texto vai al&eacute;m de corrigir erros gramaticais porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q19_1',0,2,'quiz19','C: Revis&atilde;o profunda questiona coer&ecirc;ncia global, estrutura, argumenta&ccedil;&atilde;o, vocabul&aacute;rio, voz autoral e adequa&ccedil;&atilde;o ao g&ecirc;nero &mdash; muito al&eacute;m da gramática.')"><span class="opt-letter">A)</span><span>Porque os professores avaliam mais a ortografia</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_1',1,2,'quiz19','C: A gram&aacute;tica &eacute; parte da revis&atilde;o, mas n&atilde;o o &uacute;nico (nem o mais importante) n&iacute;vel.')"><span class="opt-letter">B)</span><span>Porque a gram&aacute;tica &eacute; a parte mais dif&iacute;cil do texto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_1',2,2,'quiz19','Correto! A revis&atilde;o profunda questiona m&uacute;ltiplos n&iacute;veis: coer&ecirc;ncia global das ideias, estrutura do g&ecirc;nero, coes&atilde;o, argumenta&ccedil;&atilde;o, vocabul&aacute;rio, voz autoral e adequa&ccedil;&atilde;o ao prop&oacute;sito. A gram&aacute;tica &eacute; apenas um dos n&iacute;veis.')"><span class="opt-letter">C)</span><span>Porque a revis&atilde;o questiona m&uacute;ltiplos n&iacute;veis: coer&ecirc;ncia global, estrutura, argumenta&ccedil;&atilde;o, vocabul&aacute;rio, voz autoral e adequa&ccedil;&atilde;o ao g&ecirc;nero</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_1',3,2,'quiz19','C: O objetivo da revis&atilde;o n&atilde;o &eacute; agradar o professor; &eacute; aprimorar o texto para cumprir melhor seu prop&oacute;sito comunicativo.')"><span class="opt-letter">D)</span><span>Para agradar ao professor com um texto mais longo</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q19_1"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q19_2"><div class="qmc-num">Q2 de 5</div>
+        <div class="qmc-text">Por que o autor fica "cego" a certos problemas do pr&oacute;prio texto, necessitando de um leitor externo?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q19_2',0,2,'quiz19','C: O autor preenche automaticamente os "buracos" do texto com o que ele pretendia dizer, n&atilde;o com o que realmente escreveu. O leitor externo n&atilde;o tem esse preenchimento autom&aacute;tico.')"><span class="opt-letter">A)</span><span>Porque o autor escreve r&aacute;pido demais e n&atilde;o l&ecirc; depois</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_2',1,2,'quiz19','C: O problema n&atilde;o &eacute; falta de rigor, mas de perspectiva: o autor tem informa&ccedil;&otilde;es que o texto n&atilde;o cont&eacute;m e preenche automaticamente as lacunas.')"><span class="opt-letter">B)</span><span>Porque n&atilde;o se preocupa com a qualidade do texto</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_2',2,2,'quiz19','Correto! O autor conhece o que queria dizer e inconscientemente preenche as lacunas do texto com sua inten&ccedil;&atilde;o. O leitor externo n&atilde;o tem esse conhecimento pr&eacute;vio e enfrenta o texto exatamente como est&aacute; escrito.')"><span class="opt-letter">C)</span><span>Porque conhece o que queria dizer e preenche automaticamente as lacunas com sua inten&ccedil;&atilde;o, n&atilde;o com o que realmente escreveu</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_2',3,2,'quiz19','C: Proximidade afetiva pode ser um fator, mas o principal &eacute; a cegueira cognitiva do autor que preenche as lacunas do texto com o que pretendia.')"><span class="opt-letter">D)</span><span>Porque tem afinidade emocional com o tema e perde a objetividade</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q19_2"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q19_3"><div class="qmc-num">Q3 de 5</div>
+        <div class="qmc-text">No protocolo de revis&atilde;o em duplas, apontar problemas com perguntas em vez de julgamentos (&ldquo;Aqui eu n&atilde;o entendi&rdquo; em vez de &ldquo;Isso est&aacute; errado&rdquo;) &eacute; recomendado porque:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q19_3',0,1,'quiz19','B: Perguntas criam abertura ao di&aacute;logo e &agrave; revis&atilde;o; julgamentos fecham o autor na defesa de suas escolhas.')"><span class="opt-letter">A)</span><span>Porque &eacute; menos trabalhoso para o revisor</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_3',1,1,'quiz19','Correto! Perguntas criam abertura: o autor recebe o feedback sem sentir que sua identidade est&aacute; sendo atacada, ficando mais receptivo &agrave; revis&atilde;o. Julgamentos diretos ("isso est&aacute; errado") tendem a provocar defesa imediata, fechando o processo de revis&atilde;o.')"><span class="opt-letter">B)</span><span>Porque perguntas criam abertura ao di&aacute;logo: o autor fica mais receptivo &agrave; revis&atilde;o quando n&atilde;o sente sua identidade atacada</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_3',2,1,'quiz19','B: N&atilde;o &eacute; uma estrat&eacute;gia para evitar conflito: &eacute; uma t&eacute;cnica genuinamente mais eficaz pedagogicamente.')"><span class="opt-letter">C)</span><span>Para evitar conflitos entre os alunos</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_3',3,1,'quiz19','B: A regra n&atilde;o &eacute; sobre a autoria das ideias, mas sobre a efic&aacute;cia do feedback.')"><span class="opt-letter">D)</span><span>Porque o revisor n&atilde;o pode ter opini&atilde;o sobre o texto do colega</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q19_3"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q19_4"><div class="qmc-num">Q4 de 5</div>
+        <div class="qmc-text">A principal melhoria da "Vers&atilde;o 2" do par&aacute;grafo sobre intertextualidade foi:</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q19_4',0,2,'quiz19','C: A melhoria mais significativa foi eliminar as repeti&ccedil;&otilde;es, desenvolver a ideia com argumenta&ccedil;&atilde;o e exemplos concretos e usar vocabul&aacute;rio mais preciso.')"><span class="opt-letter">A)</span><span>Ficou mais curta e objetiva</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_4',1,2,'quiz19','C: Colocou exemplos, mas a melhoria n&atilde;o foi s&oacute; isso: foi toda a reestrutura&ccedil;&atilde;o do racioc&iacute;nio.')"><span class="opt-letter">B)</span><span>Colocou mais palavras dif&iacute;ceis</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_4',2,2,'quiz19','Correto! A Vers&atilde;o 2 eliminou repeti&ccedil;&otilde;es (&quot;intertextualidade&quot; 3x → 1x), integrou exemplos concretos e historicamente situados, usou vocabul&aacute;rio mais preciso e construiu uma ideia com progress&atilde;o l&oacute;gica.')"><span class="opt-letter">C)</span><span>Eliminou repeti&ccedil;&otilde;es, integrou exemplos concretos e construiu uma ideia com progress&atilde;o l&oacute;gica</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_4',3,2,'quiz19','C: N&atilde;o &eacute; sobre gramatic alidade; o problema da Vers&atilde;o 1 era estrutural e argumentativo, n&atilde;o ortogr&aacute;fico.')"><span class="opt-letter">D)</span><span>Corrigiu os erros de ortografia da Vers&atilde;o 1</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q19_4"></div>
+      </div>
+      <div class="qmc-card mc-q" id="q19_5"><div class="qmc-num">Q5 de 5</div>
+        <div class="qmc-text">Por que o revisor em dupla n&atilde;o deve reescrever trechos do texto do colega?</div>
+        <div class="qmc-opts">
+          <button class="qmc-opt" onclick="answerMC('q19_5',0,2,'quiz19','C: Reescrever apaga a voz autoral do colega, transformando o texto numa co-autoria n&atilde;o intencional. O papel do revisor &eacute; apontar onde melhorar, n&atilde;o produzir a melhoria por conta pr&oacute;pria.')"><span class="opt-letter">A)</span><span>Porque reescrever demora muito tempo</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_5',1,2,'quiz19','C: O conhecimento n&atilde;o &eacute; o problema; &eacute; a voz autoral que precisa ser preservada.')"><span class="opt-letter">B)</span><span>Porque o revisor n&atilde;o conhece bem o tema</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_5',2,2,'quiz19','Correto! Reescrever apaga a voz autoral do colega: o texto perde a perspectiva genuína de quem o escreveu e ganha a voz do revisor. O objetivo da revis&atilde;o &eacute; desenvolver a voz do autor, n&atilde;o substitu&iacute;-la.')"><span class="opt-letter">C)</span><span>Porque reescrever apaga a voz autoral do colega; o papel do revisor &eacute; apontar melhorias, n&atilde;o produzi-las</span><span class="opt-icon"></span></button>
+          <button class="qmc-opt" onclick="answerMC('q19_5',3,2,'quiz19','C: N&atilde;o &eacute; uma quest&atilde;o de regra da escola; &eacute; um princ&iacute;pio pedag&oacute;gico de preserva&ccedil;&atilde;o da autoria.')"><span class="opt-letter">D)</span><span>Porque &eacute; uma regra da escola</span><span class="opt-icon"></span></button>
+        </div><div class="qmc-feedback" id="fb_q19_5"></div>
+      </div>
+      <div class="quiz-result-banner" id="qr19"><div class="qrb-emoji">&#127942;</div><div class="qrb-text">Bloco VI conclu&iacute;do!</div><div class="qrb-sub">T&oacute;picos 18 e 19 finalizados! Parab&eacute;ns pela jornada!</div><button class="qrb-retry" onclick="resetQuiz('quiz19')">&#128260; Tentar novamente</button></div>
+    </div>
+  </div></div>
+</div></div></section><!-- /c19 -->
+
+<hr class="rainbow-div">
+
+<!-- ====================== REVISAO GERAL DO BIMESTRE ====================== -->
+<section style="background:var(--bg)">
+<div class="sec-head" style="background:linear-gradient(135deg,var(--acc1) 0%,#3a0a0a 50%,var(--acc4) 100%)">
+  <h2>&#128260; Revis&atilde;o Geral do Bimestre</h2>
+  <p>Um mapa de tudo que voc&ecirc; estudou e um convite &agrave; reflex&atilde;o final</p>
+</div>
+<div class="wrap">
+
+  <div class="card fi" style="background:linear-gradient(135deg,#1a0800 0%,#0a001a 100%);border:1px solid rgba(196,134,10,.3)">
+    <h3 style="color:#f0cc60 !important">&#127963; Mapa do Bimestre &mdash; Ecos do Tempo</h3>
+    <p style="color:rgba(245,230,200,.9) !important">Voc&ecirc; completou <strong style="color:#f0cc60">19 t&oacute;picos</strong> organizados em torno de uma grande quest&atilde;o: <em>"Como a linguagem constr&oacute;i sentidos, como os textos dialogam entre si ao longo do tempo, e como podemos ler e escrever com mais profundidade e criticidade?"</em></p>
+  </div>
+
+  <div class="revisao-geral fi">
+    <div class="rg-title">&#127963; Todos os T&oacute;picos &mdash; Clique para ir ao conte&uacute;do</div>
+    <div class="rg-grid">
+      <div class="rg-card" onclick="goTo('c01')"><div class="rg-num">01</div><div class="rg-name">O que &eacute; texto?</div><div class="rg-sub">Texto, discurso, condi&ccedil;&otilde;es</div></div>
+      <div class="rg-card" onclick="goTo('c02')"><div class="rg-num">02</div><div class="rg-name">Intertextualidade</div><div class="rg-sub">Refer&ecirc;ncias e alus&otilde;es</div></div>
+      <div class="rg-card" onclick="goTo('c03')"><div class="rg-num">03</div><div class="rg-name">Tipos de intertextualidade</div><div class="rg-sub">Par&oacute;dia, pastiche, par&aacute;frase</div></div>
+      <div class="rg-card" onclick="goTo('c04')"><div class="rg-num">04</div><div class="rg-name">Interdiscursividade</div><div class="rg-sub">Di&aacute;logo entre discursos</div></div>
+      <div class="rg-card" onclick="goTo('c05')"><div class="rg-num">05</div><div class="rg-name">Ironia, ambiguidade, polissemia</div><div class="rg-sub">Figuras de linguagem</div></div>
+      <div class="rg-card" onclick="goTo('c06')"><div class="rg-num">06</div><div class="rg-name">Conotação e Denotação</div><div class="rg-sub">Fun&ccedil;&otilde;es da linguagem</div></div>
+      <div class="rg-card" onclick="goTo('c07')"><div class="rg-num">07</div><div class="rg-name">Efeitos de sentido</div><div class="rg-sub">Escolhas de palavras</div></div>
+      <div class="rg-card" onclick="goTo('c08')"><div class="rg-num">08</div><div class="rg-name">O que &eacute; Literatura?</div><div class="rg-sub">Defini&ccedil;&atilde;o e c&acirc;none</div></div>
+      <div class="rg-card" onclick="goTo('c09')"><div class="rg-num">09</div><div class="rg-name">Literatura Brasileira</div><div class="rg-sub">Quinhentismo e Caminha</div></div>
+      <div class="rg-card" onclick="goTo('c10')"><div class="rg-num">10</div><div class="rg-name">Literatura Portuguesa</div><div class="rg-sub">Trovadorismo e Cam&otilde;es</div></div>
+      <div class="rg-card" onclick="goTo('c11')"><div class="rg-num">11</div><div class="rg-name">Literatura Ind&iacute;gena</div><div class="rg-sub">Perspectivas decoloniais</div></div>
+      <div class="rg-card" onclick="goTo('c12')"><div class="rg-num">12</div><div class="rg-name">Participa&ccedil;&atilde;o e Debate</div><div class="rg-sub">Modelo PEEL e gr&ecirc;mio</div></div>
+      <div class="rg-card" onclick="goTo('c13')"><div class="rg-num">13</div><div class="rg-name">Escuta e Turno de Fala</div><div class="rg-sub">Negocia&ccedil;&atilde;o e ad hominem</div></div>
+      <div class="rg-card" onclick="goTo('c14')"><div class="rg-num">14</div><div class="rg-name">Temas Controversos</div><div class="rg-sub">&Eacute;tica, est&eacute;tica e posicionamento</div></div>
+      <div class="rg-card" onclick="goTo('c15')"><div class="rg-num">15</div><div class="rg-name">Estrat&eacute;gias de Leitura</div><div class="rg-sub">Fontes e procedimentos</div></div>
+      <div class="rg-card" onclick="goTo('c16')"><div class="rg-num">16</div><div class="rg-name">Planejamento de Estudos</div><div class="rg-sub">Fontes confi&aacute;veis</div></div>
+      <div class="rg-card" onclick="goTo('c17')"><div class="rg-num">17</div><div class="rg-name">Literatura Comparada</div><div class="rg-sub">Textos em diferentes tempos</div></div>
+      <div class="rg-card" onclick="goTo('c18')" style="border-color:rgba(196,134,10,.6)"><div class="rg-num">18</div><div class="rg-name">&#11088; Produ&ccedil;&atilde;o Textual</div><div class="rg-sub">An&aacute;lise dial&oacute;gica</div></div>
+      <div class="rg-card" onclick="goTo('c19')" style="border-color:rgba(196,134,10,.6)"><div class="rg-num">19</div><div class="rg-name">&#11088; Revis&atilde;o Textual</div><div class="rg-sub">Oficina e reescrita</div></div>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#127919; Conceitos essenciais para a avalia&ccedil;&atilde;o</h3>
+    <div class="conceitos-tag-cloud">
+      <span class="ctag">Texto e discurso</span><span class="ctag">Condi&ccedil;&otilde;es de produ&ccedil;&atilde;o</span><span class="ctag">Dialogismo</span><span class="ctag">Intertextualidade expl&iacute;cita</span><span class="ctag">Intertextualidade impl&iacute;cita</span><span class="ctag">Par&oacute;dia</span><span class="ctag">Par&aacute;frase</span><span class="ctag">Pastiche</span><span class="ctag">Bricolagem</span><span class="ctag">Ep&iacute;grafe</span><span class="ctag">Alus&atilde;o</span><span class="ctag">Cita&ccedil;&atilde;o</span><span class="ctag">Interdiscursividade</span><span class="ctag">Contradiscurso</span><span class="ctag">Ironia verbal</span><span class="ctag">Ironia dram&aacute;tica</span><span class="ctag">Ambiguidade</span><span class="ctag">Polissemia</span><span class="ctag">Conotação</span><span class="ctag">Denotação</span><span class="ctag">Fun&ccedil;&otilde;es da linguagem</span><span class="ctag">Efeitos de sentido</span><span class="ctag">Eufemismo</span><span class="ctag">Metáfora</span><span class="ctag">Hipérbole</span><span class="ctag">Antítese</span><span class="ctag">C&acirc;none liter&aacute;rio</span><span class="ctag">Quinhentismo</span><span class="ctag">Trovadorismo</span><span class="ctag">Cam&otilde;es</span><span class="ctag">Caminha</span><span class="ctag">Literatura ind&iacute;gena</span><span class="ctag">Decolonial</span><span class="ctag">Modelo PEEL</span><span class="ctag">Escuta ativa</span><span class="ctag">Ad hominem</span><span class="ctag">Lei da caridade</span><span class="ctag">Falsa controv&eacute;rsia</span><span class="ctag">Coer&ecirc;ncia textual</span><span class="ctag">Coes&atilde;o</span><span class="ctag">Voz autoral</span>
+    </div>
+  </div>
+
+  <div class="card fi">
+    <h3>&#129302; Ferramentas para revisar antes da avalia&ccedil;&atilde;o</h3>
+    <div class="ai-grid">
+      <div class="ai-card"><div class="ai-name">&#127925; NotebookLM</div><div class="ai-tip">Cole este livro e pe&ccedil;a um podcast de revis&atilde;o: "Resuma os 19 t&oacute;picos em &aacute;udio de 10 minutos!"</div></div>
+      <div class="ai-card"><div class="ai-name">&#128172; ChatGPT</div><div class="ai-tip">Peça: "Me fa&ccedil;a 10 quest&otilde;es sobre intertextualidade e efeitos de sentido para treinar para a avalia&ccedil;&atilde;o."</div></div>
+      <div class="ai-card"><div class="ai-name">&#10024; Gemini</div><div class="ai-tip">Compare textos do Trovadorismo com m&uacute;sicas contemporâneas e explore as rela&ccedil;&otilde;es dial&oacute;gicas.</div></div>
+      <div class="ai-card"><div class="ai-name">&#128302; Grok</div><div class="ai-tip">Explore exemplos de par&oacute;dia e interdiscursividade em textos que est&atilde;o circulando nas redes agora.</div></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem">
+      <a class="ia-btn" href="https://notebooklm.google.com" target="_blank">&#127925; NotebookLM</a>
+      <a class="ia-btn" href="https://chat.openai.com" target="_blank">&#128172; ChatGPT</a>
+      <a class="ia-btn" href="https://gemini.google.com" target="_blank">&#10024; Gemini</a>
+      <a class="ia-btn" href="https://grok.x.ai" target="_blank">&#128302; Grok</a>
+    </div>
+  </div>
+
+  <div class="parchment-text fi" style="text-align:center;border-radius:14px;border-left:none;border:1px solid var(--gold)">
+    <p style="font-family:'Crimson Pro',Georgia,serif;font-size:1rem;font-style:italic;line-height:1.85;color:var(--txt)">"Voc&ecirc; chegou ao final dos Ecos do Tempo com um repert&oacute;rio que a maioria das pessoas nunca ter&aacute;. Sabe que todo texto dialoga com outros textos. Sabe identificar discursos e vozes silenciadas. Sabe que palavras s&atilde;o escolhas pol&iacute;ticas e est&eacute;ticas. Sabe que a literatura n&atilde;o começa com a escrita europeia. Sabe que a l&iacute;ngua &eacute; viva, plural e contestada. Leve isso com voc&ecirc;. Boa sorte na avalia&ccedil;&atilde;o. E, mais do que isso, boa sorte na vida."</p>
+    <div class="parchment-attr">Prof. Paulo Roberto R. Magalh&atilde;es &middot; E.E. Padre Carlos Casavequia &middot; 2026</div>
+  </div>
+
+</div>
+</section>
 
 <hr class="rainbow-div">
 
@@ -5899,7 +6510,9 @@ const secMascotMsgs = {
   c14:["O filósofo John Rawls propôs um experimento mental: defenda suas ideias sem saber que papel você ocuparia na sociedade resultante.","Controverso não é sinônimo de errado. Muitas verdades históricas foram controversas antes de serem aceitas.","A palavra 'polêmica' vem do grego polemos: guerra. Mas a boa polêmica é uma guerra de ideias, não de pessoas."],
   c15:["Sabia que ler apenas o título e a conclusão de um artigo científico é uma das causas mais comuns de desinformação acadêmica?","O dicionário Aurélio foi lançado em 1975. O Houaiss (o mais completo do português) tem mais de 228.000 verbetes!","A técnica de leitura dinâmica foi desenvolvida nos anos 1950 por Evelyn Wood. Mas cuidado: velocidade sem compreensão é inútil."],
   c16:["O viés de confirmação nos faz preferir fontes que confirmam o que já acreditamos. Isso é a raiz de boa parte da desinformação.","A Wikipedia tem mais de 6,7 milhões de artigos em inglês e é editada por voluntários. Incrível e perigoso ao mesmo tempo.","O método científico exige que as fontes sejam verificáveis e replicáveis. Fonte anônima nunca é suficiente para um argumento."],
-  c17:["Borges dizia que a literatura é um espelho que reflecte um leitor diferente a cada vez. Você é o que você leu.","A adaptação de Shakespeare para o Kabuki japonês e para o Cinema de Bollywood mostra como a literatura transcende culturas.","'Romeu e Julieta' foi baseado em 'Pyramus e Thisbe' de Ovídio. Shakespeare era um mestre da intertextualidade!"]
+  c17:["Borges dizia que a literatura é um espelho que reflecte um leitor diferente a cada vez. Você é o que você leu.","A adaptação de Shakespeare para o Kabuki japonês e para o Cinema de Bollywood mostra como a literatura transcende culturas.","'Romeu e Julieta' foi baseado em 'Pyramus e Thisbe' de Ovídio. Shakespeare era um mestre da intertextualidade!"],
+  c18:["Análise com relações dialógicas é o coração do bimestre. Chegou a hora de praticar tudo que aprendemos!","Todo texto responde a outros. Quando você identifica isso, você lê de verdade.","Hamlet já respondeu a outras peças de vingança anteriores. Intertextualidade desde o século XVI!"],
+  c19:["Revisar um texto é como polir uma pedra preciosa: você já tem o diamante, agora tire o excesso.","Monteiro Lobato reescrevia em média 7 vezes antes de publicar. E você que acha 1 revisão suficiente!","A melhor revisão é feita em voz alta. Seu ouvido percebe erros que seu olho ignora."]
 };
 let secMascotIdx = {};
 function pauloMascotClick(secId) {
@@ -5932,6 +6545,9 @@ const sfSyms = {
   sf15:['📖','🔍','💡','📝','🗒️','🧐','📚','🔎'],
   sf16:['🔬','📡','🌐','📰','💻','📊','🧪','🔭'],
   sf17:['🎭','🌍','🎨','📜','🎬','🎵','🖼️','✨']
+,
+  sf18:['✍️','📝','📖','🖊️','💡','📄','🌟','💬'],
+  sf19:['🔄','✅','📝','✏️','💡','🔍','🌟','📚']
 };
 Object.keys(sfSyms).forEach(id => {
   const wrap = document.getElementById(id);
@@ -6103,6 +6719,33 @@ function checkTurno(btn, gameId, idx, result, msg) {
     fb.style.fontSize = '.8rem';
   }
   pauloReact(result === 'correct');
+}
+
+/* ============================================================
+   BLOCK 6 JAVASCRIPT
+   ============================================================ */
+
+/* Revision checklist */
+function toggleCheck(item, listId) {
+  item.classList.toggle('checked');
+  const list = document.getElementById(listId);
+  if(!list) return;
+  const items = list.querySelectorAll('.rc-item');
+  const checked = list.querySelectorAll('.rc-item.checked').length;
+  const bar = document.getElementById(listId + '-bar');
+  const score = document.getElementById(listId + '-score');
+  if(bar) bar.style.width = (checked/items.length*100) + '%';
+  if(score) score.textContent = checked + ' / ' + items.length + ' itens revisados';
+}
+
+/* Genre selector */
+function selectGenero(btn, detailId) {
+  const wrap = btn.closest('.genero-selector');
+  wrap.querySelectorAll('.gs-item').forEach(b => b.classList.remove('gs-active'));
+  wrap.querySelectorAll('.gs-detail').forEach(d => { d.classList.remove('show'); });
+  btn.classList.add('gs-active');
+  const det = document.getElementById(detailId);
+  if(det) det.classList.add('show');
 }
 </script>
 </body>

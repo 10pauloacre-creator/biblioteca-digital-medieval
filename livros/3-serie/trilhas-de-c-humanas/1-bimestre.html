@@ -1271,6 +1271,213 @@ footer strong { color: var(--acc1); }
 .conn-arrow{color:var(--acc3);font-weight:900;flex-shrink:0}
 .conn-right{color:var(--txt2)}
 
+/* ═══════════════════════════════════════
+   BLOCO 4 — ECONOMIA E POLÍTICA
+═══════════════════════════════════════ */
+.bloco-header.b4{background:linear-gradient(145deg,#1a0a00 0%,#3d1a00 35%,#0a2a1a 70%,#003322 100%)}
+/*
+═══════════════════════════════════════
+   BLOCO 5 — LEITURA CRÍTICA E REVISÃO
+═══════════════════════════════════════ */
+.bloco-header.b5{background:linear-gradient(145deg,#0a0820 0%,#1a0850 35%,#280a42 65%,#0f0525 100%)}
+[data-theme="dark"] .bloco-header.b5{background:linear-gradient(145deg,#050312 0%,#0f0530 35%,#180628 65%,#08020f 100%)}
+
+/* ── Fake News Detector ── */
+.fnd-game{position:relative}
+.fnd-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:1.2rem;animation:cardSlide .3s ease}
+.fnd-badge{display:inline-block;font-size:.64rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;background:var(--bg2);color:var(--muted);border-radius:6px;padding:.2rem .5rem;margin-bottom:.6rem}
+.fnd-statement{font-size:.92rem;font-weight:600;color:var(--txt);line-height:1.65;margin-bottom:.5rem;font-style:italic}
+.fnd-source{font-size:.72rem;color:var(--muted);margin-bottom:.9rem;padding:.4rem .6rem;background:var(--bg2);border-radius:6px;border-left:3px solid var(--acc2)}
+.fnd-btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}
+.fnd-btn{flex:1;min-width:70px;padding:.6rem .3rem;border-radius:10px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid;transition:all .2s;background:transparent}
+.fnd-btn.v{border-color:var(--acc1);color:var(--acc1)}
+.fnd-btn.v:hover{background:var(--acc1);color:#fff}
+.fnd-btn.e{border-color:var(--acc3);color:var(--acc3)}
+.fnd-btn.e:hover{background:var(--acc3);color:#fff}
+.fnd-btn.f{border-color:var(--acc4);color:var(--acc4)}
+.fnd-btn.f:hover{background:var(--acc4);color:#fff}
+.fnd-btn:disabled{opacity:.45;cursor:not-allowed}
+.fnd-feedback{display:none;padding:.9rem;border-radius:10px;font-size:.82rem;line-height:1.55;margin-top:.5rem}
+.fnd-feedback.show{display:block}
+.fnd-feedback.v-fb{background:rgba(5,150,105,.1);border:1.5px solid var(--acc1);color:var(--hl-txt)}
+.fnd-feedback.e-fb{background:rgba(245,158,11,.1);border:1.5px solid var(--acc3);color:#78350f}
+.fnd-feedback.f-fb{background:rgba(220,38,38,.1);border:1.5px solid var(--acc4);color:#7f1d1d}
+[data-theme="dark"] .fnd-feedback.v-fb{background:rgba(52,211,153,.07);color:var(--acc1)}
+[data-theme="dark"] .fnd-feedback.e-fb{background:rgba(251,191,36,.07);color:var(--acc3)}
+[data-theme="dark"] .fnd-feedback.f-fb{background:rgba(248,113,113,.07);color:var(--acc4)}
+.fnd-next-btn{margin-top:.7rem;padding:.55rem 1.2rem;background:var(--acc1);color:#fff;border:none;border-radius:10px;font-size:.84rem;font-weight:700;cursor:pointer;transition:.2s;display:none}
+.fnd-next-btn:hover{filter:brightness(1.1)}
+.fnd-dots{display:flex;gap:.35rem;justify-content:center;margin-bottom:.8rem;flex-wrap:wrap}
+.fnd-dot{width:11px;height:11px;border-radius:50%;background:var(--border);transition:.3s}
+.fnd-dot.v{background:var(--acc1)}
+.fnd-dot.e{background:var(--acc3)}
+.fnd-dot.f{background:var(--acc4)}
+.fnd-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;font-size:.78rem;color:var(--muted)}
+.fnd-result{text-align:center;padding:1.5rem;background:var(--hl-bg);border-radius:16px;border:2px solid var(--acc1)}
+.fnd-result-emoji{font-size:3rem;margin-bottom:.5rem}
+.fnd-result-txt{font-size:.9rem;color:var(--txt);margin-bottom:1rem;line-height:1.6}
+.fnd-retry{padding:.6rem 1.2rem;background:var(--acc1);color:#fff;border:none;border-radius:10px;font-size:.84rem;font-weight:700;cursor:pointer}
+
+/* source-checker checklist */
+.src-check-list{list-style:none;padding:0;margin:.6rem 0}
+.src-check-list li{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem .6rem;border-radius:8px;font-size:.84rem;color:var(--txt2);margin-bottom:.3rem;background:var(--bg2)}
+.src-check-list li::before{content:'☐';font-size:1.1rem;flex-shrink:0;color:var(--acc2);cursor:pointer}
+.src-check-list li.checked{background:var(--hl-bg);color:var(--hl-txt)}
+.src-check-list li.checked::before{content:'☑';color:var(--acc1)}
+
+/* ── Concept Map ── */
+.cmap-outer{background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;padding:.8rem;overflow:hidden}
+.cmap-svg-wrap{width:100%;overflow:hidden;position:relative}
+.cmap-svg-wrap svg{width:100%;height:auto;display:block}
+.cmap-node-g{cursor:pointer}
+.cmap-popup{background:var(--card);border:2px solid #7c3aed;border-radius:14px;padding:1rem 1.1rem;margin-top:.8rem;position:relative;animation:cardSlide .22s ease;display:none}
+.cmap-popup.show{display:block}
+.cmap-popup-close{position:absolute;top:.5rem;right:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:.68rem;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900}
+.cmap-popup-title{font-size:.88rem;font-weight:800;color:#7c3aed;margin-bottom:.4rem;font-family:'Playfair Display',serif;padding-right:1.5rem}
+.cmap-popup-desc{font-size:.82rem;color:var(--txt2);line-height:1.62;margin-bottom:.4rem}
+.cmap-popup-topics{font-size:.76rem;color:var(--muted)}
+.cmap-popup-topics span{display:inline-block;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:.15rem .45rem;margin:.15rem .2rem .15rem 0}
+
+/* ── Revision tracker ── */
+.rev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem}
+@media(max-width:380px){.rev-grid{grid-template-columns:1fr}}
+.rev-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:.85rem;cursor:pointer;transition:.2s;position:relative}
+.rev-card:hover{border-color:#7c3aed;background:var(--card-hover)}
+.rev-card.done{border-color:var(--acc1);background:var(--hl-bg)}
+.rev-card .rc-num{font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#7c3aed;margin-bottom:.25rem}
+.rev-card .rc-ttl{font-size:.8rem;font-weight:700;color:var(--txt);line-height:1.3}
+.rev-card .rc-sub{font-size:.7rem;color:var(--muted);margin-top:.2rem}
+.rev-card .rc-chk{position:absolute;top:.6rem;right:.7rem;font-size:1.1rem;transition:.2s}
+.rev-prog{display:flex;align-items:center;gap:.7rem;margin-top:.7rem;font-size:.78rem;color:var(--muted)}
+.rev-pbar{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
+.rev-pfill{height:100%;background:linear-gradient(90deg,#7c3aed,var(--acc1));border-radius:4px;transition:width .4s ease;width:0%}
+
+/* AI tools grid */
+.ai-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin:.85rem 0}
+@media(max-width:380px){.ai-grid{grid-template-columns:1fr}}
+.ai-card{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:.85rem;cursor:pointer;transition:.2s;text-align:center}
+.ai-card:hover{border-color:var(--acc2);transform:translateY(-2px);box-shadow:0 4px 12px var(--shadow)}
+.ai-card .ai-icon{font-size:1.9rem;margin-bottom:.3rem}
+.ai-card .ai-name{font-size:.82rem;font-weight:800;color:var(--txt)}
+.ai-card .ai-tip{font-size:.7rem;color:var(--muted);margin-top:.25rem;line-height:1.45}
+
+/* final message card */
+.final-msg-card{background:linear-gradient(145deg,#0a0820,#1e0a40);border:2px solid #7c3aed;border-radius:20px;padding:1.5rem;margin:.85rem 0;color:#e2d9f3;position:relative;overflow:hidden}
+.final-msg-card::before{content:'🌿';position:absolute;right:-10px;top:-10px;font-size:5rem;opacity:.1}
+.final-msg-card h4{color:#c4b5fd;font-family:'Playfair Display',serif;margin-bottom:.6rem}
+.final-msg-card p{font-size:.86rem;line-height:1.75;color:#ddd6fe}
+.final-msg-card .fm-sig{margin-top:.9rem;font-size:.8rem;color:#a78bfa;font-style:italic}
+
+
+/* ── Economy product cards ── */
+.eco-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:.75rem;margin:.85rem 0}
+.eco-flip{height:155px;cursor:pointer;perspective:900px}
+.eco-flip-inner{position:relative;width:100%;height:100%;transition:transform .52s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.eco-flip.flipped .eco-flip-inner{transform:rotateY(180deg)}
+.eco-front,.eco-back-f{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:.9rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.eco-front{background:linear-gradient(135deg,#3d1a00,#c47d1a);border:2px solid rgba(255,200,80,.2);box-shadow:0 4px 18px rgba(196,125,26,.3)}
+.eco-front .ef-icon{font-size:1.9rem;margin-bottom:.4rem}
+.eco-front .ef-name{font-size:.8rem;font-weight:900;color:#ffe4a0;font-family:'Outfit',sans-serif;line-height:1.25}
+.eco-front .ef-hint{font-size:.58rem;color:rgba(255,228,160,.55);margin-top:.3rem;font-style:italic}
+.eco-back-f{background:var(--card);border:2px solid var(--acc3);transform:rotateY(180deg)}
+.eco-back-f .eb-title{font-size:.68rem;font-weight:900;color:var(--acc3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35rem;font-family:'Outfit',sans-serif}
+.eco-back-f .eb-text{font-size:.72rem;color:var(--txt2);line-height:1.52}
+
+/* ── Policy cards ── */
+.policy-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.1rem 1.2rem;margin:.6rem 0;border-left:5px solid var(--acc5);transition:all .2s}
+.policy-card:hover{box-shadow:0 4px 18px var(--shadow);border-left-color:var(--acc5)}
+.policy-header{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.5rem}
+.policy-icon{font-size:1.5rem;flex-shrink:0}
+.policy-name{font-size:.92rem;font-weight:900;color:var(--acc5);font-family:'Outfit',sans-serif;line-height:1.3}
+.policy-year{font-size:.66rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:.15rem}
+.policy-body{font-size:.84rem;color:var(--txt2);line-height:1.72}
+.policy-tag{display:inline-block;background:var(--bg2);border:1px solid var(--border);color:var(--muted);padding:.15rem .55rem;border-radius:6px;font-size:.68rem;font-weight:700;margin:.3rem .2rem 0 0;font-family:'Outfit',sans-serif}
+.policy-tag.tag-ok{background:#dcfce7;color:#14532d;border-color:#16a34a}
+.policy-tag.tag-warn{background:#fef3c7;color:#92400e;border-color:#d97706}
+.policy-tag.tag-bad{background:#fee2e2;color:#991b1b;border-color:#dc2626}
+[data-theme="dark"] .policy-tag.tag-ok{background:#14532d;color:#86efac;border-color:#22c55e}
+[data-theme="dark"] .policy-tag.tag-warn{background:#451a03;color:#fde68a;border-color:#d97706}
+[data-theme="dark"] .policy-tag.tag-bad{background:#450a0a;color:#fca5a5;border-color:#ef4444}
+
+/* ── Carbon meter ── */
+.carbon-meter{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.2rem;margin:.85rem 0}
+.carbon-meter h5{font-size:.82rem;font-weight:900;color:var(--acc1);margin-bottom:.9rem;font-family:'Outfit',sans-serif}
+.carbon-bar-item{margin:.55rem 0}
+.carbon-label{font-size:.78rem;color:var(--txt2);margin-bottom:.22rem;font-weight:600;display:flex;justify-content:space-between;font-family:'Outfit',sans-serif}
+.carbon-bg{background:var(--border);border-radius:6px;height:16px;overflow:hidden;position:relative}
+.carbon-fill{height:100%;border-radius:6px;transition:width 1.4s ease;width:0;position:relative}
+.carbon-fill::after{content:attr(data-label);position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:.6rem;font-weight:800;color:#fff;white-space:nowrap}
+
+/* ── Debate cards ── */
+.debate-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.85rem 0}
+@media(max-width:460px){.debate-grid{grid-template-columns:1fr}}
+.debate-card{border-radius:14px;padding:1rem 1.1rem}
+.debate-card.pro{background:#dcfce7;border:2px solid #16a34a}
+.debate-card.con{background:#fee2e2;border:2px solid #dc2626}
+.debate-card h5{font-size:.82rem;font-weight:900;margin-bottom:.5rem;font-family:'Outfit',sans-serif}
+.debate-card.pro h5{color:#14532d}
+.debate-card.con h5{color:#991b1b}
+.debate-card p{font-size:.78rem;line-height:1.65}
+.debate-card.pro p{color:#14532d}
+.debate-card.con p{color:#991b1b}
+[data-theme="dark"] .debate-card.pro{background:#14532d;border-color:#22c55e}
+[data-theme="dark"] .debate-card.pro h5,.debate-card.pro p{color:#86efac}
+[data-theme="dark"] .debate-card.con{background:#450a0a;border-color:#ef4444}
+[data-theme="dark"] .debate-card.con h5,[data-theme="dark"] .debate-card.con p{color:#fca5a5}
+
+/* ── Timeline horizontal scroll ── */
+.htimeline{overflow-x:auto;padding:.5rem 0 1rem;margin:.85rem 0;-webkit-overflow-scrolling:touch}
+.htimeline::-webkit-scrollbar{height:4px}
+.htimeline::-webkit-scrollbar-track{background:var(--border);border-radius:2px}
+.htimeline::-webkit-scrollbar-thumb{background:var(--acc3);border-radius:2px}
+.htl-inner{display:flex;gap:0;align-items:flex-start;min-width:max-content;padding:0 .5rem}
+.htl-item{display:flex;flex-direction:column;align-items:center;position:relative;width:160px}
+.htl-item:not(:last-child)::after{content:'';position:absolute;top:18px;left:50%;width:100%;height:2px;background:linear-gradient(90deg,var(--acc3),var(--acc1));z-index:0}
+.htl-dot{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--acc3),var(--acc1));border:3px solid var(--bg);box-shadow:0 0 0 3px var(--acc3);display:flex;align-items:center;justify-content:center;font-size:1rem;position:relative;z-index:1;flex-shrink:0}
+.htl-year{font-size:.7rem;font-weight:900;color:var(--acc3);margin-top:.4rem;font-family:'Outfit',sans-serif}
+.htl-text{font-size:.72rem;color:var(--txt2);text-align:center;margin-top:.3rem;line-height:1.45;padding:0 .3rem}
+
+/* ── Quiz drag order ── */
+.order-game-wrap{background:var(--bg2);border:2px solid var(--acc3);border-radius:20px;padding:1.4rem;margin:1rem 0}
+.order-title{font-size:.95rem;font-weight:900;color:var(--acc3);margin-bottom:.5rem;font-family:'Outfit',sans-serif}
+.order-sub{font-size:.78rem;color:var(--muted);margin-bottom:.9rem}
+.order-list{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.8rem}
+.order-item{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:.6rem .85rem;cursor:grab;font-size:.82rem;color:var(--txt);font-family:'Outfit',sans-serif;font-weight:600;display:flex;align-items:center;gap:.6rem;transition:all .18s;user-select:none}
+.order-item:active{cursor:grabbing;transform:scale(1.03);box-shadow:0 4px 14px var(--shadow)}
+.order-item.dragging{opacity:.45;transform:scale(.97)}
+.order-item.order-correct{border-color:#16a34a;background:#dcfce7;color:#14532d;cursor:default}
+.order-item.order-wrong{border-color:#dc2626;background:#fee2e2;color:#991b1b}
+.order-handle{color:var(--muted);font-size:1rem;flex-shrink:0}
+.order-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.order-btn{padding:.44rem 1.1rem;border-radius:999px;border:none;font-size:.78rem;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
+.order-btn.check{background:var(--acc3);color:#fff}
+.order-btn.reset{background:var(--bg3);color:var(--txt2);border:1.5px solid var(--border)}
+.order-btn:hover{transform:scale(1.04)}
+.order-result{font-size:.82rem;font-weight:700;color:var(--acc3);margin-top:.55rem;font-family:'Outfit',sans-serif}
+
+/* ── Number input quiz ── */
+.numquiz-wrap{background:var(--bg2);border:2px solid var(--acc1);border-radius:20px;padding:1.4rem;margin:1rem 0}
+.numquiz-title{font-size:.95rem;font-weight:900;color:var(--acc1);margin-bottom:.5rem;font-family:'Outfit',sans-serif}
+.numquiz-sub{font-size:.78rem;color:var(--muted);margin-bottom:.9rem}
+.nq-item{background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1rem;margin:.5rem 0}
+.nq-question{font-size:.86rem;color:var(--txt);font-weight:600;margin-bottom:.5rem;line-height:1.55}
+.nq-row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.nq-input{background:var(--bg2);border:2px solid var(--border);border-radius:8px;padding:.38rem .7rem;font-size:.9rem;color:var(--txt);font-family:'Outfit',sans-serif;transition:all .18s;width:130px}
+.nq-input:focus{outline:none;border-color:var(--acc1)}
+.nq-input.nq-ok{border-color:#16a34a;background:#dcfce7;color:#14532d}
+.nq-input.nq-err{border-color:#dc2626;background:#fee2e2;color:#991b1b}
+.nq-unit{font-size:.78rem;color:var(--muted);font-family:'Outfit',sans-serif}
+.nq-btn{padding:.38rem .9rem;border-radius:999px;border:none;background:var(--acc1);color:#fff;font-size:.76rem;font-weight:800;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s}
+.nq-btn:hover{opacity:.85}
+.nq-feedback{font-size:.78rem;margin-top:.4rem;font-family:'Outfit',sans-serif;display:none}
+.nq-feedback.show{display:block}
+.nq-feedback.fb-ok{color:#14532d}
+.nq-feedback.fb-err{color:#991b1b}
+[data-theme="dark"] .nq-input.nq-ok{background:#14532d;color:#86efac}
+[data-theme="dark"] .nq-input.nq-err{background:#450a0a;color:#fca5a5}
+[data-theme="dark"] .nq-feedback.fb-ok{color:#86efac}
+[data-theme="dark"] .nq-feedback.fb-err{color:#fca5a5}
+
 </style>
 </head>
 <body>
@@ -3061,6 +3268,965 @@ footer strong { color: var(--acc1); }
 
 <hr class="rainbow-div">
 
+<!-- ══════════════════════════════════════════════════════
+     BLOCO 4 — ECONOMIA E POLÍTICA: Tópicos 7 e 8
+══════════════════════════════════════════════════════ -->
+<div id="bloco4">
+
+  <div class="bloco-header b4">
+    <span class="bloco-num">🌱 Bloco 4 · Tópicos 7–8</span>
+    <h2>Economia e <em>Política na Amazônia</em></h2>
+    <p>Bioeconomia e produtos da floresta · Políticas públicas, desmatamento e disputas territoriais</p>
+  </div>
+
+  <!-- ══════ TÓPICO 7 ══════ -->
+  <section id="c07" class="sec-rel sec-bg-a">
+    <div class="sf-wrap" id="sf07"></div>
+    <div class="sec-inner">
+      <div class="topic-header">
+        <span class="topic-num-pill">Tópico 07 · Economia</span>
+        <h3>🌱 Bioeconomia amazônica: da floresta em pé ao mercado global</h3>
+        <p>Castanha · Açaí · Pirarucu · Créditos de carbono · Do extrativismo às indústrias sustentáveis</p>
+      </div>
+      <div class="content-wrap">
+
+        <!-- mascot -->
+        <div class="c-card fi" id="mascot-c07" style="display:flex;align-items:flex-start;gap:.85rem;background:var(--hl-bg);border:1.5px solid var(--acc1);cursor:pointer;position:relative" onclick="cycleMascot('c07',event)" data-idx="0">
+          <span style="font-size:2.2rem;animation:pfloat 3s ease-in-out infinite;flex-shrink:0">👨🏾‍🏫</span>
+          <div style="flex:1">
+            <div style="font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--acc1);margin-bottom:.2rem">Prof. Paulo diz:</div>
+            <div id="mascot-txt-c07" style="font-size:.84rem;color:var(--txt2);line-height:1.65">A castanha-do-pará só nasce dentro de floresta intacta. Cada tonelada vendida é um argumento econômico para não desmatar. Isso é bioeconomia: a floresta vale mais em pé.</div>
+            <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem;font-style:italic">Clique para mais curiosidades 👆</div>
+          </div>
+          <button style="position:absolute;top:.5rem;right:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:.6rem;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900" onclick="event.stopPropagation();document.getElementById('mascot-c07').style.display='none'">✕</button>
+        </div>
+
+        <div class="tab-wrap fi">
+          <div class="tab-nav">
+            <button class="tab-btn-c on" onclick="switchTabC(this,'tc07-cont')">📖 Conteúdo</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc07-atv')">✍️ Atividades</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc07-quiz')">📊 Quiz</button>
+          </div>
+
+          <div class="tab-panel-c on" id="tc07-cont">
+
+            <div class="c-card fi">
+              <h4>🌿 O que é bioeconomia?</h4>
+              <div class="concept-box">
+                <span class="cb-label">Definição</span>
+                <p>A <strong>bioeconomia</strong> é um modelo econômico que baseia a produção de bens e serviços no uso sustentável da biodiversidade e dos recursos biológicos renováveis, mantendo os ecossistemas funcionando. Na Amazônia, significa: <em>produzir riqueza sem destruir a floresta</em>. A floresta em pé gera mais valor econômico (em castanha, açaí, peixe, serviços ambientais, biofármacos e turismo) do que a pastagem ou a lavoura que a substitui — quando os custos sociais e ambientais são incluídos na conta.</p>
+              </div>
+              <div class="tip-strip" style="margin-top:.8rem"><strong>Dado-chave:</strong> Pesquisa do IPAM (2021) calculou que uma floresta amazônica intacta gera até R$ 35.000/hectare/ano em serviços ecossistêmicos (regulação do clima, água, biodiversidade), enquanto a pastagem gera R$ 900/hectare/ano. A floresta "não produtiva" é 40 vezes mais valiosa — se você considerar o que ela realmente entrega.</div>
+            </div>
+
+            <!-- FLIP CARDS — produtos da bioeconomia -->
+            <div class="c-card fi">
+              <h4>🃏 Produtos da bioeconomia amazônica — clique para descobrir</h4>
+              <div class="eco-grid">
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">🌰</span><div class="ef-name">Castanha-do-Pará</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Castanha-do-Pará</div><div class="eb-text">Só germina em floresta primária intacta. Produção: ~40 mil t/ano no Brasil. Exportações chegam a US$80 mi/ano. Para os povos que a coletam (extrativistas e indígenas), ela é o maior incentivo econômico para preservar a floresta.</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">🫐</span><div class="ef-name">Açaí</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Açaí (Euterpe oleracea)</div><div class="eb-text">De comida ribeirinha pobre a fenômeno global. Em 2022, o Brasil exportou US$700 mi em açaí. O Pará responde por 95% da produção nacional. O desafio: garantir que a riqueza chegue aos coletores ribeirinhos, não só às exportadoras.</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">🐟</span><div class="ef-name">Pirarucu</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Pirarucu (Arapaima gigas)</div><div class="eb-text">Um dos maiores peixes de água doce do mundo (até 3m e 200kg). Quase extinto nos anos 1990 por sobrepesca. Recuperado pelo manejo comunitário: comunidades ribeirinhas monitoram e pescam cota sustentável, e lucram 10x mais do que com pesca predatória.</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">🌳</span><div class="ef-name">Borracha Natural</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Seringueira (Hevea brasiliensis)</div><div class="eb-text">A borracha natural da Amazônia financiou o ciclo econômico que urbanizou Manaus e Belém no séc. XIX. Hoje, a demanda global por borracha natural cresce com a indústria de pneus de caminhões e aviões — que não usam sintética. Nova oportunidade para extrativismo sustentável.</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">♻️</span><div class="ef-name">Crédito de Carbono</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Mercado de Carbono (REDD+)</div><div class="eb-text">Países e empresas que emitem CO₂ podem "compensar" comprando créditos que financiam a preservação de florestas. 1 crédito = 1 tonelada de CO₂ não emitida. A Amazônia pode gerar bilhões em créditos. O debate: quem recebe — o governo, as empresas ou as comunidades que mantêm a floresta?</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">🍫</span><div class="ef-name">Cacau Amazônico</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Cacau nativo amazônico</div><div class="eb-text">O cacau é originário da Amazônia. Variedades nativas (como o cacau-cabeça-de-urucum) têm aromas únicos valorizados pela chocolateria artesanal global. Cultivo em sistemas agroflorestais combina preservação e renda. O Pará é o maior produtor nacional de cacau.</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">🌊</span><div class="ef-name">Turismo de Base Comunitária</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">TBC — Turismo Comunitário</div><div class="eb-text">Modelo em que as próprias comunidades ribeirinhas e indígenas conduzem o turismo na floresta, recebendo a maior parte da renda. Combina preservação, geração de renda e valorização cultural. Em franca expansão no Amazonas e no Pará.</div></div>
+                  </div>
+                </div>
+                <div class="eco-flip" onclick="this.classList.toggle('flipped')">
+                  <div class="eco-flip-inner">
+                    <div class="eco-front"><span class="ef-icon">💊</span><div class="ef-name">Biofármacos</div><div class="ef-hint">toque para saber</div></div>
+                    <div class="eco-back-f"><div class="eb-title">Bioprospecção farmacêutica</div><div class="eb-text">Moléculas de plantas e animais amazônicos com potencial farmacológico. O veneno da cobra-pico-de-jaca originou o Captopril (anti-hipertensivo). Venenos de sapos dendrobátidos são pesquisados como analgésicos. Potencial estimado em bilhões — se feito com ética.</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARBON METER -->
+            <div class="c-card fi">
+              <h4>🌍 Quanto vale a floresta em pé? — Serviços ecossistêmicos</h4>
+              <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.6rem">Os <strong>serviços ecossistêmicos</strong> são benefícios que a natureza fornece gratuitamente à humanidade. A Amazônia entrega:</p>
+              <div class="carbon-meter">
+                <h5>💰 Valor estimado dos serviços ecossistêmicos amazônicos (por ano)</h5>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>🌧️ Regulação do ciclo hidrológico (chuvas)</span><span>R$ 8–18 tri</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="95" data-label="R$ 8–18 tri/ano" style="background:linear-gradient(90deg,#1a4a6b,#0891b2)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>🌡️ Regulação climática (sequestro de carbono)</span><span>R$ 2–6 tri</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="72" data-label="R$ 2–6 tri/ano" style="background:linear-gradient(90deg,#2d5016,#5a8a2e)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>🧬 Biodiversidade e bioprospecção</span><span>R$ 500 bi–1 tri</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="52" data-label="R$ 500bi+" style="background:linear-gradient(90deg,#5a8a2e,#a8e870)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>🌰 Produtos florestais não-madeireiros</span><span>R$ 15–40 bi</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="22" data-label="R$ 15–40 bi/ano" style="background:linear-gradient(90deg,#c47d1a,#d4a520)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>🌾 Comparação: agropecuária na área desmatada</span><span>R$ 30–60 bi</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="28" data-label="R$ 30–60 bi/ano" style="background:linear-gradient(90deg,#7a2525,#c44040)"></div></div>
+                </div>
+                <p style="font-size:.72rem;color:var(--muted);margin-top:.5rem">Estimativas: IPAM, WWF-Brasil, INPE. Valores aproximados incluindo incertezas metodológicas.</p>
+              </div>
+              <div class="alert-strip">⚠️ A agropecuária gera R$ 30–60 bi/ano no espaço desmatado, mas destrói serviços ecossistêmicos que valem 100 vezes mais. Essa diferença define o debate sobre desenvolvimento amazônico.</div>
+            </div>
+
+            <!-- PIRARUCU MANEJO: accordion -->
+            <div class="c-card fi">
+              <h4>🐟 O modelo do Pirarucu — como funciona o manejo comunitário</h4>
+              <div class="accordion-wrap">
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">📉</span><span class="acc-label">Do colapso à recuperação: a história do pirarucu</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>O pirarucu foi caçado quase à extinção nos anos 1970–1990 por ser o maior peixe escamoso de água doce do planeta e ter carne muito valorizada. No final dos anos 1990, populações estavam criticamente baixas em toda a Amazônia.</p>
+                    <p>A virada veio com o manejo comunitário: <strong>comunidades ribeirinhas aprenderam a contar os pirarucus</strong> (usando boia e lança, contagem visual na cheia), definir cotas sustentáveis de pesca (30% do estoque) e monitorar as populações anualmente. Em 20 anos, a população na Reserva de Desenvolvimento Sustentável Mamirauá (AM) cresceu de centenas para mais de 200.000 indivíduos.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">💡</span><span class="acc-label">Por que o manejo comunitário funciona melhor que a legislação pura?</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>A fiscalização estatal da pesca em um território do tamanho da Europa é tecnicamente impossível. O manejo comunitário resolve isso ao alinhar os <strong>incentivos econômicos com a conservação</strong>: a comunidade que gere o pirarucu de forma sustentável lucra mais a longo prazo do que a que pesca de forma predatória.</p>
+                    <p>Uma família que pescava pirarucu de forma predatória obtinha R$ 3–5/kg. Com o manejo comunitário e certificação, o mesmo pirarucu é vendido a restaurantes e supermercados em São Paulo e no exterior por R$ 30–60/kg. O ribeirinho passou de pescador a co-gestor de um recurso natural valioso.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">🌍</span><span class="acc-label">O que é o mercado de carbono e como pode beneficiar a Amazônia?</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>O <strong>mercado de carbono</strong> funciona assim: empresas e países que emitem CO₂ acima de seus limites podem comprar "créditos" que financiam projetos que evitam ou sequestram emissões equivalentes. Uma floresta preservada que não é desmatada "gera" créditos (mecanismo chamado <strong>REDD+</strong>: Redução de Emissões por Desmatamento e Degradação florestal).</p>
+                    <p>A Amazônia brasileira tem potencial para gerar bilhões de dólares em créditos de carbono. O <strong>Fundo Amazônia</strong> (criado em 2008, suspenso em 2019, reativado em 2023) é um dos mecanismos: países como Noruega e Alemanha pagam ao Brasil por reduções de desmatamento mensuradas.</p>
+                    <p><strong>O debate crítico:</strong> Quem recebe o dinheiro? Se vai para o governo federal sem chegar às comunidades que protegem a floresta, o incentivo não funciona. Os povos indígenas e ribeirinhos que de fato mantêm a floresta em pé deveriam ser os principais beneficiários — mas isso ainda não é a regra.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GAME: ORDENAR (linha do tempo econômica) -->
+            <div class="c-card fi">
+              <h4>🔢 Ordene a linha do tempo — ciclos econômicos amazônicos</h4>
+              <div class="order-game-wrap" id="order-c07">
+                <div class="order-title">🔢 Ordene do mais antigo ao mais recente</div>
+                <div class="order-sub">Arraste os eventos para colocá-los em ordem cronológica correta.</div>
+                <div class="order-list" id="order-list-c07"></div>
+                <div class="order-actions">
+                  <button class="order-btn check" onclick="orderCheck('c07')">✅ Verificar ordem</button>
+                  <button class="order-btn reset" onclick="orderInit('c07')">🔄 Reiniciar</button>
+                </div>
+                <div class="order-result" id="order-result-c07"></div>
+              </div>
+            </div>
+
+            <!-- GAME: NUMQUIZ (dados econômicos) -->
+            <div class="c-card fi">
+              <h4>🔢 Quanto você sabe? — Números da bioeconomia amazônica</h4>
+              <div class="numquiz-wrap" id="nq-c07">
+                <div class="numquiz-title">📊 Complete com o número correto</div>
+                <div class="numquiz-sub">Digite o valor numérico e clique em verificar. Aceita valores aproximados.</div>
+                <div id="nq-items-c07"></div>
+              </div>
+            </div>
+
+            <div class="c-card fi">
+              <h4>🎬 Recursos para aprofundar</h4>
+              <div class="res-list">
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=bioeconomia+amazônica+produtos+floresta+mercado+sustentavel')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Bioeconomia amazônica: produtos e potencial</strong><span>Buscar no YouTube · Do extrativismo ao mercado sustentável</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=pirarucu+manejo+comunitario+amazonia+documentario')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Pirarucu: do colapso ao manejo comunitário</strong><span>Buscar no YouTube · Modelo de conservação e renda</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=mercado+de+carbono+REDD+amazonia+fundo+amazonia+explicação')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Mercado de carbono e REDD+ na Amazônia</strong><span>Buscar no YouTube · Créditos de carbono explicados</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://www.ipam.org.br')"><span class="res-icon">🌿</span><div class="res-txt"><strong>IPAM — Instituto de Pesquisa Ambiental da Amazônia</strong><span>ipam.org.br · Relatórios sobre bioeconomia e clima</span></div><span class="res-badge rb-site">Site</span></div>
+              </div>
+            </div>
+
+            <div class="gloss-box fi">
+              <h5>📖 Glossário do Tópico 7</h5>
+              <div class="gloss-item"><strong>Bioeconomia:</strong> Modelo econômico baseado no uso sustentável da biodiversidade, gerando riqueza sem destruir os ecossistemas.</div>
+              <div class="gloss-item"><strong>Serviços ecossistêmicos:</strong> Benefícios que os ecossistemas fornecem gratuitamente à humanidade: regulação do clima, purificação da água, polinização, biodiversidade.</div>
+              <div class="gloss-item"><strong>REDD+:</strong> Redução de Emissões por Desmatamento e Degradação florestal. Mecanismo que remunera países e comunidades por manter florestas em pé.</div>
+              <div class="gloss-item"><strong>Manejo comunitário:</strong> Gestão participativa de recursos naturais por comunidades locais, combinando conhecimento tradicional com monitoramento científico.</div>
+              <div class="gloss-item"><strong>Crédito de carbono:</strong> Certificado que equivale a 1 tonelada de CO₂ não emitida ou sequestrada. Pode ser comprado por empresas para compensar suas emissões.</div>
+              <div class="gloss-item"><strong>Fundo Amazônia:</strong> Mecanismo de doações voluntárias gerido pelo BNDES, criado em 2008, que remunera o Brasil por reduções mensuráveis de desmatamento.</div>
+            </div>
+
+          </div><!-- /tc07-cont -->
+
+          <div class="tab-panel-c" id="tc07-atv">
+            <div class="act-section">
+              <div class="act-title">✍️ Atividades de Fixação — Tópico 07</div>
+              <div class="act-sub">Questões discursivas — responder no caderno</div>
+              <div class="q-card-a"><div class="q-num-a">Questão 01</div><div class="q-text-a">O que é bioeconomia? Por que ela é considerada uma alternativa ao modelo tradicional de desenvolvimento baseado no desmatamento? Use pelo menos dois produtos da floresta como exemplo para construir seu argumento.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 02</div><div class="q-text-a">O açaí passou de "comida de ribeirinho pobre" a produto de exportação global valendo US$700 milhões/ano. Quem se beneficiou mais dessa transformação: os coletores ribeirinhos ou as empresas exportadoras? O que seria necessário para que a riqueza gerada chegasse de forma mais justa às comunidades produtoras?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 03</div><div class="q-text-a">Explique como o manejo comunitário do pirarucu reverteu o colapso populacional do animal. Por que esse modelo funciona melhor do que a fiscalização governamental pura? Quais são os princípios por trás desse sucesso?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 04</div><div class="q-text-a">O que são créditos de carbono e como o mecanismo REDD+ funciona na prática? Analise o debate sobre quem deveria receber os recursos: o governo federal, os estados, as empresas que fazem projetos ou as comunidades que efetivamente protegem a floresta.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 05</div><div class="q-text-a">Pesquisa do IPAM calculou que uma floresta intacta gera até R$35.000/ha/ano em serviços ecossistêmicos, enquanto a pastagem gera R$900/ha/ano. Por que, então, o desmatamento continua? Que fatores econômicos, políticos e sociais explicam essa "irracionalidade"?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 06</div><div class="q-text-a">A castanha-do-pará só nasce em floresta primária intacta. Explique como isso a torna um "produto de conservação involuntária" — um argumento econômico vivo pela preservação. Por que esse modelo não é suficiente por si só para garantir a preservação da floresta?</div><div class="q-note-a">📝 Caderno</div></div>
+            </div>
+          </div>
+
+          <div class="tab-panel-c" id="tc07-quiz">
+            <div class="quiz-wrap" id="qwrap-c07">
+              <div class="quiz-head">
+                <div class="quiz-ttl">📊 Quiz Interativo · Tópico 07</div>
+                <div class="quiz-score"><span>Acertos:</span><span class="sc-n" id="qsn-c07">0</span><span class="sc-t">&nbsp;/ 5</span></div>
+              </div>
+              <div class="quiz-pbar-bg"><div class="quiz-pbar-fill" id="qpb-c07" style="width:0%"></div></div>
+              <div id="qqs-c07"></div>
+              <div class="quiz-result" id="qres-c07">
+                <div class="qr-emoji" id="qre-c07">🏆</div><div class="qr-text" id="qrt-c07"></div>
+                <div class="qr-sub" id="qrs-c07"></div>
+                <button class="qr-retry" onclick="retryQuiz('c07')">🔄 Tentar novamente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rainbow-div">
+
+  <!-- ══════ TÓPICO 8 ══════ -->
+  <section id="c08" class="sec-rel sec-bg-b">
+    <div class="sf-wrap" id="sf08"></div>
+    <div class="sec-inner">
+      <div class="topic-header">
+        <span class="topic-num-pill">Tópico 08 · Política</span>
+        <h3>🏛️ Políticas públicas, desmatamento e disputas territoriais</h3>
+        <p>SNUC · Código Florestal · FUNAI · Marco temporal · Demarcação de terras · Conflitos</p>
+      </div>
+      <div class="content-wrap">
+
+        <!-- mascot -->
+        <div class="c-card fi" id="mascot-c08" style="display:flex;align-items:flex-start;gap:.85rem;background:var(--hl-bg);border:1.5px solid var(--acc1);cursor:pointer;position:relative" onclick="cycleMascot('c08',event)" data-idx="0">
+          <span style="font-size:2.2rem;animation:pfloat 3s ease-in-out infinite;flex-shrink:0">👨🏾‍🏫</span>
+          <div style="flex:1">
+            <div style="font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--acc1);margin-bottom:.2rem">Prof. Paulo diz:</div>
+            <div id="mascot-txt-c08" style="font-size:.84rem;color:var(--txt2);line-height:1.65">O "marco temporal" foi uma tese jurídica que dizia que os indígenas só tinham direito às terras onde estivessem em 5 de outubro de 1988. Mas muitos foram expulsos ANTES dessa data justamente para não ter direito depois. Percebe a armadilha?</div>
+            <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem;font-style:italic">Clique para mais curiosidades 👆</div>
+          </div>
+          <button style="position:absolute;top:.5rem;right:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:.6rem;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900" onclick="event.stopPropagation();document.getElementById('mascot-c08').style.display='none'">✕</button>
+        </div>
+
+        <div class="tab-wrap fi">
+          <div class="tab-nav">
+            <button class="tab-btn-c on" onclick="switchTabC(this,'tc08-cont')">📖 Conteúdo</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc08-atv')">✍️ Atividades</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc08-quiz')">📊 Quiz</button>
+          </div>
+
+          <div class="tab-panel-c on" id="tc08-cont">
+
+            <div class="c-card fi">
+              <h4>📜 O arcabouço legal de proteção ambiental e territorial</h4>
+              <p>Ao longo do século XX e início do XXI, o Brasil construiu um conjunto de leis e instrumentos para proteger a floresta e as populações tradicionais. Conhecê-los é fundamental para entender as disputas políticas atuais.</p>
+            </div>
+
+            <!-- TIMELINE HORIZONTAL -->
+            <div class="c-card fi">
+              <h4>⏳ Linha do tempo das políticas amazônicas — deslize para explorar</h4>
+              <div class="htimeline">
+                <div class="htl-inner">
+                  <div class="htl-item"><div class="htl-dot">🏛️</div><div class="htl-year">1973</div><div class="htl-text">Criação da FUNAI (substituindo o SPI). Órgão federal responsável pela política indigenista.</div></div>
+                  <div class="htl-item"><div class="htl-dot">📜</div><div class="htl-year">1988</div><div class="htl-text">Constituição Federal: artigos 231 e 232 garantem direitos originários dos povos indígenas às suas terras.</div></div>
+                  <div class="htl-item"><div class="htl-dot">🌳</div><div class="htl-year">2000</div><div class="htl-text">SNUC (Lei 9.985): cria o Sistema Nacional de Unidades de Conservação — parques nacionais, reservas, APA etc.</div></div>
+                  <div class="htl-item"><div class="htl-dot">🌿</div><div class="htl-year">2006</div><div class="htl-text">Lei de Gestão de Florestas Públicas: permite a concessão florestal sustentável em áreas federais.</div></div>
+                  <div class="htl-item"><div class="htl-dot">🌲</div><div class="htl-year">2012</div><div class="htl-text">Novo Código Florestal: define reserva legal (80% no bioma amazônico) e Área de Preservação Permanente (APP).</div></div>
+                  <div class="htl-item"><div class="htl-dot">🧬</div><div class="htl-year">2015</div><div class="htl-text">Lei 13.123: Marco Legal da Biodiversidade. Regulamenta acesso a recursos genéticos e saberes tradicionais.</div></div>
+                  <div class="htl-item"><div class="htl-dot">♻️</div><div class="htl-year">2023</div><div class="htl-text">Reativação do Fundo Amazônia. STF derruba tese do marco temporal. Lei 14.701 cria novo regime de demarcação.</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- POLICY CARDS -->
+            <div class="c-card fi">
+              <h4>🏛️ Principais políticas e instrumentos — o que cada um faz</h4>
+
+              <div class="policy-card">
+                <div class="policy-header"><span class="policy-icon">🌳</span><div><div class="policy-name">SNUC — Sistema Nacional de Unidades de Conservação</div><div class="policy-year">Lei 9.985/2000</div></div></div>
+                <div class="policy-body">O SNUC organiza as áreas protegidas brasileiras em dois grupos: <strong>Proteção Integral</strong> (parques nacionais, reservas biológicas — sem habitação humana) e <strong>Uso Sustentável</strong> (Reservas Extrativistas, Reservas de Desenvolvimento Sustentável, APAs — permitem populações tradicionais). As RESEX, criadas pelo movimento dos seringueiros de Chico Mendes, são parte do grupo de uso sustentável. O SNUC protege cerca de 22% do território nacional.</div>
+                <div><span class="policy-tag tag-ok">Proteção Integral</span><span class="policy-tag tag-ok">Uso Sustentável</span><span class="policy-tag">RESEX</span><span class="policy-tag">Parques Nacionais</span></div>
+              </div>
+
+              <div class="policy-card">
+                <div class="policy-header"><span class="policy-icon">📋</span><div><div class="policy-name">Código Florestal — Reserva Legal e APP</div><div class="policy-year">Lei 12.651/2012</div></div></div>
+                <div class="policy-body">O Código Florestal determina que propriedades rurais na Amazônia devem manter <strong>80% de Reserva Legal</strong> (área com cobertura de vegetação nativa) e respeitar as <strong>Áreas de Preservação Permanente</strong> (APPs: margens de rios, topos de morro, nascentes). O código de 2012 foi criticado por anistiar desmatamentos ilegais anteriores a 2008. O <strong>CAR (Cadastro Ambiental Rural)</strong> é o sistema de registro dessas obrigações.</div>
+                <div><span class="policy-tag tag-ok">Reserva Legal 80%</span><span class="policy-tag tag-ok">APP</span><span class="policy-tag tag-warn">Anistia 2008</span><span class="policy-tag">CAR</span></div>
+              </div>
+
+              <div class="policy-card">
+                <div class="policy-header"><span class="policy-icon">🏹</span><div><div class="policy-name">Demarcação de Terras Indígenas — FUNAI e CF/88</div><div class="policy-year">Art. 231–232 CF/1988</div></div></div>
+                <div class="policy-body">A Constituição de 1988 reconhece os direitos originários dos povos indígenas às terras que <em>"tradicionalmente ocupam"</em>. O processo de demarcação é conduzido pela FUNAI e envolve estudos antropológicos, consulta às comunidades, aprovação do Ministério da Justiça e homologação presidencial. Existem hoje 764 Terras Indígenas no Brasil (dados FUNAI 2023): 487 homologadas, 23 declaradas, 254 em fase de estudo. As TIs cobrem cerca de 13% do território nacional — a maioria na Amazônia.</div>
+                <div><span class="policy-tag tag-ok">764 TIs no Brasil</span><span class="policy-tag">FUNAI</span><span class="policy-tag tag-warn">254 em estudo</span><span class="policy-tag">Direitos originários</span></div>
+              </div>
+
+              <div class="policy-card">
+                <div class="policy-header"><span class="policy-icon">⚖️</span><div><div class="policy-name">A tese do Marco Temporal e a decisão do STF</div><div class="policy-year">STF: setembro/2023</div></div></div>
+                <div class="policy-body">A tese do <strong>marco temporal</strong> defendia que povos indígenas só teriam direito às terras em que estivessem <em>fisicamente presentes ou em disputa</em> em 5 de outubro de 1988 (data da promulgação da CF). Em setembro de 2023, o STF julgou inconstitucional essa tese por 9 a 2 — reconhecendo que muitos povos foram expulsos de suas terras antes dessa data justamente para não terem direito depois. Apesar disso, o Congresso aprovou a Lei 14.701/2023 que incorporou elementos do marco temporal, criando nova disputa jurídica.</div>
+                <div><span class="policy-tag tag-bad">Marco Temporal</span><span class="policy-tag tag-ok">STF 9x2</span><span class="policy-tag tag-warn">Lei 14.701/2023</span><span class="policy-tag">Disputa Congresso x STF</span></div>
+              </div>
+
+            </div>
+
+            <!-- DESMATAMENTO DATA -->
+            <div class="c-card fi">
+              <h4>📊 Desmatamento na Amazônia — o que os dados dizem</h4>
+              <div class="carbon-meter">
+                <h5>🌳 Desmatamento anual na Amazônia Legal — km² (INPE/PRODES)</h5>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>📉 Pico histórico: 1995</span><span>29.059 km²</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="100" data-label="29.059 km²" style="background:linear-gradient(90deg,#7a2525,#c44040)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>📉 Mínimo histórico: 2012</span><span>4.571 km²</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="16" data-label="4.571 km²" style="background:linear-gradient(90deg,#2d5016,#5a8a2e)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>📈 Pico recente: 2021</span><span>13.235 km²</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="46" data-label="13.235 km²" style="background:linear-gradient(90deg,#c47d1a,#d4a520)"></div></div>
+                </div>
+                <div class="carbon-bar-item">
+                  <div class="carbon-label"><span>📉 Redução: 2023</span><span>11.568 km²</span></div>
+                  <div class="carbon-bg"><div class="carbon-fill" data-w="40" data-label="11.568 km²" style="background:linear-gradient(90deg,#1a4a6b,#0891b2)"></div></div>
+                </div>
+              </div>
+              <div class="tip-strip"><strong>Para compreender:</strong> 1 km² = 100 hectares = 140 campos de futebol. Em 2021, foram desmatados 13.235 km² — o equivalente a 1.851.900 campos de futebol em um único ano. O desmatamento acumulado desde 1970 já ultrapassou 800.000 km² — uma área maior que a França.</div>
+            </div>
+
+            <!-- DEBATE PRO/CON -->
+            <div class="c-card fi">
+              <h4>⚖️ O debate: quem tem razão na disputa pela terra amazônica?</h4>
+              <p style="font-size:.84rem;color:var(--muted);margin-bottom:.7rem">O conflito fundiário amazônico envolve perspectivas radicalmente distintas. Conheça os principais argumentos — com senso crítico:</p>
+              <div class="debate-grid">
+                <div class="debate-card pro">
+                  <h5>✅ Argumento pela demarcação ampla e preservação</h5>
+                  <p>• Povos indígenas são os melhores guardiões da floresta: TIs têm 40% menos desmatamento<br>• A Constituição garante direitos originários, anteriores à própria nação<br>• A floresta em pé protege o clima, as chuvas e a economia agrícola do Brasil todo<br>• A biodiversidade amazônica é patrimônio irrecuperável da humanidade</p>
+                </div>
+                <div class="debate-card con">
+                  <h5>⚠️ Argumento pelo desenvolvimento e segurança jurídica</h5>
+                  <p>• O Brasil precisa produzir alimentos — a Amazônia tem potencial agrícola imenso<br>• Produtores rurais que ocuparam terras há décadas precisam de segurança jurídica<br>• O marco temporal daria previsibilidade ao processo de demarcação<br>• A soberania nacional sobre a Amazônia não pode ser condicionada por pressão internacional</p>
+                </div>
+              </div>
+              <div class="alert-strip" style="margin-top:.6rem">⚠️ <strong>Análise crítica:</strong> O argumento pelo "desenvolvimento" frequentemente desconsidera que (1) o desmatamento não é necessário para a produção agropecuária — já há terra desmatada suficiente; (2) o STF reconheceu por 9x2 a inconstitucionalidade do marco temporal; (3) os serviços ecossistêmicos da floresta intacta valem economicamente muito mais do que a pastagem que a substitui.</div>
+            </div>
+
+            <!-- GAME: TF t8 -->
+            <div class="c-card fi">
+              <h4>⚡ Verdadeiro ou Falso? — Políticas e desmatamento</h4>
+              <div class="tf-wrap" id="tf-c08">
+                <div class="tf-title">⚡ Verdadeiro ou Falso — Teste rápido!</div>
+                <div class="tf-sub">10 afirmações sobre políticas públicas, desmatamento e disputas territoriais na Amazônia.</div>
+                <div class="tf-progress" id="tf-dots-c08"></div>
+                <div class="tf-statement" id="tf-stmt-c08">Carregando...</div>
+                <div class="tf-btns">
+                  <button class="tf-btn v" id="tf-vbtn-c08" onclick="tfAnswer('c08',true)">✅ Verdadeiro</button>
+                  <button class="tf-btn f" id="tf-fbtn-c08" onclick="tfAnswer('c08',false)">❌ Falso</button>
+                </div>
+                <div class="tf-feedback" id="tf-fb-c08"></div>
+                <button class="tf-next" id="tf-next-c08" style="display:none" onclick="tfNext('c08')">Próxima →</button>
+                <div class="tf-score" id="tf-score-c08"></div>
+              </div>
+            </div>
+
+            <div class="c-card fi">
+              <h4>🎬 Recursos para aprofundar</h4>
+              <div class="res-list">
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=marco+temporal+terras+indigenas+STF+decisao+explicação')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Marco temporal: o que foi, o que decidiu o STF</strong><span>Buscar no YouTube · A disputa jurídica explicada</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=desmatamento+amazonia+INPE+dados+causas+quem+desmata')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Desmatamento na Amazônia: dados, causas e atores</strong><span>Buscar no YouTube · Análise do INPE e pesquisadores</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://terrasindigenas.socioambiental.org')"><span class="res-icon">🗺️</span><div class="res-txt"><strong>ISA — Terras Indígenas do Brasil (mapa interativo)</strong><span>socioambiental.org · Mapa e dados de todas as TIs brasileiras</span></div><span class="res-badge rb-site">Site</span></div>
+                <div class="res-item" onclick="window.open('https://www.inpe.br/queimadas')"><span class="res-icon">🔥</span><div class="res-txt"><strong>INPE — Monitoramento do desmatamento (PRODES)</strong><span>inpe.br · Dados oficiais atualizados de desmatamento</span></div><span class="res-badge rb-gov">Gov</span></div>
+              </div>
+            </div>
+
+            <div class="gloss-box fi">
+              <h5>📖 Glossário do Tópico 8</h5>
+              <div class="gloss-item"><strong>SNUC:</strong> Sistema Nacional de Unidades de Conservação (Lei 9.985/2000). Organiza as áreas protegidas brasileiras em Proteção Integral e Uso Sustentável.</div>
+              <div class="gloss-item"><strong>Reserva Legal:</strong> Área de vegetação nativa que todo imóvel rural na Amazônia deve manter intacta (mínimo de 80% da propriedade).</div>
+              <div class="gloss-item"><strong>APP:</strong> Área de Preservação Permanente. Faixas de vegetação nativa em margens de rios, nascentes, topos de morro — proteção obrigatória por lei.</div>
+              <div class="gloss-item"><strong>Marco temporal:</strong> Tese jurídica que limitava os direitos indígenas às terras em que estivessem presentes em 5/10/1988. Declarada inconstitucional pelo STF em 2023 (9x2).</div>
+              <div class="gloss-item"><strong>FUNAI:</strong> Fundação Nacional dos Povos Indígenas (antiga Fundação Nacional do Índio). Órgão federal responsável pela política indigenista e pelos processos de demarcação.</div>
+              <div class="gloss-item"><strong>PRODES (INPE):</strong> Programa de Monitoramento do Desmatamento da Amazônia Legal. Mede anualmente o desmatamento por satélite — principal fonte de dados sobre a floresta.</div>
+            </div>
+
+          </div><!-- /tc08-cont -->
+
+          <div class="tab-panel-c" id="tc08-atv">
+            <div class="act-section">
+              <div class="act-title">✍️ Atividades de Fixação — Tópico 08</div>
+              <div class="act-sub">Questões discursivas — responder no caderno</div>
+              <div class="q-card-a"><div class="q-num-a">Questão 01</div><div class="q-text-a">Explique o que é a tese do "marco temporal" e por que o STF a considerou inconstitucional por 9 votos a 2. Por que essa decisão é historicamente importante para os povos indígenas brasileiros?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 02</div><div class="q-text-a">O SNUC divide as áreas protegidas em "Proteção Integral" e "Uso Sustentável". Explique a diferença entre os dois grupos e por que a existência de categorias de uso sustentável (como as RESEX) foi uma inovação importante para a conservação amazônica.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 03</div><div class="q-text-a">O desmatamento na Amazônia atingiu seu mínimo histórico em 2012 (4.571 km²) e depois voltou a crescer. O que explica essa trajetória? Quais políticas e fatores políticos contribuíram para a queda e depois para o aumento do desmatamento?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 04</div><div class="q-text-a">Estudos mostram que Terras Indígenas têm 40% menos desmatamento do que áreas equivalentes sem proteção especial. Isso significa que os povos indígenas são os melhores guardiões da floresta. Analise essa afirmação: ela é politicamente neutra? Que consequências políticas ela tem para o debate sobre demarcação?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 05</div><div class="q-text-a">O Código Florestal de 2012 exige que propriedades rurais na Amazônia mantenham 80% de reserva legal, mas o mesmo código "anistiou" desmatamentos ilegais anteriores a 2008. Analise essa contradição: é possível ter uma lei ambiental forte e ao mesmo tempo garantir segurança jurídica a quem desmatou ilegalmente?</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 06</div><div class="q-text-a">Em sua opinião, como o Brasil deveria equilibrar a necessidade de desenvolvimento econômico com a preservação da Amazônia e os direitos dos povos tradicionais? Construa um argumento original, usando pelo menos três evidências do que você estudou neste bimestre.</div><div class="q-note-a">📝 Caderno</div></div>
+            </div>
+          </div>
+
+          <div class="tab-panel-c" id="tc08-quiz">
+            <div class="quiz-wrap" id="qwrap-c08">
+              <div class="quiz-head">
+                <div class="quiz-ttl">📊 Quiz Interativo · Tópico 08</div>
+                <div class="quiz-score"><span>Acertos:</span><span class="sc-n" id="qsn-c08">0</span><span class="sc-t">&nbsp;/ 5</span></div>
+              </div>
+              <div class="quiz-pbar-bg"><div class="quiz-pbar-fill" id="qpb-c08" style="width:0%"></div></div>
+              <div id="qqs-c08"></div>
+              <div class="quiz-result" id="qres-c08">
+                <div class="qr-emoji" id="qre-c08">🏆</div><div class="qr-text" id="qrt-c08"></div>
+                <div class="qr-sub" id="qrs-c08"></div>
+                <button class="qr-retry" onclick="retryQuiz('c08')">🔄 Tentar novamente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /bloco4 -->
+
+<hr class="rainbow-div">
+
+<!-- ══════════════════════════════════════════════════════
+     BLOCO 5 — LEITURA CRÍTICA E REVISÃO: Tópicos 9 e 10
+══════════════════════════════════════════════════════ -->
+<div id="bloco5">
+
+  <div class="bloco-header b5">
+    <span class="bloco-num">🔍 Bloco 5 · Tópicos 9–10</span>
+    <h2>Leitura Crítica e <em>Revisão Integradora</em></h2>
+    <p>Análise de fontes e desinformação sobre a Amazônia · Mapa conceitual e revisão geral do bimestre</p>
+  </div>
+
+  <!-- ══════ TÓPICO 9 ══════ -->
+  <section id="c09" class="sec-rel sec-bg-a">
+    <div class="sf-wrap" id="sf09"></div>
+    <div class="sec-inner">
+      <div class="topic-header">
+        <span class="topic-num-pill">Tópico 09 · Crítica</span>
+        <h3>🔍 Análise de fontes sobre a Amazônia: fatos, mitos e desinformação</h3>
+        <p>Como identificar fake news · Critérios para avaliar fontes · Detector interativo de desinformação</p>
+      </div>
+      <div class="content-wrap">
+
+        <!-- mascot -->
+        <div class="c-card fi" id="mascot-c09" style="display:flex;align-items:flex-start;gap:.85rem;background:var(--hl-bg);border:1.5px solid var(--acc1);cursor:pointer;position:relative" onclick="cycleMascot('c09',event)" data-idx="0">
+          <span style="font-size:2.2rem;animation:pfloat 3s ease-in-out infinite;flex-shrink:0">👨🏾‍🏫</span>
+          <div style="flex:1">
+            <div style="font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--acc1);margin-bottom:.2rem">Prof. Paulo diz:</div>
+            <div id="mascot-txt-c09" style="font-size:.84rem;color:var(--txt2);line-height:1.65">Em 2019, algumas fotos de \"queimadas na Amazônia\" usadas por jornais internacionais eram de anos anteriores — e uma delas era da Índia. Até o NYT errou. Então sim: você PRECISA saber verificar fontes.</div>
+            <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem;font-style:italic">Clique para mais curiosidades 👆</div>
+          </div>
+          <button style="position:absolute;top:.5rem;right:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:.6rem;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900" onclick="event.stopPropagation();document.getElementById('mascot-c09').style.display='none'">✕</button>
+        </div>
+
+        <div class="tab-wrap fi">
+          <div class="tab-nav">
+            <button class="tab-btn-c on" onclick="switchTabC(this,'tc09-cont')">📖 Conteúdo</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc09-atv')">✍️ Atividades</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc09-quiz')">📊 Quiz</button>
+          </div>
+
+          <!-- ─── CONTEÚDO ─── -->
+          <div class="tab-panel-c on" id="tc09-cont">
+
+            <!-- INTRO -->
+            <div class="c-card fi">
+              <h4>📰 Informação, desinformação e infodemia</h4>
+              <div class="concept-box">
+                <span class="cb-label">Definição</span>
+                <p>A <strong>desinformação</strong> é o conjunto de informações falsas, enganosas ou sem contexto que circulam deliberadamente para confundir, manipular ou provocar reações emocionais. Quando a desinformação se espalha em escala epidêmica, especialmente durante crises, chamamos de <strong>infodemia</strong>. A Amazônia é um dos temas mais afetados pela desinformação no Brasil e no mundo: tanto narrativas que subestimam os problemas ambientais quanto as que os exageram distorcem o debate público e dificultam políticas eficazes.</p>
+              </div>
+              <div class="tip-strip" style="margin-top:.8rem">💡 A palavra <em>fake news</em> é um anglicismo popularizado pelos algoritmos das redes sociais. O conceito correto em português é <em>desinformação</em> — mais amplo e preciso, pois inclui notícias falsas, manipulação de contexto, imagens fora de época, titulares enganosos e sátira apresentada como fato.</div>
+            </div>
+
+            <!-- TIPOS DE DESINFORMAÇÃO -->
+            <div class="c-card fi">
+              <h4>🧩 Tipos de desinformação — saiba identificar</h4>
+              <div class="accordion-wrap">
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">🤥</span><span class="acc-label">Fake News — informação completamente falsa</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>Conteúdo criado para parecer jornalismo mas que não tem nenhuma base factual. Objetivo: viralizar para influenciar opiniões, geralmente com viés político ou econômico. <strong>Exemplo amazônico:</strong> mensagens atribuindo queimadas a indígenas sem nenhuma evidência, circuladas em 2019 para desviar a atenção do desmatamento ilegal.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">⚠️</span><span class="acc-label">Conteúdo enganoso — verdade fora de contexto</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>Informação tecnicamente correta, mas apresentada sem o contexto necessário para ser compreendida corretamente. <strong>Exemplo amazônico:</strong> a frase "a Amazônia produz 20% do oxigênio do planeta" é tecnicamente verdadeira — a floresta realiza fotossíntese equivalente a 20% do O₂ global. Mas também <em>consome</em> aproximadamente a mesma quantidade pela respiração de seus organismos. O balanço líquido de oxigênio é próximo de zero. A afirmação isolada cria uma impressão incorreta da função real da floresta (que é o sequestro de carbono, não a produção de oxigênio).</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">🖼️</span><span class="acc-label">Imagem fora de época ou lugar</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>Foto ou vídeo real, mas usado para ilustrar um evento diferente. <strong>Exemplo amazônico:</strong> durante as queimadas de 2019, fotografia de 1989 do fotógrafo Sebastião Salgado foi amplamente compartilhada como sendo das queimadas atuais. O conteúdo é real e impactante — mas o contexto temporal estava errado, o que gera distorção.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">🎭</span><span class="acc-label">Sátira e paródia apresentadas como fato</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>Conteúdo criado com humor ou crítica, que é compartilhado sem o aviso de que é ficção. <strong>Exemplo:</strong> sites de sátira política publicam manchetes absurdas sobre a Amazônia que são compartilhadas como se fossem verdadeiras por pessoas que não perceberam a ironia.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">📊</span><span class="acc-label">Dado real, conclusão errada</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>Um número ou estatística real é apresentado junto a uma conclusão que ele não sustenta. <strong>Exemplo amazônico:</strong> "o desmatamento caiu X% — logo as políticas do governo estão funcionando" — quando na verdade a queda pode ser sazonal, metodológica ou explicada por outros fatores não relacionados às políticas mencionadas.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MITOS vs REALIDADE -->
+            <div class="c-card fi">
+              <h4>🧐 Os maiores mitos sobre a Amazônia — e o que a ciência diz</h4>
+              <div class="alert-strip" style="margin-bottom:.8rem">⚠️ Estes mitos circulam amplamente, muitas vezes em fontes aparentemente sérias. Conhecê-los é o primeiro passo para não reproduzi-los.</div>
+
+              <div class="policy-card" style="border-left-color:#7c3aed;margin-bottom:.6rem">
+                <div class="policy-header"><span class="policy-icon">💨</span>
+                  <div><div class="policy-name" style="color:#7c3aed">MITO: "A Amazônia é o pulmão do mundo e produz 20% do oxigênio global"</div></div>
+                </div>
+                <div class="policy-body"><strong>Realidade:</strong> A floresta produz e consume aproximadamente a mesma quantidade de oxigênio — o balanço líquido é próximo de zero. A função real e crítica da Amazônia é o <strong>sequestro de carbono</strong>: armazenar CO₂ que, se liberado, aceleraria as mudanças climáticas. A metáfora do "pulmão" é poética e politicamente motivadora, mas cientificamente imprecisa — e pode distorcer o debate sobre o papel real da floresta no clima.</div>
+                <div><span class="policy-tag tag-warn">Enganoso</span><span class="policy-tag">Fonte: Carlos Nobre / INPE</span></div>
+              </div>
+
+              <div class="policy-card" style="border-left-color:var(--acc4);margin-bottom:.6rem">
+                <div class="policy-header"><span class="policy-icon">🏹</span>
+                  <div><div class="policy-name" style="color:var(--acc4)">MITO: "Indígenas vivem isolados, sem tecnologia, como há séculos"</div></div>
+                </div>
+                <div class="policy-body"><strong>Realidade:</strong> A maioria dos 305 povos indígenas do Brasil tem acesso a celulares, internet e redes sociais. Líderes como Sônia Guajajara (Ministra dos Povos Indígenas em 2023) têm projeção nacional e internacional. Jovens Yanomami postam no Instagram. Comunidades usam drones para monitorar invasões em seus territórios. O isolamento é a exceção, não a regra — e os povos em isolamento voluntário têm esse direito respeitado por lei.</div>
+                <div><span class="policy-tag tag-bad">Falso</span><span class="policy-tag">Fonte: FUNAI / ISA</span></div>
+              </div>
+
+              <div class="policy-card" style="border-left-color:var(--acc3);margin-bottom:.6rem">
+                <div class="policy-header"><span class="policy-icon">🔥</span>
+                  <div><div class="policy-name" style="color:var(--acc3)">MITO: "Todas as queimadas na Amazônia são criminosas e ilegais"</div></div>
+                </div>
+                <div class="policy-body"><strong>Realidade:</strong> Comunidades indígenas e ribeirinhas têm direito ao uso controlado e tradicional do fogo em suas roças — prática milenar reconhecida pela legislação brasileira. O problema são as queimadas criminosas associadas ao desmatamento ilegal e à grilagem de terras, que representam a maior parte do fogo registrado pelo satélite. Tratar todo fogo como crime invisibiliza práticas culturais legítimas.</div>
+                <div><span class="policy-tag tag-warn">Enganoso</span><span class="policy-tag">Fonte: INPE / legislação ambiental</span></div>
+              </div>
+
+              <div class="policy-card" style="border-left-color:var(--acc4);margin-bottom:.6rem">
+                <div class="policy-header"><span class="policy-icon">🗺️</span>
+                  <div><div class="policy-name" style="color:var(--acc4)">MITO: "A Amazônia pertence exclusivamente ao Brasil"</div></div>
+                </div>
+                <div class="policy-body"><strong>Realidade:</strong> A bacia amazônica abrange 9 países: Brasil (60%), Peru, Colômbia, Venezuela, Equador, Bolívia, Guiana, Suriname e Guiana Francesa. O Brasil tem a maior porção, mas o ecossistema é transfronteiriço e qualquer política de proteção eficaz exige coordenação internacional. Em 2023, líderes dos países amazônicos se reuniram em Belém para a Cúpula da Amazônia exatamente por isso.</div>
+                <div><span class="policy-tag tag-bad">Falso</span><span class="policy-tag">Contexto geopolítico</span></div>
+              </div>
+
+              <div class="policy-card" style="border-left-color:#7c3aed;margin-bottom:.6rem">
+                <div class="policy-header"><span class="policy-icon">🌡️</span>
+                  <div><div class="policy-name" style="color:#7c3aed">REALIDADE CIENTÍFICA: O "ponto de não-retorno" (tipping point) é real</div></div>
+                </div>
+                <div class="policy-body"><strong>Fato:</strong> Pesquisas de Carlos Nobre (INPE) e Thomas Lovejoy publicadas em <em>Science Advances</em> (2018) identificaram que, se a Amazônia perder entre 20-25% de sua cobertura original, pode atingir um ponto de não-retorno climático. Atualmente, cerca de 18% foi desmatada. Isso significa que estamos próximos de um limiar a partir do qual a floresta pode se tornar incapaz de manter seu próprio ciclo hídrico e se transformar em savana — processo chamado de "savanização".</div>
+                <div><span class="policy-tag tag-ok">Verdadeiro</span><span class="policy-tag">Science Advances, 2018</span></div>
+              </div>
+            </div>
+
+            <!-- COMO VERIFICAR FONTES -->
+            <div class="c-card fi">
+              <h4>🔬 Como verificar uma fonte — checklist prático</h4>
+              <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Antes de compartilhar qualquer informação sobre a Amazônia (ou qualquer outro tema), percorra esta lista. Cada item marcado aumenta a confiabilidade da fonte.</p>
+              <ul class="src-check-list" id="src-checklist">
+                <li onclick="srcToggle(this)"><span>O autor está identificado com nome, formação e afiliação institucional?</span></li>
+                <li onclick="srcToggle(this)"><span>A publicação é de um veículo com equipe editorial revisora (jornalismo profissional, universidade, órgão governamental)?</span></li>
+                <li onclick="srcToggle(this)"><span>Os dados e afirmações têm fontes citadas e verificáveis (INPE, IBGE, FUNAI, ISA, institutos de pesquisa)?</span></li>
+                <li onclick="srcToggle(this)"><span>A data de publicação é recente e o conteúdo foi atualizado?</span></li>
+                <li onclick="srcToggle(this)"><span>O título da matéria corresponde ao que o texto realmente diz (sem clickbait)?</span></li>
+                <li onclick="srcToggle(this)"><span>A imagem foi verificada com pesquisa reversa (Google Imagens) para confirmar data e local?</span></li>
+                <li onclick="srcToggle(this)"><span>A informação é confirmada por pelo menos duas fontes independentes?</span></li>
+                <li onclick="srcToggle(this)"><span>O conteúdo não apela exclusivamente para emoções (medo, raiva, indignação) sem dados concretos?</span></li>
+              </ul>
+              <div class="tip-strip">🔍 <strong>Ferramentas gratuitas de verificação:</strong> <strong>Aos Fatos</strong> (aosfatos.org), <strong>Agência Lupa</strong> (lupa.news), <strong>Comprova</strong> (projetocomprova.com.br), <strong>Google Imagens</strong> (pesquisa reversa de imagens) e <strong>TinEye</strong> (tineye.com) para rastrear a origem de fotos.</div>
+            </div>
+
+            <!-- GAME: FND -->
+            <div class="c-card fi">
+              <h4>🕵️ Detector de desinformação — você consegue identificar?</h4>
+              <p style="font-size:.84rem;color:var(--txt2);margin-bottom:.7rem">Para cada afirmação abaixo, classifique: ela é <strong>✅ Verdadeira</strong>, <strong>⚠️ Enganosa</strong> (verdade incompleta ou fora de contexto) ou <strong>❌ Falsa</strong>.</p>
+              <div class="fnd-game" id="fnd-c09">
+                <div class="fnd-progress">
+                  <div class="fnd-dots" id="fnd-dots-c09"></div>
+                  <div style="font-size:.76rem;color:var(--muted)">Acertos: <span id="fnd-sc-c09" style="font-weight:800;color:var(--acc1)">0</span> / <span id="fnd-tot-c09">8</span></div>
+                </div>
+                <div id="fnd-card-c09">
+                  <div class="fnd-badge" id="fnd-badge-c09">📰 Afirmação</div>
+                  <div class="fnd-statement" id="fnd-stmt-c09">Carregando o detector...</div>
+                  <div class="fnd-source" id="fnd-src-c09"></div>
+                  <div class="fnd-btns">
+                    <button class="fnd-btn v" id="fnd-vbtn-c09" onclick="fndAnswer('c09','v')">✅ Verdadeiro</button>
+                    <button class="fnd-btn e" id="fnd-ebtn-c09" onclick="fndAnswer('c09','e')">⚠️ Enganoso</button>
+                    <button class="fnd-btn f" id="fnd-fbtn-c09" onclick="fndAnswer('c09','f')">❌ Falso</button>
+                  </div>
+                  <div class="fnd-feedback" id="fnd-fb-c09"></div>
+                  <button class="fnd-next-btn" id="fnd-next-c09" onclick="fndNext('c09')">Próxima →</button>
+                </div>
+                <div class="fnd-result" id="fnd-res-c09" style="display:none">
+                  <div class="fnd-result-emoji" id="fnd-re-c09">🎓</div>
+                  <div class="fnd-result-txt" id="fnd-rt-c09"></div>
+                  <button class="fnd-retry" onclick="fndInit('c09')">🔄 Tentar novamente</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- TRUE/FALSE -->
+            <div class="c-card fi">
+              <h4>💬 Verdadeiro ou Falso — Análise de Fontes</h4>
+              <div class="tf-wrap" id="tf-c09">
+                <div class="tf-header"><div class="tf-title">Teste seus conhecimentos</div></div>
+                <div class="tf-progress" id="tf-dots-c09"></div>
+                <div class="tf-statement" id="tf-stmt-c09">Carregando...</div>
+                <div class="tf-actions">
+                  <button class="tf-btn v" id="tf-vbtn-c09" onclick="tfAnswer('c09',true)">✅ Verdadeiro</button>
+                  <button class="tf-btn f" id="tf-fbtn-c09" onclick="tfAnswer('c09',false)">❌ Falso</button>
+                </div>
+                <div class="tf-feedback" id="tf-fb-c09"></div>
+                <button class="tf-next" id="tf-next-c09" style="display:none" onclick="tfNext('c09')">Próxima →</button>
+                <div class="tf-score" id="tf-score-c09"></div>
+              </div>
+            </div>
+
+            <!-- RECURSOS -->
+            <div class="c-card fi">
+              <h4>🎬 Recursos para aprofundar — Análise de Fontes</h4>
+              <div class="res-list">
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=como+verificar+fake+news+desinformação+amazônia+fact+checking')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Como verificar fake news sobre a Amazônia</strong><span>Buscar no YouTube · Fact-checking e verificação de fontes</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://www.youtube.com/results?search_query=infodemia+desinformação+ambiental+queimadas+amazônia+verificação')"><span class="res-icon">▶️</span><div class="res-txt"><strong>Infodemia e desinformação ambiental</strong><span>Buscar no YouTube · A crise das queimadas de 2019 e as fake news</span></div><span class="res-badge rb-yt">YT</span></div>
+                <div class="res-item" onclick="window.open('https://aosfatos.org')"><span class="res-icon">🔍</span><div class="res-txt"><strong>Aos Fatos — verificação de notícias</strong><span>aosfatos.org · Principal agência de fact-checking do Brasil</span></div><span class="res-badge rb-site">Site</span></div>
+                <div class="res-item" onclick="window.open('https://lupa.news')"><span class="res-icon">🔍</span><div class="res-txt"><strong>Agência Lupa — checagem</strong><span>lupa.news · Verificação independente de fatos e dados</span></div><span class="res-badge rb-site">Site</span></div>
+              </div>
+            </div>
+
+            <!-- GLOSSÁRIO -->
+            <div class="gloss-box fi">
+              <h5>📖 Glossário do Tópico 9</h5>
+              <div class="gloss-item"><strong>Desinformação:</strong> Informação falsa, incompleta ou fora de contexto, difundida com ou sem intenção deliberada de enganar.</div>
+              <div class="gloss-item"><strong>Fake news:</strong> Conteúdo deliberadamente falso apresentado no formato de notícia jornalística para enganar e viralizar.</div>
+              <div class="gloss-item"><strong>Infodemia:</strong> Excesso de informações falsas e verdadeiras circulando simultaneamente, dificultando a distinção entre elas — especialmente durante crises.</div>
+              <div class="gloss-item"><strong>Fact-checking:</strong> Prática de verificar afirmações de interesse público contra evidências verificáveis, classificando-as quanto à veracidade.</div>
+              <div class="gloss-item"><strong>Conteúdo enganoso:</strong> Informação tecnicamente verdadeira mas apresentada sem o contexto necessário, criando impressão falsa.</div>
+              <div class="gloss-item"><strong>Pesquisa reversa de imagem:</strong> Técnica de buscar a origem de uma imagem usando a própria imagem como chave de pesquisa (Google Imagens, TinEye).</div>
+              <div class="gloss-item"><strong>Tipping point (ponto de não-retorno):</strong> Limiar a partir do qual um sistema — como a floresta amazônica — perde a capacidade de se autorregular e passa por mudança irreversível.</div>
+            </div>
+
+          </div><!-- /tc09-cont -->
+
+          <!-- ─── ATIVIDADES ─── -->
+          <div class="tab-panel-c" id="tc09-atv">
+            <div class="act-section">
+              <div class="act-title">✍️ Atividades de Fixação — Tópico 09</div>
+              <div class="act-sub">Questões discursivas — responder no caderno</div>
+              <div class="q-card-a"><div class="q-num-a">Questão 01</div><div class="q-text-a">O que diferencia uma "fake news" de um "conteúdo enganoso"? Use um exemplo específico sobre a Amazônia para ilustrar cada tipo, explicando por que a distinção importa para o debate ambiental.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 02</div><div class="q-text-a">A frase "a Amazônia produz 20% do oxigênio do planeta" circula amplamente na mídia e é usada por ambientalistas de boa-fé. Explique por que ela é classificada como "enganosa" e qual seria a forma correta de descrever a função real da floresta amazônica para o clima global.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 03</div><div class="q-text-a">Por que uma notícia com muitos compartilhamentos e curtidas nas redes sociais NÃO pode ser considerada mais confiável? Cite a pesquisa do MIT mencionada no conteúdo e explique as implicações para o consumo de informação.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 04</div><div class="q-text-a">Você recebe uma mensagem no WhatsApp com uma foto impactante de queimadas na Amazônia e um texto alarmante pedindo compartilhamento urgente. Descreva os passos que você seguiria para verificar a autenticidade dessa informação antes de repassá-la.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 05</div><div class="q-text-a">O mito de que "os indígenas vivem isolados e sem tecnologia" persiste mesmo com evidências em contrário. Quais seriam os interesses políticos e econômicos que se beneficiam da manutenção desse estereótipo? Relacione sua resposta com o que você aprendeu sobre narrativas externas sobre a Amazônia.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 06</div><div class="q-text-a">A cobertura jornalística da Amazônia frequentemente simplifica realidades complexas. Dê dois exemplos de como essa simplificação pode prejudicar tanto os povos amazônicos quanto as políticas de preservação, usando temas estudados neste bimestre.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 07</div><div class="q-text-a">O conceito de "tipping point" (ponto de não-retorno) na Amazônia tem base científica sólida. Explique o que acontece após esse ponto, segundo as pesquisas citadas no conteúdo, e relacione esse conceito com a urgência das políticas de proteção ambiental estudadas no Bloco 4.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 08</div><div class="q-text-a">Compare o papel de um órgão como o INPE com o de agências de fact-checking como Aos Fatos e Agência Lupa. Como esses diferentes tipos de instituição contribuem para o acesso à informação confiável sobre a Amazônia? Qual a importância de que sejam independentes do governo?</div><div class="q-note-a">📝 Caderno</div></div>
+            </div>
+          </div><!-- /tc09-atv -->
+
+          <!-- ─── QUIZ ─── -->
+          <div class="tab-panel-c" id="tc09-quiz">
+            <div class="quiz-wrap" id="qwrap-c09">
+              <div class="quiz-head">
+                <div class="quiz-ttl">📊 Quiz Interativo · Tópico 09</div>
+                <div class="quiz-score"><span>Acertos:</span><span class="sc-n" id="qsn-c09">0</span><span class="sc-t">&nbsp;/ 5</span></div>
+              </div>
+              <div class="quiz-pbar-bg"><div class="quiz-pbar-fill" id="qpb-c09" style="width:0%"></div></div>
+              <div id="qqs-c09"></div>
+              <div class="quiz-result" id="qres-c09">
+                <div class="qr-emoji" id="qre-c09">🏆</div><div class="qr-text" id="qrt-c09"></div>
+                <div class="qr-sub" id="qrs-c09"></div>
+                <button class="qr-retry" onclick="retryQuiz('c09')">🔄 Tentar novamente</button>
+              </div>
+            </div>
+          </div><!-- /tc09-quiz -->
+
+        </div><!-- /tab-wrap -->
+      </div><!-- /content-wrap -->
+    </div><!-- /sec-inner -->
+  </section><!-- /c09 -->
+
+  <!-- ══════ TÓPICO 10 ══════ -->
+  <section id="c10" class="sec-rel sec-bg-b">
+    <div class="sf-wrap" id="sf10"></div>
+    <div class="sec-inner">
+      <div class="topic-header">
+        <span class="topic-num-pill" style="background:linear-gradient(90deg,#7c3aed,var(--acc1))">Tópico 10 · Revisão</span>
+        <h3>⭐ Sistematização e revisão geral do bimestre</h3>
+        <p>Mapa conceitual interativo · Revisão bloco a bloco · Dicas de estudo com IA · Avaliação integradora</p>
+      </div>
+      <div class="content-wrap">
+
+        <!-- mascot -->
+        <div class="c-card fi" id="mascot-c10" style="display:flex;align-items:flex-start;gap:.85rem;background:var(--hl-bg);border:1.5px solid var(--acc1);cursor:pointer;position:relative" onclick="cycleMascot('c10',event)" data-idx="0">
+          <span style="font-size:2.2rem;animation:pfloat 3s ease-in-out infinite;flex-shrink:0">👨🏾‍🏫</span>
+          <div style="flex:1">
+            <div style="font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--acc1);margin-bottom:.2rem">Prof. Paulo diz:</div>
+            <div id="mascot-txt-c10" style="font-size:.84rem;color:var(--txt2);line-height:1.65">Você chegou ao final! Isso já coloca você à frente de 60% dos estudantes que abandonam o material no meio. Agora o negócio é conectar os pontos — e o mapa conceitual vai te ajudar nisso.</div>
+            <div style="font-size:.68rem;color:var(--muted);margin-top:.3rem;font-style:italic">Clique para mais curiosidades 👆</div>
+          </div>
+          <button style="position:absolute;top:.5rem;right:.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:22px;height:22px;font-size:.6rem;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900" onclick="event.stopPropagation();document.getElementById('mascot-c10').style.display='none'">✕</button>
+        </div>
+
+        <div class="tab-wrap fi">
+          <div class="tab-nav">
+            <button class="tab-btn-c on" onclick="switchTabC(this,'tc10-cont')">📖 Revisão</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc10-atv')">✍️ Atividades</button>
+            <button class="tab-btn-c" onclick="switchTabC(this,'tc10-quiz')">📊 Quiz</button>
+          </div>
+
+          <!-- ─── CONTEÚDO / REVISÃO ─── -->
+          <div class="tab-panel-c on" id="tc10-cont">
+
+            <!-- MAPA CONCEITUAL -->
+            <div class="c-card fi">
+              <h4>🗺️ Mapa conceitual do bimestre — clique em cada nó</h4>
+              <p style="font-size:.8rem;color:var(--muted);margin-bottom:.7rem">Toque em qualquer bloco temático para ver um resumo do que você aprendeu. O nó central conecta todos os temas.</p>
+              <div class="cmap-outer">
+                <div class="cmap-svg-wrap">
+                  <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+                    <!-- Connection lines -->
+                    <line x1="200" y1="170" x2="200" y2="58" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="6,4" opacity=".55"/>
+                    <line x1="200" y1="170" x2="330" y2="108" stroke="#059669" stroke-width="2.5" stroke-dasharray="6,4" opacity=".55"/>
+                    <line x1="200" y1="170" x2="305" y2="268" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,4" opacity=".55"/>
+                    <line x1="200" y1="170" x2="95"  y2="268" stroke="#1a4a6b" stroke-width="2.5" stroke-dasharray="6,4" opacity=".55"/>
+                    <line x1="200" y1="170" x2="70"  y2="108" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" opacity=".55"/>
+                    <!-- Central node -->
+                    <g class="cmap-node-g" onclick="cmapShow('centro')" style="cursor:pointer">
+                      <circle cx="200" cy="170" r="48" fill="#2d5016" opacity=".92"/>
+                      <circle cx="200" cy="170" r="48" fill="none" stroke="#6abf40" stroke-width="2" opacity=".6"/>
+                      <text x="200" y="162" text-anchor="middle" fill="#e8f8d0" font-size="11" font-weight="bold" font-family="Outfit,sans-serif">AMAZÔNIA</text>
+                      <text x="200" y="176" text-anchor="middle" fill="#b8e8a0" font-size="8.5" font-family="Outfit,sans-serif">Identidades,</text>
+                      <text x="200" y="187" text-anchor="middle" fill="#b8e8a0" font-size="8.5" font-family="Outfit,sans-serif">Narrativas e Saberes</text>
+                    </g>
+                    <!-- Node B1 — top -->
+                    <g class="cmap-node-g" onclick="cmapShow('b1')" style="cursor:pointer">
+                      <circle cx="200" cy="45" r="34" fill="#7c3aed" opacity=".9"/>
+                      <text x="200" y="40" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Outfit,sans-serif">🌍 Território</text>
+                      <text x="200" y="53" text-anchor="middle" fill="white" font-size="8" font-family="Outfit,sans-serif">e Imaginário</text>
+                    </g>
+                    <!-- Node B2 — top-right -->
+                    <g class="cmap-node-g" onclick="cmapShow('b2')" style="cursor:pointer">
+                      <circle cx="330" cy="98" r="34" fill="#059669" opacity=".9"/>
+                      <text x="330" y="93" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Outfit,sans-serif">🗣️ Narrativas</text>
+                      <text x="330" y="106" text-anchor="middle" fill="white" font-size="8" font-family="Outfit,sans-serif">e Cultura</text>
+                    </g>
+                    <!-- Node B3 — bottom-right -->
+                    <g class="cmap-node-g" onclick="cmapShow('b3')" style="cursor:pointer">
+                      <circle cx="305" cy="275" r="34" fill="#c47d1a" opacity=".9"/>
+                      <text x="305" y="270" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Outfit,sans-serif">📱 Digital</text>
+                      <text x="305" y="283" text-anchor="middle" fill="white" font-size="8" font-family="Outfit,sans-serif">e Saberes</text>
+                    </g>
+                    <!-- Node B4 — bottom-left -->
+                    <g class="cmap-node-g" onclick="cmapShow('b4')" style="cursor:pointer">
+                      <circle cx="95" cy="275" r="34" fill="#1a4a6b" opacity=".9"/>
+                      <text x="95" y="270" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Outfit,sans-serif">🌱 Economia</text>
+                      <text x="95" y="283" text-anchor="middle" fill="white" font-size="8" font-family="Outfit,sans-serif">e Política</text>
+                    </g>
+                    <!-- Node B5 — top-left -->
+                    <g class="cmap-node-g" onclick="cmapShow('b5')" style="cursor:pointer">
+                      <circle cx="70" cy="98" r="34" fill="#dc2626" opacity=".9"/>
+                      <text x="70" y="93" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Outfit,sans-serif">🔍 Crítica</text>
+                      <text x="70" y="106" text-anchor="middle" fill="white" font-size="8" font-family="Outfit,sans-serif">e Revisão</text>
+                    </g>
+                  </svg>
+                </div>
+                <!-- popup area -->
+                <div class="cmap-popup" id="cmap-popup">
+                  <button class="cmap-popup-close" onclick="document.getElementById('cmap-popup').classList.remove('show')">✕</button>
+                  <div class="cmap-popup-title" id="cmap-ptitle"></div>
+                  <div class="cmap-popup-desc" id="cmap-pdesc"></div>
+                  <div class="cmap-popup-topics" id="cmap-ptopics"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVISÃO BLOCO A BLOCO -->
+            <div class="c-card fi">
+              <h4>📚 Revisão bloco a bloco — marque o que você estudou</h4>
+              <p style="font-size:.8rem;color:var(--muted);margin-bottom:.7rem">Toque em cada card para marcá-lo como revisado. Acompanhe seu progresso pela barra.</p>
+              <div class="rev-grid" id="rev-grid">
+                <div class="rev-card fi" onclick="revToggle(this,'r1')">
+                  <div class="rc-num">Bloco 1 · Tópicos 1–2</div>
+                  <div class="rc-ttl">🌍 Território e Imaginário</div>
+                  <div class="rc-sub">Construção social, diversidade urbana e regional</div>
+                  <span class="rc-chk">⬜</span>
+                </div>
+                <div class="rev-card fi" onclick="revToggle(this,'r2')">
+                  <div class="rc-num">Bloco 2 · Tópicos 3–4</div>
+                  <div class="rc-ttl">🗣️ Narrativas e Cultura</div>
+                  <div class="rc-sub">Oralidade, mitologia e literatura amazônica</div>
+                  <span class="rc-chk">⬜</span>
+                </div>
+                <div class="rev-card fi" onclick="revToggle(this,'r3')">
+                  <div class="rc-num">Bloco 3 · Tópicos 5–6</div>
+                  <div class="rc-ttl">📱 Digital e Saberes</div>
+                  <div class="rc-sub">Ativismo digital, biopirataria e propriedade intelectual</div>
+                  <span class="rc-chk">⬜</span>
+                </div>
+                <div class="rev-card fi" onclick="revToggle(this,'r4')">
+                  <div class="rc-num">Bloco 4 · Tópicos 7–8</div>
+                  <div class="rc-ttl">🌱 Economia e Política</div>
+                  <div class="rc-sub">Bioeconomia, REDD+, desmatamento e disputas territoriais</div>
+                  <span class="rc-chk">⬜</span>
+                </div>
+                <div class="rev-card fi" onclick="revToggle(this,'r5')" style="grid-column:1/-1">
+                  <div class="rc-num">Bloco 5 · Tópicos 9–10</div>
+                  <div class="rc-ttl">🔍 Leitura Crítica e Revisão</div>
+                  <div class="rc-sub">Análise de fontes, desinformação e revisão integradora</div>
+                  <span class="rc-chk">⬜</span>
+                </div>
+              </div>
+              <div class="rev-prog">
+                <div class="rev-pbar"><div class="rev-pfill" id="rev-pfill" style="width:0%"></div></div>
+                <span id="rev-pct" style="font-weight:800;color:var(--acc1)">0%</span>
+              </div>
+            </div>
+
+            <!-- GRANDES TEMAS INTEGRADOS -->
+            <div class="c-card fi">
+              <h4>🔗 Os grandes temas que conectam tudo — revisão integradora</h4>
+              <div class="accordion-wrap">
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">⚖️</span><span class="acc-label">Território + Política: a disputa pelo espaço amazônico</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>A Amazônia é um território disputado em múltiplas dimensões: pela definição de quem pertence a ela (indígenas vs. fazendeiros vs. ribeirinhos vs. cidades), por políticas de uso da terra (SNUC, marco temporal, Código Florestal), e por narrativas nacionais e internacionais sobre soberania e conservação. Entender o território como construção social (Bloco 1) é o fundamento para analisar as disputas políticas (Bloco 4).</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">📚</span><span class="acc-label">Saberes + Biopirataria: o conhecimento como campo de poder</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>O patrimônio cultural imaterial (Bloco 2) e os saberes tradicionais sobre plantas e animais (Bloco 3) não são apenas questões culturais — são questões econômicas e de poder. A biopirataria acontece quando o conhecimento gerado por comunidades ao longo de milênios é apropriado sem consentimento ou compensação. A bioeconomia (Bloco 4) só é ética quando esse conhecimento é reconhecido e remunerado.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">📱</span><span class="acc-label">Digital + Crítica: tecnologia como ferramenta e ameaça</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>A tecnologia digital (Bloco 3) é uma ferramenta de poder para povos indígenas — que usam drones, redes sociais e aplicativos para monitorar seus territórios e amplificar suas vozes. Mas a mesma tecnologia é o veículo da desinformação (Bloco 5). Desenvolver literacia digital crítica — saber usar a tecnologia e saber desconfiar dela — é a habilidade fundamental do século XXI.</p>
+                  </div>
+                </div>
+                <div class="acc-item">
+                  <button class="acc-trigger" onclick="toggleAcc(this)"><span class="acc-icon">🌿</span><span class="acc-label">Bioeconomia + Narrativas: quem conta a história decide o futuro</span><span class="acc-arrow">›</span></button>
+                  <div class="acc-body">
+                    <p>A narrativa dominante sobre a Amazônia — floresta como obstáculo ao progresso econômico ou como natureza intocada sem humanos — ignora a realidade das populações que lá vivem e produzem. A bioeconomia (Bloco 4) mostra que riqueza e preservação são compatíveis. Mas isso só se torna política pública quando as narrativas corretas (Bloco 2) e as fontes confiáveis (Bloco 5) chegam ao debate público.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DICAS COM IA -->
+            <div class="c-card fi">
+              <h4>🤖 Estude mais com ferramentas de IA — dicas do Prof. Paulo</h4>
+              <div class="tip-strip" style="margin-bottom:.9rem">💡 As IAs abaixo são aliadas do estudo — não substituem a leitura, mas ajudam a aprofundar, testar conhecimentos e conectar ideias. Use com senso crítico!</div>
+              <div class="ai-grid">
+                <div class="ai-card" onclick="window.open('https://notebooklm.google.com')">
+                  <div class="ai-icon">📓</div>
+                  <div class="ai-name">NotebookLM</div>
+                  <div class="ai-tip">Carregue este livro (PDF) e faça perguntas sobre o conteúdo. Gera resumos e podcasts automáticos!</div>
+                </div>
+                <div class="ai-card" onclick="window.open('https://gemini.google.com')">
+                  <div class="ai-icon">✨</div>
+                  <div class="ai-name">Gemini</div>
+                  <div class="ai-tip">Peça para criar um quiz sobre Amazônia e bioeconomia. Ótimo para revisão guiada por perguntas.</div>
+                </div>
+                <div class="ai-card" onclick="window.open('https://chat.openai.com')">
+                  <div class="ai-icon">💬</div>
+                  <div class="ai-name">ChatGPT</div>
+                  <div class="ai-tip">Peça para simular uma "defesa de tese" sobre cada tópico e ele vai te questionar e corrigir.</div>
+                </div>
+                <div class="ai-card" onclick="window.open('https://grok.x.com')">
+                  <div class="ai-icon">🚀</div>
+                  <div class="ai-name">Grok</div>
+                  <div class="ai-tip">Ótimo para buscar notícias recentes sobre desmatamento e políticas amazônicas. Conectado à internet.</div>
+                </div>
+              </div>
+              <div class="alert-strip" style="margin-top:.7rem">⚠️ <strong>Cuidado:</strong> IAs podem cometer erros e alucinar fatos. Sempre verifique informações importantes em fontes primárias como INPE, FUNAI, ISA e IPAM antes de usá-las em trabalhos.</div>
+            </div>
+
+            <!-- MENSAGEM FINAL -->
+            <div class="final-msg-card fi">
+              <h4>🌿 Uma última palavra do Prof. Paulo</h4>
+              <p>Você chegou ao fim deste bimestre com um repertório que vai muito além de "a Amazônia é importante". Você sabe agora que ela é território disputado, sistema de saberes, campo de batalha político, mercado em potencial e alvo constante de desinformação. Você aprendeu a olhar para as narrativas e perguntar: <em>quem conta essa história? A partir de qual lugar? Com quais interesses?</em></p>
+              <p style="margin-top:.7rem">Isso é pensamento crítico. É a habilidade mais importante que uma escola pode te dar. A Amazônia foi só o palco. A capacidade de analisar, questionar e construir argumentos baseados em evidências vai com você para qualquer debate — sobre qualquer tema.</p>
+              <p style="margin-top:.7rem">Bons estudos. A floresta continua precisando de quem a conheça de verdade.</p>
+              <div class="fm-sig">Prof. Paulo Roberto R. Magalhães · E.E. Padre Carlos Casavequia · 2026</div>
+            </div>
+
+          </div><!-- /tc10-cont -->
+
+          <!-- ─── ATIVIDADES ─── -->
+          <div class="tab-panel-c" id="tc10-atv">
+            <div class="act-section">
+              <div class="act-title">✍️ Atividades Integradoras — Tópico 10</div>
+              <div class="act-sub">Questões discursivas e integrativas — responder no caderno</div>
+              <div class="q-card-a"><div class="q-num-a">Questão 01</div><div class="q-text-a">Construa um parágrafo argumentativo que conecte pelo menos TRÊS blocos do bimestre para responder: "A proteção da Amazônia é apenas uma questão ambiental?" Use conceitos como construção social do território, bioeconomia, saberes tradicionais e desinformação em sua resposta.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 02</div><div class="q-text-a">Você é assessor(a) de um político que precisa fazer um discurso sobre a Amazônia. Com base no que aprendeu sobre desinformação (Tópico 9) e narrativas (Bloco 2), escreva orientações sobre o que ele DEVE e o que NÃO DEVE dizer para ser preciso, justo e eficaz politicamente.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 03</div><div class="q-text-a">Compare o modelo de "bioeconomia" estudado no Bloco 4 com o modelo de "desenvolvimento" baseado no desmatamento. Use dados concretos do material (IPAM, pirarucu, castanha, crédito de carbono) para construir um argumento econômico — não apenas ambiental — pela preservação.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 04</div><div class="q-text-a">Descreva como a tecnologia digital funciona simultaneamente como aliada e como ameaça para os povos amazônicos. Use exemplos concretos do Bloco 3 (ativismo digital, TikTok Yanomami, drones) e do Bloco 5 (desinformação, fake news sobre queimadas) em sua resposta.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 05</div><div class="q-text-a">Escreva um texto dissertativo-argumentativo com o título: "A Amazônia que eu aprendi a ver: narrativas, saberes e política." O texto deve ter introdução, desenvolvimento e conclusão, e mencionar pelo menos cinco conceitos estudados ao longo do bimestre.</div><div class="q-note-a">📝 Caderno</div></div>
+              <div class="q-card-a"><div class="q-num-a">Questão 06</div><div class="q-text-a">O que mudou na sua visão sobre a Amazônia depois deste bimestre? Identifique pelo menos dois conceitos ou informações que você desconhecia antes e explique como eles mudaram sua forma de pensar sobre o tema.</div><div class="q-note-a">📝 Caderno</div></div>
+            </div>
+          </div><!-- /tc10-atv -->
+
+          <!-- ─── QUIZ ─── -->
+          <div class="tab-panel-c" id="tc10-quiz">
+            <div class="quiz-wrap" id="qwrap-c10">
+              <div class="quiz-head">
+                <div class="quiz-ttl">⭐ Quiz de Revisão Geral · Bimestre completo</div>
+                <div class="quiz-score"><span>Acertos:</span><span class="sc-n" id="qsn-c10">0</span><span class="sc-t">&nbsp;/ 5</span></div>
+              </div>
+              <div class="quiz-pbar-bg"><div class="quiz-pbar-fill" id="qpb-c10" style="width:0%"></div></div>
+              <div id="qqs-c10"></div>
+              <div class="quiz-result" id="qres-c10">
+                <div class="qr-emoji" id="qre-c10">🏆</div><div class="qr-text" id="qrt-c10"></div>
+                <div class="qr-sub" id="qrs-c10"></div>
+                <button class="qr-retry" onclick="retryQuiz('c10')">🔄 Tentar novamente</button>
+              </div>
+            </div>
+          </div><!-- /tc10-quiz -->
+
+        </div><!-- /tab-wrap -->
+      </div><!-- /content-wrap -->
+    </div><!-- /sec-inner -->
+  </section><!-- /c10 -->
+
+</div><!-- /bloco5 -->
+
+<hr class="rainbow-div">
+
 <footer>
   <p>
     <strong>Amazônia: Identidades, Narrativas e Conhecimentos</strong><br>
@@ -4081,6 +5247,854 @@ if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',globalInit);
 } else {
   setTimeout(globalInit,100);
+}
+
+/* ═══════════════════════════════════════════════
+   BLOCO 4 — JAVASCRIPT
+═══════════════════════════════════════════════ */
+
+/* Section floaters */
+Object.assign(SF_DATA, {
+  sf07: ['🌰','🫐','🐟','🌳','♻️','🍫','💊','🌊','💰','🌿'],
+  sf08: ['🏛️','⚖️','🗺️','📜','🏹','🌳','🔥','📋','✊','🌿']
+});
+['sf07','sf08'].forEach(id => {
+  const wrap = document.getElementById(id);
+  if (!wrap) return;
+  const items = SF_DATA[id];
+  function spawnB4() {
+    const el = document.createElement('span');
+    el.className = 'sf';
+    el.textContent = items[Math.floor(Math.random() * items.length)];
+    el.style.left = (Math.random() * 94) + '%';
+    const d = Math.random() * 20 + 12;
+    el.style.animationDuration = d + 's';
+    el.style.animationDelay = (Math.random() * 3) + 's';
+    wrap.appendChild(el);
+    setTimeout(() => el.remove(), (d + 4) * 1000);
+  }
+  for (let i = 0; i < 3; i++) spawnB4();
+  setInterval(spawnB4, 3500 + Math.random() * 2000);
+});
+
+/* Mascot messages */
+Object.assign(MASCOT_MSGS, {
+  c07: [
+    'A castanha-do-pará só nasce em floresta primária intacta. Cada tonelada vendida é um argumento vivo contra o desmatamento.',
+    'O açaí virou febre global — mas quem enriqueceu mais foram os exportadores, não os coletores ribeirinhos do Pará.',
+    'O pirarucu estava quase extinto. O manejo comunitário fez a população crescer de centenas para 200.000 em 20 anos.',
+    'Uma floresta amazônica intacta gera 40x mais valor econômico por hectare do que a pastagem que a substitui.'
+  ],
+  c08: [
+    'O "marco temporal" foi uma tese jurídica que premiava quem expulsou os indígenas antes de 1988. O STF derrubou por 9x2.',
+    'Terras Indígenas têm 40% menos desmatamento que áreas equivalentes. Os indígenas são os melhores gestores da floresta.',
+    'Em 2021 foram desmatados 13.235 km² da Amazônia — o equivalente a 1,8 milhão de campos de futebol em um ano.',
+    'O mínimo histórico de desmatamento foi em 2012: 4.571 km². Resultado de políticas coordenadas e fiscalização ativa.'
+  ]
+});
+
+/* Extend SECTION_IDS */
+['c07','c08'].forEach(id => {
+  if (!SECTION_IDS.includes(id)) SECTION_IDS.push(id);
+  const el = document.getElementById(id);
+  if (el) pauloSecObs.observe(el);
+});
+
+/* Extend quiz switcher */
+const _origSwitch = window.switchTabC;
+window.switchTabC = function(btn, panelId) {
+  _origSwitch(btn, panelId);
+  if (panelId === 'tc07-quiz') initQuiz('c07');
+  if (panelId === 'tc08-quiz') initQuiz('c08');
+};
+
+/* ── ORDER GAME (drag to sort chronologically) ── */
+const ORDER_DATA = {
+  c07: {
+    items: [
+      { id: 'o1', text: '🌳 Borracha — primeiro ciclo extrativista de exportação em massa da Amazônia', year: 1850 },
+      { id: 'o2', text: '🏙️ Construção da Zona Franca de Manaus — polo industrial na floresta', year: 1967 },
+      { id: 'o3', text: '🌰 Criação das primeiras Reservas Extrativistas — modelo de Chico Mendes', year: 1990 },
+      { id: 'o4', text: '🫐 Boom global do açaí — produto amazônico vira hit nos EUA e Europa', year: 2005 },
+      { id: 'o5', text: '♻️ Fundo Amazônia — Noruega e Alemanha pagam pelo desmatamento evitado', year: 2008 },
+      { id: 'o6', text: '🐟 Pirarucu ultrapassa 200.000 ind. no Mamirauá — manejo comunitário funciona', year: 2018 }
+    ],
+    correctOrder: ['o1','o2','o3','o4','o5','o6']
+  }
+};
+const ORDER_STATE = {};
+
+function orderInit(id) {
+  const data = ORDER_DATA[id];
+  if (!data) return;
+  const shuffled = [...data.items].sort(() => Math.random() - .5);
+  ORDER_STATE[id] = { items: shuffled, dragging: null };
+  const list = document.getElementById('order-list-' + id);
+  if (!list) return;
+  list.innerHTML = '';
+  shuffled.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'order-item';
+    el.id = 'oi-' + item.id;
+    el.dataset.id = item.id;
+    el.draggable = true;
+    el.innerHTML = `<span class="order-handle">⠿</span><span>${item.text}</span>`;
+    el.addEventListener('dragstart', () => {
+      ORDER_STATE[id].dragging = el;
+      setTimeout(() => el.classList.add('dragging'), 0);
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      ORDER_STATE[id].dragging = null;
+    });
+    el.addEventListener('dragover', e => {
+      e.preventDefault();
+      const dragging = ORDER_STATE[id].dragging;
+      if (!dragging || dragging === el) return;
+      const rect = el.getBoundingClientRect();
+      const mid = rect.top + rect.height / 2;
+      if (e.clientY < mid) list.insertBefore(dragging, el);
+      else list.insertBefore(dragging, el.nextSibling);
+    });
+    list.appendChild(el);
+  });
+  const resultEl = document.getElementById('order-result-' + id);
+  if (resultEl) resultEl.textContent = '';
+  list.querySelectorAll('.order-item').forEach(el => {
+    el.classList.remove('order-correct', 'order-wrong');
+  });
+}
+
+function orderCheck(id) {
+  const data = ORDER_DATA[id];
+  if (!data) return;
+  const list = document.getElementById('order-list-' + id);
+  if (!list) return;
+  const items = list.querySelectorAll('.order-item');
+  let correct = 0;
+  items.forEach((el, idx) => {
+    el.classList.remove('order-correct', 'order-wrong');
+    if (el.dataset.id === data.correctOrder[idx]) {
+      el.classList.add('order-correct');
+      correct++;
+    } else {
+      el.classList.add('order-wrong');
+    }
+  });
+  const resultEl = document.getElementById('order-result-' + id);
+  const pct = Math.round(correct / data.correctOrder.length * 100);
+  if (resultEl) {
+    resultEl.textContent = pct === 100
+      ? '🏆 Ordem perfeita! Você domina a história da bioeconomia!'
+      : `${correct}/${data.correctOrder.length} na posição correta. ${pct >= 60 ? '📚 Quase lá!' : '🔄 Tente novamente!'} Verde = correto, Vermelho = incorreto.`;
+  }
+  pauloShow(pct === 100 ? getRnd(PAULO_PHRASES.correct) + ' Cronologia perfeita!' : getRnd(PAULO_PHRASES.wrong), pct >= 80 ? 'right' : 'wrong', false);
+  setEmojiP(pct >= 80 ? '😄' : '😅');
+}
+
+/* ── NUMQUIZ (numeric answers) ── */
+const NQ_DATA = {
+  c07: [
+    { q: 'Segundo pesquisa do IPAM, uma floresta intacta gera até R$___/ha/ano em serviços ecossistêmicos.', answer: 35000, tolerance: 5000, unit: 'R$/ha/ano', hint: 'É muito mais do que a pastagem (R$900)' },
+    { q: 'O Brasil exportou aproximadamente US$___ milhões em açaí em 2022.', answer: 700, tolerance: 100, unit: 'US$ mi', hint: 'Um número redondo entre 600 e 800' },
+    { q: 'O pirarucu pode atingir até ___m de comprimento, sendo um dos maiores peixes de água doce do mundo.', answer: 3, tolerance: 0.5, unit: 'metros', hint: 'Pense em um veículo bem grande' },
+    { q: 'As Terras Indígenas cobrem cerca de ___% do território nacional brasileiro.', answer: 13, tolerance: 2, unit: '%', hint: 'Entre 10% e 15%' },
+    { q: 'O desmatamento mínimo histórico na Amazônia foi registrado em 2012: ___km².', answer: 4571, tolerance: 500, unit: 'km²', hint: 'Pouco abaixo de 5.000' }
+  ]
+};
+
+function nqInit(id) {
+  const data = NQ_DATA[id];
+  if (!data) return;
+  const container = document.getElementById('nq-items-' + id);
+  if (!container) return;
+  container.innerHTML = '';
+  data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'nq-item';
+    div.innerHTML = `
+      <div class="nq-question">${item.q}</div>
+      <div class="nq-row">
+        <input class="nq-input" type="number" placeholder="Número..." id="nqi-${id}-${i}" data-answer="${item.answer}" data-tol="${item.tolerance}">
+        <span class="nq-unit">${item.unit}</span>
+        <button class="nq-btn" onclick="nqCheck('${id}',${i})">Verificar</button>
+      </div>
+      <div class="nq-feedback" id="nqf-${id}-${i}"><em style="color:var(--muted);font-size:.76rem">💡 Dica: ${item.hint}</em></div>`;
+    container.appendChild(div);
+    // show hint on focus
+    div.querySelector('.nq-input').addEventListener('focus', () => {
+      const fb = document.getElementById('nqf-' + id + '-' + i);
+      if (fb) fb.classList.add('show');
+    });
+  });
+}
+
+function nqCheck(id, idx) {
+  const inp = document.getElementById('nqi-' + id + '-' + idx);
+  if (!inp) return;
+  const val = parseFloat(inp.value);
+  const ans = parseFloat(inp.dataset.answer);
+  const tol = parseFloat(inp.dataset.tol);
+  const fb = document.getElementById('nqf-' + id + '-' + idx);
+  if (isNaN(val)) {
+    if (fb) { fb.className = 'nq-feedback show fb-err'; fb.textContent = '❌ Digite um número válido.'; }
+    return;
+  }
+  const isOk = Math.abs(val - ans) <= tol;
+  inp.classList.remove('nq-ok', 'nq-err');
+  inp.classList.add(isOk ? 'nq-ok' : 'nq-err');
+  if (fb) {
+    fb.className = 'nq-feedback show ' + (isOk ? 'fb-ok' : 'fb-err');
+    fb.textContent = isOk
+      ? `✅ Correto! A resposta é ${ans}.`
+      : `❌ Errado. A resposta correta é aproximadamente ${ans}. Você digitou ${val}.`;
+  }
+  if (isOk) { pauloShow(getRnd(PAULO_PHRASES.correct), 'right', false); setEmojiP('😄'); }
+  else { pauloShow(getRnd(PAULO_PHRASES.wrong), 'wrong', false); setEmojiP('😅'); }
+}
+
+/* ── TF DATA for t08 ── */
+Object.assign(TF_DATA, {
+  c08: [
+    { stmt: 'A tese do marco temporal estabelecia que os indígenas só teriam direito às terras onde estivessem fisicamente presentes em 5 de outubro de 1988.', correct: true, exp: 'VERDADEIRO. A tese do marco temporal usava a data da promulgação da Constituição como limite — ignorando que muitos povos foram expulsos de suas terras justamente antes dessa data para não terem direito depois.' },
+    { stmt: 'O STF declarou o marco temporal constitucional por unanimidade em setembro de 2023.', correct: false, exp: 'FALSO. O STF declarou o marco temporal INCONSTITUCIONAL, por 9 votos a 2. A decisão reconheceu os direitos originários dos povos indígenas, anteriores à própria Constituição.' },
+    { stmt: 'O SNUC (Sistema Nacional de Unidades de Conservação) inclui tanto áreas de proteção integral (parques) quanto áreas de uso sustentável (RESEX).', correct: true, exp: 'VERDADEIRO. O SNUC (Lei 9.985/2000) divide as áreas protegidas em dois grupos: Proteção Integral (sem habitação permanente) e Uso Sustentável (permite populações tradicionais e atividades sustentáveis).' },
+    { stmt: 'O Código Florestal de 2012 exige que propriedades rurais na Amazônia mantenham pelo menos 50% de reserva legal de vegetação nativa.', correct: false, exp: 'FALSO. Na Amazônia, a exigência é de 80% de Reserva Legal — a mais alta entre todos os biomas brasileiros. Em outros biomas a exigência é menor (20% no Cerrado e Mata Atlântica).' },
+    { stmt: 'Terras Indígenas demarcadas apresentam, em média, menos desmatamento do que áreas equivalentes sem proteção especial.', correct: true, exp: 'VERDADEIRO. Pesquisas do INPE e do ISA mostram consistentemente que as TIs têm cerca de 40% menos desmatamento do que áreas comparáveis. Os povos indígenas são de fato os melhores guardiões da floresta.' },
+    { stmt: 'O desmatamento na Amazônia atingiu seu pico histórico em 2021, quando foram destruídos mais de 30.000 km².', correct: false, exp: 'FALSO. O pico histórico foi em 1995 (29.059 km²). Em 2021 o desmatamento foi de 13.235 km² — alto e preocupante, mas não o maior registrado. O mínimo histórico foi 2012 (4.571 km²).' },
+    { stmt: 'A FUNAI é o órgão federal responsável pela política indigenista e pelos processos de demarcação de terras indígenas no Brasil.', correct: true, exp: 'VERDADEIRO. A Fundação Nacional dos Povos Indígenas (FUNAI) conduz os estudos e os processos de demarcação, que envolvem laudos antropológicos, aprovação ministerial e homologação presidencial.' },
+    { stmt: 'O Fundo Amazônia funciona como um mercado de carbono em que empresas privadas compram créditos diretamente.', correct: false, exp: 'FALSO. O Fundo Amazônia é um mecanismo de doações voluntárias de países (principalmente Noruega e Alemanha) ao BNDES, condicionadas a reduções mensuráveis do desmatamento. É diferente do mercado de carbono voluntário.' },
+    { stmt: 'O PRODES (INPE) monitora o desmatamento amazônico por satélite e é a principal fonte de dados oficiais sobre a cobertura florestal no Brasil.', correct: true, exp: 'VERDADEIRO. O PRODES (Programa de Monitoramento do Desmatamento da Amazônia Legal) é executado pelo INPE desde 1988 e produz os dados anuais de referência sobre o desmatamento, reconhecidos internacionalmente.' },
+    { stmt: 'O Brasil desmatou mais de 800.000 km² de Amazônia desde 1970 — área maior que a França inteira.', correct: true, exp: 'VERDADEIRO. O desmatamento acumulado na Amazônia Legal desde os anos 1970 ultrapassa 800.000 km² — mais do que o território da França (551.000 km²). Cerca de 18% da floresta original já foi removida.' }
+  ]
+});
+
+/* ── QUIZ DATA for bloco4 ── */
+Object.assign(QUIZ_DATA, {
+  c07: [
+    {
+      q: 'A bioeconomia amazônica diferencia-se do modelo extrativista predatório porque:',
+      opts: ['Extrai recursos naturais com maior eficiência tecnológica','Baseia a geração de riqueza no uso sustentável da biodiversidade, mantendo os ecossistemas funcionando e gerando renda para as comunidades locais','Proíbe qualquer uso econômico da floresta para garantir sua preservação total','Transfere a produção de commodities para dentro da floresta','Depende exclusivamente de investimentos estrangeiros para funcionar'],
+      correct: 1,
+      exps: ['Errado. Maior eficiência pode ainda ser predatória se não respeitar os limites dos ecossistemas.','Correto! A bioeconomia gera valor sem destruir o capital natural — a própria floresta e sua biodiversidade. Combina produção sustentável com preservação e distribuição de renda.','Errado. A bioeconomia permite e incentiva o uso econômico responsável dos recursos florestais.','Errado. A bioeconomia pode incluir cultivos, mas sua lógica central é o uso sustentável dos recursos naturais.','Errado. A bioeconomia depende sobretudo das comunidades locais e de mercados que valorizam sustentabilidade.']
+    },
+    {
+      q: 'O pirarucu é um exemplo paradigmático de manejo comunitário porque:',
+      opts: ['A espécie foi completamente domesticada e agora é criada em fazendas aquícolas','As próprias comunidades ribeirinhas monitoram e pescam cotas sustentáveis, alinhando incentivos econômicos com conservação — e lucrando muito mais do que com a pesca predatória','O governo federal proibiu totalmente a pesca do pirarucu para recuperar as populações','O pirarucu passou a ser exportado como produto de luxo para mercados internacionais sem participação local','A FUNAI assumiu o controle da pesca do pirarucu em reservas indígenas'],
+      correct: 1,
+      exps: ['Errado. O pirarucu existe em ambiente natural gerido comunitariamente, não em fazendas convencionais.','Correto! O modelo do pirarucu prova que conservação e geração de renda não são opostos. Ao colocar as comunidades no papel de gestoras, o modelo alinha o interesse econômico de curto prazo (pescar mais agora) com o interesse de longo prazo (ter mais peixe no futuro).','Errado. A proibição total não foi a solução; o manejo participativo com cotas sim.','Errado. A exportação existe, mas o diferencial é a gestão comunitária que garante sustentabilidade.','Errado. O manejo do pirarucu é conduzido por comunidades ribeirinhas, não pela FUNAI.']
+    },
+    {
+      q: 'O mecanismo REDD+ (Redução de Emissões por Desmatamento e Degradação) funciona principalmente:',
+      opts: ['Proibindo a exportação de madeira amazônica para países desenvolvidos','Como sistema em que países e empresas que emitem CO₂ pagam pela preservação de florestas que evitam emissões equivalentes','Como fundo que financia a reflorestação de áreas já desmatadas na Amazônia','Como taxa ambiental cobrada de produtores rurais que desmatam dentro da legalidade','Como programa de compensação para comunidades que sofreram com o desmatamento'],
+      correct: 1,
+      exps: ['Errado. REDD+ não é uma medida de comércio exterior.','Correto! REDD+ é um mecanismo de pagamento por serviços ambientais: países e empresas que emitem CO₂ podem compensar suas emissões pagando pela preservação de florestas que sequestram carbono equivalente.','Errado. REDD+ financia principalmente a preservação de florestas existentes, não o reflorestamento.','Errado. REDD+ é um mecanismo de mercado voluntário, não uma taxa sobre atividades legais.','Errado. REDD+ não é um programa de reparação de danos — é pagamento por serviços ambientais futuros.']
+    },
+    {
+      q: 'A afirmação "uma floresta intacta gera 40 vezes mais valor por hectare do que a pastagem" demonstra principalmente que:',
+      opts: ['A floresta amazônica deve ser completamente protegida sem nenhum uso humano','O agronegócio deve ser proibido em toda a Amazônia Legal','Os serviços ecossistêmicos da floresta (regulação do clima, água, biodiversidade) têm valor econômico real e imenso que raramente é contabilizado nas decisões de uso da terra','A pecuária bovina é o principal culpado pelo desmatamento amazônico','Os cálculos econômicos sobre a floresta são imprecisos e não devem orientar políticas'],
+      correct: 2,
+      exps: ['Errado. A conclusão não é a proibição do uso, mas o reconhecimento do valor dos serviços ecossistêmicos.','Errado. O dado não implica proibição total — implica reconhecimento do valor da floresta.','Correto! Quando os serviços ecossistêmicos (regulação de chuvas, sequestro de carbono, biodiversidade) são incluídos na conta econômica, a floresta intacta é muito mais valiosa do que qualquer uso agropecuário que a substituiria.','Errado. O dado não aponta um culpado específico — analisa o valor comparativo dos usos do solo.','Errado. São cálculos científicos rigorosos de institutos como IPAM e WWF, base de políticas internacionais.']
+    },
+    {
+      q: 'A castanha-do-pará representa o argumento mais direto pela preservação da floresta amazônica porque:',
+      opts: ['É o produto agrícola de maior valor por tonelada no mercado global','Pode ser cultivada em plantações fora da floresta com alta produtividade','Só germina e produz em florestas primárias intactas, tornando a preservação da floresta um pré-requisito econômico para sua produção','Foi patenteada por comunidades indígenas que impedem sua exploração por terceiros','É exportada exclusivamente por cooperativas de pequenos produtores'],
+      correct: 2,
+      exps: ['Errado. Não é necessariamente o mais valioso em termos de preço por tonelada.','Errado. Tentativas de cultivo em monocultura falharam — a castanha depende de polinizadores que só existem em floresta primária.','Correto! A castanha-do-pará é um exemplo perfeito de produto cuja produção é biologicamente impossível sem floresta intacta. Vender castanha é, literalmente, um argumento econômico pela preservação.','Errado. A castanha não foi patenteada; é um recurso de livre coleta por comunidades extrativistas.','Errado. Existem grandes exportadoras comerciais no mercado de castanha.']
+    }
+  ],
+  c08: [
+    {
+      q: 'A tese do marco temporal foi considerada inconstitucional pelo STF porque:',
+      opts: ['Violava o direito de propriedade dos fazendeiros que compraram terras de boa-fé','Ignorava que muitos povos foram expulsos de suas terras antes de 1988 justamente para não terem direito após a promulgação da Constituição, contradizendo os direitos originários garantidos por ela','Era tecnicamente impossível de comprovar arqueologicamente','Foi criada por interesses estrangeiros contrários ao agronegócio brasileiro','Contrariava tratados internacionais sobre mercado de carbono'],
+      correct: 1,
+      exps: ['Errado. O STF reconheceu que os direitos indígenas são originários — anteriores a qualquer compra ou venda de terra.','Correto! O STF (9x2) reconheceu que a tese criava uma armadilha perversa: premiava quem havia expulsado os indígenas de suas terras antes de 1988. Os direitos originários da CF não podem ser condicionados à presença física numa data arbitrária.','Errado. A questão é jurídica e histórica, não apenas arqueológica.','Errado. A tese foi desenvolvida por advogados do agronegócio brasileiro, não por interesses externos.','Errado. O debate sobre a constitucionalidade não envolve tratados de carbono.']
+    },
+    {
+      q: 'O SNUC diferencia-se de uma simples proibição do uso da floresta porque:',
+      opts: ['Permite o desmatamento controlado em todas as categorias de áreas protegidas','Cria categorias de "uso sustentável" que permitem populações tradicionais e atividades econômicas compatíveis com a conservação, em vez de apenas excluir as pessoas das florestas','É administrado exclusivamente por ONGs internacionais','Só se aplica a florestas privadas, não a terras públicas federais','Foi criado pela ditadura militar como instrumento de controle territorial'],
+      correct: 1,
+      exps: ['Errado. Apenas categorias de uso sustentável permitem certas atividades — parques de proteção integral não permitem.','Correto! O SNUC reconheceu que conservação e uso humano sustentável são compatíveis. As RESEX e RDS foram uma inovação que incluiu populações tradicionais como gestoras, não como problemas a ser removidos.','Errado. É gerido pelo IBAMA/ICMBio, órgãos federais brasileiros.','Errado. Inclui terras públicas, privadas e terras de povos tradicionais.','Errado. Foi criado em 2000, já na democracia, resultado da luta dos seringueiros nos anos 1980.']
+    },
+    {
+      q: 'O desmatamento na Amazônia atingiu seu mínimo histórico em 2012 e depois voltou a crescer. A principal explicação para essa trajetória é:',
+      opts: ['Mudanças climáticas tornaram a floresta mais inflamável após 2012','O Brasil esgotou as áreas de floresta disponíveis para desmatar até 2012','A redução foi resultado de políticas coordenadas de fiscalização e monitoramento que foram enfraquecidas nos anos seguintes por mudanças políticas e legislativas','A seca histórica de 2015 destruiu automaticamente grandes áreas de floresta','Investimentos internacionais em agronegócio foram suspensos até 2012'],
+      correct: 2,
+      exps: ['Errado. As mudanças climáticas são consequência, não causa principal do desmatamento.','Errado. Ainda há floresta suficiente para ser destruída — como provam os números pós-2012.','Correto! A queda até 2012 resultou de ação coordenada: PPCDAM, PPCerrado, Operação Arco de Fogo, cadastro rural, moratória da soja. O aumento após 2015 acompanhou enfraquecimento da fiscalização, da FUNAI e do IBAMA.','Errado. Secas reduzem naturalmente a vegetação em algumas áreas, mas o desmatamento antrópico é mensurado separadamente.','Errado. Investimentos estrangeiros no agronegócio continuaram durante todo o período.']
+    },
+    {
+      q: 'A reserva legal de 80% exigida pelo Código Florestal na Amazônia significa que:',
+      opts: ['80% de toda a Amazônia Legal deve ser preservada pelo governo federal','Propriedades rurais na Amazônia devem manter 80% de sua área com vegetação nativa, podendo usar apenas 20% para atividades produtivas','Fazendas que já desmataram 80% de suas terras estão permanentemente proibidas de novas atividades','O governo pode comprar até 80% de propriedades privadas para transformá-las em reservas','Áreas de preservação permanente (APP) devem cobrir 80% das margens de rios'],
+      correct: 1,
+      exps: ['Errado. A reserva legal é uma obrigação por propriedade, não um percentual do território nacional.','Correto! Cada imóvel rural na Amazônia deve manter 80% de sua área com vegetação nativa. Isso é muito mais restritivo do que em outros biomas (20% no Cerrado), refletindo a importância crítica da floresta amazônica.','Errado. A reserva legal é uma obrigação prospectiva, não uma punição retroativa automática.','Errado. A reserva legal é uma obrigação do proprietário rural, não uma faculdade de compra governamental.','Errado. As APPs têm regras próprias de largura por tipo de curso d\'água — não 80%.']
+    },
+    {
+      q: 'O fato de que Terras Indígenas têm em média 40% menos desmatamento que áreas equivalentes é evidência de que:',
+      opts: ['Os povos indígenas são biologicamente mais conectados à natureza do que outros grupos humanos','A legislação de TIs é mais rígida do que a do Código Florestal, garantindo proteção automática','A presença de povos indígenas como gestores de seus territórios é um dos mecanismos mais eficazes de proteção da floresta amazônica','O IBAMA fiscaliza com mais intensidade as TIs do que outras áreas','O isolamento geográfico das TIs naturalmente as protege do desmatamento'],
+      correct: 2,
+      exps: ['Errado. A explicação é social e política — os incentivos e o controle comunitário — não biológica.','Errado. A legislação por si só não garante proteção — a fiscalização e a gestão ativa são essenciais.','Correto! As TIs têm menor desmatamento porque os povos que nelas vivem têm interesse direto em preservar seus territórios — combinando uso tradicional, vigilância comunitária e, cada vez mais, monitoramento por drones e satélites.','Errado. O IBAMA frequentemente tem menos presença física em TIs remotas do que em áreas de maior conflito.','Errado. Muitas TIs estão em áreas de alta pressão de grileiros e madeireiros, não em isolamento geográfico.']
+    }
+  ]
+});
+
+/* ══════════════════════════════════════════
+   BLOCO 5 — LEITURA CRÍTICA E REVISÃO
+══════════════════════════════════════════ */
+
+/* ── Mascot messages ── */
+Object.assign(MASCOT_MSGS, {
+  c09: [
+    'Em 2019, fotos usadas por jornais internacionais para ilustrar queimadas na Amazônia eram de anos anteriores — e uma era de outro país. Até o jornalismo erra.',
+    'Uma notícia falsa viaja 6x mais rápido que uma verdadeira no Twitter. Isso não é achismo — é pesquisa do MIT publicada em Science.',
+    'O INPE monitora a Amazônia por satélite desde 1988. São dados públicos e verificáveis. Sempre que alguém disser "o desmatamento é mentira", peça o link do PRODES.',
+    'A frase "20% do oxigênio do mundo" virou clichê ambiental — mas é enganosa. A floresta produz e consome o mesmo. O que ela faz de verdade é segurar carbono. Diferença enorme.'
+  ],
+  c10: [
+    'Você chegou ao fim! Isso já coloca você à frente de 60% dos estudantes que abandonam o material no meio.',
+    'NotebookLM é uma IA do Google que você alimenta com PDFs e ela responde perguntas sobre o conteúdo. Perfeito para revisar este bimestre.',
+    'Dica de ouro: Ciências Humanas no ENEM ama questões interdisciplinares. Cada bloco deste bimestre é uma ponte para outras disciplinas e outros argumentos.',
+    'Vou ser honesto: se você leu tudo aqui, está pronto. Se só clicou nos quizzes — a floresta está de olho. 🌿'
+  ]
+});
+
+/* ── TF data ── */
+Object.assign(TF_DATA, {
+  c09: [
+    { stmt: 'A Amazônia produz aproximadamente 20% do oxigênio global por fotossíntese, e esse é o principal benefício climático da floresta para a humanidade.', correct: false, exp: 'FALSO. A floresta produz ~20% de O₂ pela fotossíntese, mas também CONSOME ~20% pela respiração de plantas, animais e decompositores — balanço líquido próximo de zero. O principal benefício climático é o SEQUESTRO DE CARBONO: a floresta armazena bilhões de toneladas de CO₂ que, se liberadas, acelerariam as mudanças climáticas.' },
+    { stmt: 'O Brasil é o único país com território amazônico soberano.', correct: false, exp: 'FALSO. A bacia amazônica abrange 9 países: Brasil (60%), Peru, Colômbia, Venezuela, Equador, Bolívia, Guiana, Suriname e Guiana Francesa. O Brasil tem a maior porção, mas qualquer política de proteção eficaz exige coordenação internacional — exatamente o motivo da Cúpula da Amazônia em Belém (2023).' },
+    { stmt: 'Uma publicação com muitas curtidas e compartilhamentos nas redes sociais tende a ser mais confiável do que uma com baixo engajamento.', correct: false, exp: 'FALSO. Pesquisa do MIT (2018, Vosoughi et al., Science) demonstrou que notícias falsas se espalhavam 6x mais rápido e para mais pessoas do que as verdadeiras no Twitter. Conteúdo emocionalmente impactante — seja raiva, medo ou surpresa — gera mais engajamento, independentemente de ser verdadeiro.' },
+    { stmt: 'O INPE (Instituto Nacional de Pesquisas Espaciais) opera o sistema PRODES, principal referência oficial de monitoramento do desmatamento amazônico, com dados públicos acessíveis desde 1988.', correct: true, exp: 'VERDADEIRO. O PRODES produz dados anuais de desmatamento da Amazônia Legal desde 1988, usando imagens de satélite. É reconhecido internacionalmente como referência metodológica e seus dados são públicos no site do INPE.' },
+    { stmt: 'Queimadas na Amazônia são sempre ilegais, pois qualquer uso do fogo na floresta é proibido pela legislação brasileira.', correct: false, exp: 'FALSO. Comunidades indígenas e populações tradicionais (ribeirinhos, quilombolas) têm direito ao uso controlado e tradicional do fogo em suas roças — prática milenar com função agrícola e cultural, reconhecida pela legislação. O problema é o uso criminoso associado ao desmatamento ilegal. Tratar todo uso do fogo como crime ignora direitos culturais legalmente protegidos.' },
+    { stmt: 'Agências de fact-checking como Aos Fatos e Agência Lupa são vinculadas ao governo federal e produzem verificações alinhadas a interesses políticos.', correct: false, exp: 'FALSO. Aos Fatos e Agência Lupa são organizações jornalísticas independentes, sem vínculo com o governo federal. A independência editorial é um dos critérios da IFCN (International Fact-Checking Network) para certificação. Elas verificam afirmações de todos os espectros políticos, incluindo do governo.' },
+    { stmt: 'Pesquisas científicas identificaram um "ponto de não-retorno" amazônico entre 20-25% de desmatamento, a partir do qual a floresta pode perder capacidade de manter seu ciclo hídrico.', correct: true, exp: 'VERDADEIRO. Pesquisadores como Carlos Nobre (INPE) e Thomas Lovejoy publicaram em Science Advances (2018) sobre o risco de "savanização" se o desmatamento ultrapassar 20-25% da cobertura original. Atualmente, ~18% foi removido. O tipping point existe porque a floresta gera sua própria chuva pela evapotranspiração — se fragmentada demais, esse ciclo colapsa.' },
+    { stmt: 'Uma fotografia pode ser usada como evidência de um evento sem necessidade de verificar data e localização, desde que ela pareça autêntica.', correct: false, exp: 'FALSO. Durante as queimadas de 2019, imagens de outros anos e até de outros países circularam como representação das queimadas daquele ano. Verificar a autenticidade e origem de uma imagem — usando pesquisa reversa (Google Imagens, TinEye) — é etapa básica de qualquer análise de fonte confiável.' }
+  ]
+});
+
+/* ── Section floaters ── */
+Object.assign(SF_DATA, {
+  sf09: ['🔍','📰','❓','✅','❌','🧐','📊','🔬','💬','📡','🕵️','⚖️','📱','🗞️','🔎'],
+  sf10: ['🗺️','💡','⭐','📚','🌿','🏆','🎓','📝','🌐','🔄','🌟','🎯','✨','🔗','🧩']
+});
+
+/* Extend section IDs */
+['c09','c10'].forEach(id => {
+  if (!SECTION_IDS.includes(id)) SECTION_IDS.push(id);
+  const el = document.getElementById(id);
+  if (el) pauloSecObs.observe(el);
+});
+
+/* Extend switchTabC */
+const _origSwitchB5 = window.switchTabC;
+window.switchTabC = function(btn, panelId) {
+  _origSwitchB5(btn, panelId);
+  if (panelId === 'tc09-quiz') initQuiz('c09');
+  if (panelId === 'tc10-quiz') initQuiz('c10');
+  if (panelId === 'tc09-cont') { fndInit('c09'); tfInit('c09'); }
+};
+
+/* ── Quiz data ── */
+Object.assign(QUIZ_DATA, {
+  c09: [
+    {
+      q: 'A afirmação "a Amazônia produz 20% do oxigênio do planeta" é classificada como enganosa principalmente porque:',
+      opts: [
+        'A floresta amazônica não realiza fotossíntese em quantidade significativa',
+        'A floresta produz e consome aproximadamente a mesma quantidade de O₂ — o balanço líquido é próximo de zero, e o benefício climático real da Amazônia é o sequestro de carbono, não a produção de oxigênio',
+        'O número correto seria 40%, e a afirmação subestima a floresta',
+        'Apenas as algas marinhas produzem oxigênio em escala global relevante',
+        'A afirmação é completamente falsa e nunca foi confirmada por nenhum estudo científico'
+      ],
+      correct: 1,
+      exps: [
+        'Errado. A floresta realiza fotossíntese em escala equivalente a ~20% do O₂ global — esse dado é real.',
+        'Correto! A floresta produz ~20% de O₂ e também consome ~20% pela respiração de seus organismos. O balanço líquido é próximo de zero. O papel crítico da Amazônia é o sequestro de carbono: armazenar bilhões de toneladas de CO₂. A metáfora do "pulmão" é politicamente mobilizadora mas cientificamente imprecisa.',
+        'Errado. A questão não é sobre o tamanho do número, mas sobre o balanço entre produção e consumo de O₂.',
+        'Errado. Embora algas marinhas sejam responsáveis por grande parte do O₂ atmosférico, florestas tropicais também produzem — mas consomem o equivalente.',
+        'Errado. A fotossíntese amazônica é real e equivale a ~20% da produção global. O problema é apresentar isso como benefício líquido para o planeta, ignorando o consumo.'
+      ]
+    },
+    {
+      q: 'Ao analisar uma fonte de informação sobre a Amazônia, qual critério é MENOS confiável para determinar a veracidade do conteúdo?',
+      opts: [
+        'O artigo cita dados do INPE, IPAM ou outras instituições de pesquisa com referências verificáveis',
+        'O autor está identificado com nome, formação acadêmica e afiliação institucional',
+        'A publicação tem muitos compartilhamentos e comentários positivos nas redes sociais',
+        'O veículo tem equipe editorial revisora e política de correção de erros publicada',
+        'A data de publicação é recente e o conteúdo especifica se foi revisado ou atualizado'
+      ],
+      correct: 2,
+      exps: [
+        'Errado. Citar fontes verificáveis é um dos critérios mais importantes de confiabilidade.',
+        'Errado. A identificação do autor com formação e afiliação é critério relevante de credibilidade.',
+        'Correto! Pesquisa do MIT (2018) demonstrou que notícias falsas se espalhavam 6x mais rápido que as verdadeiras. Popularidade nas redes sociais não indica veracidade — frequentemente indica o oposto, pois conteúdo emocionalmente impactante (incluindo desinformação) gera mais compartilhamentos.',
+        'Errado. A presença de equipe editorial revisora e política de correção é critério importante de jornalismo responsável.',
+        'Errado. A data recente e a atualização são critérios relevantes, especialmente em temas que mudam rapidamente como desmatamento.'
+      ]
+    },
+    {
+      q: 'A desinformação sobre a Amazônia afeta o debate público porque:',
+      opts: [
+        'Torna o debate mais acessível para a população que não tem formação científica',
+        'Simplifica questões complexas de forma que elas podem ser rapidamente resolvidas por políticas simples',
+        'Dificulta a formulação de políticas eficazes ao substituir dados reais por narrativas falsas ou incompletas, polarizando o debate e impedindo análises baseadas em evidências',
+        'Só afeta a percepção internacional da Amazônia, sem impacto nas políticas nacionais',
+        'É uma questão secundária comparada ao desmatamento real, pois o que importa são ações concretas'
+      ],
+      correct: 2,
+      exps: [
+        'Errado. Simplificação enganosa não torna o debate mais acessível — torna políticas de preservação mais difíceis ao basear decisões em premissas erradas.',
+        'Errado. Questões complexas raramente têm soluções simples. Simplificações enganosas frequentemente atrapalham, não ajudam.',
+        'Correto! A desinformação tem consequências práticas: políticos tomam decisões com base em dados falsos, a opinião pública é manipulada, e soluções eficazes (como bioeconomia e manejo comunitário) são invisibilizadas por narrativas simplistas.',
+        'Errado. A desinformação sobre a Amazônia tem impacto direto na política nacional — nos votos, nos financiamentos, nas leis e na fiscalização.',
+        'Errado. A desinformação e as ações concretas estão diretamente ligadas. Sem informação correta, ações políticas eficazes são impossíveis.'
+      ]
+    },
+    {
+      q: 'O conceito de "conteúdo enganoso" (diferente de fake news pura) refere-se a:',
+      opts: [
+        'Informação completamente inventada, sem nenhuma base factual',
+        'Informação tecnicamente verdadeira, mas apresentada sem o contexto necessário para ser compreendida corretamente, gerando impressão falsa',
+        'Conteúdo humorístico ou satírico apresentado como se fosse jornalismo sério',
+        'Qualquer informação produzida por veículos de comunicação com financiamento privado',
+        'Declarações de políticos que contradizem evidências científicas'
+      ],
+      correct: 1,
+      exps: [
+        'Errado. Isso descreve fake news pura — conteúdo sem base factual. O conteúdo enganoso é diferente: parte de algo verdadeiro.',
+        'Correto! "Enganoso" não é sinônimo de "falso". Um fato verdadeiro apresentado sem contexto pode criar uma impressão completamente equivocada. Exemplo: "a Amazônia produz 20% do oxigênio" — é um dado real, mas enganoso sem mencionar que a floresta também consome o equivalente.',
+        'Errado. Isso descreve sátira ou paródia mal identificada.',
+        'Errado. A fonte de financiamento não define automaticamente se o conteúdo é enganoso ou não.',
+        'Errado. Isso descreve negacionismo científico, que é uma categoria específica de desinformação.'
+      ]
+    },
+    {
+      q: 'A verificação de imagens por "pesquisa reversa" é importante na análise de fontes sobre a Amazônia porque:',
+      opts: [
+        'Permite descobrir quem é o fotógrafo e pagar seus direitos autorais',
+        'Identifica se uma imagem é produzida por inteligência artificial',
+        'Permite rastrear a data e o local original de uma foto, revelando se ela foi usada fora de contexto — como queimadas de outros anos apresentadas como atuais',
+        'Verifica se a imagem passou por edições gráficas que alteraram suas cores ou composição',
+        'É exigida por lei para publicação de fotos em meios jornalísticos digitais'
+      ],
+      correct: 2,
+      exps: [
+        'Errado. A pesquisa reversa não identifica automaticamente o fotógrafo para fins de direitos autorais.',
+        'Errado. Detectar imagens de IA requer ferramentas específicas diferentes da pesquisa reversa simples.',
+        'Correto! A pesquisa reversa (Google Imagens, TinEye) mostra onde e quando a imagem apareceu pela primeira vez, permitindo identificar se uma foto de queimadas de 2012 está sendo usada como se fosse de 2019, por exemplo — erro comum durante crises ambientais.',
+        'Errado. Detectar manipulações gráficas requer ferramentas de análise de metadados e pixels, não pesquisa reversa.',
+        'Errado. Não há exigência legal de pesquisa reversa de imagens para publicação jornalística.'
+      ]
+    }
+  ],
+  c10: [
+    {
+      q: 'O que diferencia a "Amazônia real" vivida por seus habitantes da "Amazônia imaginada" por parte da mídia e do público externo?',
+      opts: [
+        'A Amazônia real é exclusivamente indígena e não possui cidades, indústrias ou conflitos modernos',
+        'A Amazônia real inclui cidades com metrô, conflitos fundiários, diversidade cultural, tecnologia e contradições, enquanto a imaginada tende a reduzi-la à imagem de floresta intocada sem presença humana',
+        'Não existe diferença significativa: a mídia global representa bem a complexidade amazônica',
+        'A Amazônia imaginada é mais próxima da realidade porque é construída por quem a observa de fora, com mais distanciamento científico',
+        'A distinção entre "real" e "imaginada" é irrelevante para políticas de preservação ambiental'
+      ],
+      correct: 1,
+      exps: [
+        'Errado. Cidades como Manaus (com mais de 2 milhões de habitantes, shopping, metrô e zona industrial) são parte integrante da Amazônia.',
+        'Correto! A Amazônia "imaginada" frequentemente apaga os habitantes (indígenas, ribeirinhos, moradores urbanos) e trata a floresta como natureza sem sujeitos. A Amazônia real é um território habitado, disputado e complexo — com redes digitais, conflitos judiciais sobre terras e uma economia diversa.',
+        'Errado. A cobertura midiática frequentemente simplifica, exotiza ou politiza a Amazônia de formas que distorcem sua realidade.',
+        'Errado. O distanciamento geográfico frequentemente produz estereótipos, não mais objetividade.',
+        'Errado. A distinção é fundamental: políticas baseadas na Amazônia "imaginada" (vazia, intocada) ignoram os direitos e as necessidades de milhões de pessoas que a habitam.'
+      ]
+    },
+    {
+      q: 'O papel do patrimônio cultural imaterial na Amazônia é reconhecido como estratégico porque:',
+      opts: [
+        'Substitui os saberes científicos por conhecimentos tradicionais mais eficazes na prática',
+        'Garante que apenas indígenas tenham acesso econômico a recursos naturais amazônicos',
+        'Preserva práticas, narrativas, línguas e saberes transmitidos oralmente que carregam conhecimento acumulado por milênios — reconhecendo-os como legítimos e valiosos, especialmente para a bioeconomia e a preservação ambiental',
+        'Impede a modernização das comunidades tradicionais amazônicas para preservar sua autenticidade cultural',
+        'Serve principalmente como atração turística e símbolo cultural sem impacto econômico concreto'
+      ],
+      correct: 2,
+      exps: [
+        'Errado. O patrimônio imaterial não substitui a ciência — ele COMPLEMENTA com conhecimentos que a ciência formal ainda não catalogou ou compreendeu totalmente.',
+        'Errado. O reconhecimento do patrimônio imaterial não cria exclusividade de acesso a recursos — mas cria direito a consentimento e compensação (CPLI).',
+        'Correto! O patrimônio imaterial inclui línguas com vocabulários de centenas de espécies de plantas, técnicas de manejo que sustentaram ecossistemas por milênios, e narrativas que organizam o modo de vida das comunidades. Esse conhecimento tem valor cultural, científico e econômico.',
+        'Errado. O reconhecimento do patrimônio imaterial não pressupõe congelamento das comunidades no tempo — povos indígenas podem e devem usar tecnologia moderna.',
+        'Errado. O patrimônio imaterial tem impacto direto na bioeconomia (bioprospecção responsável), na alimentação (produtos como açaí e mandioca) e na farmacologia.'
+      ]
+    },
+    {
+      q: 'A biopirataria difere do uso legítimo do conhecimento tradicional principalmente porque:',
+      opts: [
+        'A biopirataria é cometida apenas por empresas estrangeiras, enquanto o uso legítimo envolve atores nacionais',
+        'A biopirataria envolve apropriação de recursos biológicos e saberes tradicionais sem o Consentimento Prévio Livre e Informado (CPLI) das comunidades detentoras e sem repartição justa de benefícios',
+        'A biopirataria só ocorre quando o recurso natural é patenteado em outro país',
+        'O uso legítimo depende de aprovação do IBAMA, enquanto a biopirataria prescinde de qualquer regulação',
+        'A biopirataria é uma forma de desinformação científica que atribui eficácia incorreta a plantas medicinais'
+      ],
+      correct: 1,
+      exps: [
+        'Errado. A biopirataria pode ser cometida por atores nacionais também — o que a define é a ausência de consentimento e compensação, não a nacionalidade do agente.',
+        'Correto! O CPLI (Consentimento Prévio, Livre e Informado) é o princípio central: comunidades têm o direito de saber o que será feito com seus recursos e saberes, decidir se concordam, e receber compensação justa. Sem esses elementos, qualquer uso é biopirataria.',
+        'Errado. A biopirataria ocorre no próprio processo de coleta e uso sem consentimento — o patenteamento é apenas uma das formas como ela se manifesta.',
+        'Errado. A regulação brasileira (Lei 13.123/2015, Nagoya Protocol) se aplica a ambos — o que diferencia é o cumprimento ou não das obrigações de consentimento e repartição.',
+        'Errado. Biopirataria não é desinformação — é uma prática econômica ilegal de apropriação de recursos biológicos e conhecimentos.'
+      ]
+    },
+    {
+      q: 'O modelo do pirarucu (manejo comunitário) é considerado paradigmático para a bioeconomia amazônica porque:',
+      opts: [
+        'Prova que a pesca industrial é mais eficiente que o extrativismo tradicional quando bem regulada',
+        'Mostra que a proibição total da pesca é a única forma de recuperar espécies ameaçadas',
+        'Demonstra que comunidades ribeirinhas, ao gerirem seus próprios recursos com incentivos econômicos alinhados à conservação, protegem a biodiversidade com mais eficiência do que a fiscalização estatal isolada',
+        'Foi desenvolvido exclusivamente por cientistas do INPA sem participação das comunidades locais',
+        'É aplicável apenas a espécies de peixes de grande porte, sem escala para outros recursos naturais'
+      ],
+      correct: 2,
+      exps: [
+        'Errado. O modelo do pirarucu é o oposto da pesca industrial — é comunitário e sustentável.',
+        'Errado. A proibição total não foi a solução. O manejo com cotas participativas e incentivos econômicos foi.',
+        'Correto! O modelo alinha o interesse econômico de curto prazo (pescar mais agora) com o de longo prazo (ter mais peixe no futuro). A comunidade que gere bem o pirarucu lucra 10x mais do que a que pesca predatoriamente — e isso é um incentivo econômico poderoso para a conservação.',
+        'Errado. O manejo comunitário foi desenvolvido em parceria entre comunidades ribeirinhas e pesquisadores do Instituto Mamirauá.',
+        'Errado. O princípio — alinhamento de incentivos econômicos com conservação por comunidades locais — é aplicado a castanha, açaí, borracha e outros recursos.'
+      ]
+    },
+    {
+      q: 'Qual afirmação sintetiza melhor a interdependência entre os temas estudados neste bimestre?',
+      opts: [
+        'A Amazônia é um recurso natural que o Brasil deve explorar de forma racional para impulsionar o desenvolvimento econômico nacional',
+        'A preservação da Amazônia depende exclusivamente de legislação ambiental federal rigorosa, sem necessidade de participação das comunidades locais',
+        'Os povos indígenas e comunidades tradicionais, ao agirem como gestores de seus territórios, protegem a floresta com maior eficiência — integrando direitos territoriais, bioeconomia, saberes culturais e literacia crítica para combater desinformação',
+        'A tecnologia digital é o único caminho para a preservação amazônica no século XXI, substituindo práticas tradicionais obsoletas',
+        'O desmatamento na Amazônia só pode ser combatido através de acordos internacionais e pressão diplomática de países desenvolvidos'
+      ],
+      correct: 2,
+      exps: [
+        'Errado. O modelo de "exploração racional" ignorou por décadas o valor dos serviços ecossistêmicos e os direitos das populações amazônicas.',
+        'Errado. Legislação sem implementação participativa falha historicamente. O modelo do pirarucu e das RESEX mostra que a participação comunitária é insubstituível.',
+        'Correto! Esta resposta integra território (Bloco 1), cultura e narrativas (Bloco 2), tecnologia e saberes (Bloco 3), bioeconomia (Bloco 4) e análise crítica (Bloco 5). Nenhum fator isolado protege a Amazônia — é a combinação de direitos, economia, cultura e informação que funciona.',
+        'Errado. Tecnologia é uma ferramenta poderosa, mas sem direitos territoriais garantidos e bioeconomia funcionando, ela é insuficiente.',
+        'Errado. A pressão internacional é um fator relevante, mas sem políticas nacionais eficazes e participação comunitária, ela tem impacto limitado.'
+      ]
+    }
+  ]
+});
+
+/* ── FND (Fake News Detector) Data ── */
+const FND_DATA = {
+  c09: [
+    {
+      stmt: '"A Amazônia produz 20% do oxigênio do planeta" — frase amplamente divulgada na mídia e em discursos ambientalistas.',
+      source: 'Circulou em jornais, redes sociais e discursos durante as queimadas de 2019.',
+      correct: 'e',
+      exp: '⚠️ ENGANOSO. A floresta produz ~20% de O₂ por fotossíntese, MAS também consome ~20% pela respiração de seus organismos. O balanço líquido é próximo de zero. O papel real da Amazônia para o clima é o SEQUESTRO DE CARBONO — não a produção de oxigênio. A metáfora do "pulmão" é poeticamente forte mas cientificamente imprecisa.'
+    },
+    {
+      stmt: '"Indígenas da Amazônia vivem sem tecnologia moderna, isolados do mundo contemporâneo, como há séculos."',
+      source: 'Narrativa frequente na mídia estrangeira e em representações populares da Amazônia.',
+      correct: 'f',
+      exp: '❌ FALSO. A grande maioria dos 305 povos indígenas brasileiros tem acesso a celulares, internet e redes sociais. Jovens Yanomami postam no TikTok com cocares. Kayapó usam drones para monitorar invasões. Líderes como Sônia Guajajara atuam como ministros e têm presença global. Povos em isolamento voluntário são exceção e têm esse direito respeitado por lei.'
+    },
+    {
+      stmt: '"O Brasil é o único país com soberania sobre o território amazônico."',
+      source: 'Argumento usado em debates sobre soberania nacional e interferência estrangeira.',
+      correct: 'f',
+      exp: '❌ FALSO. A bacia amazônica abrange 9 países: Brasil (60%), Peru, Colômbia, Venezuela, Equador, Bolívia, Guiana, Suriname e Guiana Francesa. O Brasil tem a maior porção, mas o ecossistema é compartilhado — daí a Cúpula da Amazônia em Belém (2023), reunindo líderes de todos esses países para coordenar políticas de proteção.'
+    },
+    {
+      stmt: '"Uma notícia com milhares de curtidas e compartilhamentos é mais confiável do que uma com pouco engajamento."',
+      source: 'Lógica implícita nos algoritmos e no comportamento do usuário médio nas redes sociais.',
+      correct: 'f',
+      exp: '❌ FALSO. Pesquisa publicada em Science (MIT, 2018) demonstrou que notícias falsas se espalhavam 6x mais rápido e chegavam a mais pessoas do que as verdadeiras no Twitter. Conteúdo que gera reações emocionais fortes (medo, raiva, indignação) tem mais compartilhamentos — independentemente de ser verdadeiro. Popularidade não é sinônimo de veracidade.'
+    },
+    {
+      stmt: '"Todas as queimadas registradas na Amazônia são criminosas e deveriam ser completamente proibidas."',
+      source: 'Afirmação comum no debate ambiental, especialmente após crises como a de 2019.',
+      correct: 'e',
+      exp: '⚠️ ENGANOSO. Comunidades indígenas e ribeirinhas têm o direito legal ao uso controlado e tradicional do fogo em suas roças — prática agrícola milenar. A grande maioria do fogo registrado por satélite está de fato associada a desmatamento ilegal e grilagem. Mas proibir todo uso do fogo ignora direitos culturais protegidos pela Constituição.'
+    },
+    {
+      stmt: '"A ciência identificou que, se a Amazônia perder 20-25% de sua cobertura, pode atingir um ponto de não-retorno climático e se transformar em savana."',
+      source: 'Pesquisa de Carlos Nobre e Thomas Lovejoy, Science Advances, 2018.',
+      correct: 'v',
+      exp: '✅ VERDADEIRO. O "tipping point" amazônico é um conceito científico sólido: a floresta gera suas próprias chuvas por evapotranspiração. Se fragmentada demais (20-25% de desmatamento), não consegue mais manter esse ciclo hídrico e pode colapsar para um estado de savana tropical — processo chamado "savanização". Atualmente, ~18% foi desmatado.'
+    },
+    {
+      stmt: '"Agências de fact-checking como Aos Fatos e Agência Lupa são financiadas pelo governo federal para verificar notícias favoráveis ao poder."',
+      source: 'Narrativa comum em grupos que se sentem alvo de verificações.',
+      correct: 'f',
+      exp: '❌ FALSO. Aos Fatos e Agência Lupa são organizações jornalísticas independentes, sem vínculo com o governo federal. São certificadas pela IFCN (International Fact-Checking Network), que exige entre seus critérios: independência editorial, transparência sobre financiamento e metodologia. Elas verificam afirmações de todos os espectros políticos, incluindo do governo de turno.'
+    },
+    {
+      stmt: '"O desmatamento na Amazônia é causado principalmente por pequenos agricultores pobres que precisam de terra para sobreviver."',
+      source: 'Argumento recorrente em defesa do desmatamento no debate político.',
+      correct: 'e',
+      exp: '⚠️ ENGANOSO. Pesquisas do INPE e ISA mostram que a maior parcela do desmatamento está associada a grilagem de terras (apossamento ilegal), pecuária extensiva de grande escala e especulação fundiária — não a pequenos agricultores. A narrativa do "camponês pobre" é frequentemente instrumentalizada para justificar desmatamentos que beneficiam grandes proprietários e especuladores.'
+    }
+  ]
+};
+
+const FND_STATE = {};
+
+function fndInit(id) {
+  const data = FND_DATA[id];
+  if (!data) return;
+  const shuffled = [...data].sort(() => Math.random() - .5);
+  FND_STATE[id] = { items: shuffled, idx: 0, score: 0, answered: false };
+  const res = document.getElementById('fnd-res-' + id);
+  const card = document.getElementById('fnd-card-' + id);
+  if (res) res.style.display = 'none';
+  if (card) card.style.display = '';
+  fndRenderDots(id);
+  fndRender(id);
+}
+
+function fndRenderDots(id) {
+  const state = FND_STATE[id];
+  if (!state) return;
+  const c = document.getElementById('fnd-dots-' + id);
+  if (!c) return;
+  c.innerHTML = state.items.map((item, i) => {
+    let cls = '';
+    if (i < state.idx && item._ans !== undefined) cls = ' ' + (item._ans === item.correct ? 'v' : 'f');
+    else if (i < state.idx) cls = ' f';
+    return '<div class="fnd-dot' + cls + '"></div>';
+  }).join('');
+}
+
+function fndRender(id) {
+  const state = FND_STATE[id];
+  if (!state) return;
+  const item = state.items[state.idx];
+  if (!item) return;
+  const stmt = document.getElementById('fnd-stmt-' + id);
+  const src = document.getElementById('fnd-src-' + id);
+  const fb = document.getElementById('fnd-fb-' + id);
+  const next = document.getElementById('fnd-next-' + id);
+  const sc = document.getElementById('fnd-sc-' + id);
+  const tot = document.getElementById('fnd-tot-' + id);
+  if (stmt) stmt.textContent = item.stmt;
+  if (src) src.textContent = item.source;
+  if (fb) { fb.className = 'fnd-feedback'; fb.textContent = ''; }
+  if (next) next.style.display = 'none';
+  if (sc) sc.textContent = state.score;
+  if (tot) tot.textContent = state.items.length;
+  state.answered = false;
+  const btns = ['fnd-vbtn-' + id, 'fnd-ebtn-' + id, 'fnd-fbtn-' + id];
+  btns.forEach(bid => { const b = document.getElementById(bid); if (b) b.disabled = false; });
+}
+
+function fndAnswer(id, choice) {
+  const state = FND_STATE[id];
+  if (!state || state.answered) return;
+  state.answered = true;
+  const item = state.items[state.idx];
+  item._ans = choice;
+  const isCorrect = choice === item.correct;
+  if (isCorrect) state.score++;
+  const fb = document.getElementById('fnd-fb-' + id);
+  const next = document.getElementById('fnd-next-' + id);
+  const sc = document.getElementById('fnd-sc-' + id);
+  if (fb) {
+    const correctClass = item.correct === 'v' ? 'v-fb' : item.correct === 'e' ? 'e-fb' : 'f-fb';
+    fb.className = 'fnd-feedback show ' + correctClass;
+    fb.textContent = (isCorrect ? '✅ Certo! ' : '❌ Incorreto. ') + item.exp;
+  }
+  if (next) next.style.display = '';
+  if (sc) sc.textContent = state.score;
+  const btns = ['fnd-vbtn-' + id, 'fnd-ebtn-' + id, 'fnd-fbtn-' + id];
+  btns.forEach(bid => { const b = document.getElementById(bid); if (b) b.disabled = true; });
+  fndRenderDots(id);
+  pauloShow(isCorrect ? getRnd(PAULO_PHRASES.correct) : getRnd(PAULO_PHRASES.wrong), isCorrect ? 'right' : 'wrong', false);
+  setEmojiP(isCorrect ? '😄' : '😅');
+}
+
+function fndNext(id) {
+  const state = FND_STATE[id];
+  if (!state) return;
+  state.idx++;
+  if (state.idx >= state.items.length) {
+    fndShowResult(id);
+  } else {
+    fndRender(id);
+    fndRenderDots(id);
+  }
+}
+
+function fndShowResult(id) {
+  const state = FND_STATE[id];
+  if (!state) return;
+  const card = document.getElementById('fnd-card-' + id);
+  const res = document.getElementById('fnd-res-' + id);
+  const re = document.getElementById('fnd-re-' + id);
+  const rt = document.getElementById('fnd-rt-' + id);
+  if (card) card.style.display = 'none';
+  if (res) res.style.display = '';
+  const pct = Math.round(state.score / state.items.length * 100);
+  const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '📚' : '🔄';
+  const msg = pct >= 80
+    ? 'Detector de fake news ativado! Você está preparado para navegar com olhar crítico.'
+    : pct >= 60
+    ? 'Bom resultado! Releia os casos que errou para afinar seu olhar crítico.'
+    : 'Continue praticando! A análise crítica de fontes é uma habilidade que se desenvolve com o tempo.';
+  if (re) re.textContent = emoji;
+  if (rt) rt.innerHTML = '<strong>' + state.score + '/' + state.items.length + ' (' + pct + '%)</strong><br>' + msg;
+  pauloShow(pct >= 80 ? '🏆 ' + getRnd(PAULO_PHRASES.correct) : getRnd(PAULO_PHRASES.wrong), pct >= 80 ? 'right' : 'wrong', false);
+  setEmojiP(pct >= 80 ? '🤩' : '🤔');
+}
+
+/* ── Checklist source toggle ── */
+function srcToggle(li) {
+  li.classList.toggle('checked');
+}
+
+/* ── Concept Map ── */
+const CMAP_DATA = {
+  centro: {
+    title: '🌿 AMAZÔNIA: Identidades, Narrativas e Conhecimentos',
+    desc: 'A Amazônia não é apenas um ecossistema. É um território disputado, uma construção cultural, um sistema de saberes, uma economia viva e um campo permanente de batalha política e narrativa. Clique em cada bloco para explorar o que você aprendeu.',
+    topics: []
+  },
+  b1: {
+    title: '🌍 Bloco 1 — Território e Imaginário',
+    desc: 'A Amazônia é ao mesmo tempo uma floresta real e uma ideia construída por diferentes grupos com interesses distintos. Quem narra a Amazônia define como ela é percebida — e como é tratada política e economicamente.',
+    topics: ['T01: A Amazônia como construção social — narrativas em disputa', 'T02: Diversidade urbana e regional amazônica']
+  },
+  b2: {
+    title: '🗣️ Bloco 2 — Narrativas e Cultura',
+    desc: 'As culturas amazônicas se transmitem pela oralidade, pelos mitos, pelos rituais e pela arte. Reconhecer essas narrativas como conhecimento legítimo é um ato político tanto quanto cultural.',
+    topics: ['T03: Patrimônio cultural imaterial e oralidade', 'T04: Mitologia e literatura amazônica']
+  },
+  b3: {
+    title: '📱 Bloco 3 — Digital e Saberes',
+    desc: 'Tecnologia e conhecimento tradicional se encontram na Amazônia do século XXI. Indígenas usam drones e redes sociais para proteger seus territórios. O desafio é garantir que esse encontro seja justo e não viole a soberania dos povos.',
+    topics: ['T05: Tecnologia e ativismo digital indígena', 'T06: Biopirataria e propriedade dos saberes tradicionais']
+  },
+  b4: {
+    title: '🌱 Bloco 4 — Economia e Política',
+    desc: 'A floresta em pé vale mais do que a pastagem que a substitui — quando todos os serviços ecossistêmicos são contabilizados. Bioeconomia e políticas de proteção territorial são as duas faces de uma mesma equação.',
+    topics: ['T07: Bioeconomia amazônica — produtos da floresta e mercado sustentável', 'T08: Políticas públicas, desmatamento e disputas territoriais']
+  },
+  b5: {
+    title: '🔍 Bloco 5 — Leitura Crítica e Revisão',
+    desc: 'Saber analisar fontes, identificar desinformação e construir argumentos fundamentados em evidências é a habilidade mais importante para navegar no mundo contemporâneo — especialmente no debate sobre a Amazônia.',
+    topics: ['T09: Análise de fontes e desinformação sobre a Amazônia', 'T10: Sistematização e revisão integradora']
+  }
+};
+
+function cmapShow(id) {
+  const data = CMAP_DATA[id];
+  if (!data) return;
+  const popup = document.getElementById('cmap-popup');
+  const title = document.getElementById('cmap-ptitle');
+  const desc = document.getElementById('cmap-pdesc');
+  const topics = document.getElementById('cmap-ptopics');
+  if (!popup) return;
+  if (title) title.textContent = data.title;
+  if (desc) desc.textContent = data.desc;
+  if (topics) {
+    topics.innerHTML = data.topics.length
+      ? data.topics.map(t => '<span>' + t + '</span>').join('')
+      : '';
+  }
+  popup.classList.add('show');
+}
+
+/* ── Revision tracker ── */
+const REV_STATE = {};
+
+function revToggle(card, key) {
+  REV_STATE[key] = !REV_STATE[key];
+  const isDone = REV_STATE[key];
+  card.classList.toggle('done', isDone);
+  const chk = card.querySelector('.rc-chk');
+  if (chk) chk.textContent = isDone ? '✅' : '⬜';
+  revUpdateProgress();
+  save('rev-state', REV_STATE);
+}
+
+function revUpdateProgress() {
+  const keys = Object.keys(REV_STATE);
+  const done = keys.filter(k => REV_STATE[k]).length;
+  const total = 5;
+  const pct = Math.round(done / total * 100);
+  const fill = document.getElementById('rev-pfill');
+  const pctEl = document.getElementById('rev-pct');
+  if (fill) fill.style.width = pct + '%';
+  if (pctEl) pctEl.textContent = pct + '%';
+}
+
+function revRestoreState() {
+  const saved = load('rev-state');
+  if (!saved) return;
+  Object.assign(REV_STATE, saved);
+  const grid = document.getElementById('rev-grid');
+  if (!grid) return;
+  const cards = grid.querySelectorAll('.rev-card');
+  const keyMap = ['r1','r2','r3','r4','r5'];
+  cards.forEach((card, i) => {
+    const key = keyMap[i];
+    if (REV_STATE[key]) {
+      card.classList.add('done');
+      const chk = card.querySelector('.rc-chk');
+      if (chk) chk.textContent = '✅';
+    }
+  });
+  revUpdateProgress();
+}
+
+/* ── Extend section floaters to include b5 sections ── */
+function initB5Floaters() {
+  ['sf09','sf10'].forEach(sfId => {
+    const items = SF_DATA[sfId];
+    if (!items) return;
+    const wrap = document.getElementById(sfId);
+    if (!wrap) return;
+    function spawn() {
+      const el = document.createElement('span');
+      el.className = 'sf';
+      el.textContent = items[Math.floor(Math.random() * items.length)];
+      el.style.left = (Math.random() * 94) + '%';
+      const d = Math.random() * 20 + 12;
+      el.style.animationDuration = d + 's';
+      el.style.animationDelay = (Math.random() * 3) + 's';
+      wrap.appendChild(el);
+      setTimeout(() => el.remove(), (d + 4) * 1000);
+    }
+    for (let i = 0; i < 3; i++) spawn();
+    setInterval(spawn, 3500 + Math.random() * 2000);
+  });
+}
+
+/* ── Carbon fills (if any in b5) ── */
+function initBloco5() {
+  fndInit('c09');
+  tfInit('c09');
+  revRestoreState();
+  observeFI();
+  observeBars();
+  initB5Floaters();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initBloco5);
+} else {
+  setTimeout(initBloco5, 250);
+}
+
+/* ── init all b4 games ── */
+function initBloco4() {
+  orderInit('c07');
+  nqInit('c07');
+  tfInit('c08');
+  observeFI();
+  observeBars();
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initBloco4);
+} else {
+  setTimeout(initBloco4, 200);
 }
 
 </script>
