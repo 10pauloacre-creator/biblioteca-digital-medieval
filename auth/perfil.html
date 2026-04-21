@@ -98,6 +98,36 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 .info-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.14em;color:var(--text-d);margin-bottom:.25rem;}
 .info-value{font-size:.95rem;color:var(--text-m);}
 
+/* ── Admin: seção de nível ── */
+.admin-info{margin-bottom:1.2rem;}
+.admin-stat{
+  background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);
+  border-radius:5px;padding:.75rem 1rem;margin-bottom:.6rem;
+}
+.admin-stat-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.14em;color:var(--text-d);margin-bottom:.4rem;}
+.admin-stat-value{font-size:1rem;color:var(--text-m);}
+.level-bar-wrap{
+  background:rgba(0,0,0,.35);border-radius:20px;height:10px;overflow:hidden;
+  border:1px solid rgba(201,168,76,.2);margin-top:.5rem;
+}
+.level-bar{
+  height:100%;width:100%;border-radius:20px;
+  background:linear-gradient(90deg,#8a6414,#c9a84c,#ffe87a,#f0d060,#c9a84c);
+  background-size:200% 100%;
+  animation:sweep 2s linear infinite;
+  box-shadow:0 0 8px rgba(255,220,80,.5);
+}
+.level-stars{font-size:1.1rem;letter-spacing:.15em;color:var(--gold-b);
+  text-shadow:0 0 8px rgba(255,220,80,.7);margin-top:.3rem;}
+.level-max-label{
+  font-family:'Cinzel',serif;font-weight:900;font-size:.65rem;letter-spacing:.2em;
+  background:linear-gradient(135deg,#f9e3a0,#f2c25c,#ffe87a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:right;margin-top:.2rem;
+}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.6rem;}
+.admin-grid .admin-stat{margin-bottom:0;text-align:center;}
+
 .divider{display:flex;align-items:center;gap:8px;margin:0 auto 1rem;max-width:160px;color:var(--gold);}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 
@@ -192,24 +222,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
     <div class="divider"><span>✦</span></div>
 
-    <div class="info-grid">
-      <div class="info-box">
-        <div class="info-label">SÉRIE</div>
-        <div class="info-value" id="info-serie">—</div>
-      </div>
-      <div class="info-box">
-        <div class="info-label">TURMA</div>
-        <div class="info-value" id="info-turma">—</div>
-      </div>
-      <div class="info-box">
-        <div class="info-label">Nº CHAMADA</div>
-        <div class="info-value" id="info-numero">—</div>
-      </div>
-      <div class="info-box">
-        <div class="info-label">MEMBRO DESDE</div>
-        <div class="info-value" id="info-data">—</div>
-      </div>
-    </div>
+    <div id="info-section"><!-- preenchido pelo JS --></div>
 
     <div class="actions" id="actions-section"></div>
   </div>
@@ -305,12 +318,58 @@ async function loadProfile(uid) {
   }
 
   document.getElementById('profile-name').textContent = profile.nome_completo || '(sem nome)';
-  document.getElementById('info-serie').textContent  = profile.serie     || '—';
-  document.getElementById('info-turma').textContent  = profile.turma     || '—';
-  document.getElementById('info-numero').textContent = profile.numero_chamada ?? '—';
-  document.getElementById('info-data').textContent   = profile.created_at
-    ? new Date(profile.created_at).toLocaleDateString('pt-BR', {month:'short',year:'numeric'})
+
+  const dataMembro = profile.created_at
+    ? new Date(profile.created_at).toLocaleDateString('pt-BR', {month:'short', year:'numeric'})
     : '—';
+
+  const infoSection = document.getElementById('info-section');
+
+  if (profile.role === 'admin') {
+    // Busca total de alunos para exibir nas estatísticas do admin
+    const { count } = await db.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'aluno');
+    const totalAlunos = count ?? '—';
+
+    infoSection.innerHTML = `
+      <div class="admin-info">
+        <div class="admin-stat">
+          <div class="admin-stat-label">NÍVEL DE ARCANO</div>
+          <div class="level-bar-wrap"><div class="level-bar"></div></div>
+          <div class="level-stars">★★★★★</div>
+          <div class="level-max-label">⚜ NÍVEL MÁXIMO ATINGIDO ⚜</div>
+        </div>
+        <div class="admin-grid">
+          <div class="admin-stat">
+            <div class="admin-stat-label">ESCUDEIROS</div>
+            <div class="admin-stat-value">${totalAlunos}</div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-label">MEMBRO DESDE</div>
+            <div class="admin-stat-value">${dataMembro}</div>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    infoSection.innerHTML = `
+      <div class="info-grid">
+        <div class="info-box">
+          <div class="info-label">SÉRIE</div>
+          <div class="info-value">${profile.serie || '—'}</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">TURMA</div>
+          <div class="info-value">${profile.turma || '—'}</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">Nº CHAMADA</div>
+          <div class="info-value">${profile.numero_chamada ?? '—'}</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">MEMBRO DESDE</div>
+          <div class="info-value">${dataMembro}</div>
+        </div>
+      </div>`;
+  }
 
   // Botão admin
   if (isAdmin) document.getElementById('btn-admin').style.display = 'block';
