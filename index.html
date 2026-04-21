@@ -1457,7 +1457,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   function playIntro() {
     intro.classList.remove('hidden');
     intro.style.opacity = '1';
-    vid.src = isMobile ? 'assets/intro-mobile.mp4' : 'assets/intro-pc.mp4';
+    vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
     vid.play().catch(() => {});
     vid.addEventListener('ended', hideIntro, { once: true });
   }
