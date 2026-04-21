@@ -1003,6 +1003,7 @@ let currentSerie = 0;
 const SERIE_NAMES = ['','1ª Série','2ª Série','3ª Série'];
 
 function selectSerie(n) {
+  if (window.bdmAllowedSerie && n !== window.bdmAllowedSerie) return;
   playSound('sfx-serie');
   currentSerie = n;
   try{localStorage.setItem('bdm-current-serie',String(n));}catch(e){}
@@ -1435,8 +1436,9 @@ window.addEventListener('DOMContentLoaded',()=>{
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="assets/js/supabase-config.js"></script>
 <script>
-/* ── Splash / Intro logic ── */
 (function(){
+  if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
+
   const isMobile = window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent);
   const params   = new URLSearchParams(window.location.search);
   const doIntro  = params.get('intro') === '1';
@@ -1446,89 +1448,90 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   if (doIntro) history.replaceState(null, '', window.location.pathname);
 
-  function hideIntro() {
-    intro.style.transition = 'opacity .8s ease';
-    intro.style.opacity = '0';
-    setTimeout(() => intro.classList.add('hidden'), 820);
-  }
-
-  window.skipIntro = hideIntro;
-
-  function playIntro() {
-    intro.classList.remove('hidden');
-    intro.style.opacity = '1';
-    vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
-    vid.play().catch(() => {});
-    vid.addEventListener('ended', hideIntro, { once: true });
-  }
-
-  function hideSplash() {
-    splash.style.transition = 'opacity .6s ease';
-    splash.style.opacity = '0';
-    setTimeout(() => splash.classList.add('hidden'), 640);
-  }
-
-  // Se ?intro=1 → esconde splash, toca intro
-  if (doIntro) {
-    splash.classList.add('hidden');
-    playIntro();
-    return;
-  }
-
-  // Sem Supabase configurado → mantém splash visível
-  if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
-
-  const { createClient } = supabase;
-  const _db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
-
-  _db.auth.getSession().then(({ data: { session } }) => {
-    if (session || sessionStorage.getItem('bdm-visitante') === '1') {
-      hideSplash(); // Já logado ou visitante → pula splash
-    }
-    // Não logado → splash permanece visível
-  });
-})();
-
-/* ── Auth button com imagens ── */
-(function(){
-  if(!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
   const { createClient } = supabase;
   const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
 
+  /* ── Auth button ── */
   function setAuthImg(src, href) {
     const btn = document.getElementById('auth-btn');
     const img = document.getElementById('auth-img');
     if (!btn || !img) return;
-    img.src = src;
-    btn.href = href;
+    img.src = src; btn.href = href;
   }
 
   async function updateAuthBtn(session) {
-    if (!session) {
-      setAuthImg('assets/images/login.png', 'auth/login.html');
-      return;
-    }
-
+    if (!session) { setAuthImg('assets/images/login.png', 'auth/login.html'); return; }
     setAuthImg('assets/images/perfil.png', 'auth/perfil.html');
-
     try {
-      const { data: profile } = await db.from('profiles')
-        .select('role').eq('id', session.user.id).single();
-      if (profile?.role === 'admin') {
-        document.getElementById('auth-btn').href = 'auth/admin.html';
-      }
+      const { data: p } = await db.from('profiles').select('role').eq('id', session.user.id).single();
+      if (p?.role === 'admin') document.getElementById('auth-btn').href = 'auth/admin.html';
     } catch(e) {}
   }
 
+  db.auth.onAuthStateChange((_e, session) => updateAuthBtn(session));
+
+  /* ── Intro video ── */
+  function _endIntro() {
+    intro.style.transition = 'opacity .8s ease';
+    intro.style.opacity = '0';
+    setTimeout(() => {
+      intro.classList.add('hidden');
+      sessionStorage.setItem('bdm-nav', '1');
+      if (window._bdmAfterIntro) window._bdmAfterIntro();
+    }, 820);
+  }
+  window.skipIntro = _endIntro;
+
+  function playIntro() {
+    splash.classList.add('hidden');
+    intro.classList.remove('hidden');
+    intro.style.opacity = '1';
+    vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
+    vid.play().catch(() => {});
+    vid.addEventListener('ended', _endIntro, { once: true });
+  }
+
+  /* ── Auto-seleciona série do aluno ── */
+  window._goToSerie = async function(session) {
+    try {
+      const { data: p } = await db.from('profiles').select('serie,role').eq('id', session.user.id).single();
+      if (!p || p.role === 'admin') return; // admin vê landing normalmente
+      const map = {'1ª Série': 1, '2ª Série': 2, '3ª Série': 3};
+      const n = map[p.serie];
+      if (n) { window.bdmAllowedSerie = n; selectSerie(n); }
+    } catch(e) {}
+  };
+
+  /* ── Lógica principal ── */
   db.auth.getSession().then(({ data: { session } }) => {
+    // Visitante sem sessão
     if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
+      splash.style.transition = 'opacity .6s'; splash.style.opacity = '0';
+      setTimeout(() => splash.classList.add('hidden'), 640);
+      return;
+    }
+
+    // Não logado → splash visível
+    if (!session) {
+      updateAuthBtn(null);
+      return;
+    }
+
+    // Logado → esconde splash e atualiza botão
+    splash.style.transition = 'opacity .6s'; splash.style.opacity = '0';
+    setTimeout(() => splash.classList.add('hidden'), 640);
+    updateAuthBtn(session);
+
+    if (doIntro || !sessionStorage.getItem('bdm-nav')) {
+      // Primeiro acesso ou login recente → intro → série
+      window._bdmAfterIntro = () => window._goToSerie(session);
+      playIntro();
     } else {
-      updateAuthBtn(session);
+      // Voltando de perfil/admin → vai direto pra série
+      window._goToSerie(session);
     }
   });
-
-  db.auth.onAuthStateChange((_e, session) => updateAuthBtn(session));
 })();
 </script>
 
