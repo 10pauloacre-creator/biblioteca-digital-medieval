@@ -1346,12 +1346,18 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
   };
 
-  /* Android: captura o evento — mostra após primeira interação do usuário */
+  /* Android: captura o evento e mostra o prompt automaticamente */
   window.addEventListener('beforeinstallprompt',e=>{
     e.preventDefault();
     deferredPrompt=e;
-    /* Aguarda o usuário clicar numa série antes de mostrar o prompt */
     window._pwaReadyToShow=true;
+    /* Mostra após 3,5s seja na splash, seja na tela de séries */
+    setTimeout(()=>{
+      if(window._pwaReadyToShow && !wasRecentlyDismissed()){
+        window._pwaReadyToShow=false;
+        showMsg();
+      }
+    },3500);
   });
 
   /* Chamado por selectSerie() após primeira interação */
