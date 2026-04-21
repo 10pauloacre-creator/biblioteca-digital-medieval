@@ -13,11 +13,14 @@ const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste ent
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
 const VALID_CACHES = [SHELL_CACHE, MEDIA_CACHE, BOOKS_CACHE];
 
-// ── Shell: imagens, ícones, index
-const SHELL_ASSETS = [
+// ── Shell: imagens, ícones, index, auth
+const SHELL_ASSETS_CRITICAL = [
   './',
   './index.html',
   './manifest.json',
+];
+
+const SHELL_ASSETS_OPTIONAL = [
   './cache-manifest.json',
   './assets/images/livro-azul.png',
   './assets/images/livro-verde.png',
@@ -33,7 +36,16 @@ const SHELL_ASSETS = [
   './assets/icons/icon-512x512.png',
   './assets/icons/apple-touch-icon.png',
   './assets/icons/favicon-32x32.png',
+  // Páginas de autenticação — necessárias para login offline
+  './auth/login.html',
+  './auth/cadastro.html',
+  './auth/perfil.html',
+  './auth/admin.html',
+  './assets/js/supabase-config.js',
 ];
+
+// Retrocompatibilidade: lista completa usada em staleWhileRevalidate
+const SHELL_ASSETS = [...SHELL_ASSETS_CRITICAL, ...SHELL_ASSETS_OPTIONAL];
 
 // ── Áudio: pré-cache junto com o shell
 const AUDIO_ASSETS = [
@@ -106,18 +118,19 @@ const ALL_BOOKS = [
 // ═══════════════════════════════════════════════════════════════
 self.addEventListener('install', event => {
   event.waitUntil(
-    Promise.all([
-      // Shell crítico — falha aborta install
-      caches.open(SHELL_CACHE).then(cache => cache.addAll(SHELL_ASSETS)),
+    caches.open(SHELL_CACHE).then(async cache => {
+      // Assets críticos — falha aborta install
+      await cache.addAll(SHELL_ASSETS_CRITICAL);
+      // Assets opcionais (imagens, ícones, auth) — best-effort
+      await Promise.allSettled(SHELL_ASSETS_OPTIONAL.map(url => cache.add(url)));
       // Áudio — best-effort
-      caches.open(SHELL_CACHE).then(cache =>
-        Promise.allSettled(AUDIO_ASSETS.map(url => cache.add(url)))
-      ),
-      // Todos os livros — best-effort (não aborta install se algum falhar)
+      await Promise.allSettled(AUDIO_ASSETS.map(url => cache.add(url)));
+    }).then(() =>
+      // Livros — best-effort, não aborta install
       caches.open(BOOKS_CACHE).then(cache =>
         Promise.allSettled(ALL_BOOKS.map(url => cache.add(url)))
-      ),
-    ]).then(() => self.skipWaiting())
+      )
+    ).then(() => self.skipWaiting())
   );
 });
 

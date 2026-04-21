@@ -487,6 +487,16 @@ body{background:#080300;color:var(--text);}
 }
 #pwa-fixed-btn img{width:100%;height:auto;display:block;}
 
+/* Link "Agora não" no overlay PWA */
+#pwa-dismiss-btn{
+  display:block;text-align:center;margin-top:10px;padding:8px 0 4px;
+  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em;
+  color:rgba(201,168,76,.65);cursor:pointer;
+  background:none;border:none;width:100%;
+  transition:color .2s;
+}
+#pwa-dismiss-btn:hover{color:var(--gold-l);}
+
 /* ══════════════════════════════
    BACK TOAST
 ══════════════════════════════ */
@@ -934,6 +944,7 @@ body{background:#080300;color:var(--text);}
     <div id="pwa-fixed-btn" onclick="triggerPwaInstall()">
       <img src="assets/images/botão-baixar.png" alt="Baixar o Codex">
     </div>
+    <button id="pwa-dismiss-btn" onclick="window.hidePwaMsg&&window.hidePwaMsg();localStorage.setItem('bdm-pwa-dismissed',Date.now())">✕ Agora não</button>
   </div>
 </div>
 
@@ -980,6 +991,7 @@ function selectSerie(n) {
   buildTabs(n);
 
   if(window.hidePwaMsg) window.hidePwaMsg();
+  if(window.maybShowPwaMsg) window.maybShowPwaMsg();
 
   const landing = document.getElementById('screen-landing');
   const content = document.getElementById('screen-content');
@@ -1193,6 +1205,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(!('serviceWorker' in navigator)) return;
 
   window.addEventListener('load', async () => {
+    // Detecta se já havia um SW controlando a página (não é primeira instalação)
+    const hadController = !!navigator.serviceWorker.controller;
+
     let reg;
     try { reg = await navigator.serviceWorker.register('./sw.js'); } catch(e) { return; }
 
@@ -1201,8 +1216,9 @@ window.addEventListener('DOMContentLoaded',()=>{
       if(e.data && e.data.type === 'BDM_NEW_BOOKS') showUpdateToast();
     });
 
-    // Quando um novo SW assume, recarrega para servir conteúdo atualizado
+    // Recarrega apenas quando um SW ATUALIZADO (não o primeiro) assume o controle
     reg.addEventListener('controllerchange', () => {
+      if(!hadController) return; // primeira instalação — não recarrega
       if(!document._bdmReloading){ document._bdmReloading=true; location.reload(); }
     });
 
@@ -1249,8 +1265,17 @@ window.addEventListener('DOMContentLoaded',()=>{
   const isIOS=/iPad|iPhone|iPod/i.test(navigator.userAgent)&&!window.MSStream;
   let deferredPrompt=null;
 
+  /* Verifica se foi dispensado nos últimos 7 dias */
+  function wasRecentlyDismissed(){
+    try{
+      const t=parseInt(localStorage.getItem('bdm-pwa-dismissed')||'0');
+      return t && (Date.now()-t < 7*24*60*60*1000);
+    }catch(e){return false;}
+  }
+
   /* Abre overlay deslizante */
   function showMsg(){
+    if(wasRecentlyDismissed())return;
     overlay.style.display='flex';
     requestAnimationFrame(()=>overlay.classList.add('show'));
   }
@@ -1264,9 +1289,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   /* Expoe hideMsg globalmente para outras funcoes usarem */
   window.hidePwaMsg=hideMsg;
 
-  /* Clique fora da imagem fecha */
+  /* Clique fora do container fecha */
   window.pwaOverlayClick=function(e){
-    if(e.target===overlay||e.target===document.getElementById('pwa-msg-overlay'))hideMsg();
+    if(e.target===overlay)hideMsg();
   };
 
   /* Botao fixo aciona instalacao */
@@ -1275,29 +1300,35 @@ window.addEventListener('DOMContentLoaded',()=>{
       hideMsg();
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(r=>{
-        if(r.outcome==='accepted'){
-          overlay.style.display='none';
-        }
+        if(r.outcome==='accepted') overlay.style.display='none';
         deferredPrompt=null;
       });
     } else {
-      /* iOS ou sem prompt: mostra a mensagem como instrucao */
       showMsg();
     }
   };
 
-  /* Android: captura o evento de instalacao */
+  /* Android: captura o evento — mostra após primeira interação do usuário */
   window.addEventListener('beforeinstallprompt',e=>{
     e.preventDefault();
     deferredPrompt=e;
-    setTimeout(showMsg,1200);
+    /* Aguarda o usuário clicar numa série antes de mostrar o prompt */
+    window._pwaReadyToShow=true;
   });
+
+  /* Chamado por selectSerie() após primeira interação */
+  window.maybShowPwaMsg=function(){
+    if(window._pwaReadyToShow && !wasRecentlyDismissed()){
+      window._pwaReadyToShow=false;
+      setTimeout(showMsg,800);
+    }
+  };
 
   /* Ja instalado: esconde tudo */
   window.addEventListener('appinstalled',()=>hideMsg());
 
-  /* iOS: mostra mensagem automaticamente */
-  if(isIOS) setTimeout(showMsg,1200);
+  /* iOS: mostra após 5s (fora da tela inicial, sem bloquear o painel) */
+  if(isIOS) setTimeout(showMsg,5000);
 })();
 </script>
 
