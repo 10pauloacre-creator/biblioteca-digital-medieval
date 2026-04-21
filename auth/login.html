@@ -29,7 +29,6 @@ body{
   animation:revealUp .6s ease-out both;
 }
 
-/* ── Scroll/pergaminho ── */
 .scroll{
   background:linear-gradient(160deg,#1e1004,#130a02,#1c0e05);
   border:2px solid var(--gold);
@@ -65,17 +64,18 @@ body{
 .divider{display:flex;align-items:center;gap:8px;margin:0 auto 1.2rem;max-width:200px;color:var(--gold);}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 
-/* ── Tabs ── */
-.tabs{display:flex;gap:0;margin-bottom:1.4rem;border-bottom:1px solid rgba(201,168,76,.25);}
-.tab{
-  flex:1;padding:.6rem;text-align:center;cursor:pointer;
-  font-family:'Cinzel',serif;font-weight:700;font-size:.7rem;letter-spacing:.12em;
-  color:#6a4a20;border-bottom:2px solid transparent;
-  transition:color .2s,border-color .2s;background:none;border-top:none;border-left:none;border-right:none;
+/* ── Steps ── */
+.step{display:none;}
+.step.active{display:block;}
+
+/* ── Nome do aluno em destaque ── */
+.nome-badge{
+  font-family:'Cinzel',serif;font-weight:700;font-size:.85rem;
+  color:var(--gold-l);text-align:center;
+  background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);
+  border-radius:5px;padding:.6rem 1rem;margin-bottom:1.1rem;
+  letter-spacing:.04em;
 }
-.tab.active{color:var(--gold-l);border-bottom-color:var(--gold);}
-.tab-panel{display:none;}
-.tab-panel.active{display:block;}
 
 /* ── Form fields ── */
 .field{margin-bottom:1rem;}
@@ -83,7 +83,7 @@ body{
   display:block;font-family:'Cinzel',serif;font-size:.62rem;
   letter-spacing:.14em;color:var(--text-d);margin-bottom:.4rem;
 }
-.field input,.field select{
+.field input{
   width:100%;padding:.65rem .9rem;
   background:rgba(255,255,255,.04);
   border:1px solid rgba(201,168,76,.3);
@@ -92,12 +92,11 @@ body{
   transition:border-color .2s,box-shadow .2s;outline:none;
   -webkit-appearance:none;appearance:none;
 }
-.field input:focus,.field select:focus{
+.field input:focus{
   border-color:var(--gold);
   box-shadow:0 0 12px rgba(201,168,76,.2);
 }
 .field input::placeholder{color:rgba(245,232,192,.25);}
-.field select option{background:#1a0e04;color:var(--text);}
 
 /* ── Buttons ── */
 .btn-primary{
@@ -123,7 +122,7 @@ body{
 .row-link{text-align:center;margin-top:.9rem;font-size:.78rem;color:var(--text-d);}
 .row-link button{margin-left:4px;}
 
-/* ── Mensagens ── */
+/* ── Mensagem ── */
 .msg{
   padding:.6rem .9rem;border-radius:4px;
   font-size:.8rem;margin-bottom:.9rem;
@@ -132,15 +131,8 @@ body{
 }
 .msg.error{background:rgba(180,20,20,.15);border:1px solid rgba(180,60,60,.4);color:#f08080;}
 .msg.success{background:rgba(20,100,20,.15);border:1px solid rgba(60,160,60,.4);color:#80d080;}
+.msg.info{background:rgba(20,60,120,.15);border:1px solid rgba(60,100,180,.4);color:#80b0f0;}
 .msg.show{display:block;}
-
-/* ── Back link ── */
-.back-link{
-  text-align:center;margin-top:1.1rem;
-  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;color:var(--text-d);
-}
-.back-link a{color:var(--text-d);text-decoration:none;transition:color .2s;}
-.back-link a:hover{color:var(--gold-l);}
 
 /* ── Visitante ── */
 .visitor-separator{
@@ -162,6 +154,21 @@ body{
   background:rgba(201,168,76,.07);
 }
 
+/* ── Back link ── */
+.back-link{
+  text-align:center;margin-top:1.1rem;
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;color:var(--text-d);
+}
+.back-link a{color:var(--text-d);text-decoration:none;transition:color .2s;}
+.back-link a:hover{color:var(--gold-l);}
+
+/* ── Hint text ── */
+.hint{
+  font-size:.74rem;color:var(--text-d);line-height:1.6;
+  text-align:center;margin-bottom:1rem;
+  font-family:'Cinzel',serif;letter-spacing:.04em;
+}
+
 @keyframes sweep{from{background-position:0% 50%}to{background-position:200% 50%}}
 @keyframes revealUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 </style>
@@ -181,73 +188,97 @@ body{
     <p class="scroll-sub">Acesso ao Acervo Sagrado</p>
     <div class="divider"><span>✦</span></div>
 
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('login')">ENTRAR</button>
-      <button class="tab" onclick="switchTab('register')">CRIAR CONTA</button>
-    </div>
+    <div id="msg-global" class="msg"></div>
 
-    <!-- ── LOGIN ── -->
-    <div id="tab-login" class="tab-panel active">
-      <div id="msg-login" class="msg"></div>
-      <div class="field">
-        <label>PERGAMINHO DE IDENTIFICAÇÃO (E-MAIL)</label>
-        <input id="login-email" type="email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="field">
-        <label>SENHA SECRETA</label>
-        <input id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
-      </div>
-      <button class="btn-primary" id="btn-login" onclick="doLogin()">⚔ ADENTRAR O SANCTUM</button>
+    <!-- ══ STEP: PERFIL (já logado) ══ -->
+    <div id="step-profile" class="step">
+      <div class="nome-badge" id="profile-nome"></div>
+      <div class="hint" id="profile-serie"></div>
+      <button class="btn-primary" onclick="irParaBiblioteca()">📚 IR PARA A BIBLIOTECA</button>
       <div class="row-link">
-        <button class="btn-ghost" onclick="showForgot()">Esqueci minha senha</button>
+        <button class="btn-ghost" onclick="doLogout()">↩ Sair da conta</button>
       </div>
     </div>
 
-    <!-- ── REGISTER ── -->
-    <div id="tab-register" class="tab-panel">
-      <div id="msg-register" class="msg"></div>
+    <!-- ══ STEP: NOME ══ -->
+    <div id="step-nome" class="step active">
       <div class="field">
-        <label>NOME COMPLETO</label>
-        <input id="reg-nome" type="text" placeholder="Seu nome completo" autocomplete="name"/>
+        <label>SEU NOME COMPLETO</label>
+        <input id="input-nome" type="text" placeholder="Como aparece na lista da turma" autocomplete="name" autocorrect="off"/>
       </div>
-      <div class="field">
-        <label>E-MAIL</label>
-        <input id="reg-email" type="email" placeholder="seu@email.com" autocomplete="email"/>
-      </div>
-      <div class="field">
-        <label>SÉRIE</label>
-        <select id="reg-serie">
-          <option value="">— Selecione sua série —</option>
-          <option value="1ª Série">1ª Série</option>
-          <option value="2ª Série">2ª Série</option>
-          <option value="3ª Série">3ª Série</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>SENHA (mínimo 6 caracteres)</label>
-        <input id="reg-pass" type="password" placeholder="••••••••" autocomplete="new-password"/>
-      </div>
-      <button class="btn-primary" id="btn-register" onclick="doRegister()">📜 SELAR O PERGAMINHO</button>
+      <button class="btn-primary" id="btn-verificar" onclick="verificarNome()">🔍 VERIFICAR</button>
     </div>
 
-    <!-- ── FORGOT PASSWORD ── -->
-    <div id="tab-forgot" class="tab-panel">
-      <div id="msg-forgot" class="msg"></div>
-      <p style="font-size:.82rem;color:var(--text-m);margin-bottom:1rem;line-height:1.5;">
-        Digite seu e-mail para receber o feitiço de recuperação de senha.
+    <!-- ══ STEP: PRIMEIRO ACESSO ══ -->
+    <div id="step-primeiro" class="step">
+      <div class="nome-badge" id="nome-badge-primeiro"></div>
+      <p class="hint">
+        Primeiro acesso! Crie sua senha pessoal.<br>
+        <span style="font-size:.68rem;opacity:.7;">Guarde-a bem — só o professor pode redefinir.</span>
       </p>
       <div class="field">
-        <label>E-MAIL</label>
-        <input id="forgot-email" type="email" placeholder="seu@email.com"/>
+        <label>NOVA SENHA (mínimo 6 caracteres)</label>
+        <input id="input-senha-nova" type="password" placeholder="••••••••" autocomplete="new-password"/>
       </div>
-      <button class="btn-primary" id="btn-forgot" onclick="doForgot()">✉ ENVIAR FEITIÇO</button>
+      <div class="field">
+        <label>CONFIRMAR SENHA</label>
+        <input id="input-senha-confirmar" type="password" placeholder="••••••••" autocomplete="new-password"/>
+      </div>
+      <button class="btn-primary" id="btn-criar" onclick="criarSenha()">🔑 CRIAR SENHA E ENTRAR</button>
       <div class="row-link">
-        <button class="btn-ghost" onclick="switchTab('login')">← Voltar ao login</button>
+        <button class="btn-ghost" onclick="voltarNome()">← Voltar</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP: SENHA (retorno) ══ -->
+    <div id="step-senha" class="step">
+      <div class="nome-badge" id="nome-badge-senha"></div>
+      <div class="field">
+        <label>SENHA</label>
+        <input id="input-senha" type="password" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <button class="btn-primary" id="btn-entrar" onclick="fazerLogin()">⚔ ADENTRAR O SANCTUM</button>
+      <div class="row-link">
+        <button class="btn-ghost" onclick="showStep('esqueci')">Esqueci minha senha</button>
+      </div>
+      <div class="row-link" style="margin-top:.5rem;">
+        <button class="btn-ghost" onclick="voltarNome()">← Não sou eu</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP: ESQUECI SENHA ══ -->
+    <div id="step-esqueci" class="step">
+      <div style="text-align:center;font-size:2rem;margin-bottom:.8rem;">🔒</div>
+      <p class="hint" style="margin-bottom:1.2rem;line-height:1.9;">
+        Para redefinir sua senha,<br>
+        <strong style="color:var(--gold-l);">solicite ao professor.</strong><br>
+        <span style="font-size:.68rem;opacity:.7;">Ele irá liberar um novo acesso para você.</span>
+      </p>
+      <div class="row-link">
+        <button class="btn-ghost" onclick="showStep('senha')">← Voltar</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP: ADMIN ══ -->
+    <div id="step-admin" class="step">
+      <p class="hint" style="margin-bottom:1rem;">Acesso exclusivo para o professor administrador.</p>
+      <div class="field">
+        <label>E-MAIL ADMINISTRATIVO</label>
+        <input id="admin-email" type="email" placeholder="professor@escola.com" autocomplete="email"/>
+      </div>
+      <div class="field">
+        <label>SENHA</label>
+        <input id="admin-pass" type="password" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <button class="btn-primary" id="btn-admin" onclick="doAdminLogin()">👑 ENTRAR COMO ADMINISTRADOR</button>
+      <div class="row-link" style="margin-top:.8rem;">
+        <button class="btn-ghost" onclick="showStep('nome')">← Voltar</button>
       </div>
     </div>
   </div>
 
-  <div class="scroll" style="margin-top:.8rem;padding:1.2rem 1.8rem;">
+  <!-- Visitante -->
+  <div class="scroll" id="card-visitante" style="margin-top:.8rem;padding:1.2rem 1.8rem;">
     <div class="visitor-separator">ou</div>
     <button class="btn-visitor" onclick="entrarComoVisitante()">
       👁 CONTINUAR COMO VISITANTE
@@ -259,6 +290,8 @@ body{
 
   <div class="back-link">
     <a href="../index.html">← Voltar à Biblioteca</a>
+    <span style="color:rgba(201,168,76,.2);margin:0 .6rem;">·</span>
+    <button class="btn-ghost" onclick="showStep('admin')" style="font-size:.55rem;color:rgba(122,92,48,.45);letter-spacing:.08em;">Administrador</button>
   </div>
 </div>
 
@@ -268,131 +301,199 @@ body{
 const { createClient } = supabase;
 const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
 
-// Redireciona se já logado
-db.auth.getSession().then(({ data: { session } }) => {
-  if (session) redirectAfterLogin(session.user);
-});
+let currentNome = '';
 
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach((t,i) => {
-    const names = ['login','register','forgot'];
-    t.classList.toggle('active', names[i] === name);
-  });
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  if (name === 'forgot') {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+// ── Verificar sessão existente ──────────────────────────────────
+(async () => {
+  const alunoSession = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+  if (alunoSession) {
+    document.getElementById('profile-nome').textContent = alunoSession.nome_completo;
+    document.getElementById('profile-serie').textContent = alunoSession.serie || '';
+    document.getElementById('card-visitante').style.display = 'none';
+    showStep('profile');
+    return;
   }
+  const { data: { session } } = await db.auth.getSession();
+  if (session) await redirectAdmin(session.user);
+})();
+
+// ── Navegação ───────────────────────────────────────────────────
+function showStep(name) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('step-' + name);
+  if (el) el.classList.add('active');
+  clearMsg();
 }
 
-function showForgot() { switchTab('forgot'); }
+function voltarNome() {
+  currentNome = '';
+  document.getElementById('input-nome').value = '';
+  showStep('nome');
+}
 
-function showMsg(id, text, type) {
-  const el = document.getElementById(id);
+// ── Mensagens ───────────────────────────────────────────────────
+function showMsg(text, type) {
+  const el = document.getElementById('msg-global');
   el.textContent = text;
   el.className = 'msg ' + type + ' show';
 }
+function clearMsg() {
+  document.getElementById('msg-global').className = 'msg';
+}
 
-async function redirectAfterLogin(user) {
+// ── Loading helper ──────────────────────────────────────────────
+function setLoading(btnId, loading, label) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.textContent = loading ? 'Aguarde…' : label;
+}
+
+// ── Step 1: Verificar nome ──────────────────────────────────────
+async function verificarNome() {
+  const nome = document.getElementById('input-nome').value.trim();
+  if (!nome) { showMsg('Digite seu nome completo.', 'error'); return; }
+
+  setLoading('btn-verificar', true, '🔍 VERIFICAR');
+  const { data, error } = await db.rpc('check_aluno', { p_nome: nome });
+  setLoading('btn-verificar', false, '🔍 VERIFICAR');
+
+  if (error) { showMsg('Erro de conexão. Tente novamente.', 'error'); return; }
+  if (data?.error) { showMsg(data.error, 'error'); return; }
+
+  currentNome = nome;
+
+  if (data.first_access) {
+    document.getElementById('nome-badge-primeiro').textContent = data.nome_completo;
+    document.getElementById('input-senha-nova').value = '';
+    document.getElementById('input-senha-confirmar').value = '';
+    showStep('primeiro');
+  } else {
+    document.getElementById('nome-badge-senha').textContent = data.nome_completo;
+    document.getElementById('input-senha').value = '';
+    showStep('senha');
+  }
+}
+
+// ── Step 2a: Criar senha (primeiro acesso) ──────────────────────
+async function criarSenha() {
+  const senha     = document.getElementById('input-senha-nova').value;
+  const confirmar = document.getElementById('input-senha-confirmar').value;
+
+  if (!senha)           { showMsg('Digite uma senha.', 'error'); return; }
+  if (senha.length < 6) { showMsg('A senha deve ter pelo menos 6 caracteres.', 'error'); return; }
+  if (senha !== confirmar) { showMsg('As senhas não coincidem.', 'error'); return; }
+
+  setLoading('btn-criar', true, '🔑 CRIAR SENHA E ENTRAR');
+  const { data, error } = await db.rpc('set_student_password', { p_nome: currentNome, p_senha: senha });
+  setLoading('btn-criar', false, '🔑 CRIAR SENHA E ENTRAR');
+
+  if (error)        { showMsg('Erro de conexão. Tente novamente.', 'error'); return; }
+  if (data?.error)  { showMsg(data.error, 'error'); return; }
+
+  salvarSessao(data);
+  window.location.href = '../index.html?intro=1';
+}
+
+// ── Step 2b: Login com senha ────────────────────────────────────
+async function fazerLogin() {
+  const senha = document.getElementById('input-senha').value;
+  if (!senha) { showMsg('Digite sua senha.', 'error'); return; }
+
+  setLoading('btn-entrar', true, '⚔ ADENTRAR O SANCTUM');
+  const { data, error } = await db.rpc('login_aluno', { p_nome: currentNome, p_senha: senha });
+  setLoading('btn-entrar', false, '⚔ ADENTRAR O SANCTUM');
+
+  if (error)       { showMsg('Erro de conexão. Tente novamente.', 'error'); return; }
+  if (data?.error) { showMsg(data.error, 'error'); return; }
+
+  if (data?.first_access) {
+    document.getElementById('nome-badge-primeiro').textContent = data.nome_completo;
+    showStep('primeiro');
+    return;
+  }
+
+  salvarSessao(data);
+  window.location.href = '../index.html?intro=1';
+}
+
+// ── Salvar sessão ───────────────────────────────────────────────
+function salvarSessao(data) {
+  localStorage.setItem('bdm-aluno', JSON.stringify({
+    id:             data.id,
+    nome_completo:  data.nome_completo,
+    serie:          data.serie,
+    numero_chamada: data.numero_chamada,
+    role:           data.role || 'aluno'
+  }));
+  sessionStorage.removeItem('bdm-nav');
+  sessionStorage.removeItem('bdm-visitante');
+}
+
+// ── Perfil: ir para biblioteca ──────────────────────────────────
+function irParaBiblioteca() {
+  window.location.href = '../index.html';
+}
+
+// ── Logout ──────────────────────────────────────────────────────
+function doLogout() {
+  localStorage.removeItem('bdm-aluno');
+  sessionStorage.removeItem('bdm-nav');
+  sessionStorage.removeItem('bdm-visitante');
+  try { localStorage.removeItem('bdm-cached-role'); } catch(e) {}
+  document.getElementById('card-visitante').style.display = 'block';
+  document.getElementById('input-nome').value = '';
+  currentNome = '';
+  showStep('nome');
+}
+
+// ── Admin login ─────────────────────────────────────────────────
+async function doAdminLogin() {
+  const email = document.getElementById('admin-email').value.trim();
+  const pass  = document.getElementById('admin-pass').value;
+  if (!email || !pass) { showMsg('Preencha e-mail e senha.', 'error'); return; }
+
+  setLoading('btn-admin', true, '👑 ENTRAR COMO ADMINISTRADOR');
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+  setLoading('btn-admin', false, '👑 ENTRAR COMO ADMINISTRADOR');
+
+  if (error) {
+    const msgs = { 'Invalid login credentials': 'E-mail ou senha incorretos.' };
+    showMsg(msgs[error.message] || error.message, 'error');
+    return;
+  }
+  await redirectAdmin(data.user);
+}
+
+async function redirectAdmin(user) {
   try {
-    const { data: profile, error } = await db.from('profiles').select('nome_completo,role').eq('id', user.id).single();
-    if (error) throw error;
-    if (profile?.role === 'admin') {
+    const { data: p } = await db.from('profiles').select('role').eq('id', user.id).single();
+    if (p?.role === 'admin' || user.email === '10pauloacre@gmail.com') {
       window.location.href = 'admin.html';
-    } else if (!profile?.nome_completo) {
-      window.location.href = 'cadastro.html';
     } else {
-      window.location.href = '../index.html?intro=1';
+      window.location.href = '../index.html';
     }
   } catch(e) {
-    // Tabela profiles não existe ainda ou erro de schema — redireciona para cadastro
-    if (user.email === window.ADMIN_EMAIL) {
-      window.location.href = 'admin.html';
-    } else {
-      window.location.href = 'cadastro.html';
-    }
+    if (user.email === '10pauloacre@gmail.com') window.location.href = 'admin.html';
+    else window.location.href = '../index.html';
   }
 }
 
-async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-pass').value;
-  const btn   = document.getElementById('btn-login');
-  if (!email || !pass) { showMsg('msg-login','Preencha todos os campos.','error'); return; }
-  btn.disabled = true; btn.textContent = 'Abrindo o portal…';
-  const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
-  if (error) {
-    const msgs = {
-      'Invalid login credentials': 'E-mail ou senha incorretos.',
-      'Email not confirmed': 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.',
-    };
-    showMsg('msg-login', msgs[error.message] || error.message, 'error');
-    btn.disabled = false; btn.textContent = '⚔ ADENTRAR O SANCTUM';
-  } else {
-    await redirectAfterLogin(data.user);
-  }
-}
-
-async function doRegister() {
-  const nome  = document.getElementById('reg-nome').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const serie = document.getElementById('reg-serie').value;
-  const pass  = document.getElementById('reg-pass').value;
-  const btn   = document.getElementById('btn-register');
-  if (!nome || !email || !serie || !pass) { showMsg('msg-register','Preencha todos os campos.','error'); return; }
-  if (pass.length < 6) { showMsg('msg-register','A senha deve ter ao menos 6 caracteres.','error'); return; }
-  btn.disabled = true; btn.textContent = 'Selando…';
-  const { error } = await db.auth.signUp({
-    email, password: pass,
-    options: { data: { nome_completo: nome, serie } }
-  });
-  if (error) {
-    showMsg('msg-register', error.message, 'error');
-    btn.disabled = false; btn.textContent = '📜 SELAR O PERGAMINHO';
-  } else {
-    showMsg('msg-register',
-      'Pergaminho selado! Verifique seu e-mail para confirmar o cadastro.',
-      'success');
-    btn.disabled = false; btn.textContent = '📜 SELAR O PERGAMINHO';
-  }
-}
-
-async function doForgot() {
-  const email = document.getElementById('forgot-email').value.trim();
-  const btn   = document.getElementById('btn-forgot');
-  if (!email) { showMsg('msg-forgot','Digite seu e-mail.','error'); return; }
-  btn.disabled = true; btn.textContent = 'Enviando…';
-  const { error } = await db.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/auth/login.html'
-  });
-  if (error) {
-    showMsg('msg-forgot', error.message, 'error');
-  } else {
-    showMsg('msg-forgot', 'Feitiço enviado! Verifique seu e-mail.', 'success');
-  }
-  btn.disabled = false; btn.textContent = '✉ ENVIAR FEITIÇO';
-}
-
-// Enter para submeter
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  const active = document.querySelector('.tab-panel.active')?.id;
-  if (active === 'tab-login') doLogin();
-  else if (active === 'tab-register') doRegister();
-  else if (active === 'tab-forgot') doForgot();
-});
-
-// Checa se veio de confirmação de email
-const params = new URLSearchParams(location.search);
-if (params.get('confirmed')) {
-  switchTab('login');
-  showMsg('msg-login','E-mail confirmado! Faça login para continuar.','success');
-}
-
+// ── Visitante ───────────────────────────────────────────────────
 function entrarComoVisitante() {
   sessionStorage.setItem('bdm-visitante', '1');
   window.location.href = '../index.html';
 }
+
+// ── Enter key ───────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.step.active')?.id;
+  if      (active === 'step-nome')    verificarNome();
+  else if (active === 'step-primeiro') criarSenha();
+  else if (active === 'step-senha')   fazerLogin();
+  else if (active === 'step-admin')   doAdminLogin();
+});
 </script>
 </body>
 </html>

@@ -196,6 +196,7 @@ body{overflow-y:auto;}
     <div class="stat-box"><div class="stat-num" id="stat-s2">—</div><div class="stat-lbl">2ª SÉRIE</div></div>
     <div class="stat-box"><div class="stat-num" id="stat-s3">—</div><div class="stat-lbl">3ª SÉRIE</div></div>
   </div>
+  <div id="stat-sem-senha-msg" style="text-align:center;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.1em;color:#ff9060;margin-top:-.4rem;margin-bottom:1.1rem;min-height:1.2rem;"></div>
 
   <!-- Search -->
   <div class="search-row">
@@ -263,6 +264,9 @@ body{overflow-y:auto;}
       <button class="btn-action btn-outline" onclick="closeModal()">Cancelar</button>
       <button class="btn-action btn-gold" id="btn-save" onclick="saveStudent()">Salvar</button>
     </div>
+    <div style="margin-top:.6rem;">
+      <button class="btn-action btn-outline" style="width:100%;border-color:rgba(240,208,96,.3);color:var(--gold-l);" onclick="confirmarResetSenha()">🔑 Redefinir Senha do Aluno</button>
+    </div>
   </div>
 </div>
 
@@ -280,15 +284,18 @@ let newAvatarFile = null;
   const { data: { session } } = await db.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return; }
 
-  const { data: me } = await db.from('profiles').select('role').eq('id', session.user.id).single();
-  if (me?.role !== 'admin') { window.location.href = 'perfil.html'; return; }
+  const isAdmin = session.user.email === '10pauloacre@gmail.com';
+  if (!isAdmin) {
+    const { data: me } = await db.from('profiles').select('role').eq('id', session.user.id).single();
+    if (me?.role !== 'admin') { window.location.href = '../index.html'; return; }
+  }
 
   await loadStudents();
 })();
 
 async function loadStudents() {
-  const { data, error } = await db.from('profiles')
-    .select('*').order('nome_completo', { ascending: true });
+  const { data, error } = await db.from('alunos')
+    .select('*').order('serie').order('numero_chamada');
   if (error) { document.getElementById('students-grid').innerHTML = '<div class="empty-state">Erro ao carregar.</div>'; return; }
 
   allStudents = data || [];
@@ -297,11 +304,15 @@ async function loadStudents() {
 }
 
 function updateStats() {
-  const alunos = allStudents.filter(s => s.role !== 'admin');
-  document.getElementById('stat-total').textContent = alunos.length;
-  document.getElementById('stat-s1').textContent = alunos.filter(s => s.serie === '1ª Série').length;
-  document.getElementById('stat-s2').textContent = alunos.filter(s => s.serie === '2ª Série').length;
-  document.getElementById('stat-s3').textContent = alunos.filter(s => s.serie === '3ª Série').length;
+  document.getElementById('stat-total').textContent = allStudents.length;
+  document.getElementById('stat-s1').textContent = allStudents.filter(s => s.serie === '1ª Série').length;
+  document.getElementById('stat-s2').textContent = allStudents.filter(s => s.serie === '2ª Série').length;
+  document.getElementById('stat-s3').textContent = allStudents.filter(s => s.serie === '3ª Série').length;
+  const semSenha = allStudents.filter(s => !s.password_hash).length;
+  const msgEl = document.getElementById('stat-sem-senha-msg');
+  msgEl.textContent = semSenha > 0
+    ? `⚠ ${semSenha} aluno(s) ainda sem senha definida`
+    : '';
 }
 
 function filterStudents() {
@@ -310,7 +321,7 @@ function filterStudents() {
   const filtered = allStudents.filter(s => {
     const matchNome  = !q || s.nome_completo.toLowerCase().includes(q);
     const matchSerie = !serie || s.serie === serie;
-    return matchNome && matchSerie && s.role !== 'admin';
+    return matchNome && matchSerie;
   });
   renderStudents(filtered);
 }
@@ -325,6 +336,9 @@ function renderStudents(students) {
     const avatarHtml = s.avatar_url
       ? `<img src="${s.avatar_url}" alt="">`
       : `<span>${ini.toUpperCase()}</span>`;
+    const semSenhaBadge = !s.password_hash
+      ? '<div class="s-badge" style="background:rgba(255,100,0,.15);border-color:rgba(255,120,0,.3);color:#ff9060;">SEM SENHA</div>'
+      : '';
     return `
       <div class="student-card" onclick="openEdit('${s.id}')">
         <div class="s-avatar">${avatarHtml}</div>
@@ -332,7 +346,7 @@ function renderStudents(students) {
           <div class="s-name">${s.nome_completo || '(sem nome)'}</div>
           <div class="s-meta">${s.serie||'—'} ${s.turma ? '· Turma '+s.turma : ''}</div>
           <div class="s-meta">Nº ${s.numero_chamada ?? '—'}</div>
-          ${s.nome_completo ? '' : '<div class="s-badge">PERFIL INCOMPLETO</div>'}
+          ${semSenhaBadge}
         </div>
       </div>`;
   }).join('');
@@ -410,7 +424,7 @@ async function saveStudent() {
     avatar_url = urlData.publicUrl + '?t=' + Date.now();
   }
 
-  const { error } = await db.from('profiles').update({
+  const { error } = await db.from('alunos').update({
     nome_completo: nome, serie: serie||null, turma: turma||null,
     numero_chamada: numero, avatar_url
   }).eq('id', editingId);
@@ -425,8 +439,26 @@ async function saveStudent() {
 }
 
 async function confirmarDelete() {
-  if (!confirm('Remover este aluno permanentemente? Esta ação não pode ser desfeita.')) return;
-  await db.from('profiles').delete().eq('id', editingId);
+  const s = allStudents.find(x => x.id === editingId);
+  if (!confirm(`Remover "${s?.nome_completo || 'este aluno'}" permanentemente? Esta ação não pode ser desfeita.`)) return;
+  await db.from('alunos').delete().eq('id', editingId);
+  closeModal();
+  await loadStudents();
+}
+
+async function confirmarResetSenha() {
+  const s = allStudents.find(x => x.id === editingId);
+  if (!s) return;
+  if (!confirm(`Redefinir a senha de "${s.nome_completo}"?\nO aluno poderá criar uma nova senha no próximo acesso.`)) return;
+
+  const { data, error } = await db.rpc('reset_student_password', { p_aluno_id: editingId });
+  if (error || data?.error) {
+    const msg = document.getElementById('msg-modal');
+    msg.textContent = data?.error || error.message;
+    msg.className = 'msg error show';
+    return;
+  }
+  alert(`Senha de "${s.nome_completo}" redefinida!\nO aluno poderá criar nova senha no próximo acesso.`);
   closeModal();
   await loadStudents();
 }

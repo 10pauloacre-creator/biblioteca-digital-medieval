@@ -1460,7 +1460,8 @@ window.addEventListener('DOMContentLoaded',()=>{
       k.startsWith('sb-') && k.endsWith('-auth-token') && localStorage.getItem(k)
     );
     const _isVisitor = sessionStorage.getItem('bdm-visitante') === '1';
-    if (_hasToken || _isVisitor) splash.classList.add('hidden');
+    const _isAluno   = !!localStorage.getItem('bdm-aluno');
+    if (_hasToken || _isVisitor || _isAluno) splash.classList.add('hidden');
   } catch(e) {}
 
   const { createClient } = supabase;
@@ -1475,6 +1476,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
 
   async function updateAuthBtn(session) {
+    const alunoSession = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+    if (alunoSession) { setAuthImg('assets/images/perfil.png', 'auth/login.html'); return; }
     if (!session) { setAuthImg('assets/images/login.png', 'auth/login.html'); return; }
     setAuthImg('assets/images/perfil.png', 'auth/perfil.html');
     try {
@@ -1522,6 +1525,19 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   /* ── Auto-seleciona série do aluno ── */
   window._goToSerie = async function(session) {
+    // Aluno via localStorage
+    if (!session) {
+      try {
+        const al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+        if (al) {
+          try { localStorage.removeItem('bdm-cached-role'); } catch(e) {}
+          const map = {'1ª Série': 1, '2ª Série': 2, '3ª Série': 3};
+          const n = map[al.serie];
+          if (n) { window.bdmAllowedSerie = n; selectSerie(n); }
+        }
+      } catch(e) {}
+      return;
+    }
     try {
       const { data: p } = await db.from('profiles').select('serie,role').eq('id', session.user.id).single();
       if (!p || p.role === 'admin') {
@@ -1539,6 +1555,20 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   /* ── Lógica principal ── */
   db.auth.getSession().then(({ data: { session } }) => {
+    // Aluno com sessão por localStorage (sem Supabase Auth)
+    const alunoSession = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+    if (alunoSession && !session) {
+      hideSplash();
+      setAuthImg('assets/images/perfil.png', 'auth/login.html');
+      if (doIntro || !sessionStorage.getItem('bdm-nav')) {
+        window._bdmAfterIntro = () => window._goToSerie(null);
+        playIntro();
+      } else {
+        window._goToSerie(null);
+      }
+      return;
+    }
+
     if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
       hideSplash();
