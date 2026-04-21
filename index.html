@@ -1414,29 +1414,58 @@ window.addEventListener('DOMContentLoaded',()=>{
       btn.href = 'auth/login.html';
       label.textContent = 'ENTRAR';
       ini.textContent = '⚔';
+      avatar.innerHTML = '<span id="auth-initials">⚔</span>';
       return;
     }
 
-    const { data: profile } = await db.from('profiles')
-      .select('nome_completo,avatar_url,role').eq('id', session.user.id).single();
+    // Mostra estado logado imediatamente com fallback no e-mail
+    btn.href = 'auth/perfil.html';
+    const emailFallback = (session.user.email || '').split('@')[0].slice(0,8).toUpperCase();
+    ini.textContent = emailFallback[0] || '?';
+    label.textContent = emailFallback || 'PERFIL';
 
-    btn.href = profile?.role === 'admin' ? 'auth/admin.html' : 'auth/perfil.html';
+    try {
+      const { data: profile } = await db.from('profiles')
+        .select('nome_completo,avatar_url,role').eq('id', session.user.id).single();
 
-    if (profile?.avatar_url) {
-      avatar.innerHTML = `<img src="${profile.avatar_url}" alt="">`;
-    } else if (profile?.nome_completo) {
-      const parts = profile.nome_completo.split(' ').filter(Boolean);
-      const initials = parts.length >= 2
-        ? parts[0][0] + parts[parts.length-1][0]
-        : parts[0]?.[0] || '?';
-      ini.textContent = initials.toUpperCase();
+      if (profile?.role === 'admin') btn.href = 'auth/admin.html';
+
+      if (profile?.avatar_url) {
+        avatar.innerHTML = `<img src="${profile.avatar_url}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else if (profile?.nome_completo) {
+        const parts = profile.nome_completo.split(' ').filter(Boolean);
+        const initials = parts.length >= 2
+          ? parts[0][0] + parts[parts.length-1][0]
+          : parts[0]?.[0] || '?';
+        ini.textContent = initials.toUpperCase();
+      }
+
+      const nome = profile?.nome_completo?.split(' ')[0] || emailFallback || 'Perfil';
+      label.textContent = profile?.role === 'admin' ? 'MAGO SUPREMO' : nome.toUpperCase();
+    } catch(e) {
+      // Perfil inacessível mas sessão válida — mantém fallback por email
     }
-
-    const nome = profile?.nome_completo?.split(' ')[0] || 'Perfil';
-    label.textContent = profile?.role === 'admin' ? 'MAGO SUPREMO' : nome.toUpperCase();
   }
 
-  db.auth.getSession().then(({ data: { session } }) => updateAuthBtn(session));
+  db.auth.getSession().then(({ data: { session } }) => {
+    if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
+      // Modo visitante — mostra indicador especial
+      const btn   = document.getElementById('auth-btn');
+      const label = document.getElementById('auth-label');
+      const ini   = document.getElementById('auth-initials');
+      if (btn) {
+        btn.href = 'auth/login.html';
+        ini.textContent = '👁';
+        label.textContent = 'VISITANTE';
+        btn.style.borderColor = 'rgba(140,100,200,.5)';
+        btn.style.background  = 'linear-gradient(135deg,rgba(140,100,200,.15),rgba(100,60,160,.08))';
+        document.getElementById('auth-label').style.color = '#c8a8f0';
+        document.getElementById('auth-initials').style.color = '#c8a8f0';
+      }
+    } else {
+      updateAuthBtn(session);
+    }
+  });
   db.auth.onAuthStateChange((_e, session) => updateAuthBtn(session));
 })();
 </script>

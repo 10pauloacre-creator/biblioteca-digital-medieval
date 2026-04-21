@@ -135,6 +135,26 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 .back-link a{color:var(--text-d);text-decoration:none;transition:color .2s;}
 .back-link a:hover{color:var(--gold-l);}
 
+/* ── Visitante ── */
+.visitor-separator{
+  display:flex;align-items:center;gap:8px;
+  margin:1.3rem 0 .9rem;
+  font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;color:var(--text-d);
+}
+.visitor-separator::before,.visitor-separator::after{
+  content:'';flex:1;height:1px;background:rgba(201,168,76,.15);
+}
+.btn-visitor{
+  width:100%;padding:.65rem;border:1px solid rgba(201,168,76,.25);border-radius:4px;
+  background:rgba(255,255,255,.03);cursor:pointer;
+  font-family:'Cinzel',serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;
+  color:var(--text-d);transition:all .2s;
+}
+.btn-visitor:hover{
+  border-color:rgba(201,168,76,.5);color:var(--text-m);
+  background:rgba(201,168,76,.07);
+}
+
 @keyframes sweep{from{background-position:0% 50%}to{background-position:200% 50%}}
 @keyframes revealUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 </style>
@@ -218,6 +238,16 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
         <button class="btn-ghost" onclick="switchTab('login')">← Voltar ao login</button>
       </div>
     </div>
+  </div>
+
+  <div class="scroll" style="margin-top:.8rem;padding:1.2rem 1.8rem;">
+    <div class="visitor-separator">ou</div>
+    <button class="btn-visitor" onclick="entrarComoVisitante()">
+      👁 CONTINUAR COMO VISITANTE
+    </button>
+    <p style="text-align:center;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.08em;color:var(--text-d);margin-top:.6rem;line-height:1.6;">
+      Acesse os conteúdos sem cadastro.<br>Sem perfil salvo.
+    </p>
   </div>
 
   <div class="back-link">
@@ -340,6 +370,11 @@ const params = new URLSearchParams(location.search);
 if (params.get('confirmed')) {
   switchTab('login');
   showMsg('msg-login','E-mail confirmado! Faça login para continuar.','success');
+}
+
+function entrarComoVisitante() {
+  sessionStorage.setItem('bdm-visitante', '1');
+  window.location.href = '../index.html';
 }
 </script>
 </body>

@@ -7,7 +7,7 @@
 //   Periodic Background Sync → verifica novos livros 1x/dia
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v10';
+const SW_VERSION   = 'v11';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates

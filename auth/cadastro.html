@@ -204,6 +204,8 @@ async function salvarPerfil() {
     serie,
     turma: turma || null,
     numero_chamada: numero,
+    role: 'aluno',
+    created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   });
 
