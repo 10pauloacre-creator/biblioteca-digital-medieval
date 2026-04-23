@@ -819,9 +819,9 @@ body{background:#080300;color:var(--text);}
 /* Ranking — fundo da tela, compacto, sem disputar espaço */
 .ranking-strip{
   position:absolute;
-  left:50%;transform:translateX(-50%);
-  bottom:6px;
-  width:min(310px,78vw);
+  left:50%;transform:translateX(-70%);
+  bottom:150px;
+  width:min(200px,50vw);
   z-index:8;
   animation:revealUp .6s .7s ease-out both;
   background:rgba(6,3,0,.78);
@@ -976,9 +976,51 @@ body{background:#080300;color:var(--text);}
   color:var(--gold-l);line-height:1.65;
   font-style:italic;
 }
+
+/* ── Pull-to-Refresh ── */
+#ptr-indicator{
+  position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-80px);
+  z-index:9999;display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:transform .2s ease;pointer-events:none;
+}
+#ptr-indicator.pulling{transition:none;}
+#ptr-indicator.holding{transition:transform .15s ease;}
+.ptr-ring-wrap{
+  width:44px;height:44px;
+  background:rgba(6,3,0,.88);
+  border:1.5px solid rgba(201,168,76,.4);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  position:relative;box-shadow:0 2px 18px rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);
+}
+.ptr-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
+.ptr-arc{
+  fill:none;stroke:var(--gold-b,#c9a84c);stroke-width:3;
+  stroke-dasharray:113;stroke-dashoffset:113;
+  transition:stroke-dashoffset 1s linear;stroke-linecap:round;
+}
+.ptr-icon{font-size:1.3rem;line-height:1;transition:transform .3s;}
+#ptr-indicator.ready .ptr-icon{transform:rotate(180deg);}
+.ptr-label{
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.12em;
+  color:var(--gold-l,#e8d5a0);text-shadow:0 1px 6px rgba(0,0,0,.8);
+  background:rgba(6,3,0,.7);padding:2px 8px;border-radius:10px;
+  white-space:nowrap;
+}
 </style>
 </head>
 <body>
+
+<!-- Pull-to-Refresh indicator -->
+<div id="ptr-indicator" aria-hidden="true">
+  <div class="ptr-ring-wrap">
+    <svg class="ptr-svg" viewBox="0 0 38 38">
+      <circle class="ptr-arc" cx="19" cy="19" r="18"/>
+    </svg>
+    <span class="ptr-icon">⚔</span>
+  </div>
+  <span class="ptr-label" id="ptr-label">PUXE PARA ATUALIZAR</span>
+</div>
 
 <!-- Loading screen (z:10000 — aparece antes de tudo) -->
 <div id="screen-loading">
@@ -2201,6 +2243,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   }
 
   initRanking();
+  window.loadRanking = loadRanking;
 }());
 </script>
 
@@ -2330,6 +2373,116 @@ window.addEventListener('DOMContentLoaded',()=>{
 })();
 </script>
 ══ FIM MODO POSICIONAMENTO ══ -->
+
+<!-- Pull-to-Refresh logic -->
+<script>
+(function () {
+  'use strict';
+  var ind      = document.getElementById('ptr-indicator');
+  var arc      = ind.querySelector('.ptr-arc');
+  var label    = document.getElementById('ptr-label');
+  var CIRCUM   = 113; // 2π × 18 ≈ 113
+
+  var startY   = 0;
+  var pulling  = false;
+  var holdTimer= null;
+  var triggered= false;
+  var THRESHOLD= 72; // px para ativar
+
+  function setOffset(py) {
+    var clamped = Math.min(py, THRESHOLD + 20);
+    var progress = Math.min(clamped / THRESHOLD, 1);
+    // posição vertical: aparece de cima
+    ind.style.transform = 'translateX(-50%) translateY(' + (clamped - 6) + 'px)';
+    // arco SVG proporcional ao arrasto
+    var offset = CIRCUM - CIRCUM * progress;
+    arc.style.transition = 'none';
+    arc.style.strokeDashoffset = offset;
+  }
+
+  function startHoldTimer() {
+    if (holdTimer) return;
+    // arco completa em 1 segundo
+    arc.style.transition = 'stroke-dashoffset 1s linear';
+    arc.style.strokeDashoffset = 0;
+    label.textContent = 'SOLTE PARA ATUALIZAR';
+    ind.classList.add('ready');
+    holdTimer = setTimeout(function () {
+      triggerRefresh();
+    }, 1000);
+  }
+
+  function cancelHoldTimer() {
+    if (!holdTimer) return;
+    clearTimeout(holdTimer);
+    holdTimer = null;
+    arc.style.transition = 'none';
+    ind.classList.remove('ready');
+    label.textContent = 'PUXE PARA ATUALIZAR';
+  }
+
+  function snapBack() {
+    ind.classList.remove('pulling', 'holding', 'ready');
+    ind.style.transform = 'translateX(-50%) translateY(-80px)';
+    arc.style.transition = 'none';
+    arc.style.strokeDashoffset = CIRCUM;
+    label.textContent = 'PUXE PARA ATUALIZAR';
+    cancelHoldTimer();
+    pulling   = false;
+    triggered = false;
+  }
+
+  function triggerRefresh() {
+    triggered = true;
+    label.textContent = 'ATUALIZANDO...';
+    arc.style.strokeDashoffset = 0;
+    // Recarrega o ranking se existir
+    if (typeof window.loadRanking === 'function') {
+      window.loadRanking();
+    }
+    setTimeout(snapBack, 900);
+  }
+
+  document.addEventListener('touchstart', function (e) {
+    // só ativa na tela landing visível
+    var landing = document.getElementById('screen-landing');
+    if (!landing || !landing.classList.contains('active')) return;
+    // só ativa se estiver no topo da página
+    if (window.scrollY > 4) return;
+    startY  = e.touches[0].clientY;
+    pulling = false;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function (e) {
+    if (triggered) return;
+    var landing = document.getElementById('screen-landing');
+    if (!landing || !landing.classList.contains('active')) return;
+    if (window.scrollY > 4) return;
+
+    var dy = e.touches[0].clientY - startY;
+    if (dy <= 0) { if (pulling) snapBack(); return; }
+
+    pulling = true;
+    ind.classList.add('pulling');
+    setOffset(dy);
+
+    if (dy >= THRESHOLD) {
+      ind.classList.add('holding');
+      startHoldTimer();
+    } else {
+      cancelHoldTimer();
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', function () {
+    if (!pulling) return;
+    if (!triggered) snapBack();
+  });
+
+  // Expõe loadRanking globalmente para o trigger conseguir chamá-la
+  // (definida no IIFE do ranking; re-exportada aqui se necessário)
+}());
+</script>
 
 </body>
 </html>
