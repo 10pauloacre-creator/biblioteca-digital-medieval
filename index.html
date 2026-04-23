@@ -2161,8 +2161,8 @@ window.addEventListener('DOMContentLoaded',()=>{
     // Visitantes nunca veem o ranking
     if (sessionStorage.getItem('bdm-visitante') === '1') return;
 
-    // Aluno com sessão salva localmente
-    if (localStorage.getItem('bdm-aluno')) {
+    // Admin ou aluno com sessão salva localmente
+    if (localStorage.getItem('bdm-aluno') || localStorage.getItem('bdm-cached-role') === 'admin') {
       document.getElementById('ranking-strip').style.display = '';
       loadRanking();
       setInterval(loadRanking, 60000);
