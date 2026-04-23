@@ -1773,7 +1773,13 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     // Escuta mensagem do SW avisando que há novos livros
     navigator.serviceWorker.addEventListener('message', e => {
-      if(e.data && e.data.type === 'BDM_NEW_BOOKS') showUpdateToast();
+      if (e.data && e.data.type === 'BDM_NEW_BOOKS') {
+        const incoming = e.data.version || '';
+        const seen     = localStorage.getItem('bdm-manifest-seen');
+        if (incoming && seen === incoming) return; // aluno já viu este lote
+        if (incoming) localStorage.setItem('bdm-manifest-seen', incoming);
+        showUpdateToast();
+      }
     });
 
     // Recarrega apenas quando um SW ATUALIZADO (não o primeiro) assume o controle

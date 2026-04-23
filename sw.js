@@ -363,7 +363,7 @@ async function checkForUpdates() {
     // Notifica a página se houver novidades
     if (hasNew) {
       const clients = await self.clients.matchAll({ type: 'window' });
-      clients.forEach(c => c.postMessage({ type: 'BDM_NEW_BOOKS' }));
+      clients.forEach(c => c.postMessage({ type: 'BDM_NEW_BOOKS', version: manifest.version || '' }));
     }
   } catch (e) {}
 }
