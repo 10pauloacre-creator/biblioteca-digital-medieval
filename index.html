@@ -830,10 +830,10 @@ body{background:#080300;color:var(--text);}
 /* ── Ranking CELULAR (≤ 767px) — ajuste aqui ── */
 @media (max-width:767px){
   .ranking-strip{
-    bottom:6px;
-    left:50%;
+    bottom:430px;
+    left:58%;
     transform:translateX(-50%);
-    width:min(310px,88vw);
+    width:min(250px,45vw);
     padding:.32rem .48rem .24rem;
   }
   .ranking-title-btn{font-size:.56rem;}
@@ -877,12 +877,15 @@ body{background:#080300;color:var(--text);}
   display:flex;align-items:center;gap:.4rem;
   background:rgba(255,255,255,.03);
   border:1px solid rgba(201,168,76,.1);border-radius:4px;
-  padding:.18rem .4rem;transition:border-color .2s;
+  padding:.18rem .4rem;transition:border-color .2s,background .2s;
+  text-decoration:none;color:inherit;
 }
+.rk-card:hover{border-color:rgba(201,168,76,.35);background:rgba(255,255,255,.06);}
 .rk-card.top1{
   border-color:rgba(255,200,40,.32);
   background:rgba(255,180,20,.05);
 }
+.rk-card.top1:hover{background:rgba(255,180,20,.1);}
 .rk-num{
   font-family:'Cinzel',serif;font-size:.6rem;font-weight:900;
   min-width:16px;text-align:center;flex-shrink:0;
@@ -2196,8 +2199,9 @@ window.addEventListener('DOMContentLoaded',()=>{
       ? '<img src="' + s.avatar_url + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">'
       : initials;
 
-    var frameUrl = 'assets/images/frames/frame-nivel-' + nivel + '.png';
-    return '<div class="rk-card' + (isTop1 ? ' top1' : '') + '">' +
+    var frameUrl   = 'assets/images/frames/frame-nivel-' + nivel + '.png';
+    var profileUrl = 'auth/perfil-publico.html?id=' + (s.id || '');
+    return '<a class="rk-card' + (isTop1 ? ' top1' : '') + '" href="' + profileUrl + '">' +
       '<div class="rk-num ' + posClass + '">' + (isTop1 ? '🏆' : pos + 'º') + '</div>' +
       '<div class="rk-avatar-wrap">' +
         '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
@@ -2208,7 +2212,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         '<div class="rk-level" style="color:' + NIVEIS_COR[nivel] + '">' + NIVEIS_NOME[nivel] + (fullName ? (s.serie ? ' · ' + s.serie : '') : (s.serie ? '<span class="rk-serie">' + s.serie + '</span>' : '')) + '</div>' +
       '</div>' +
       '<div class="rk-pts' + (isTop1 ? ' top1' : '') + '">' + pts + ' pts</div>' +
-    '</div>';
+    '</a>';
   }
 
   /* ── Renderiza top 5 na landing ── */
