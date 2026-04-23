@@ -61,6 +61,25 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   position:relative;margin-bottom:.8rem;
 }
 .avatar-ring img{width:100%;height:100%;object-fit:cover;}
+.avatar-upload-overlay{
+  position:absolute;inset:0;border-radius:50%;
+  background:rgba(0,0,0,.55);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .2s;cursor:pointer;
+  font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.1em;
+  color:var(--gold-l);gap:3px;
+}
+.avatar-ring:hover .avatar-upload-overlay{opacity:1;}
+.avatar-upload-overlay .cam-icon{font-size:1.4rem;line-height:1;}
+.avatar-upload-spinner{
+  position:absolute;inset:0;border-radius:50%;
+  background:rgba(0,0,0,.7);
+  display:none;align-items:center;justify-content:center;
+  font-size:1.4rem;
+}
+.avatar-upload-spinner.show{display:flex;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-icon{animation:spin 1s linear infinite;display:inline-block;}
 
 /* Admin: coroa dourada */
 .crown{
@@ -269,7 +288,15 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
         <span id="avatar-crown" class="crown" style="display:none">👑</span>
         <img id="avatar-img" style="display:none" alt="Avatar"/>
         <span id="avatar-initials">…</span>
+        <div class="avatar-upload-overlay" id="avatar-upload-overlay" style="display:none" onclick="document.getElementById('avatar-file-input').click()">
+          <span class="cam-icon">📷</span>
+          <span>ALTERAR</span>
+        </div>
+        <div class="avatar-upload-spinner" id="avatar-spinner">
+          <span class="spin-icon">⚙️</span>
+        </div>
       </div>
+      <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/>
       <div id="badge-admin" class="badge-admin" style="display:none">⚜ MAGO SUPREMO ⚜</div>
       <div id="badge-aluno" class="badge-aluno" style="display:none">ESCUDEIRO DO CONHECIMENTO</div>
     </div>
@@ -436,6 +463,11 @@ async function loadProfile(uid) {
   // Botão admin
   if (isAdmin) document.getElementById('btn-admin').style.display = 'block';
 
+  // Overlay de upload de avatar — só para o próprio dono
+  if (isOwner) {
+    document.getElementById('avatar-upload-overlay').style.display = 'flex';
+  }
+
   // Ações
   const actions = document.getElementById('actions-section');
   if (isOwner || isAdmin) {
@@ -580,6 +612,59 @@ async function doLogout() {
 document.getElementById('modal-edit').addEventListener('click', e => {
   if (e.target === document.getElementById('modal-edit')) closeModal();
 });
+
+async function uploadAvatar(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  // Validação: máx 2 MB e apenas imagens
+  if (file.size > 2 * 1024 * 1024) {
+    alert('A imagem deve ter no máximo 2 MB.');
+    event.target.value = '';
+    return;
+  }
+
+  const spinner = document.getElementById('avatar-spinner');
+  const overlay = document.getElementById('avatar-upload-overlay');
+  spinner.classList.add('show');
+  overlay.style.display = 'none';
+
+  try {
+    const ext  = file.name.split('.').pop().toLowerCase();
+    const path = `${currentUser.id}.${ext}`;
+
+    // Faz upload para o bucket "avatares" (upsert para sobrescrever)
+    const { error: upErr } = await db.storage
+      .from('avatares')
+      .upload(path, file, { upsert: true, contentType: file.type });
+
+    if (upErr) throw upErr;
+
+    // Pega URL pública
+    const { data: urlData } = db.storage.from('avatares').getPublicUrl(path);
+    const publicUrl = urlData.publicUrl;
+
+    // Atualiza o perfil
+    const { error: dbErr } = await db.from('profiles')
+      .update({ avatar_url: publicUrl })
+      .eq('id', currentUser.id);
+
+    if (dbErr) throw dbErr;
+
+    // Atualiza a UI sem recarregar tudo
+    const img = document.getElementById('avatar-img');
+    img.src = publicUrl + '?t=' + Date.now(); // evita cache
+    img.style.display = 'block';
+    document.getElementById('avatar-initials').style.display = 'none';
+    currentProfile.avatar_url = publicUrl;
+  } catch (err) {
+    alert('Erro ao enviar foto: ' + err.message);
+  } finally {
+    spinner.classList.remove('show');
+    overlay.style.display = 'flex';
+    event.target.value = '';
+  }
+}
 </script>
 </body>
 </html>

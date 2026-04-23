@@ -84,18 +84,31 @@ ON CONFLICT (id) DO NOTHING;
 CREATE POLICY "avatares_public_read" ON storage.objects
   FOR SELECT USING (bucket_id = 'avatares');
 
--- Somente admin pode fazer upload/delete
-CREATE POLICY "avatares_admin_write" ON storage.objects
+-- Cada usuário autenticado pode fazer upload do próprio avatar
+-- (o nome do arquivo começa com o UUID do usuário)
+CREATE POLICY "avatares_own_upload" ON storage.objects
   FOR INSERT TO authenticated
-  WITH CHECK (bucket_id = 'avatares' AND auth.email() = '10pauloacre@gmail.com');
+  WITH CHECK (
+    bucket_id = 'avatares'
+    AND (storage.filename(name) LIKE (auth.uid()::text || '.%')
+         OR auth.email() = '10pauloacre@gmail.com')
+  );
 
-CREATE POLICY "avatares_admin_update" ON storage.objects
+CREATE POLICY "avatares_own_update" ON storage.objects
   FOR UPDATE TO authenticated
-  USING (bucket_id = 'avatares' AND auth.email() = '10pauloacre@gmail.com');
+  USING (
+    bucket_id = 'avatares'
+    AND (storage.filename(name) LIKE (auth.uid()::text || '.%')
+         OR auth.email() = '10pauloacre@gmail.com')
+  );
 
-CREATE POLICY "avatares_admin_delete" ON storage.objects
+CREATE POLICY "avatares_own_delete" ON storage.objects
   FOR DELETE TO authenticated
-  USING (bucket_id = 'avatares' AND auth.email() = '10pauloacre@gmail.com');
+  USING (
+    bucket_id = 'avatares'
+    AND (storage.filename(name) LIKE (auth.uid()::text || '.%')
+         OR auth.email() = '10pauloacre@gmail.com')
+  );
 
 -- ── 6. Configurações de Auth (faça manualmente no painel) ────────
 -- Authentication → Settings → Site URL:
