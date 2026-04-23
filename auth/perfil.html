@@ -81,11 +81,6 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin-icon{animation:spin 1s linear infinite;display:inline-block;}
 
-/* Admin: coroa dourada */
-.crown{
-  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
-  font-size:1.4rem;filter:drop-shadow(0 2px 8px rgba(255,200,0,.8));
-}
 
 .badge-admin{
   font-family:'Cinzel',serif;font-weight:900;font-size:.65rem;letter-spacing:.18em;
@@ -285,8 +280,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
     <div class="avatar-section">
       <div class="avatar-ring" id="avatar-ring">
-        <span id="avatar-crown" class="crown" style="display:none">👑</span>
-        <img id="avatar-img" style="display:none" alt="Avatar"/>
+<img id="avatar-img" style="display:none" alt="Avatar"/>
         <span id="avatar-initials">…</span>
         <div class="avatar-upload-overlay" id="avatar-upload-overlay" style="display:none" onclick="document.getElementById('avatar-file-input').click()">
           <span class="cam-icon">📷</span>
@@ -400,7 +394,6 @@ async function loadProfile(uid) {
 
   // Badge
   if (profile.role === 'admin') {
-    document.getElementById('avatar-crown').style.display = 'block';
     document.getElementById('badge-admin').style.display = 'block';
   } else {
     document.getElementById('badge-aluno').style.display = 'block';
