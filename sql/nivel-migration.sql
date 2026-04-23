@@ -67,20 +67,18 @@ BEGIN
   WHERE serie = v_serie;
 
   -- Níveis:
-  -- 1 = Pergaminheiro das Runas  (padrão)
-  -- 2 = Escriba do Saber         (30+ pontos)
-  -- 3 = Erudito Arcano            (80+ pontos)
-  -- 4 = Guardião da Sabedoria     (150+ pontos)
-  -- 5 = Mago Supremo              (todos os quizzes + acurácia >= 95%)
-  IF v_quizzes_expected > 0
-     AND v_quizzes_done >= v_quizzes_expected
-     AND v_accuracy >= 95 THEN
+  -- 1 = Aprendiz     (0–49 pontos)
+  -- 2 = Camponês     (50–199 pontos)
+  -- 3 = Gladiador    (200–299 pontos)
+  -- 4 = Rei          (300–499 pontos)
+  -- 5 = Mago Supremo (500+ pontos)
+  IF v_pontos >= 500 THEN
     v_nivel := 5;
-  ELSIF v_pontos >= 150 THEN
+  ELSIF v_pontos >= 300 THEN
     v_nivel := 4;
-  ELSIF v_pontos >= 80 THEN
+  ELSIF v_pontos >= 200 THEN
     v_nivel := 3;
-  ELSIF v_pontos >= 30 THEN
+  ELSIF v_pontos >= 50 THEN
     v_nivel := 2;
   ELSE
     v_nivel := 1;

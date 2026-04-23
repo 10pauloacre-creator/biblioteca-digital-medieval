@@ -812,6 +812,164 @@ body{background:#080300;color:var(--text);}
   transition:background .2s;z-index:1;
 }
 #intro-skip:hover{background:rgba(201,168,76,.2);}
+
+/* ══════════════════════════════
+   RANKING DE PODER
+══════════════════════════════ */
+.ranking-strip{
+  position:absolute;
+  left:50%;transform:translateX(-50%);
+  top:clamp(88px,18vh,120px);
+  width:min(370px,91vw);
+  z-index:8;
+  animation:revealUp .7s .55s ease-out both;
+}
+.ranking-title-btn{
+  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.24em;font-weight:700;
+  color:var(--gold-b);background:none;border:none;cursor:pointer;
+  display:block;width:100%;text-align:center;margin-bottom:.45rem;
+  text-shadow:0 0 10px rgba(255,200,40,.65);transition:color .2s,text-shadow .2s;
+  padding:0;
+}
+.ranking-title-btn:hover{color:var(--ember);text-shadow:0 0 14px rgba(255,106,26,.8);}
+.ranking-top5{display:flex;flex-direction:column;gap:.28rem;}
+.rk-card{
+  display:flex;align-items:center;gap:.6rem;
+  background:linear-gradient(135deg,rgba(18,9,1,.93),rgba(12,6,1,.96));
+  border:1px solid rgba(201,168,76,.18);border-radius:5px;
+  padding:.42rem .65rem;transition:border-color .2s;
+}
+.rk-card.top1{
+  border-color:rgba(255,200,40,.45);
+  background:linear-gradient(135deg,rgba(38,18,2,.97),rgba(28,13,1,.99));
+  box-shadow:0 0 18px rgba(255,180,30,.12),inset 0 1px 0 rgba(255,200,40,.1);
+}
+.rk-num{
+  font-family:'Cinzel',serif;font-size:.7rem;font-weight:900;
+  min-width:20px;text-align:center;flex-shrink:0;
+}
+.rk-num.top1{color:var(--gold-b);font-size:.85rem;text-shadow:0 0 8px rgba(255,200,40,.7);}
+.rk-num.pos2{color:#c0c0c0;}
+.rk-num.pos3{color:#cd7f32;}
+.rk-num.pos4,.rk-num.pos5{color:var(--text-d);}
+.rk-avatar{
+  width:30px;height:30px;border-radius:50%;
+  border:1.5px solid rgba(201,168,76,.35);overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel Decorative',serif;font-size:.62rem;
+  color:var(--gold-l);background:linear-gradient(135deg,#2a1400,#1a0a00);
+}
+.rk-avatar.top1{border-color:rgba(255,200,40,.6);width:36px;height:36px;}
+.rk-avatar img{width:100%;height:100%;object-fit:cover;}
+.rk-info{flex:1;min-width:0;}
+.rk-name{
+  font-family:'Cinzel',serif;font-size:.67rem;font-weight:600;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;
+}
+.rk-name.top1{font-size:.74rem;color:var(--gold-l);}
+.rk-level{font-size:.55rem;color:var(--text-d);font-family:'Cinzel',serif;letter-spacing:.1em;}
+.rk-pts{
+  font-family:'Cinzel',serif;font-size:.65rem;font-weight:700;
+  color:var(--gold-l);white-space:nowrap;flex-shrink:0;
+}
+.rk-pts.top1{color:var(--gold-b);font-size:.72rem;}
+.ranking-ver-mais-btn{
+  font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.16em;
+  color:var(--text-d);background:none;
+  border:1px solid rgba(201,168,76,.18);border-radius:4px;
+  width:100%;padding:.35rem;cursor:pointer;margin-top:.35rem;
+  transition:color .2s,border-color .2s;
+}
+.ranking-ver-mais-btn:hover{color:var(--gold-l);border-color:rgba(201,168,76,.45);}
+
+/* ── Modal ranking completo ── */
+#modal-rk-full{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(0,0,0,.88);
+  display:none;align-items:center;justify-content:center;
+  padding:1rem;backdrop-filter:blur(4px);
+}
+#modal-rk-full.open{display:flex;}
+.rk-modal-box{
+  max-width:420px;width:100%;max-height:88vh;
+  background:linear-gradient(160deg,#1e1004,#130a02);
+  border:2px solid var(--gold);border-radius:8px;
+  padding:1.4rem 1.2rem;
+  display:flex;flex-direction:column;
+  box-shadow:0 0 60px rgba(201,168,76,.3);
+  animation:modalIn .32s ease;
+}
+.rk-modal-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;
+}
+.rk-modal-title{
+  font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.2em;
+  color:var(--gold-l);font-weight:700;
+}
+.rk-modal-close{
+  background:none;border:none;color:var(--text-d);cursor:pointer;
+  font-size:1.1rem;line-height:1;padding:2px 6px;
+  transition:color .2s;
+}
+.rk-modal-close:hover{color:var(--gold-l);}
+.rk-modal-list{
+  overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:.28rem;
+}
+.rk-modal-list::-webkit-scrollbar{width:3px;}
+.rk-modal-list::-webkit-scrollbar-track{background:transparent;}
+.rk-modal-list::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+/* ── Modal explicação do ranking ── */
+#modal-rk-explain{
+  position:fixed;inset:0;z-index:8001;
+  background:rgba(0,0,0,.92);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:1rem;backdrop-filter:blur(4px);
+  overflow-y:auto;
+}
+#modal-rk-explain.open{display:flex;}
+.rk-explain-box{
+  max-width:420px;width:100%;
+  background:linear-gradient(160deg,#1e1004,#130a02);
+  border:2px solid var(--gold);border-radius:8px;
+  padding:1.8rem 1.5rem;
+  box-shadow:0 0 60px rgba(201,168,76,.3);
+  animation:modalIn .32s ease;
+  position:relative;margin:auto;
+}
+.rk-explain-close{
+  position:absolute;top:.8rem;right:.8rem;
+  background:none;border:none;color:var(--text-d);cursor:pointer;
+  font-size:1.1rem;line-height:1;
+}
+.rk-explain-close:hover{color:var(--gold-l);}
+.rk-section-title{
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;font-weight:700;
+  color:var(--gold-l);margin:.9rem 0 .4rem;
+  display:flex;align-items:center;gap:6px;
+}
+.rk-section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(201,168,76,.4),transparent);}
+.rk-level-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.35rem .5rem;border-radius:4px;margin-bottom:.2rem;
+  background:rgba(255,255,255,.025);
+}
+.rk-level-name{font-family:'Cinzel',serif;font-size:.67rem;font-weight:700;}
+.rk-level-pts-label{font-size:.58rem;color:var(--text-d);font-family:'Cinzel',serif;}
+.rk-level-bonus{
+  font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;
+  background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);
+  border-radius:10px;padding:2px 8px;color:var(--gold-l);
+}
+.rk-motivational{
+  margin-top:1.2rem;
+  background:linear-gradient(135deg,rgba(40,18,2,.9),rgba(25,10,1,.95));
+  border:1px solid rgba(201,168,76,.3);border-radius:6px;
+  padding:.9rem 1rem;text-align:center;
+  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.04em;
+  color:var(--gold-l);line-height:1.65;
+  font-style:italic;
+}
 </style>
 </head>
 <body>
@@ -867,6 +1025,102 @@ body{background:#080300;color:var(--text);}
 <button id="mute-btn" onclick="toggleMute()"></button>
 
 <!-- ════════════════════════════════════════
+     MODAL RANKING COMPLETO
+════════════════════════════════════════ -->
+<div id="modal-rk-full" onclick="if(event.target===this)closeRankingFull()">
+  <div class="rk-modal-box">
+    <div class="rk-modal-header">
+      <div class="rk-modal-title">⚔ RANKING DE PODER ⚔</div>
+      <button class="rk-modal-close" onclick="closeRankingFull()">✕</button>
+    </div>
+    <div class="rk-modal-list" id="rk-full-list">
+      <div style="text-align:center;color:var(--text-d);padding:.8rem;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em">
+        Carregando...
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL COMO FUNCIONA O RANKING
+════════════════════════════════════════ -->
+<div id="modal-rk-explain" onclick="if(event.target===this)closeRankingExplain()">
+  <div class="rk-explain-box">
+    <button class="rk-explain-close" onclick="closeRankingExplain()">✕</button>
+
+    <h2 style="font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--gold-l);
+      text-align:center;margin-bottom:1rem;letter-spacing:.05em">
+      ⚔ RANKING DE PODER ⚔
+    </h2>
+
+    <p style="font-size:.78rem;color:var(--text-m);line-height:1.65;text-align:center;margin-bottom:.2rem">
+      O Ranking de Poder classifica todos os alunos da Biblioteca Digital Medieval
+      com base na pontuação acumulada nos quizzes ao longo do ano.
+    </p>
+
+    <div class="rk-section-title">COMO PONTUAR</div>
+    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);border-radius:5px;padding:.65rem .8rem;font-size:.75rem;color:var(--text-m);line-height:1.7">
+      <div>✅ <strong style="color:var(--gold-l)">+1 ponto</strong> por cada resposta correta</div>
+      <div>❌ <strong style="color:#f08080">−1 ponto</strong> por cada resposta errada</div>
+      <div style="margin-top:.35rem;font-size:.68rem;color:var(--text-d)">
+        O ranking atualiza automaticamente a cada quiz realizado.
+      </div>
+    </div>
+
+    <div class="rk-section-title">OS 5 NIVEIS DE PODER</div>
+    <div style="display:flex;flex-direction:column;gap:.22rem">
+      <div class="rk-level-row">
+        <div>
+          <div class="rk-level-name" style="color:#a09878">★☆☆☆☆ Aprendiz</div>
+          <div class="rk-level-pts-label">0 – 49 pontos</div>
+        </div>
+        <div class="rk-level-bonus">+0 pts na media</div>
+      </div>
+      <div class="rk-level-row">
+        <div>
+          <div class="rk-level-name" style="color:#c9a84c">★★☆☆☆ Camponês</div>
+          <div class="rk-level-pts-label">50 – 199 pontos</div>
+        </div>
+        <div class="rk-level-bonus">+1 pt na media</div>
+      </div>
+      <div class="rk-level-row">
+        <div>
+          <div class="rk-level-name" style="color:#4fc3f7">★★★☆☆ Gladiador</div>
+          <div class="rk-level-pts-label">200 – 299 pontos</div>
+        </div>
+        <div class="rk-level-bonus">+2 pts na media</div>
+      </div>
+      <div class="rk-level-row">
+        <div>
+          <div class="rk-level-name" style="color:#c084fc">★★★★☆ Rei</div>
+          <div class="rk-level-pts-label">300 – 499 pontos</div>
+        </div>
+        <div class="rk-level-bonus">+6 pts na media</div>
+      </div>
+      <div class="rk-level-row" style="border:1px solid rgba(255,106,26,.3);background:rgba(255,106,26,.06)">
+        <div>
+          <div class="rk-level-name" style="color:#ff6a1a;text-shadow:0 0 8px rgba(255,106,26,.5)">★★★★★ Mago Supremo</div>
+          <div class="rk-level-pts-label">500+ pontos</div>
+        </div>
+        <div class="rk-level-bonus" style="color:var(--ember);border-color:rgba(255,106,26,.4)">+8 pts na media</div>
+      </div>
+    </div>
+
+    <div class="rk-section-title">RECOMPENSAS NO FIM DO ANO</div>
+    <div style="font-size:.75rem;color:var(--text-m);line-height:1.7;background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);border-radius:5px;padding:.65rem .8rem">
+      <div>🏅 Cada nivel concede <strong style="color:var(--gold-l)">pontos extras na media final</strong> de cada disciplina</div>
+      <div>📜 Todo aluno recebera um <strong style="color:var(--gold-l)">certificado fisico</strong> de acordo com seu nivel alcancado</div>
+      <div>🏆 As pontuacoes ficam <strong style="color:var(--gold-l)">guardadas para a historia</strong> — nos proximos anos os alunos tentarao bater o recorde de hoje</div>
+    </div>
+
+    <div class="rk-motivational">
+      "Quer terminar o ano como um mero Aprendiz ou como um grande Mago Supremo
+      e ser lembrado para toda a historia?"
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
      MODAL
 ════════════════════════════════════════ -->
 <div id="modal-overlay" class="modal-overlay" style="display:none" onclick="closeModal(event)">
@@ -896,6 +1150,17 @@ body{background:#080300;color:var(--text);}
     <!-- Header plaque -->
     <div class="plaque-img-wrapper">
       <img src="assets/images/placa.png" alt="Biblioteca Digital Medieval" class="placa-img">
+    </div>
+
+    <!-- Ranking de Poder -->
+    <div class="ranking-strip" id="ranking-strip">
+      <button class="ranking-title-btn" onclick="openRankingExplain()">⚔ RANKING DE PODER ⚔</button>
+      <div class="ranking-top5" id="ranking-top5">
+        <div style="text-align:center;color:var(--text-d);font-size:.68rem;padding:.4rem 0;font-family:'Cinzel',serif;letter-spacing:.1em">
+          Consultando os pergaminhos…
+        </div>
+      </div>
+      <button class="ranking-ver-mais-btn" onclick="openRankingFull()">▼ VER TODOS OS ESCUDEIROS ▼</button>
     </div>
 
     <!-- CTA -->
@@ -1793,6 +2058,117 @@ window.addEventListener('DOMContentLoaded',()=>{
     timer=setTimeout(()=>{once=false;toast.classList.remove('show');},2000);
   });
 })();
+</script>
+
+<!-- ════════════════════════════════════════
+     RANKING DE PODER — JS
+════════════════════════════════════════ -->
+<script>
+(function () {
+  if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
+
+  var NIVEIS_NOME = ['', 'Aprendiz', 'Campoês', 'Gladiador', 'Rei', 'Mago Supremo'];
+  var NIVEIS_COR  = ['', '#a09878',   '#c9a84c',    '#4fc3f7',    '#c084fc', '#ff6a1a'];
+
+  var rkDb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+  var allStudents = [];
+
+  /* ── Busca ranking do Supabase ── */
+  async function loadRanking() {
+    try {
+      var res = await rkDb
+        .from('profiles')
+        .select('id,nome_completo,avatar_url,pontos,nivel,serie')
+        .eq('role', 'aluno')
+        .order('pontos', { ascending: false });
+      if (res.error || !res.data) return;
+      allStudents = res.data;
+      renderTop5(allStudents.slice(0, 5));
+    } catch (e) {}
+  }
+
+  /* ── Monta um card de aluno ── */
+  function makeCard(s, pos, fullName) {
+    var isTop1   = pos === 1;
+    var posClass = ['top1','pos2','pos3','pos4','pos5'][pos - 1] || 'pos5';
+    var nivel    = s.nivel || 1;
+    var pts      = s.pontos || 0;
+    var nome     = s.nome_completo || '—';
+    var parts    = nome.split(' ').filter(Boolean);
+    var initials = parts.length >= 2
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : (parts[0] ? parts[0][0].toUpperCase() : '?');
+    var displayName = fullName ? nome : (parts[0] || '—');
+
+    var avatarInner = s.avatar_url
+      ? '<img src="' + s.avatar_url + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">'
+      : initials;
+
+    return '<div class="rk-card' + (isTop1 ? ' top1' : '') + '">' +
+      '<div class="rk-num ' + posClass + '">' + (isTop1 ? '🏆' : pos + 'º') + '</div>' +
+      '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
+      '<div class="rk-info">' +
+        '<div class="rk-name' + (isTop1 ? ' top1' : '') + '">' + displayName + '</div>' +
+        '<div class="rk-level" style="color:' + NIVEIS_COR[nivel] + '">' + NIVEIS_NOME[nivel] + '</div>' +
+      '</div>' +
+      '<div class="rk-pts' + (isTop1 ? ' top1' : '') + '">' + pts + ' pts</div>' +
+    '</div>';
+  }
+
+  /* ── Renderiza top 5 na landing ── */
+  function renderTop5(students) {
+    var el = document.getElementById('ranking-top5');
+    if (!el) return;
+    if (!students || students.length === 0) {
+      el.innerHTML = '<div style="text-align:center;color:var(--text-d);font-size:.68rem;padding:.4rem;font-family:\'Cinzel\',serif">Nenhum aluno cadastrado ainda.</div>';
+      return;
+    }
+    el.innerHTML = students.map(function (s, i) { return makeCard(s, i + 1, false); }).join('');
+  }
+
+  /* ── Renderiza lista completa no modal ── */
+  function renderFullList() {
+    var el = document.getElementById('rk-full-list');
+    if (!el) return;
+    if (!allStudents || allStudents.length === 0) {
+      el.innerHTML = '<div style="text-align:center;color:var(--text-d);padding:.8rem;font-family:\'Cinzel\',serif;font-size:.68rem">Nenhum aluno cadastrado ainda.</div>';
+      return;
+    }
+    el.innerHTML = allStudents.map(function (s, i) { return makeCard(s, i + 1, true); }).join('');
+  }
+
+  /* ── Abrir/fechar modais ── */
+  window.openRankingFull = function () {
+    renderFullList();
+    var m = document.getElementById('modal-rk-full');
+    if (m) m.classList.add('open');
+  };
+  window.closeRankingFull = function () {
+    var m = document.getElementById('modal-rk-full');
+    if (m) m.classList.remove('open');
+  };
+  window.openRankingExplain = function () {
+    var m = document.getElementById('modal-rk-explain');
+    if (m) m.classList.add('open');
+  };
+  window.closeRankingExplain = function () {
+    var m = document.getElementById('modal-rk-explain');
+    if (m) m.classList.remove('open');
+  };
+
+  /* ── Carrega ao iniciar ── */
+  loadRanking();
+
+  /* ── Auto-refresh a cada 60 s ── */
+  setInterval(loadRanking, 60000);
+
+  /* ── Realtime: atualiza quando pontuação muda ── */
+  try {
+    rkDb.channel('rk-profiles')
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles' }, loadRanking)
+      .subscribe();
+  } catch (e) {}
+}());
 </script>
 
 <!-- ══ MODO POSICIONAMENTO REMOVIDO ══
