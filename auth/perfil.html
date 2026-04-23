@@ -190,6 +190,62 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
 @keyframes sweep{from{background-position:0% 50%}to{background-position:200% 50%}}
 @keyframes revealUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Quiz Results Section ── */
+#quiz-results-section{
+  width:100%;max-width:460px;margin-top:1.2rem;
+  position:relative;z-index:1;
+}
+.qr-section-title{
+  font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.18em;font-weight:700;
+  color:var(--gold-l);text-align:center;margin-bottom:.8rem;
+  display:flex;align-items:center;gap:8px;
+}
+.qr-section-title::before,.qr-section-title::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.qr-book-block{
+  background:linear-gradient(160deg,#1e1004,#130a02,#1c0e05);
+  border:1px solid rgba(201,168,76,.25);border-radius:8px;
+  padding:1rem;margin-bottom:.8rem;
+}
+.qr-book-name{
+  font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;
+  color:var(--gold-l);margin-bottom:.6rem;padding-bottom:.5rem;
+  border-bottom:1px solid rgba(201,168,76,.2);
+}
+.qr-quiz-row{
+  background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.1);
+  border-radius:5px;padding:.65rem .8rem;margin-bottom:.4rem;
+}
+.qr-quiz-header{
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;gap:.5rem;
+}
+.qr-quiz-label{font-size:.78rem;color:var(--text-m);flex:1;}
+.qr-quiz-score{
+  font-family:'Cinzel',serif;font-size:.68rem;font-weight:700;
+  padding:.2rem .6rem;border-radius:999px;
+}
+.qr-quiz-score.perfect{background:rgba(20,180,80,.2);color:#80efa0;border:1px solid rgba(20,180,80,.4);}
+.qr-quiz-score.good{background:rgba(200,160,20,.2);color:#f0d060;border:1px solid rgba(200,160,20,.4);}
+.qr-quiz-score.low{background:rgba(180,40,20,.2);color:#f09080;border:1px solid rgba(180,40,20,.4);}
+.qr-quiz-chevron{font-size:.7rem;color:var(--text-d);transition:transform .2s;}
+.qr-quiz-chevron.open{transform:rotate(180deg);}
+.qr-answers{display:none;margin-top:.5rem;padding-top:.5rem;border-top:1px solid rgba(201,168,76,.1);}
+.qr-answers.open{display:block;}
+.qr-answer-row{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.72rem;color:var(--text-m);padding:.2rem 0;
+}
+.qr-answer-row .qa-icon{font-size:.8rem;}
+.qr-answer-row .qa-id{font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-d);min-width:50px;}
+.qr-empty{
+  text-align:center;font-size:.78rem;color:var(--text-d);
+  padding:1.2rem;border:1px dashed rgba(201,168,76,.2);
+  border-radius:8px;
+}
 </style>
 </head>
 <body>
@@ -225,6 +281,12 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     <div id="info-section"><!-- preenchido pelo JS --></div>
 
     <div class="actions" id="actions-section"></div>
+  </div>
+
+  <!-- Quiz results — visible to admin viewing a student profile -->
+  <div id="quiz-results-section" style="display:none">
+    <div class="qr-section-title">📊 DESEMPENHO NOS QUIZZES</div>
+    <div id="quiz-results-body"></div>
   </div>
 </div>
 
@@ -382,6 +444,95 @@ async function loadProfile(uid) {
   if (isAdmin && !isOwner) {
     actions.innerHTML += `<button class="btn-action btn-red" onclick="confirmarDelete()">🗑 Remover Aluno</button>`;
   }
+
+  // Quiz results: visible to admin viewing a student, or to the student viewing own profile
+  if ((isAdmin || isOwner) && profile.role !== 'admin') {
+    await loadQuizResults(uid);
+  }
+}
+
+async function loadQuizResults(uid) {
+  const { data, error } = await db
+    .from('quiz_results')
+    .select('*')
+    .eq('user_id', uid)
+    .order('book_label', { ascending: true })
+    .order('quiz_id',    { ascending: true });
+
+  const section = document.getElementById('quiz-results-section');
+  const body    = document.getElementById('quiz-results-body');
+  if (!section || !body) return;
+
+  if (error || !data || data.length === 0) {
+    body.innerHTML = '<div class="qr-empty">Nenhum quiz realizado ainda.</div>';
+    section.style.display = 'block';
+    return;
+  }
+
+  // Group by book_label
+  const byBook = {};
+  data.forEach(r => {
+    if (!byBook[r.book_label]) byBook[r.book_label] = [];
+    byBook[r.book_label].push(r);
+  });
+
+  let html = '';
+  Object.entries(byBook).forEach(([bookLbl, quizzes]) => {
+    html += `<div class="qr-book-block">`;
+    html += `<div class="qr-book-name">📖 ${escHtml(bookLbl)}</div>`;
+    quizzes.forEach((q, qi) => {
+      const pct    = q.total > 0 ? Math.round(q.correct / q.total * 100) : 0;
+      const grade  = pct === 100 ? 'perfect' : pct >= 60 ? 'good' : 'low';
+      const rowId  = `qr-row-${uid.slice(0,8)}-${qi}`;
+      const label  = escHtml(q.quiz_label || q.quiz_id);
+      const date   = q.completed_at
+        ? new Date(q.completed_at).toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' })
+        : '';
+
+      /* Build per-question detail rows */
+      let ansHtml = '';
+      if (Array.isArray(q.answers) && q.answers.length > 0) {
+        q.answers.forEach((a, ai) => {
+          const icon = a.correct ? '✅' : '❌';
+          const txt  = a.correct ? 'Correto' : 'Errado';
+          const qLabel = escHtml(a.questionId || ('Questão ' + (ai + 1)));
+          ansHtml += `<div class="qr-answer-row">
+            <span class="qa-icon">${icon}</span>
+            <span class="qa-id">${qLabel}</span>
+            <span>${txt}</span>
+          </div>`;
+        });
+      } else {
+        ansHtml = '<div class="qr-answer-row"><span style="color:var(--text-d)">Detalhes não disponíveis</span></div>';
+      }
+
+      html += `
+        <div class="qr-quiz-row">
+          <div class="qr-quiz-header" onclick="toggleQrRow('${rowId}')">
+            <span class="qr-quiz-label">${label}${date ? ' <span style="font-size:.65rem;color:var(--text-d)">· ' + date + '</span>' : ''}</span>
+            <span class="qr-quiz-score ${grade}">${q.correct}/${q.total} (${pct}%)</span>
+            <span class="qr-quiz-chevron" id="${rowId}-chev">▼</span>
+          </div>
+          <div class="qr-answers" id="${rowId}">${ansHtml}</div>
+        </div>`;
+    });
+    html += `</div>`;
+  });
+
+  body.innerHTML = html;
+  section.style.display = 'block';
+}
+
+function toggleQrRow(id) {
+  const el   = document.getElementById(id);
+  const chev = document.getElementById(id + '-chev');
+  if (!el) return;
+  const open = el.classList.toggle('open');
+  if (chev) chev.classList.toggle('open', open);
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function openModal() {

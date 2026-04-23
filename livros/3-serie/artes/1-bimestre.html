@@ -3561,7 +3561,7 @@ function buildAllQuizzes(){
       item.opts.forEach((opt,oi)=>{html+=`<button class="qmc-opt" onclick="answerQ('${quiz.id}',${qi},${oi})"><span class="opt-letter">${String.fromCharCode(65+oi)})</span><span>${opt}</span><span class="opt-icon"></span></button>`});
       html+='</div><div class="qmc-feedback" id="'+quiz.id+'_fb'+qi+'"></div></div>';
     });
-    html+=`<div class="quiz-result-banner" id="${quiz.id}_banner"><div class="qrb-emoji">🏆</div><div class="qrb-text">Parabéns!</div><div class="qrb-sub">Você completou o quiz!</div><button class="qrb-retry" onclick="retryQuiz('${quiz.id}')">🔄 Tentar novamente</button></div></div>`;
+    html+=`<div class="quiz-result-banner" id="${quiz.id}_banner"><div class="qrb-emoji">🏆</div><div class="qrb-text">Parabéns!</div><div class="qrb-sub">Você completou o quiz!</div></div></div>`;
     panels[2].innerHTML=html;
     wrap.innerHTML='';
     if(mascotBox)wrap.appendChild(mascotBox);
@@ -3616,5 +3616,8 @@ buildAllQuizzes();
 restoreMCStates();
 setTimeout(()=>{pauloShowMsg(getRandom(phrases.welcome),'happy',false);setEmoji('happy')},1800);
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../../../assets/js/quiz-supabase.js"></script>
 </body>
 </html>

@@ -2901,7 +2901,7 @@ function buildAllQuizzes() {
       + '<div class="qrb-emoji">🏆</div>'
       + '<div class="qrb-text">Parabéns!</div>'
       + '<div class="qrb-sub">Você completou o quiz!</div>'
-      + '<button class="qrb-retry" onclick="retryQuiz(\'' + quiz.id + '\')">🔄 Tentar novamente</button>'
+      + ''
       + '</div></div>';
 
     panels[2].innerHTML = html;
@@ -3135,5 +3135,8 @@ setTimeout(() => {
 
 </script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../../../assets/js/quiz-supabase.js"></script>
 </body>
 </html>
