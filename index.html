@@ -857,15 +857,17 @@ body{background:#080300;color:var(--text);}
 .rk-num.pos2{color:#b0b0b0;}
 .rk-num.pos3{color:#b06820;}
 .rk-num.pos4,.rk-num.pos5{color:var(--text-d);}
+.rk-avatar-wrap{position:relative;display:inline-flex;flex-shrink:0;}
 .rk-avatar{
   width:20px;height:20px;border-radius:50%;
-  border:1.5px solid rgba(201,168,76,.28);overflow:hidden;flex-shrink:0;
+  border:1.5px solid rgba(201,168,76,.28);overflow:hidden;
   display:flex;align-items:center;justify-content:center;
   font-family:'Cinzel Decorative',serif;font-size:.42rem;
   color:var(--gold-l);background:linear-gradient(135deg,#2a1400,#1a0a00);
 }
 .rk-avatar.top1{border-color:rgba(255,200,40,.5);width:23px;height:23px;}
 .rk-avatar img{width:100%;height:100%;object-fit:cover;}
+.rk-frame-img{position:absolute;inset:-4px;width:calc(100% + 8px);height:calc(100% + 8px);pointer-events:none;z-index:5;object-fit:contain;}
 .rk-info{flex:1;min-width:0;}
 .rk-name{
   font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;color:var(--text);
@@ -2108,9 +2110,13 @@ window.addEventListener('DOMContentLoaded',()=>{
       ? '<img src="' + s.avatar_url + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">'
       : initials;
 
+    var frameUrl = 'assets/images/frames/frame-nivel-' + nivel + '.png';
     return '<div class="rk-card' + (isTop1 ? ' top1' : '') + '">' +
       '<div class="rk-num ' + posClass + '">' + (isTop1 ? '🏆' : pos + 'º') + '</div>' +
-      '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
+      '<div class="rk-avatar-wrap">' +
+        '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
+        '<img class="rk-frame-img" src="' + frameUrl + '" alt="">' +
+      '</div>' +
       '<div class="rk-info">' +
         '<div class="rk-name' + (isTop1 ? ' top1' : '') + '">' + displayName + '</div>' +
         '<div class="rk-level" style="color:' + NIVEIS_COR[nivel] + '">' + NIVEIS_NOME[nivel] + (fullName && s.serie ? ' · ' + s.serie : '') + '</div>' +

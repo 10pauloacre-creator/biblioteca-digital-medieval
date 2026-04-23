@@ -50,6 +50,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
 /* ── Avatar ── */
 .avatar-section{display:flex;flex-direction:column;align-items:center;margin-bottom:1.4rem;}
+.avatar-wrap{position:relative;display:inline-block;margin-bottom:.8rem;}
 .avatar-ring{
   width:100px;height:100px;border-radius:50%;
   border:3px solid var(--gold);
@@ -58,7 +59,12 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   font-family:'Cinzel Decorative',serif;font-size:2rem;
   color:var(--gold-l);overflow:hidden;
   box-shadow:0 0 30px rgba(201,168,76,.4),0 0 60px rgba(201,168,76,.15);
-  position:relative;margin-bottom:.8rem;
+  position:relative;
+}
+.avatar-frame-img{
+  position:absolute;inset:-14px;
+  width:calc(100% + 28px);height:calc(100% + 28px);
+  pointer-events:none;z-index:10;object-fit:contain;
 }
 .avatar-ring img{width:100%;height:100%;object-fit:cover;}
 .avatar-upload-overlay{
@@ -306,6 +312,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     <div class="corner bl"></div><div class="corner br"></div>
 
     <div class="avatar-section">
+      <div class="avatar-wrap" id="avatar-wrap">
       <div class="avatar-ring" id="avatar-ring">
 <img id="avatar-img" style="display:none" alt="Avatar"/>
         <span id="avatar-initials">…</span>
@@ -316,6 +323,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
         <div class="avatar-upload-spinner" id="avatar-spinner">
           <span class="spin-icon">⚙️</span>
         </div>
+      </div>
+      <img id="avatar-frame-img" class="avatar-frame-img" src="" alt="" style="display:none">
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/>
       <div id="badge-admin" class="badge-admin" style="display:none">⚜ MAGO SUPREMO ⚜</div>
@@ -393,6 +402,13 @@ function renderNivelBadge(profile) {
   for (let i = 1; i <= 5; i++) ring.classList.remove('frame-nivel-' + i);
   ring.classList.add(info.frameClass);
 
+  // Imagem PNG do frame
+  const frameImg = document.getElementById('avatar-frame-img');
+  if (frameImg) {
+    frameImg.src = '../assets/images/frames/frame-nivel-' + nivel + '.png';
+    frameImg.style.display = 'block';
+  }
+
   // Badge com nome do nível
   const badge = document.getElementById('nivel-badge');
   badge.className = 'nivel-badge nivel-badge-' + nivel;
@@ -450,6 +466,8 @@ async function loadProfile(uid) {
   if (profile.role === 'admin') {
     document.getElementById('badge-admin').style.display = 'block';
     document.getElementById('avatar-ring').classList.add('frame-nivel-5');
+    const fi = document.getElementById('avatar-frame-img');
+    if (fi) { fi.src = '../assets/images/frames/frame-nivel-5.png'; fi.style.display = 'block'; }
   } else {
     renderNivelBadge(profile);
   }
