@@ -1152,8 +1152,8 @@ body{background:#080300;color:var(--text);}
       <img src="assets/images/placa.png" alt="Biblioteca Digital Medieval" class="placa-img">
     </div>
 
-    <!-- Ranking de Poder -->
-    <div class="ranking-strip" id="ranking-strip">
+    <!-- Ranking de Poder (visível apenas para alunos logados) -->
+    <div class="ranking-strip" id="ranking-strip" style="display:none">
       <button class="ranking-title-btn" onclick="openRankingExplain()">⚔ RANKING DE PODER ⚔</button>
       <div class="ranking-top5" id="ranking-top5">
         <div style="text-align:center;color:var(--text-d);font-size:.68rem;padding:.4rem 0;font-family:'Cinzel',serif;letter-spacing:.1em">
@@ -2156,18 +2156,41 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (m) m.classList.remove('open');
   };
 
-  /* ── Carrega ao iniciar ── */
-  loadRanking();
+  /* ── Mostra ranking apenas para usuários autenticados ── */
+  async function initRanking() {
+    // Visitantes nunca veem o ranking
+    if (sessionStorage.getItem('bdm-visitante') === '1') return;
 
-  /* ── Auto-refresh a cada 60 s ── */
-  setInterval(loadRanking, 60000);
+    // Aluno com sessão salva localmente
+    if (localStorage.getItem('bdm-aluno')) {
+      document.getElementById('ranking-strip').style.display = '';
+      loadRanking();
+      setInterval(loadRanking, 60000);
+      try {
+        rkDb.channel('rk-profiles')
+          .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles' }, loadRanking)
+          .subscribe();
+      } catch (e) {}
+      return;
+    }
 
-  /* ── Realtime: atualiza quando pontuação muda ── */
-  try {
-    rkDb.channel('rk-profiles')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles' }, loadRanking)
-      .subscribe();
-  } catch (e) {}
+    // Verifica sessão Supabase
+    try {
+      var res = await rkDb.auth.getSession();
+      if (res.data && res.data.session) {
+        document.getElementById('ranking-strip').style.display = '';
+        loadRanking();
+        setInterval(loadRanking, 60000);
+        try {
+          rkDb.channel('rk-profiles')
+            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles' }, loadRanking)
+            .subscribe();
+        } catch (e) {}
+      }
+    } catch (e) {}
+  }
+
+  initRanking();
 }());
 </script>
 
