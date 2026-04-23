@@ -718,8 +718,8 @@ body{background:#080300;color:var(--text);}
 ══════════════════════════════ */
 @media screen and (max-width:600px) and (min-height:500px){
   .plaque-img-wrapper{
-    max-height:min(220px,28vh);
-    margin:40px auto 12px;
+    max-height:min(200px,26vh);
+    margin:12px auto 4px;
     width:min(820px,96vw);
   }
   .books-scene{
@@ -816,71 +816,75 @@ body{background:#080300;color:var(--text);}
 /* ══════════════════════════════
    RANKING DE PODER
 ══════════════════════════════ */
+/* Ranking — fundo da tela, compacto, sem disputar espaço */
 .ranking-strip{
   position:absolute;
   left:50%;transform:translateX(-50%);
-  top:clamp(150px,28vh,180px);
-  width:min(270px,70vw);
+  bottom:6px;
+  width:min(310px,78vw);
   z-index:8;
-  animation:revealUp .7s .55s ease-out both;
+  animation:revealUp .6s .7s ease-out both;
+  background:rgba(6,3,0,.78);
+  border:1px solid rgba(201,168,76,.22);
+  border-radius:7px;
+  padding:.32rem .48rem .24rem;
+  backdrop-filter:blur(6px);
 }
 .ranking-title-btn{
-  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.24em;font-weight:700;
+  font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;font-weight:700;
   color:var(--gold-b);background:none;border:none;cursor:pointer;
-  display:block;width:100%;text-align:center;margin-bottom:.45rem;
-  text-shadow:0 0 10px rgba(255,200,40,.65);transition:color .2s,text-shadow .2s;
+  display:block;width:100%;text-align:center;margin-bottom:.22rem;
+  text-shadow:0 0 8px rgba(255,200,40,.5);transition:color .2s;
   padding:0;
 }
-.ranking-title-btn:hover{color:var(--ember);text-shadow:0 0 14px rgba(255,106,26,.8);}
-.ranking-top5{display:flex;flex-direction:column;gap:.28rem;}
+.ranking-title-btn:hover{color:var(--ember);}
+.ranking-top5{display:flex;flex-direction:column;gap:.14rem;}
 .rk-card{
-  display:flex;align-items:center;gap:.6rem;
-  background:linear-gradient(135deg,rgba(18,9,1,.93),rgba(12,6,1,.96));
-  border:1px solid rgba(201,168,76,.18);border-radius:5px;
-  padding:.32rem .65rem;transition:border-color .2s;
+  display:flex;align-items:center;gap:.4rem;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(201,168,76,.1);border-radius:4px;
+  padding:.18rem .4rem;transition:border-color .2s;
 }
 .rk-card.top1{
-  border-color:rgba(255,200,40,.45);
-  background:linear-gradient(135deg,rgba(38,18,2,.97),rgba(28,13,1,.99));
-  box-shadow:0 0 18px rgba(255,180,30,.12),inset 0 1px 0 rgba(255,200,40,.1);
+  border-color:rgba(255,200,40,.32);
+  background:rgba(255,180,20,.05);
 }
 .rk-num{
-  font-family:'Cinzel',serif;font-size:.7rem;font-weight:900;
-  min-width:20px;text-align:center;flex-shrink:0;
+  font-family:'Cinzel',serif;font-size:.6rem;font-weight:900;
+  min-width:16px;text-align:center;flex-shrink:0;
 }
-.rk-num.top1{color:var(--gold-b);font-size:.85rem;text-shadow:0 0 8px rgba(255,200,40,.7);}
-.rk-num.pos2{color:#c0c0c0;}
-.rk-num.pos3{color:#cd7f32;}
+.rk-num.top1{color:var(--gold-b);text-shadow:0 0 5px rgba(255,200,40,.6);}
+.rk-num.pos2{color:#b0b0b0;}
+.rk-num.pos3{color:#b06820;}
 .rk-num.pos4,.rk-num.pos5{color:var(--text-d);}
 .rk-avatar{
-  width:30px;height:30px;border-radius:50%;
-  border:1.5px solid rgba(201,168,76,.35);overflow:hidden;flex-shrink:0;
+  width:20px;height:20px;border-radius:50%;
+  border:1.5px solid rgba(201,168,76,.28);overflow:hidden;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel Decorative',serif;font-size:.62rem;
+  font-family:'Cinzel Decorative',serif;font-size:.42rem;
   color:var(--gold-l);background:linear-gradient(135deg,#2a1400,#1a0a00);
 }
-.rk-avatar.top1{border-color:rgba(255,200,40,.6);width:36px;height:36px;}
+.rk-avatar.top1{border-color:rgba(255,200,40,.5);width:23px;height:23px;}
 .rk-avatar img{width:100%;height:100%;object-fit:cover;}
 .rk-info{flex:1;min-width:0;}
 .rk-name{
-  font-family:'Cinzel',serif;font-size:.67rem;font-weight:600;color:var(--text);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;
+  font-family:'Cinzel',serif;font-size:.58rem;font-weight:600;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1;
 }
-.rk-name.top1{font-size:.74rem;color:var(--gold-l);}
-.rk-level{font-size:.55rem;color:var(--text-d);font-family:'Cinzel',serif;letter-spacing:.1em;}
+.rk-name.top1{color:var(--gold-l);}
+.rk-level{font-size:.45rem;color:var(--text-d);font-family:'Cinzel',serif;letter-spacing:.07em;}
 .rk-pts{
-  font-family:'Cinzel',serif;font-size:.65rem;font-weight:700;
+  font-family:'Cinzel',serif;font-size:.56rem;font-weight:700;
   color:var(--gold-l);white-space:nowrap;flex-shrink:0;
 }
-.rk-pts.top1{color:var(--gold-b);font-size:.72rem;}
+.rk-pts.top1{color:var(--gold-b);}
 .ranking-ver-mais-btn{
-  font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.16em;
-  color:var(--text-d);background:none;
-  border:1px solid rgba(201,168,76,.18);border-radius:4px;
-  width:100%;padding:.35rem;cursor:pointer;margin-top:.35rem;
-  transition:color .2s,border-color .2s;
+  font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.14em;
+  color:var(--text-d);background:none;border:none;
+  width:100%;padding:.16rem 0 0;cursor:pointer;margin-top:.08rem;
+  transition:color .2s;text-align:center;display:block;
 }
-.ranking-ver-mais-btn:hover{color:var(--gold-l);border-color:rgba(201,168,76,.45);}
+.ranking-ver-mais-btn:hover{color:var(--gold-l);}
 
 /* ── Modal ranking completo ── */
 #modal-rk-full{
@@ -2083,7 +2087,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         .order('pontos', { ascending: false });
       if (res.error || !res.data) return;
       allStudents = res.data;
-      renderTop5(allStudents.slice(0, 5));
+      renderTop5(allStudents.slice(0, 3));
     } catch (e) {}
   }
 
@@ -2109,7 +2113,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
       '<div class="rk-info">' +
         '<div class="rk-name' + (isTop1 ? ' top1' : '') + '">' + displayName + '</div>' +
-        '<div class="rk-level" style="color:' + NIVEIS_COR[nivel] + '">' + NIVEIS_NOME[nivel] + '</div>' +
+        '<div class="rk-level" style="color:' + NIVEIS_COR[nivel] + '">' + NIVEIS_NOME[nivel] + (fullName && s.serie ? ' · ' + s.serie : '') + '</div>' +
       '</div>' +
       '<div class="rk-pts' + (isTop1 ? ' top1' : '') + '">' + pts + ' pts</div>' +
     '</div>';
