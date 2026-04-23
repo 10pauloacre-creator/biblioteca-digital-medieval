@@ -89,10 +89,37 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   border:1px solid rgba(201,168,76,.5);border-radius:12px;
   padding:3px 12px;margin-bottom:.4rem;
 }
-.badge-aluno{
-  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.12em;
-  color:var(--text-d);border:1px solid rgba(120,80,30,.4);border-radius:12px;padding:3px 10px;
-  margin-bottom:.4rem;
+
+/* ── Níveis: molduras do avatar ───────────────────────────────── */
+.frame-nivel-1{border-color:#a09878;box-shadow:0 0 20px rgba(160,152,120,.3),0 0 50px rgba(160,152,120,.1);}
+.frame-nivel-2{border-color:#c9a84c;box-shadow:0 0 28px rgba(201,168,76,.45),0 0 55px rgba(201,168,76,.15);}
+.frame-nivel-3{border-color:#4fc3f7;box-shadow:0 0 32px rgba(79,195,247,.55),0 0 65px rgba(79,195,247,.2);animation:nivelPulse3 2.5s ease-in-out infinite;}
+.frame-nivel-4{border-color:#c084fc;box-shadow:0 0 35px rgba(192,132,252,.6),0 0 70px rgba(192,132,252,.25);animation:nivelPulse4 2s ease-in-out infinite;}
+.frame-nivel-5{border-color:#ff6a1a;box-shadow:0 0 40px rgba(255,106,26,.7),0 0 80px rgba(201,168,76,.35),0 0 120px rgba(255,106,26,.15);animation:nivelPulse5 1.6s ease-in-out infinite;}
+
+@keyframes nivelPulse3{0%,100%{box-shadow:0 0 32px rgba(79,195,247,.55),0 0 65px rgba(79,195,247,.2);}50%{box-shadow:0 0 48px rgba(79,195,247,.8),0 0 90px rgba(79,195,247,.35);}}
+@keyframes nivelPulse4{0%,100%{box-shadow:0 0 35px rgba(192,132,252,.6),0 0 70px rgba(192,132,252,.25);}50%{box-shadow:0 0 55px rgba(192,132,252,.85),0 0 95px rgba(192,132,252,.4);}}
+@keyframes nivelPulse5{0%,100%{box-shadow:0 0 40px rgba(255,106,26,.7),0 0 80px rgba(201,168,76,.35);}50%{box-shadow:0 0 65px rgba(255,106,26,.95),0 0 110px rgba(255,200,0,.5);}}
+
+/* ── Nível: badge dinâmico do aluno ───────────────────────────── */
+.nivel-badge{
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.14em;font-weight:700;
+  border-radius:12px;padding:3px 12px;margin-bottom:.2rem;text-align:center;
+}
+.nivel-badge-1{color:#a09878;border:1px solid rgba(160,152,120,.4);}
+.nivel-badge-2{color:var(--gold-l);border:1px solid rgba(201,168,76,.5);}
+.nivel-badge-3{color:#4fc3f7;border:1px solid rgba(79,195,247,.5);background:rgba(79,195,247,.05);}
+.nivel-badge-4{color:#c084fc;border:1px solid rgba(192,132,252,.5);background:rgba(192,132,252,.05);}
+.nivel-badge-5{
+  color:var(--ember);border:1px solid rgba(255,106,26,.55);
+  background:rgba(255,106,26,.07);
+  text-shadow:0 0 10px rgba(255,106,26,.5);
+}
+
+/* ── Estrelas de poder ────────────────────────────────────────── */
+.nivel-stars-display{
+  font-size:.95rem;letter-spacing:.22em;margin-bottom:.35rem;
+  text-shadow:0 0 6px currentColor;
 }
 
 /* ── Info ── */
@@ -292,7 +319,10 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/>
       <div id="badge-admin" class="badge-admin" style="display:none">⚜ MAGO SUPREMO ⚜</div>
-      <div id="badge-aluno" class="badge-aluno" style="display:none">ESCUDEIRO DO CONHECIMENTO</div>
+      <div id="nivel-badge" class="nivel-badge nivel-badge-1" style="display:none">
+        <span id="nivel-nome-badge">PERGAMINHEIRO DAS RUNAS</span>
+      </div>
+      <div id="nivel-stars-display" class="nivel-stars-display" style="display:none;color:#a09878">★☆☆☆☆</div>
     </div>
 
     <h2 class="profile-name" id="profile-name">Carregando…</h2>
@@ -348,9 +378,33 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../assets/js/supabase-config.js"></script>
+<script src="../assets/js/nivel.js"></script>
 <script>
 const { createClient } = supabase;
 const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+
+function renderNivelBadge(profile) {
+  const nivel  = profile.nivel  || 1;
+  const pontos = profile.pontos || 0;
+  const info   = window.getNivelInfo(nivel);
+
+  // Moldura colorida do avatar
+  const ring = document.getElementById('avatar-ring');
+  for (let i = 1; i <= 5; i++) ring.classList.remove('frame-nivel-' + i);
+  ring.classList.add(info.frameClass);
+
+  // Badge com nome do nível
+  const badge = document.getElementById('nivel-badge');
+  badge.className = 'nivel-badge nivel-badge-' + nivel;
+  badge.style.display = 'block';
+  document.getElementById('nivel-nome-badge').textContent = info.nome.toUpperCase();
+
+  // Estrelas
+  const starsEl = document.getElementById('nivel-stars-display');
+  starsEl.style.display = 'block';
+  starsEl.style.color   = info.cor;
+  starsEl.textContent   = window.getNivelStars(nivel);
+}
 
 let viewingId = null;
 let currentUser = null;
@@ -392,11 +446,12 @@ async function loadProfile(uid) {
     document.getElementById('avatar-initials').textContent = ini.toUpperCase();
   }
 
-  // Badge
+  // Badge + moldura avatar
   if (profile.role === 'admin') {
     document.getElementById('badge-admin').style.display = 'block';
+    document.getElementById('avatar-ring').classList.add('frame-nivel-5');
   } else {
-    document.getElementById('badge-aluno').style.display = 'block';
+    renderNivelBadge(profile);
   }
 
   document.getElementById('profile-name').textContent = profile.nome_completo || '(sem nome)';
@@ -432,6 +487,15 @@ async function loadProfile(uid) {
         </div>
       </div>`;
   } else {
+    const nivel  = profile.nivel  || 1;
+    const pontos = profile.pontos || 0;
+    const nInfo  = window.getNivelInfo(nivel);
+    const stars  = window.getNivelStars(nivel);
+    const pct    = window.getNivelProgress(nivel, pontos);
+    const proxTxt = window.getNivelProxTxt(nivel, pontos);
+    const barColor = nivel >= 5
+      ? 'linear-gradient(90deg,#c9a84c,#ff6a1a,#ffe87a)'
+      : `linear-gradient(90deg,${nInfo.cor}60,${nInfo.cor})`;
     infoSection.innerHTML = `
       <div class="info-grid">
         <div class="info-box">
@@ -449,6 +513,26 @@ async function loadProfile(uid) {
         <div class="info-box">
           <div class="info-label">MEMBRO DESDE</div>
           <div class="info-value">${dataMembro}</div>
+        </div>
+      </div>
+      <div class="admin-stat" style="margin-bottom:.8rem">
+        <div class="admin-stat-label">NÍVEL DE PODER</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin:.35rem 0">
+          <div style="font-family:'Cinzel',serif;font-size:.82rem;font-weight:700;color:${nInfo.cor};
+            text-shadow:0 0 8px ${nInfo.corGlow}">${nInfo.nome}</div>
+          <div style="font-size:1rem;letter-spacing:.2em;color:${nInfo.cor};
+            text-shadow:0 0 8px ${nInfo.corGlow}">${stars}</div>
+        </div>
+        <div class="level-bar-wrap">
+          <div class="level-bar" style="width:${pct}%;background:${barColor};box-shadow:0 0 8px ${nInfo.corGlow}"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.35rem">
+          <span style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.12em;color:var(--text-d)">
+            ${pontos} PONTOS
+          </span>
+          <span style="font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.1em;color:var(--text-d)">
+            ${proxTxt}
+          </span>
         </div>
       </div>`;
   }
