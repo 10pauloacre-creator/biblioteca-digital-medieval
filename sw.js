@@ -7,7 +7,7 @@
 //   Periodic Background Sync → verifica novos livros 1x/dia
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v12';
+const SW_VERSION   = 'v13';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -22,6 +22,7 @@ const SHELL_ASSETS_CRITICAL = [
 
 const SHELL_ASSETS_OPTIONAL = [
   './cache-manifest.json',
+  './assets/gif/carregando-video.mp4', // tela de carregamento — deve estar no shell
   './assets/images/livro-azul.png',
   './assets/images/livro-verde.png',
   './assets/images/1-serie-home.png',
@@ -63,6 +64,7 @@ const AUDIO_ASSETS = [
 
 // ── Vídeo/animação: cache em background (arquivos grandes)
 const MEDIA_ASSETS = [
+  './assets/gif/carregando-video.mp4', // tela de carregamento — prioridade máxima
   './assets/gif/vide-de-fundo.mp4',
   './assets/gif/livro-abrindo.webm',
   './assets/gif/intro-pc.mp4',

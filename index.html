@@ -31,7 +31,19 @@
 <meta name="apple-mobile-web-app-title" content="Biblioteca"/>
 <!-- iOS splash screen -->
 <link rel="apple-touch-startup-image" href="assets/images/splash-screen.png"/>
+<!-- Preconnect para fontes -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+<!-- Preload: ícones críticos (aparecem instantaneamente) -->
+<link rel="preload" as="image" href="assets/images/login.png"/>
+<link rel="preload" as="image" href="assets/images/perfil.png"/>
+<link rel="preload" as="image" href="assets/images/forasteiro.png"/>
+<link rel="preload" as="image" href="assets/images/placa.png"/>
+<link rel="preload" as="image" href="assets/images/1-serie-home.png"/>
+<link rel="preload" as="image" href="assets/images/2-serie-home.png"/>
+<link rel="preload" as="image" href="assets/images/3-serie-home.png"/>
+<link rel="preload" as="image" href="assets/images/pilhadelivros.png"/>
 <style>
 /* ══════════════════════════════
    ROOT TOKENS
@@ -569,13 +581,79 @@ body{background:#080300;color:var(--text);}
   color:var(--gold-l);opacity:.85;white-space:nowrap;
 }
 
-/* ── Background video ── */
+/* ── Background video (GPU-accelerated) ── */
 #bg-video{
   position:fixed;top:0;left:0;
   width:100%;height:100%;
   object-fit:cover;
   z-index:-1;
   pointer-events:none;
+  transform:translateZ(0);
+  will-change:transform;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+
+/* ══ TELA DE CARREGAMENTO ══ */
+#screen-loading{
+  position:fixed;inset:0;z-index:10000;
+  background:#050200;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .75s ease;
+}
+#screen-loading.fade-out{opacity:0;pointer-events:none;}
+#loading-vid{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;
+  transform:translateZ(0);will-change:transform;backface-visibility:hidden;
+}
+#loading-veil{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,
+    rgba(3,1,0,.7) 0%,rgba(3,1,0,.5) 50%,rgba(3,1,0,.72) 100%);
+}
+#loading-center{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  padding:24px;text-align:center;
+}
+#loading-t1{
+  font-family:'Cinzel Decorative','Palatino Linotype',Georgia,serif;
+  font-weight:900;font-size:clamp(1.5rem,7vw,3rem);letter-spacing:.06em;
+  background:linear-gradient(135deg,#f9e3a0,#f2c25c,#c9a84c,#b98b28);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;
+}
+#loading-t2{
+  font-family:'UnifrakturMaguntia','Palatino Linotype',Georgia,serif;
+  font-size:clamp(1rem,4.5vw,1.9rem);color:#c9a870;
+  letter-spacing:.08em;margin-top:.3rem;
+}
+#loading-sep{
+  color:rgba(201,168,76,.4);font-size:.72rem;letter-spacing:.3em;
+  margin:1.4rem 0 1rem;
+}
+#loading-progress-wrap{
+  width:min(290px,62vw);height:7px;
+  background:rgba(201,168,76,.12);
+  border:1px solid rgba(201,168,76,.25);
+  border-radius:4px;overflow:hidden;margin-bottom:.8rem;
+}
+#loading-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#6b4a08,#f0d060,#6b4a08);
+  background-size:200% 100%;
+  border-radius:4px;transition:width .25s ease;
+  animation:ldg-shimmer 1.8s linear infinite;
+}
+@keyframes ldg-shimmer{
+  from{background-position:100% 0}to{background-position:-100% 0}
+}
+#loading-msg{
+  font-family:'Cinzel','Palatino Linotype',serif;
+  font-size:clamp(.56rem,2.1vw,.7rem);color:#6a4a22;
+  letter-spacing:.13em;text-transform:uppercase;
+  min-height:1.5em;transition:opacity .3s ease;
 }
 
 /* ── Plaque image ── */
@@ -738,6 +816,23 @@ body{background:#080300;color:var(--text);}
 </head>
 <body>
 
+<!-- Loading screen (z:10000 — aparece antes de tudo) -->
+<div id="screen-loading">
+  <video id="loading-vid" autoplay muted loop playsinline disableremoteplayback>
+    <source src="assets/gif/carregando-video.mp4" type="video/mp4">
+  </video>
+  <div id="loading-veil"></div>
+  <div id="loading-center">
+    <div id="loading-t1">Biblioteca</div>
+    <div id="loading-t2">Digital Medieval</div>
+    <div id="loading-sep">✦ &nbsp;───────&nbsp; ✦ &nbsp;───────&nbsp; ✦</div>
+    <div id="loading-progress-wrap">
+      <div id="loading-bar"></div>
+    </div>
+    <div id="loading-msg">Abrindo os Pergaminhos Sagrados&hellip;</div>
+  </div>
+</div>
+
 <!-- Splash screen -->
 <div id="screen-splash">
   <div id="splash-bg"></div>
@@ -758,7 +853,7 @@ body{background:#080300;color:var(--text);}
 </a>
 
 <!-- Background video -->
-<video id="bg-video" autoplay muted loop playsinline>
+<video id="bg-video" autoplay muted loop playsinline preload="auto" disableremoteplayback>
   <source src="assets/gif/vide-de-fundo.mp4" type="video/mp4">
 </video>
 
@@ -996,6 +1091,84 @@ body{background:#080300;color:var(--text);}
 </div>
 
 <script>
+/* ══════════════════════════════
+   LOADING SCREEN
+══════════════════════════════ */
+(function(){
+  var scr = document.getElementById('screen-loading');
+  if (!scr) return;
+  var bar = document.getElementById('loading-bar');
+  var msg = document.getElementById('loading-msg');
+  var START = performance.now();
+  var MIN_MS = 2000;
+
+  var MSGS = [
+    'Abrindo os Pergaminhos Sagrados…',
+    'Acendendo as Tochas do Acervo…',
+    'Invocando os Escribas Medievais…',
+    'Preparando o Scriptorium…',
+    'Carregando os Tomos Antigos…',
+    'Consultando os Arquivos da Guilda…',
+  ];
+  var mi = 0;
+  var msgTimer = setInterval(function(){
+    msg.style.opacity = '0';
+    setTimeout(function(){
+      mi = (mi + 1) % MSGS.length;
+      msg.textContent = MSGS[mi];
+      msg.style.opacity = '1';
+    }, 300);
+  }, 950);
+
+  var pct = 0;
+  function setBar(v) {
+    pct = Math.max(pct, Math.min(100, v));
+    bar.style.width = pct + '%';
+  }
+  setBar(5);
+
+  // Precarregar imagens e video de fundo enquanto loading screen aparece
+  var assets = [
+    'assets/images/login.png',
+    'assets/images/perfil.png',
+    'assets/images/forasteiro.png',
+    'assets/images/placa.png',
+    'assets/images/splash-screen-pc.png',
+    'assets/images/splash-screen-mobile.jpeg',
+    'assets/images/1-serie-home.png',
+    'assets/images/2-serie-home.png',
+    'assets/images/3-serie-home.png',
+    'assets/images/pilhadelivros.png',
+  ];
+  var done = 0, total = assets.length;
+  function onAsset() { done++; setBar(8 + (done / total) * 80); if (done >= total) tryEnd(); }
+  assets.forEach(function(src){
+    var img = new Image();
+    img.onload = img.onerror = onAsset;
+    img.src = src;
+  });
+
+  // Tambem dispara carga do video de fundo (warma cache/decodificador)
+  var bgv = document.getElementById('bg-video');
+  if (bgv) { bgv.load(); }
+
+  function tryEnd() {
+    setBar(100);
+    var elapsed = performance.now() - START;
+    var wait = Math.max(0, MIN_MS - elapsed);
+    setTimeout(dismiss, wait + 150);
+  }
+
+  function dismiss() {
+    clearInterval(msgTimer);
+    scr.classList.add('fade-out');
+    setTimeout(function(){ if (scr.parentNode) scr.parentNode.removeChild(scr); }, 820);
+  }
+
+  // Seguranca: nunca bloqueia mais de 5s
+  setTimeout(function(){ if (scr.parentNode) tryEnd(); }, 5000);
+})();
+
 /* ══════════════════════════════
    SCREEN TRANSITIONS
 ══════════════════════════════ */
