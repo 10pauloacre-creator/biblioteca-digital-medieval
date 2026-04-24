@@ -80,7 +80,8 @@ INSERT INTO public.student_roster (nome_completo, serie, numero_chamada) VALUES
 
 -- RLS: leitura pública do roster
 ALTER TABLE public.student_roster ENABLE ROW LEVEL SECURITY;
-CREATE POLICY IF NOT EXISTS "roster_read_all" ON public.student_roster
+DROP POLICY IF EXISTS "roster_read_all" ON public.student_roster;
+CREATE POLICY "roster_read_all" ON public.student_roster
   FOR SELECT USING (true);
 
 -- ── 3. nivel padrão = 0 (sem pontos ainda) ──────────────────────
