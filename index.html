@@ -920,6 +920,24 @@ body{background:#080300;color:var(--text);}
   color:var(--gold-l);white-space:nowrap;flex-shrink:0;
 }
 .rk-pts.top1{color:var(--gold-b);}
+
+/* ── Presença online (ranking) ── */
+.presence-dot{
+  position:absolute;bottom:1px;right:1px;
+  width:8px;height:8px;border-radius:50%;
+  border:1.5px solid #080300;z-index:20;pointer-events:none;
+}
+.presence-dot.online{
+  background:#22c55e;
+  box-shadow:0 0 5px #22c55e,0 0 10px rgba(34,197,94,.7);
+  animation:presence-pulse 2s ease-in-out infinite;
+}
+.presence-dot.offline{background:#dc2626;box-shadow:0 0 3px rgba(220,38,38,.35);}
+@keyframes presence-pulse{
+  0%,100%{box-shadow:0 0 5px #22c55e,0 0 10px rgba(34,197,94,.7);}
+  50%{box-shadow:0 0 8px #22c55e,0 0 18px rgba(34,197,94,.9);}
+}
+
 .ranking-ver-mais-btn{
   font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.14em;
   color:var(--text-d);background:none;border:none;
@@ -2000,6 +2018,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 <!-- AUTH SESSION + SPLASH + INTRO -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/presence.js"></script>
 <script>
 (function(){
   if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
@@ -2199,7 +2218,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     try {
       var res = await rkDb
         .from('ranking_all')
-        .select('id,nome_completo,avatar_url,pontos,nivel,serie,numero_chamada,cadastrado')
+        .select('id,nome_completo,avatar_url,pontos,nivel,serie,numero_chamada,cadastrado,last_seen')
         .order('pontos', { ascending: false })
         .order('numero_chamada', { ascending: true });
       if (res.error || !res.data) return;
@@ -2234,6 +2253,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       '<div class="rk-avatar-wrap">' +
         '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
         frameHtml +
+        (s.id ? '<span class="presence-dot ' + (window.isOnline && window.isOnline(s.last_seen) ? 'online' : 'offline') + '" data-uid="' + s.id + '"></span>' : '') +
       '</div>' +
       '<div class="rk-info">' +
         '<div class="rk-name' + (isTop1 ? ' top1' : '') + '">' + displayName + '</div>' +
@@ -2317,6 +2337,20 @@ window.addEventListener('DOMContentLoaded',()=>{
       }
     } catch (e) {}
   }
+
+  // Presença: atualiza dots sem recarregar o ranking inteiro
+  function applyRkPresence(uid, lastSeen) {
+    document.querySelectorAll('[data-uid="' + uid + '"]').forEach(function (dot) {
+      dot.className = 'presence-dot ' + (window.isOnline && window.isOnline(lastSeen) ? 'online' : 'offline');
+    });
+  }
+  try {
+    rkDb.channel('rk-presence')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'presence' }, function (payload) {
+        if (payload.new) applyRkPresence(payload.new.id, payload.new.last_seen);
+      })
+      .subscribe();
+  } catch (e) {}
 
   initRanking();
   window.loadRanking = loadRanking;

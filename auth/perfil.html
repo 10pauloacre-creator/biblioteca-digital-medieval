@@ -338,6 +338,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
         </div>
       </div>
       <img id="avatar-frame-img" class="avatar-frame-img" src="" alt="" style="display:none">
+      <span id="profile-presence-dot" class="presence-dot offline" title="offline"></span>
       </div>
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/>
       <div id="badge-admin" class="badge-admin" style="display:none">⚜ MAGO SUPREMO ⚜</div>
@@ -398,6 +399,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../assets/js/supabase-config.js"></script>
 <script src="../assets/js/nivel.js"></script>
+<script src="../assets/js/presence.js"></script>
 <script>
 const { createClient } = supabase;
 const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
@@ -588,6 +590,32 @@ async function loadProfile(uid) {
   if ((isAdmin || isOwner) && profile.role !== 'admin') {
     await loadQuizResults(uid);
   }
+
+  // Presença online
+  await refreshPresenceDot(uid);
+  subscribePresenceDot(uid);
+}
+
+function setPresenceDot(lastSeen) {
+  const dot = document.getElementById('profile-presence-dot');
+  if (!dot) return;
+  const on = window.isOnline(lastSeen);
+  dot.className = 'presence-dot ' + (on ? 'online' : 'offline');
+  dot.title     = on ? 'online agora' : 'offline';
+}
+
+async function refreshPresenceDot(uid) {
+  const { data } = await db.from('presence').select('last_seen').eq('id', uid).maybeSingle();
+  setPresenceDot(data?.last_seen);
+}
+
+let _presenceCh = null;
+function subscribePresenceDot(uid) {
+  if (_presenceCh) { _presenceCh.unsubscribe(); _presenceCh = null; }
+  _presenceCh = db.channel('pres-perfil-' + uid)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'presence', filter: 'id=eq.' + uid },
+        (p) => setPresenceDot(p.new?.last_seen))
+    .subscribe();
 }
 
 async function loadQuizResults(uid) {

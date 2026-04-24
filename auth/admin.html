@@ -95,6 +95,24 @@ body{overflow-y:auto;}
 }
 .s-avatar img{width:100%;height:100%;object-fit:cover;}
 
+/* ── Presença online ── */
+.s-avatar-wrap{position:relative;flex-shrink:0;}
+.presence-dot{
+  position:absolute;bottom:2px;right:2px;
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid #0e0803;z-index:20;pointer-events:none;
+}
+.presence-dot.online{
+  background:#22c55e;
+  box-shadow:0 0 6px #22c55e,0 0 14px rgba(34,197,94,.7);
+  animation:presence-pulse 2s ease-in-out infinite;
+}
+.presence-dot.offline{background:#dc2626;box-shadow:0 0 4px rgba(220,38,38,.35);}
+@keyframes presence-pulse{
+  0%,100%{box-shadow:0 0 6px #22c55e,0 0 14px rgba(34,197,94,.7);}
+  50%{box-shadow:0 0 10px #22c55e,0 0 22px rgba(34,197,94,.9);}
+}
+
 .s-info{flex:1;min-width:0;}
 .s-name{
   font-family:'Cinzel',serif;font-weight:700;font-size:.82rem;
@@ -272,6 +290,7 @@ body{overflow-y:auto;}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../assets/js/supabase-config.js"></script>
+<script src="../assets/js/presence.js"></script>
 <script>
 const { createClient } = supabase;
 const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
@@ -301,6 +320,7 @@ async function loadStudents() {
   allStudents = data || [];
   updateStats();
   renderStudents(allStudents);
+  await loadPresence();
 }
 
 function updateStats() {
@@ -341,7 +361,10 @@ function renderStudents(students) {
       : '';
     return `
       <div class="student-card" onclick="openEdit('${s.id}')">
-        <div class="s-avatar">${avatarHtml}</div>
+        <div class="s-avatar-wrap">
+          <div class="s-avatar">${avatarHtml}</div>
+          <span class="presence-dot offline" data-uid="${s.id}" title="offline"></span>
+        </div>
         <div class="s-info">
           <div class="s-name">${s.nome_completo || '(sem nome)'}</div>
           <div class="s-meta">${s.serie||'—'} ${s.turma ? '· Turma '+s.turma : ''}</div>
@@ -467,6 +490,30 @@ async function doLogout() {
   await db.auth.signOut();
   window.location.href = '../index.html';
 }
+
+// ── Presença online ──────────────────────────────────────────
+function applyPresenceDots(presenceList) {
+  (presenceList || []).forEach(function (p) {
+    document.querySelectorAll('[data-uid="' + p.id + '"]').forEach(function (dot) {
+      var on = window.isOnline(p.last_seen);
+      dot.className = 'presence-dot ' + (on ? 'online' : 'offline');
+      dot.title     = on ? 'online agora' : 'offline';
+    });
+  });
+}
+
+async function loadPresence() {
+  var ids = allStudents.map(function (s) { return s.id; }).filter(Boolean);
+  if (!ids.length) return;
+  var { data } = await db.from('presence').select('id,last_seen').in('id', ids);
+  applyPresenceDots(data);
+}
+
+db.channel('presence-admin')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'presence' }, function (payload) {
+    if (payload.new) applyPresenceDots([payload.new]);
+  })
+  .subscribe();
 
 document.getElementById('modal-edit').addEventListener('click', e => {
   if (e.target === document.getElementById('modal-edit')) closeModal();
