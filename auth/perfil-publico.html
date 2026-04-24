@@ -222,7 +222,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   const totalQuest    = quizzes ? quizzes.reduce((s,q)=>s+q.total,0)   : 0;
   const accuracy      = totalQuest > 0 ? Math.round(totalCorrect/totalQuest*100) : 0;
 
-  const frameUrl = '../assets/images/frames/frame-nivel-' + nivel + '.png';
+  const frameUrl = nivel > 0 ? '../assets/images/frames/frame-nivel-' + nivel + '.png' : '';
   const avatarInner = profile.avatar_url
     ? '<img src="' + profile.avatar_url + '" alt="' + nome + '">'
     : initials;
@@ -235,7 +235,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
       <div class="avatar-section">
         <div class="avatar-wrap">
           <div class="avatar-ring frame-nivel-${nivel}" id="avatar-ring">${avatarInner}</div>
-          <img class="avatar-frame-img" src="${frameUrl}" alt="">
+          ${frameUrl ? '<img class="avatar-frame-img" src="' + frameUrl + '" alt="">' : ''}
         </div>
         <div class="nivel-badge nivel-badge-${nivel}">${info.nome.toUpperCase()}</div>
         <div class="nivel-stars" style="color:${info.cor}">${stars}</div>

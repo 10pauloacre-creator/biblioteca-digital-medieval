@@ -1,17 +1,29 @@
 /* nivel.js — Sistema de Níveis da Biblioteca Digital Medieval
-   5 níveis baseados em pontuação acumulada nos quizzes.
+   Nível 0: sem pontos (sem estrelas, sem frame)
+   Nível 1 Aprendiz: a partir de 10 pts
    +1 ponto por acerto, -1 ponto por erro. */
 (function () {
   'use strict';
 
   var NIVEIS = [
-    null, // índice 0 não usado
+    {
+      id: 0,
+      nome: 'Novato',
+      descricao: 'Complete quizzes para começar sua jornada',
+      estrelas: 0,
+      pontosMin: 0,
+      pontosMax: 9,
+      bonusNota: 0,
+      cor: '#4a4040',
+      corGlow: 'rgba(74,64,64,.2)',
+      frameClass: null
+    },
     {
       id: 1,
       nome: 'Aprendiz',
       descricao: 'Iniciante nas artes do saber',
       estrelas: 1,
-      pontosMin: 0,
+      pontosMin: 10,
       pontosMax: 49,
       bonusNota: 0,
       cor: '#a09878',
@@ -71,17 +83,21 @@
   window.BDM_NIVEIS = NIVEIS;
 
   window.getNivelInfo = function (nivel) {
-    return NIVEIS[nivel] || NIVEIS[1];
+    var n = parseInt(nivel, 10);
+    if (isNaN(n) || n < 0) n = 0;
+    if (n > 5) n = 5;
+    return NIVEIS[n];
   };
 
   window.getNivelStars = function (nivel) {
-    var n = parseInt(nivel, 10) || 1;
+    var n = parseInt(nivel, 10) || 0;
+    if (n <= 0) return '☆☆☆☆☆';
     return '★'.repeat(n) + '☆'.repeat(5 - n);
   };
 
   /* Retorna a % de progresso dentro do nível atual (0–100) */
   window.getNivelProgress = function (nivel, pontos) {
-    var n = parseInt(nivel, 10) || 1;
+    var n = parseInt(nivel, 10) || 0;
     if (n >= 5) return 100;
     var info = NIVEIS[n];
     var next = NIVEIS[n + 1];
@@ -93,7 +109,7 @@
 
   /* Texto do próximo nível */
   window.getNivelProxTxt = function (nivel, pontos) {
-    var n = parseInt(nivel, 10) || 1;
+    var n = parseInt(nivel, 10) || 0;
     if (n >= 5) return '⚜ NÍVEL MÁXIMO ⚜';
     var next = NIVEIS[n + 1];
     var falta = next.pontosMin - pontos;

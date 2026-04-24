@@ -118,27 +118,10 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 
     <div class="field">
       <label>NOME COMPLETO</label>
-      <input id="nome" type="text" placeholder="Seu nome completo" autocomplete="name" oninput="updateInitials()"/>
+      <input id="nome" type="text" placeholder="Seu nome completo" autocomplete="name" oninput="updateInitials(); buscarRoster()"/>
     </div>
-    <div class="row2">
-      <div class="field">
-        <label>SÉRIE</label>
-        <select id="serie">
-          <option value="">— Série —</option>
-          <option value="1ª Série">1ª Série</option>
-          <option value="2ª Série">2ª Série</option>
-          <option value="3ª Série">3ª Série</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>TURMA</label>
-        <input id="turma" type="text" placeholder="ex: A, B, C…"/>
-      </div>
-    </div>
-    <div class="field">
-      <label>Nº DA CHAMADA</label>
-      <input id="numero" type="number" min="1" max="60" placeholder="Seu número"/>
-    </div>
+    <div id="roster-info" style="display:none;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:5px;padding:.55rem .8rem;margin-bottom:.9rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;color:var(--gold-l);text-align:center"></div>
+    <div id="roster-warn" style="display:none;background:rgba(180,20,20,.1);border:1px solid rgba(180,60,60,.3);border-radius:5px;padding:.55rem .8rem;margin-bottom:.9rem;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.08em;color:#f08080;text-align:center">Nome não encontrado na lista da turma. Verifique se digitou o nome completo corretamente.</div>
 
     <button class="btn-primary" id="btn-salvar" onclick="salvarPerfil()">📜 SELAR MEU PERGAMINHO</button>
   </div>
@@ -171,8 +154,30 @@ let currentUser = null;
   if (profile?.nome_completo && profile?.serie) {
     window.location.href = profile.role === 'admin' ? 'admin.html' : '../index.html';
   }
-  if (profile?.serie) document.getElementById('serie').value = profile.serie;
 })();
+
+let rosterTimer = null;
+function buscarRoster() {
+  clearTimeout(rosterTimer);
+  rosterTimer = setTimeout(async () => {
+    const nome = document.getElementById('nome').value.trim();
+    const info = document.getElementById('roster-info');
+    const warn = document.getElementById('roster-warn');
+    if (nome.length < 5) { info.style.display='none'; warn.style.display='none'; return; }
+    const { data } = await db.from('student_roster')
+      .select('serie,numero_chamada')
+      .ilike('nome_completo', nome)
+      .limit(1).maybeSingle();
+    if (data) {
+      info.textContent = data.serie + ' · Nº ' + data.numero_chamada;
+      info.style.display = 'block';
+      warn.style.display = 'none';
+    } else {
+      info.style.display = 'none';
+      warn.style.display = 'block';
+    }
+  }, 600);
+}
 
 function updateInitials() {
   const nome = document.getElementById('nome').value.trim();
@@ -184,28 +189,31 @@ function updateInitials() {
 }
 
 async function salvarPerfil() {
-  const nome   = document.getElementById('nome').value.trim();
-  const serie  = document.getElementById('serie').value;
-  const turma  = document.getElementById('turma').value.trim();
-  const numero = parseInt(document.getElementById('numero').value) || null;
-  const btn    = document.getElementById('btn-salvar');
-  const msg    = document.getElementById('msg');
+  const nome = document.getElementById('nome').value.trim();
+  const btn  = document.getElementById('btn-salvar');
+  const msg  = document.getElementById('msg');
 
-  if (!nome || !serie) {
-    msg.textContent = 'Preencha Nome e Série.';
+  if (!nome) {
+    msg.textContent = 'Preencha seu nome completo.';
     msg.classList.add('show'); return;
   }
   msg.classList.remove('show');
   btn.disabled = true; btn.textContent = 'Selando…';
 
+  // Busca série/chamada do roster pelo nome
+  const { data: roster } = await db.from('student_roster')
+    .select('serie,numero_chamada')
+    .ilike('nome_completo', nome)
+    .limit(1).maybeSingle();
+
   const { error } = await db.from('profiles').upsert({
     id: currentUser.id,
     nome_completo: nome,
-    serie,
-    turma: turma || null,
-    numero_chamada: numero,
+    serie:          roster?.serie          || null,
+    numero_chamada: roster?.numero_chamada || null,
     role: 'aluno',
-    created_at: new Date().toISOString(),
+    nivel: 0,
+    pontos: 0,
     updated_at: new Date().toISOString(),
   });
 

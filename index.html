@@ -1155,42 +1155,67 @@ body{background:#080300;color:var(--text);}
       </div>
     </div>
 
-    <div class="rk-section-title">OS 5 NIVEIS DE PODER</div>
+    <div class="rk-section-title">OS NÍVEIS DE PODER</div>
     <div style="display:flex;flex-direction:column;gap:.22rem">
       <div class="rk-level-row">
-        <div>
-          <div class="rk-level-name" style="color:#a09878">★☆☆☆☆ Aprendiz</div>
-          <div class="rk-level-pts-label">0 – 49 pontos</div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div style="width:28px;height:28px;border-radius:50%;background:rgba(74,64,64,.3);border:1px solid #4a4040;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#4a4040;flex-shrink:0">—</div>
+          <div>
+            <div class="rk-level-name" style="color:#6a5a5a">☆☆☆☆☆ Novato</div>
+            <div class="rk-level-pts-label">0 – 9 pontos · sem frame</div>
+          </div>
         </div>
-        <div class="rk-level-bonus">+0 pts na media</div>
+        <div class="rk-level-bonus" style="color:#6a5a5a;border-color:rgba(106,90,90,.3)">sem bônus</div>
       </div>
       <div class="rk-level-row">
-        <div>
-          <div class="rk-level-name" style="color:#c9a84c">★★☆☆☆ Camponês</div>
-          <div class="rk-level-pts-label">50 – 199 pontos</div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <img src="assets/images/frames/frame-nivel-1.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
+          <div>
+            <div class="rk-level-name" style="color:#a09878">★☆☆☆☆ Aprendiz</div>
+            <div class="rk-level-pts-label">10 – 49 pontos</div>
+          </div>
         </div>
-        <div class="rk-level-bonus">+1 pt na media</div>
+        <div class="rk-level-bonus">+0 na média</div>
       </div>
       <div class="rk-level-row">
-        <div>
-          <div class="rk-level-name" style="color:#4fc3f7">★★★☆☆ Gladiador</div>
-          <div class="rk-level-pts-label">200 – 299 pontos</div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <img src="assets/images/frames/frame-nivel-2.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
+          <div>
+            <div class="rk-level-name" style="color:#c9a84c">★★☆☆☆ Camponês</div>
+            <div class="rk-level-pts-label">50 – 199 pontos</div>
+          </div>
         </div>
-        <div class="rk-level-bonus">+2 pts na media</div>
+        <div class="rk-level-bonus">+1 na média</div>
       </div>
       <div class="rk-level-row">
-        <div>
-          <div class="rk-level-name" style="color:#c084fc">★★★★☆ Rei</div>
-          <div class="rk-level-pts-label">300 – 499 pontos</div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <img src="assets/images/frames/frame-nivel-3.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
+          <div>
+            <div class="rk-level-name" style="color:#4fc3f7">★★★☆☆ Gladiador</div>
+            <div class="rk-level-pts-label">200 – 299 pontos</div>
+          </div>
         </div>
-        <div class="rk-level-bonus">+6 pts na media</div>
+        <div class="rk-level-bonus">+2 na média</div>
+      </div>
+      <div class="rk-level-row">
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <img src="assets/images/frames/frame-nivel-4.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
+          <div>
+            <div class="rk-level-name" style="color:#c084fc">★★★★☆ Rei</div>
+            <div class="rk-level-pts-label">300 – 499 pontos</div>
+          </div>
+        </div>
+        <div class="rk-level-bonus">+6 na média</div>
       </div>
       <div class="rk-level-row" style="border:1px solid rgba(255,106,26,.3);background:rgba(255,106,26,.06)">
-        <div>
-          <div class="rk-level-name" style="color:#ff6a1a;text-shadow:0 0 8px rgba(255,106,26,.5)">★★★★★ Mago Supremo</div>
-          <div class="rk-level-pts-label">500+ pontos</div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <img src="assets/images/frames/frame-nivel-5.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
+          <div>
+            <div class="rk-level-name" style="color:#ff6a1a;text-shadow:0 0 8px rgba(255,106,26,.5)">★★★★★ Mago Supremo</div>
+            <div class="rk-level-pts-label">500+ pontos</div>
+          </div>
         </div>
-        <div class="rk-level-bonus" style="color:var(--ember);border-color:rgba(255,106,26,.4)">+8 pts na media</div>
+        <div class="rk-level-bonus" style="color:var(--ember);border-color:rgba(255,106,26,.4)">+8 na média</div>
       </div>
     </div>
 
@@ -2161,8 +2186,8 @@ window.addEventListener('DOMContentLoaded',()=>{
 (function () {
   if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
 
-  var NIVEIS_NOME = ['', 'Aprendiz', 'Campoês', 'Gladiador', 'Rei', 'Mago Supremo'];
-  var NIVEIS_COR  = ['', '#a09878',   '#c9a84c',    '#4fc3f7',    '#c084fc', '#ff6a1a'];
+  var NIVEIS_NOME = ['Novato', 'Aprendiz', 'Camponês', 'Gladiador', 'Rei', 'Mago Supremo'];
+  var NIVEIS_COR  = ['#4a4040', '#a09878', '#c9a84c',  '#4fc3f7',  '#c084fc', '#ff6a1a'];
 
   var rkDb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
   var allStudents = [];
@@ -2199,13 +2224,13 @@ window.addEventListener('DOMContentLoaded',()=>{
       ? '<img src="' + s.avatar_url + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">'
       : initials;
 
-    var frameUrl   = 'assets/images/frames/frame-nivel-' + nivel + '.png';
+    var frameHtml  = nivel > 0 ? '<img class="rk-frame-img" src="assets/images/frames/frame-nivel-' + nivel + '.png" alt="">' : '';
     var profileUrl = 'auth/perfil-publico.html?id=' + (s.id || '');
     return '<a class="rk-card' + (isTop1 ? ' top1' : '') + '" href="' + profileUrl + '">' +
       '<div class="rk-num ' + posClass + '">' + (isTop1 ? '🏆' : pos + 'º') + '</div>' +
       '<div class="rk-avatar-wrap">' +
         '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
-        '<img class="rk-frame-img" src="' + frameUrl + '" alt="">' +
+        frameHtml +
       '</div>' +
       '<div class="rk-info">' +
         '<div class="rk-name' + (isTop1 ? ' top1' : '') + '">' + displayName + '</div>' +

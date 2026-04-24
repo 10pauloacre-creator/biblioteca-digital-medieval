@@ -366,10 +366,6 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
           <option value="3ª Série">3ª Série</option>
         </select>
       </div>
-      <div class="field">
-        <label>TURMA</label>
-        <input id="edit-turma" type="text" placeholder="A, B, C…"/>
-      </div>
     </div>
     <div class="field">
       <label>Nº CHAMADA</label>
@@ -399,11 +395,15 @@ function renderNivelBadge(profile) {
   for (let i = 1; i <= 5; i++) ring.classList.remove('frame-nivel-' + i);
   ring.classList.add(info.frameClass);
 
-  // Imagem PNG do frame
+  // Imagem PNG do frame (nível 0 não tem frame)
   const frameImg = document.getElementById('avatar-frame-img');
   if (frameImg) {
-    frameImg.src = '../assets/images/frames/frame-nivel-' + nivel + '.png';
-    frameImg.style.display = 'block';
+    if (nivel > 0) {
+      frameImg.src = '../assets/images/frames/frame-nivel-' + nivel + '.png';
+      frameImg.style.display = 'block';
+    } else {
+      frameImg.style.display = 'none';
+    }
   }
 
   // Badge com nome do nível + série
@@ -520,14 +520,10 @@ async function loadProfile(uid) {
           <div class="info-value">${profile.serie || '—'}</div>
         </div>
         <div class="info-box">
-          <div class="info-label">TURMA</div>
-          <div class="info-value">${profile.turma || '—'}</div>
-        </div>
-        <div class="info-box">
           <div class="info-label">Nº CHAMADA</div>
           <div class="info-value">${profile.numero_chamada ?? '—'}</div>
         </div>
-        <div class="info-box">
+        <div class="info-box" style="grid-column:span 2">
           <div class="info-label">MEMBRO DESDE</div>
           <div class="info-value">${dataMembro}</div>
         </div>
@@ -664,7 +660,6 @@ function escHtml(str) {
 function openModal() {
   document.getElementById('edit-nome').value   = currentProfile.nome_completo || '';
   document.getElementById('edit-serie').value  = currentProfile.serie || '';
-  document.getElementById('edit-turma').value  = currentProfile.turma || '';
   document.getElementById('edit-numero').value = currentProfile.numero_chamada || '';
   document.getElementById('modal-edit').classList.add('open');
 }
@@ -673,14 +668,13 @@ function closeModal() { document.getElementById('modal-edit').classList.remove('
 async function saveEdit() {
   const nome   = document.getElementById('edit-nome').value.trim();
   const serie  = document.getElementById('edit-serie').value;
-  const turma  = document.getElementById('edit-turma').value.trim();
   const numero = parseInt(document.getElementById('edit-numero').value) || null;
   const btn    = document.getElementById('btn-save-edit');
   const msg    = document.getElementById('msg-edit');
   if (!nome) { msg.textContent='Nome obrigatório.'; msg.className='msg error show'; return; }
   msg.className='msg'; btn.disabled=true; btn.textContent='Salvando…';
   const { error } = await db.from('profiles').update({
-    nome_completo: nome, serie: serie||null, turma: turma||null, numero_chamada: numero
+    nome_completo: nome, serie: serie||null, numero_chamada: numero
   }).eq('id', viewingId);
   if (error) {
     msg.textContent = error.message; msg.className='msg error show';
