@@ -290,12 +290,29 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
         </div>
       </div>
 
-      <button class="btn-msg" disabled id="btn-msg" title="Em breve">
+      <button class="btn-msg" id="btn-msg" onclick="openChat()">
         ✉ ENVIAR MENSAGEM
-        <span style="font-size:.48rem;opacity:.6;font-weight:400">(EM BREVE)</span>
       </button>
     </div>
   `;
+  /* ── Verifica sessao atual para o botao de mensagem ── */
+  const { data: { session } } = await db.auth.getSession();
+  const viewerId = session?.user?.id;
+
+  // Oculta o botao se o visitante for o proprio dono do perfil
+  if (viewerId && viewerId === userId) {
+    const btn = document.getElementById('btn-msg');
+    if (btn) btn.style.display = 'none';
+  }
+
+  // Funcao chamada pelo botao
+  window.openChat = function() {
+    if (!session) {
+      window.location.href = 'login.html';
+      return;
+    }
+    window.location.href = 'chat.html?with=' + userId;
+  };
 }());
 </script>
 </body>

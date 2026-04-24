@@ -773,6 +773,108 @@ body{background:#080300;color:var(--text);}
 #auth-btn:hover{transform:scale(1.06);filter:brightness(1.12) drop-shadow(0 0 10px rgba(201,168,76,.5));}
 #auth-btn img{height:48px;width:auto;display:block;}
 
+/* ── Botão sino de notificações ── */
+#notif-btn{
+  position:fixed;top:16px;right:70px;z-index:500;
+  width:36px;height:36px;
+  background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.08));
+  border:1px solid rgba(201,168,76,.4);
+  border-radius:50%;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  font-size:1.05rem;
+  transition:all .2s;
+}
+#notif-btn:hover{background:rgba(201,168,76,.3);transform:scale(1.1);}
+#notif-badge{
+  position:absolute;top:-5px;right:-5px;
+  background:var(--ember);color:#fff;
+  border-radius:50%;font-size:.5rem;font-family:'Cinzel',serif;
+  font-weight:700;min-width:17px;height:17px;
+  display:none;align-items:center;justify-content:center;
+  border:2px solid #080300;line-height:1;padding:0 3px;
+}
+
+/* ── Modal de notificações ── */
+#modal-notif{
+  position:fixed;inset:0;z-index:8800;
+  background:rgba(0,0,0,.7);
+  display:none;align-items:flex-start;justify-content:flex-end;
+  padding-top:60px;padding-right:10px;
+}
+#notif-box{
+  width:min(320px,90vw);
+  background:linear-gradient(160deg,#1e1004,#130a02,#1c0e05);
+  border:1px solid rgba(201,168,76,.4);border-radius:8px;
+  box-shadow:0 8px 40px rgba(0,0,0,.8),0 0 30px rgba(201,168,76,.08);
+  max-height:70vh;display:flex;flex-direction:column;
+  overflow:hidden;
+}
+#notif-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1rem;
+  border-bottom:1px solid rgba(201,168,76,.2);
+  flex-shrink:0;
+}
+#notif-title{
+  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.12em;
+  font-weight:700;color:var(--gold-l);
+}
+#notif-close{
+  background:none;border:none;color:var(--text-d);cursor:pointer;
+  font-size:.9rem;padding:2px 6px;transition:color .2s;
+}
+#notif-close:hover{color:var(--gold-l);}
+#notif-list{overflow-y:auto;flex:1;padding:.4rem 0;}
+#notif-list::-webkit-scrollbar{width:3px;}
+#notif-list::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);}
+.notif-item{
+  padding:.6rem 1rem;cursor:pointer;
+  border-bottom:1px solid rgba(120,60,10,.2);
+  transition:background .15s;display:flex;gap:.6rem;align-items:center;
+}
+.notif-item:last-child{border-bottom:none;}
+.notif-item:hover{background:rgba(201,168,76,.07);}
+.notif-icon{font-size:1.1rem;flex-shrink:0;}
+.notif-text{flex:1;min-width:0;}
+.notif-name{
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.06em;
+  font-weight:700;color:var(--gold-l);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.notif-preview{
+  font-size:.7rem;color:var(--text-d);margin-top:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.notif-time{
+  font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.06em;
+  color:var(--text-d);flex-shrink:0;
+}
+.notif-unread-dot{
+  width:8px;height:8px;background:var(--ember);border-radius:50%;
+  flex-shrink:0;
+}
+#notif-empty{
+  padding:1.2rem;text-align:center;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;
+  color:var(--text-d);
+}
+#notif-mark-read{
+  margin:.4rem .8rem .6rem;
+  padding:.4rem;
+  background:transparent;border:1px solid rgba(201,168,76,.25);
+  border-radius:4px;color:var(--text-d);cursor:pointer;
+  font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.1em;
+  width:calc(100% - 1.6rem);transition:all .2s;
+}
+#notif-mark-read:hover{border-color:rgba(201,168,76,.5);color:var(--gold);}
+
+/* Admin: seção de vigilância */
+.notif-section-title{
+  padding:.4rem 1rem .2rem;
+  font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.14em;
+  color:var(--ember);opacity:.8;
+}
+
 /* ── Splash screen ── */
 #screen-splash{
   position:fixed;inset:0;z-index:9000;
@@ -849,10 +951,10 @@ body{background:#080300;color:var(--text);}
 /* ── Ranking DESKTOP (≥ 768px) — ajuste aqui ── */
 @media (min-width:768px){
   .ranking-strip{
-    bottom:150px;
-    left:50%;
+    bottom:350px;
+    left:70%;
     transform:translateX(-70%);
-    width:min(200px,50vw);
+    width:min(250px,50vw);
     padding:.32rem .48rem .24rem;
   }
   .ranking-title-btn{font-size:.56rem;}
@@ -1117,6 +1219,28 @@ body{background:#080300;color:var(--text);}
 <a id="auth-btn" href="auth/login.html">
   <img id="auth-img" src="assets/images/login.png" alt="Entrar">
 </a>
+
+<!-- Botao de notificacoes (visivel apenas quando logado) -->
+<div id="notif-btn" onclick="openNotifModal()" title="Notificacoes">
+  🔔
+  <div id="notif-badge"></div>
+</div>
+
+<!-- Modal de notificacoes -->
+<div id="modal-notif" onclick="if(event.target===this)closeNotifModal()">
+  <div id="notif-box">
+    <div id="notif-header">
+      <span id="notif-title">✦ MENSAGENS ✦</span>
+      <button id="notif-close" onclick="closeNotifModal()">✕</button>
+    </div>
+    <div id="notif-list">
+      <div id="notif-empty">Nenhuma mensagem nova</div>
+    </div>
+    <button id="notif-mark-read" onclick="markAllNotifRead()" style="display:none">
+      ✓ MARCAR TODAS COMO LIDAS
+    </button>
+  </div>
+</div>
 
 <!-- Background video -->
 <video id="bg-video" autoplay muted loop playsinline preload="auto" disableremoteplayback>
@@ -2064,7 +2188,288 @@ window.addEventListener('DOMContentLoaded',()=>{
     } catch(e) {}
   }
 
-  db.auth.onAuthStateChange((_e, session) => updateAuthBtn(session));
+  db.auth.onAuthStateChange((_e, session) => {
+    updateAuthBtn(session);
+    if (session) initNotifications(session);
+    else hideNotifBtn();
+  });
+
+  /* ── Sistema de notificacoes ── */
+  let _notifSession = null;
+  let _notifIsAdmin = false;
+  let _notifChannel = null;
+  let _notifAdminId = null;
+
+  function hideNotifBtn(){
+    const btn = document.getElementById('notif-btn');
+    if (btn) btn.style.display = 'none';
+  }
+
+  function setNotifBadge(count){
+    const btn   = document.getElementById('notif-btn');
+    const badge = document.getElementById('notif-badge');
+    if (!btn || !badge) return;
+    btn.style.display = 'flex';
+    if (count > 0){
+      badge.textContent = count > 99 ? '99+' : String(count);
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  async function initNotifications(session){
+    _notifSession = session;
+    const uid = session.user.id;
+
+    // Descobre role do usuario
+    try {
+      const { data: p } = await db.from('profiles').select('role').eq('id', uid).single();
+      _notifIsAdmin = p?.role === 'admin';
+    } catch(e){}
+
+    if (_notifIsAdmin) {
+      _notifAdminId = uid;
+      await refreshAdminNotifCount();
+      // Realtime: novas mensagens entre alunos
+      if (_notifChannel) db.removeChannel(_notifChannel);
+      _notifChannel = db.channel('notif-admin')
+        .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},
+          (p)=>{
+            // Conta apenas mensagens entre alunos (nao envolvendo o admin)
+            if (p.new.sender_id === _notifAdminId || p.new.receiver_id === _notifAdminId) return;
+            const badge = document.getElementById('notif-badge');
+            const cur = parseInt(badge?.textContent || '0') || 0;
+            setNotifBadge(cur + 1);
+          })
+        .subscribe();
+    } else {
+      await refreshStudentNotifCount(uid);
+      // Realtime: novas mensagens recebidas pelo aluno
+      if (_notifChannel) db.removeChannel(_notifChannel);
+      _notifChannel = db.channel('notif-student-' + uid)
+        .on('postgres_changes',{
+          event:'INSERT',schema:'public',table:'messages',
+          filter:'receiver_id=eq.' + uid
+        }, ()=>{
+          const badge = document.getElementById('notif-badge');
+          const cur = parseInt(badge?.textContent || '0') || 0;
+          setNotifBadge(cur + 1);
+        })
+        .subscribe();
+    }
+  }
+
+  async function refreshStudentNotifCount(uid){
+    try {
+      const { count } = await db.from('messages')
+        .select('*',{count:'exact',head:true})
+        .eq('receiver_id', uid)
+        .is('read_at', null);
+      setNotifBadge(count || 0);
+    } catch(e){}
+  }
+
+  async function refreshAdminNotifCount(){
+    try {
+      const { data: p } = await db.from('profiles')
+        .select('notif_seen_at').eq('id', _notifAdminId).single();
+      let query = db.from('messages')
+        .select('*',{count:'exact',head:true})
+        .neq('sender_id', _notifAdminId)
+        .neq('receiver_id', _notifAdminId);
+      if (p?.notif_seen_at) query = query.gt('created_at', p.notif_seen_at);
+      const { count } = await query;
+      setNotifBadge(count || 0);
+    } catch(e){}
+  }
+
+  /* ── Abrir modal de notificacoes ── */
+  window.openNotifModal = async function(){
+    if (!_notifSession) return;
+    document.getElementById('modal-notif').style.display = 'flex';
+    const list = document.getElementById('notif-list');
+    list.innerHTML = '<div style="padding:1rem;text-align:center;font-family:\'Cinzel\',serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-d)">Carregando...</div>';
+    document.getElementById('notif-mark-read').style.display = 'none';
+
+    if (_notifIsAdmin) {
+      await loadAdminNotifModal();
+    } else {
+      await loadStudentNotifModal();
+    }
+  };
+
+  window.closeNotifModal = function(){
+    document.getElementById('modal-notif').style.display = 'none';
+  };
+
+  window.markAllNotifRead = async function(){
+    if (!_notifSession) return;
+    if (_notifIsAdmin){
+      try {
+        await db.from('profiles')
+          .update({ notif_seen_at: new Date().toISOString() })
+          .eq('id', _notifAdminId);
+      } catch(e){}
+      setNotifBadge(0);
+    } else {
+      try {
+        await db.from('messages')
+          .update({ read_at: new Date().toISOString() })
+          .eq('receiver_id', _notifSession.user.id)
+          .is('read_at', null);
+      } catch(e){}
+      setNotifBadge(0);
+    }
+    closeNotifModal();
+  };
+
+  async function loadStudentNotifModal(){
+    const uid  = _notifSession.user.id;
+    const list = document.getElementById('notif-list');
+    try {
+      // Busca conversas com mensagens nao lidas, agrupadas por remetente
+      const { data: msgs } = await db.from('messages')
+        .select('sender_id, content, created_at, read_at')
+        .eq('receiver_id', uid)
+        .is('read_at', null)
+        .order('created_at', { ascending: false });
+
+      if (!msgs || msgs.length === 0){
+        list.innerHTML = '<div id="notif-empty">Nenhuma mensagem nova</div>';
+        return;
+      }
+
+      // Agrupa por sender_id
+      const bySender = {};
+      msgs.forEach(m => {
+        if (!bySender[m.sender_id]) bySender[m.sender_id] = [];
+        bySender[m.sender_id].push(m);
+      });
+
+      // Carrega nomes dos remetentes
+      const senderIds = Object.keys(bySender);
+      const { data: profiles } = await db.from('profiles')
+        .select('id,nome_completo,avatar_url').in('id', senderIds);
+
+      const profileMap = {};
+      (profiles||[]).forEach(p => profileMap[p.id] = p);
+
+      list.innerHTML = '';
+      const titleEl = document.getElementById('notif-title');
+      titleEl.textContent = '✦ MENSAGENS ✦';
+
+      senderIds.forEach(sid => {
+        const p     = profileMap[sid] || {};
+        const nome  = p.nome_completo || 'Escudeiro';
+        const count = bySender[sid].length;
+        const last  = bySender[sid][0];
+        const item  = document.createElement('div');
+        item.className = 'notif-item';
+        item.innerHTML = `
+          <div class="notif-icon">✉</div>
+          <div class="notif-text">
+            <div class="notif-name">${escapeHtmlSimple(nome)}</div>
+            <div class="notif-preview">${escapeHtmlSimple(last.content.substring(0,60))}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+            <span style="background:var(--ember);color:#fff;border-radius:10px;padding:1px 7px;font-family:'Cinzel',serif;font-size:.45rem;font-weight:700">${count}</span>
+            <span class="notif-time">${formatNotifTime(last.created_at)}</span>
+          </div>
+        `;
+        item.onclick = () => {
+          closeNotifModal();
+          window.location.href = 'auth/chat.html?with=' + sid;
+        };
+        list.appendChild(item);
+      });
+
+      document.getElementById('notif-mark-read').style.display = 'block';
+    } catch(e){
+      list.innerHTML = '<div id="notif-empty">Erro ao carregar mensagens</div>';
+    }
+  }
+
+  async function loadAdminNotifModal(){
+    const list = document.getElementById('notif-list');
+    const titleEl = document.getElementById('notif-title');
+    titleEl.textContent = '⚔ VIGILANCIA ⚔';
+    try {
+      // Busca mensagens recentes entre alunos (nao envolvendo o admin)
+      const { data: msgs } = await db.from('messages')
+        .select('sender_id, receiver_id, content, created_at')
+        .neq('sender_id', _notifAdminId)
+        .neq('receiver_id', _notifAdminId)
+        .order('created_at', { ascending: false })
+        .limit(50);
+
+      if (!msgs || msgs.length === 0){
+        list.innerHTML = '<div id="notif-empty">Nenhuma conversa entre escudeiros</div>';
+        return;
+      }
+
+      // Agrupa por par de usuarios (canonico: menor + maior UUID)
+      const pairs = {};
+      msgs.forEach(m => {
+        const key = [m.sender_id, m.receiver_id].sort().join('|');
+        if (!pairs[key]) pairs[key] = { a: m.sender_id, b: m.receiver_id, msgs: [] };
+        pairs[key].msgs.push(m);
+      });
+
+      // Carrega perfis de todos os usuarios envolvidos
+      const allIds = [...new Set(msgs.flatMap(m => [m.sender_id, m.receiver_id]))];
+      const { data: profiles } = await db.from('profiles')
+        .select('id,nome_completo').in('id', allIds);
+      const pMap = {};
+      (profiles||[]).forEach(p => pMap[p.id] = p);
+
+      list.innerHTML = '<div class="notif-section-title">CONVERSAS RECENTES</div>';
+
+      Object.values(pairs).slice(0, 20).forEach(pair => {
+        const nomeA = pMap[pair.a]?.nome_completo || 'Escudeiro';
+        const nomeB = pMap[pair.b]?.nome_completo || 'Escudeiro';
+        const last  = pair.msgs[0];
+        const item  = document.createElement('div');
+        item.className = 'notif-item';
+        item.innerHTML = `
+          <div class="notif-icon">⚔</div>
+          <div class="notif-text">
+            <div class="notif-name">${escapeHtmlSimple(nomeA.split(' ')[0])} ↔ ${escapeHtmlSimple(nomeB.split(' ')[0])}</div>
+            <div class="notif-preview">${escapeHtmlSimple(last.content.substring(0,55))}</div>
+          </div>
+          <span class="notif-time">${formatNotifTime(last.created_at)}</span>
+        `;
+        item.onclick = () => {
+          closeNotifModal();
+          window.location.href = 'auth/chat.html?with=' + pair.a + '&peer=' + pair.b;
+        };
+        list.appendChild(item);
+      });
+
+      document.getElementById('notif-mark-read').style.display = 'block';
+
+      // Marca como visto
+      await db.from('profiles')
+        .update({ notif_seen_at: new Date().toISOString() })
+        .eq('id', _notifAdminId);
+      setNotifBadge(0);
+    } catch(e){
+      list.innerHTML = '<div id="notif-empty">Erro ao carregar vigilancia</div>';
+    }
+  }
+
+  function escapeHtmlSimple(str){
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function formatNotifTime(iso){
+    const d = new Date(iso);
+    const today = new Date();
+    const diff = Math.floor((today - d) / 86400000);
+    if (diff === 0) return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    if (diff === 1) return 'ontem';
+    return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+  }
 
   /* ── Intro video ── */
   let _introEnded = false;
@@ -2163,6 +2568,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     hideSplash();
     updateAuthBtn(session);
+    initNotifications(session);
 
     const isAdmin = localStorage.getItem('bdm-cached-role') === 'admin';
 

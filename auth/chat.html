@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>Mensagem — Biblioteca Digital Medieval</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#c9a84c;--gold-l:#f0d060;--gold-b:#ffe87a;
+  --ember:#ff6a1a;--ember-d:#b84010;
+  --text:#f5e8c0;--text-m:#c9a870;--text-d:#7a5c30;
+  --bg-card:#1a0e04;--bg-dark:#080300;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;background:var(--bg-dark);color:var(--text);}
+
+/* ── Fundo com vídeo ── */
+#bg-video{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  object-fit:cover;z-index:0;opacity:.25;pointer-events:none;
+}
+#bg-veil{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(4,2,0,.8) 0%,rgba(4,2,0,.6) 100%);
+}
+
+/* ── Layout principal ── */
+#chat-wrap{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;
+  height:100dvh;
+  max-width:600px;
+  margin:0 auto;
+}
+
+/* ── Barra de navegação ── */
+#chat-nav{
+  display:flex;align-items:center;gap:.8rem;
+  padding:10px 14px;
+  background:linear-gradient(180deg,rgba(20,10,2,.95),rgba(12,6,1,.9));
+  border-bottom:1px solid rgba(201,168,76,.3);
+  flex-shrink:0;
+  min-height:60px;
+}
+#btn-back{
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;font-weight:700;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.08));
+  border:1px solid rgba(201,168,76,.4);color:var(--gold-l);
+  border-radius:4px;padding:6px 12px;cursor:pointer;
+  white-space:nowrap;transition:all .2s;flex-shrink:0;
+}
+#btn-back:hover{background:rgba(201,168,76,.25);}
+#chat-peer{
+  display:flex;align-items:center;gap:.6rem;flex:1;min-width:0;
+}
+#peer-avatar{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  border:2px solid var(--gold);
+  background:linear-gradient(135deg,#2a1400,#1a0a00);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold-l);
+  overflow:hidden;position:relative;
+}
+#peer-avatar img{width:100%;height:100%;object-fit:cover;}
+#peer-online-dot{
+  position:absolute;bottom:0;right:0;
+  width:10px;height:10px;border-radius:50%;
+  border:2px solid var(--bg-dark);
+}
+#peer-info{min-width:0;}
+#peer-name{
+  font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.06em;
+  font-weight:700;color:var(--gold-l);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#peer-status{
+  font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.1em;
+  color:var(--text-d);margin-top:1px;
+}
+
+/* ── Área de mensagens ── */
+#messages-area{
+  flex:1;overflow-y:auto;
+  padding:14px 14px 8px;
+  display:flex;flex-direction:column;gap:.6rem;
+  scroll-behavior:smooth;
+}
+#messages-area::-webkit-scrollbar{width:4px;}
+#messages-area::-webkit-scrollbar-track{background:transparent;}
+#messages-area::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:2px;}
+
+/* ── Mensagem individual ── */
+.msg{
+  display:flex;flex-direction:column;max-width:80%;
+  animation:msgIn .25s ease-out both;
+}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.sent{align-self:flex-end;align-items:flex-end;}
+.msg.recv{align-self:flex-start;align-items:flex-start;}
+.msg.monitor{align-self:flex-start;align-items:flex-start;}
+
+.msg-bubble{
+  padding:.55rem .8rem;border-radius:12px;
+  font-size:.85rem;line-height:1.5;word-break:break-word;
+  position:relative;
+}
+.msg.sent .msg-bubble{
+  background:linear-gradient(135deg,rgba(201,168,76,.22),rgba(180,120,20,.18));
+  border:1px solid rgba(201,168,76,.45);
+  border-bottom-right-radius:3px;
+  color:var(--text);
+}
+.msg.recv .msg-bubble{
+  background:linear-gradient(135deg,rgba(30,14,4,.9),rgba(20,8,2,.85));
+  border:1px solid rgba(120,70,20,.4);
+  border-bottom-left-radius:3px;
+  color:var(--text-m);
+}
+.msg.monitor .msg-bubble{
+  background:linear-gradient(135deg,rgba(50,20,5,.85),rgba(30,12,2,.9));
+  border:1px solid rgba(100,50,15,.5);
+  border-bottom-left-radius:3px;
+  color:var(--text-m);
+}
+.msg-sender-label{
+  font-family:'Cinzel',serif;font-size:.44rem;letter-spacing:.1em;
+  color:var(--gold);margin-bottom:2px;
+}
+.msg-time{
+  font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.08em;
+  color:var(--text-d);margin-top:3px;
+}
+.msg.sent .msg-time{text-align:right;}
+.msg-read-icon{font-size:.5rem;color:var(--gold);margin-left:4px;}
+
+/* Separador de data */
+.date-sep{
+  text-align:center;
+  font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.14em;
+  color:var(--text-d);padding:.4rem 0;
+  position:relative;
+}
+.date-sep::before,.date-sep::after{
+  content:'';position:absolute;top:50%;
+  height:1px;background:rgba(120,70,20,.3);
+  width:calc(50% - 60px);
+}
+.date-sep::before{left:0;}
+.date-sep::after{right:0;}
+
+/* Estado vazio / carregando */
+#chat-empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.7rem;color:var(--text-d);
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.12em;
+  text-align:center;padding:2rem;
+}
+#chat-empty-icon{font-size:2.5rem;opacity:.4;}
+#chat-loading{
+  display:flex;align-items:center;justify-content:center;
+  padding:1.5rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.12em;color:var(--text-d);
+}
+
+/* Monitor header (apenas para admin monitorando) */
+#monitor-header{
+  display:none;
+  background:rgba(140,40,10,.15);
+  border:1px solid rgba(200,60,10,.3);
+  border-radius:6px;margin:8px 14px 0;flex-shrink:0;
+  padding:.5rem .8rem;
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;
+  color:#e08060;text-align:center;
+}
+
+/* ── Área de input ── */
+#input-area{
+  flex-shrink:0;
+  padding:10px 12px;
+  background:linear-gradient(0deg,rgba(20,10,2,.97),rgba(14,7,1,.93));
+  border-top:1px solid rgba(201,168,76,.25);
+  display:flex;gap:.5rem;align-items:flex-end;
+}
+#msg-input{
+  flex:1;
+  background:rgba(30,14,4,.8);
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:8px;
+  color:var(--text);
+  font-family:'IM Fell English',serif;font-size:.9rem;
+  padding:.55rem .75rem;
+  resize:none;max-height:100px;min-height:40px;
+  outline:none;line-height:1.45;
+  transition:border-color .2s;
+  overflow-y:auto;
+}
+#msg-input:focus{border-color:rgba(201,168,76,.6);}
+#msg-input::placeholder{color:var(--text-d);font-size:.78rem;}
+#msg-input::-webkit-scrollbar{width:3px;}
+#msg-input::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);}
+#send-btn{
+  flex-shrink:0;
+  width:44px;height:40px;
+  background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(180,120,20,.2));
+  border:1px solid rgba(201,168,76,.5);
+  border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold-l);font-size:1.1rem;
+  transition:all .2s;
+}
+#send-btn:hover:not(:disabled){
+  background:rgba(201,168,76,.35);
+  box-shadow:0 0 12px rgba(201,168,76,.2);
+}
+#send-btn:disabled{opacity:.35;cursor:default;}
+
+/* Toast de erro */
+#chat-toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:rgba(180,40,10,.9);border:1px solid rgba(220,60,10,.5);
+  border-radius:6px;padding:.5rem 1.2rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;color:#ffc0a0;
+  transition:transform .3s ease,opacity .3s ease;opacity:0;z-index:100;
+  white-space:nowrap;
+}
+#chat-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+</style>
+</head>
+<body>
+
+<video id="bg-video" autoplay muted loop playsinline preload="auto">
+  <source src="../assets/gif/vide-de-fundo.mp4" type="video/mp4">
+</video>
+<div id="bg-veil"></div>
+
+<div id="chat-wrap">
+  <!-- Barra de navegação -->
+  <div id="chat-nav">
+    <button id="btn-back" onclick="history.back()">← VOLTAR</button>
+    <div id="chat-peer">
+      <div id="peer-avatar">
+        <span id="peer-initials">?</span>
+        <div id="peer-online-dot" style="display:none"></div>
+      </div>
+      <div id="peer-info">
+        <div id="peer-name">Carregando...</div>
+        <div id="peer-status">MENSAGEM PRIVADA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner admin monitor -->
+  <div id="monitor-header">
+    ⚔ MODO VIGILÂNCIA — CONVERSA ENTRE ESCUDEIROS ⚔
+  </div>
+
+  <!-- Área de mensagens -->
+  <div id="messages-area">
+    <div id="chat-loading">
+      <span style="animation:ctaPulse 1.5s ease-in-out infinite">Invocando os pergaminhos…</span>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div id="input-area">
+    <textarea id="msg-input" placeholder="Escreve tua mensagem..." rows="1"
+      onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button id="send-btn" onclick="sendMessage()" disabled title="Enviar">✉</button>
+  </div>
+</div>
+
+<div id="chat-toast"></div>
+
+<script>
+/* ── Autosize textarea ── */
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,100)+'px';
+}
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
+}
+</script>
+<style>
+@keyframes ctaPulse{0%,100%{opacity:.4}50%{opacity:.9}}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../assets/js/supabase-config.js"></script>
+<script>
+(async function(){
+  /* ── Verificações iniciais ── */
+  if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') {
+    showToast('Configuração Supabase ausente'); return;
+  }
+
+  const params   = new URLSearchParams(window.location.search);
+  const otherId  = params.get('with');   // UUID do destinatário
+  const peerId   = params.get('peer');   // UUID do peer (modo monitor admin)
+
+  if (!otherId) { history.back(); return; }
+
+  const { createClient } = supabase;
+  const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+
+  /* ── Sessão atual ── */
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html'; return;
+  }
+  const myId = session.user.id;
+
+  /* ── Verificar se é admin em modo monitor ── */
+  const { data: myProfile } = await db.from('profiles')
+    .select('role,nome_completo').eq('id', myId).single();
+
+  const isAdmin   = myProfile?.role === 'admin';
+  const monitorMode = isAdmin && !!peerId; // admin monitorando conversa entre otherId e peerId
+
+  /* ── Carregar perfil do "outro" ── */
+  const { data: otherProfile } = await db.from('profiles')
+    .select('nome_completo,avatar_url,nivel').eq('id', otherId).single();
+
+  if (!otherProfile) { showToast('Escudeiro não encontrado'); history.back(); return; }
+
+  /* ── Não pode falar consigo mesmo (exceto admin monitor) ── */
+  if (myId === otherId && !monitorMode) {
+    showToast('Não podes enviar mensagem a ti mesmo'); history.back(); return;
+  }
+
+  /* ── Popular cabeçalho ── */
+  const nome  = otherProfile.nome_completo || '—';
+  const parts = nome.split(' ').filter(Boolean);
+  const initials = parts.length >= 2
+    ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase()
+    : (parts[0]?.[0]?.toUpperCase()||'?');
+
+  document.getElementById('peer-name').textContent = nome;
+  const avatarEl  = document.getElementById('peer-avatar');
+  const initialsEl = document.getElementById('peer-initials');
+
+  if (otherProfile.avatar_url) {
+    const img = document.createElement('img');
+    img.src = otherProfile.avatar_url;
+    img.alt = nome;
+    initialsEl.replaceWith(img);
+  } else {
+    initialsEl.textContent = initials;
+  }
+
+  if (monitorMode) {
+    document.getElementById('monitor-header').style.display = 'block';
+    document.getElementById('peer-status').textContent = 'VIGILÂNCIA DO MESTRE';
+    document.getElementById('input-area').style.display = 'none';
+  } else {
+    document.getElementById('input-area').style.display = 'flex';
+    document.getElementById('send-btn').disabled = false;
+  }
+
+  /* ── Presença online do peer ── */
+  loadPresence();
+  setInterval(loadPresence, 30000);
+
+  async function loadPresence() {
+    try {
+      const { data } = await db.from('presence')
+        .select('online_at').eq('user_id', otherId).single();
+      const dot = document.getElementById('peer-online-dot');
+      if (!dot) return;
+      if (data?.online_at) {
+        const diff = Date.now() - new Date(data.online_at).getTime();
+        const online = diff < 90000; // 90s
+        dot.style.display = 'block';
+        dot.style.background = online ? '#4caf50' : '#666';
+        document.getElementById('peer-status').textContent =
+          online ? 'ONLINE AGORA' : 'MENSAGEM PRIVADA';
+      }
+    } catch(e){}
+  }
+
+  /* ── Carregar histórico ── */
+  await loadMessages();
+
+  /* ── Marcar mensagens recebidas como lidas ── */
+  await markAllRead();
+
+  /* ── Realtime ── */
+  const channelName = monitorMode
+    ? `monitor-${[otherId, peerId].sort().join('-')}`
+    : `chat-${[myId, otherId].sort().join('-')}`;
+
+  const filter = monitorMode
+    ? `sender_id=eq.${otherId}`
+    : `receiver_id=eq.${myId}`;
+
+  db.channel(channelName)
+    .on('postgres_changes', {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'messages',
+      filter: filter
+    }, async (payload) => {
+      const msg = payload.new;
+      // Em modo normal: apenas mensagens desta conversa
+      if (!monitorMode && msg.sender_id !== otherId) return;
+      // Em modo monitor: apenas entre otherId e peerId
+      if (monitorMode) {
+        const pair = [msg.sender_id, msg.receiver_id];
+        if (!pair.includes(otherId) || !pair.includes(peerId)) return;
+      }
+      appendMessage(msg, false);
+      scrollToBottom();
+      if (!monitorMode) await markRead(msg.id);
+    })
+    .subscribe();
+
+  /* ── Funções de mensagens ── */
+  async function loadMessages() {
+    const area = document.getElementById('messages-area');
+    area.innerHTML = '';
+
+    let query;
+    if (monitorMode) {
+      // Admin vê conversa entre otherId e peerId
+      query = db.from('messages')
+        .select('*')
+        .or(
+          `and(sender_id.eq.${otherId},receiver_id.eq.${peerId}),` +
+          `and(sender_id.eq.${peerId},receiver_id.eq.${otherId})`
+        )
+        .order('created_at', { ascending: true });
+    } else {
+      // Conversa normal entre myId e otherId
+      query = db.from('messages')
+        .select('*')
+        .or(
+          `and(sender_id.eq.${myId},receiver_id.eq.${otherId}),` +
+          `and(sender_id.eq.${otherId},receiver_id.eq.${myId})`
+        )
+        .order('created_at', { ascending: true });
+    }
+
+    const { data: msgs, error } = await query;
+
+    if (error) {
+      area.innerHTML = `<div id="chat-empty">
+        <div id="chat-empty-icon">⚠</div>
+        <span>Erro ao carregar mensagens</span>
+      </div>`;
+      return;
+    }
+
+    if (!msgs || msgs.length === 0) {
+      area.innerHTML = `<div id="chat-empty">
+        <div id="chat-empty-icon">✉</div>
+        <span>Nenhuma mensagem ainda.<br>Inicia a conversa abaixo.</span>
+      </div>`;
+      return;
+    }
+
+    let lastDate = null;
+    msgs.forEach(msg => {
+      const msgDate = new Date(msg.created_at).toLocaleDateString('pt-BR');
+      if (msgDate !== lastDate) {
+        const sep = document.createElement('div');
+        sep.className = 'date-sep';
+        sep.textContent = formatDateLabel(msg.created_at);
+        area.appendChild(sep);
+        lastDate = msgDate;
+      }
+      appendMessage(msg, true);
+    });
+
+    scrollToBottom(false);
+  }
+
+  function appendMessage(msg, skipAnim) {
+    const area = document.getElementById('messages-area');
+
+    // Remove estado vazio se existir
+    const empty = document.getElementById('chat-empty');
+    if (empty) empty.remove();
+
+    const isSent = !monitorMode && msg.sender_id === myId;
+    const isMonitorSent = monitorMode && msg.sender_id === otherId;
+
+    const el = document.createElement('div');
+    el.className = `msg ${isSent ? 'sent' : monitorMode ? 'monitor' : 'recv'}`;
+    if (skipAnim) el.style.animation = 'none';
+    el.dataset.id = msg.id;
+
+    const time = formatTime(msg.created_at);
+    const readIcon = isSent && msg.read_at ? '<span class="msg-read-icon">✓✓</span>' : '';
+
+    // Em modo monitor, mostrar nome do remetente
+    const senderLabel = monitorMode
+      ? `<div class="msg-sender-label">${isMonitorSent ? nome : (myProfile?.nome_completo || 'Admin')}</div>`
+      : '';
+
+    el.innerHTML = `
+      ${senderLabel}
+      <div class="msg-bubble">${escapeHtml(msg.content)}</div>
+      <div class="msg-time">${time}${readIcon}</div>
+    `;
+
+    area.appendChild(el);
+  }
+
+  async function markAllRead() {
+    if (monitorMode) return;
+    try {
+      await db.from('messages')
+        .update({ read_at: new Date().toISOString() })
+        .eq('receiver_id', myId)
+        .eq('sender_id', otherId)
+        .is('read_at', null);
+    } catch(e){}
+  }
+
+  async function markRead(msgId) {
+    if (monitorMode) return;
+    try {
+      await db.from('messages')
+        .update({ read_at: new Date().toISOString() })
+        .eq('id', msgId);
+    } catch(e){}
+  }
+
+  /* ── Enviar mensagem ── */
+  window.sendMessage = async function() {
+    if (monitorMode) return;
+    const input = document.getElementById('msg-input');
+    const content = input.value.trim();
+    if (!content) return;
+
+    const btn = document.getElementById('send-btn');
+    btn.disabled = true;
+    input.disabled = true;
+
+    const { error } = await db.from('messages').insert({
+      sender_id:   myId,
+      receiver_id: otherId,
+      content:     content
+    });
+
+    if (error) {
+      showToast('Erro ao enviar mensagem');
+      btn.disabled = false;
+      input.disabled = false;
+      return;
+    }
+
+    // Adiciona localmente sem esperar realtime
+    appendMessage({
+      id: 'temp-' + Date.now(),
+      sender_id: myId,
+      receiver_id: otherId,
+      content: content,
+      read_at: null,
+      created_at: new Date().toISOString()
+    }, false);
+
+    input.value = '';
+    input.style.height = 'auto';
+    input.disabled = false;
+    btn.disabled = false;
+    input.focus();
+    scrollToBottom();
+  };
+
+  /* ── Utilitários ── */
+  function scrollToBottom(smooth=true) {
+    const area = document.getElementById('messages-area');
+    area.scrollTo({ top: area.scrollHeight, behavior: smooth ? 'smooth' : 'instant' });
+  }
+
+  function formatTime(iso) {
+    return new Date(iso).toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function formatDateLabel(iso) {
+    const d = new Date(iso);
+    const today = new Date();
+    const diff = Math.floor((today - d) / 86400000);
+    if (diff === 0) return 'HOJE';
+    if (diff === 1) return 'ONTEM';
+    return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'long' }).toUpperCase();
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\n/g,'<br>');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('chat-toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 3200);
+  }
+
+})();
+</script>
+</body>
+</html>
