@@ -1773,22 +1773,16 @@ function startBgMusic() {
   const m=document.getElementById('bg-music');
   if(!m||musicStarted)return;
   m.volume=.04;
-  function _unmuteBgVideo(){
-    const bgv=document.getElementById('bg-video');
-    if(bgv)bgv.muted=false;
-  }
   m.play().then(()=>{
     musicStarted=true;
     const btn=document.getElementById('mute-btn');
     if(btn)btn.style.display='flex';
-    _unmuteBgVideo(.04);
   }).catch(()=>{
     const unlock=()=>{
       m.play().then(()=>{
         musicStarted=true;
         const btn=document.getElementById('mute-btn');
         if(btn)btn.style.display='flex';
-        _unmuteBgVideo();
         ['click','touchstart'].forEach(ev=>document.removeEventListener(ev,unlock));
       }).catch(()=>{});
     };
@@ -1917,7 +1911,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(screen.orientation&&screen.orientation.lock){
     screen.orientation.lock('portrait').catch(()=>{});
   }
-  startBgMusic();
 });
 </script>
 
