@@ -1214,7 +1214,7 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 
 <!-- Intro video overlay -->
 <div id="screen-intro" class="hidden">
-  <video id="intro-video" playsinline muted></video>
+  <video id="intro-video" playsinline></video>
   <button id="intro-skip" onclick="skipIntro()">Pular ▶</button>
 </div>
 
@@ -1773,16 +1773,22 @@ function startBgMusic() {
   const m=document.getElementById('bg-music');
   if(!m||musicStarted)return;
   m.volume=.04;
+  function _unmuteBgVideo(){
+    const bgv=document.getElementById('bg-video');
+    if(bgv)bgv.muted=false;
+  }
   m.play().then(()=>{
     musicStarted=true;
     const btn=document.getElementById('mute-btn');
     if(btn)btn.style.display='flex';
+    _unmuteBgVideo();
   }).catch(()=>{
     const unlock=()=>{
       m.play().then(()=>{
         musicStarted=true;
         const btn=document.getElementById('mute-btn');
         if(btn)btn.style.display='flex';
+        _unmuteBgVideo();
         ['click','touchstart'].forEach(ev=>document.removeEventListener(ev,unlock));
       }).catch(()=>{});
     };
@@ -1792,9 +1798,11 @@ function startBgMusic() {
 
 function toggleMute(){
   const m=document.getElementById('bg-music');
+  const bgv=document.getElementById('bg-video');
   const btn=document.getElementById('mute-btn');
   if(!m)return;
   muted=!muted;m.muted=muted;
+  if(bgv)bgv.muted=muted;
   if(btn)btn.textContent=muted?'':'';
 }
 
@@ -2495,11 +2503,15 @@ window.addEventListener('DOMContentLoaded',()=>{
     intro.classList.remove('hidden');
     intro.style.opacity = '1';
     vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
+    vid.muted = false;
     vid.load();
-    const safetyTimer = setTimeout(_endIntro, 4000);
+    const safetyTimer = setTimeout(_endIntro, 25000);
     vid.addEventListener('canplay', () => {
       clearTimeout(safetyTimer);
-      vid.play().catch(_endIntro);
+      vid.play().catch(() => {
+        vid.muted = true;
+        vid.play().catch(_endIntro);
+      });
     }, { once: true });
     vid.addEventListener('ended', () => { clearTimeout(safetyTimer); _endIntro(); }, { once: true });
   }
