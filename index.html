@@ -2503,7 +2503,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     vid.src = isMobile ? 'assets/gif/intro-mobile.mp4' : 'assets/gif/intro-pc.mp4';
     vid.muted = false;
     vid.load();
-    const safetyTimer = setTimeout(_endIntro, 25000);
+    const safetyTimer = setTimeout(_endIntro, 10000);
     vid.addEventListener('canplay', () => {
       clearTimeout(safetyTimer);
       vid.play().catch(() => {
@@ -2511,7 +2511,8 @@ window.addEventListener('DOMContentLoaded',()=>{
         vid.play().catch(_endIntro);
       });
     }, { once: true });
-    vid.addEventListener('ended', () => { clearTimeout(safetyTimer); _endIntro(); }, { once: true });
+    vid.addEventListener('ended',  () => { clearTimeout(safetyTimer); _endIntro(); }, { once: true });
+    vid.addEventListener('error',  () => { clearTimeout(safetyTimer); _endIntro(); }, { once: true });
   }
 
   function hideSplash() {
