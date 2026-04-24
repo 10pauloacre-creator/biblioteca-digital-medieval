@@ -1781,7 +1781,7 @@ function startBgMusic() {
     musicStarted=true;
     const btn=document.getElementById('mute-btn');
     if(btn)btn.style.display='flex';
-    _unmuteBgVideo();
+    _unmuteBgVideo(.04);
   }).catch(()=>{
     const unlock=()=>{
       m.play().then(()=>{
@@ -1798,18 +1798,16 @@ function startBgMusic() {
 
 function toggleMute(){
   const m=document.getElementById('bg-music');
-  const bgv=document.getElementById('bg-video');
   const btn=document.getElementById('mute-btn');
   if(!m)return;
   muted=!muted;m.muted=muted;
-  if(bgv)bgv.muted=muted;
   if(btn)btn.textContent=muted?'':'';
 }
 
 function playSound(id){
   const a=document.getElementById(id);
   if(!a)return;
-  try{a.currentTime=0;a.volume=.0.2;a.play().catch(()=>{});}catch(e){}
+  try{a.currentTime=0;a.volume=.1;a.play().catch(()=>{});}catch(e){}
 }
 
 document.addEventListener('visibilitychange',()=>{
