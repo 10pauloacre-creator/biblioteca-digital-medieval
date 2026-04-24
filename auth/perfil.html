@@ -87,6 +87,23 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin-icon{animation:spin 1s linear infinite;display:inline-block;}
 
+/* ── Presença online ── */
+.presence-dot{
+  position:absolute;bottom:4px;right:4px;
+  width:16px;height:16px;border-radius:50%;
+  border:2.5px solid #080300;z-index:20;pointer-events:none;
+}
+.presence-dot.online{
+  background:#22c55e;
+  box-shadow:0 0 8px #22c55e,0 0 18px rgba(34,197,94,.7);
+  animation:presence-pulse 2s ease-in-out infinite;
+}
+.presence-dot.offline{background:#dc2626;box-shadow:0 0 5px rgba(220,38,38,.4);}
+@keyframes presence-pulse{
+  0%,100%{box-shadow:0 0 8px #22c55e,0 0 18px rgba(34,197,94,.7);}
+  50%{box-shadow:0 0 14px #22c55e,0 0 30px rgba(34,197,94,.9);}
+}
+
 
 .badge-admin{
   font-family:'Cinzel',serif;font-weight:900;font-size:.65rem;letter-spacing:.18em;
