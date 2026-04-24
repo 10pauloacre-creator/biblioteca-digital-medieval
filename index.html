@@ -980,14 +980,17 @@ body{background:#080300;color:var(--text);}
   background:rgba(255,255,255,.03);
   border:1px solid rgba(201,168,76,.1);border-radius:4px;
   padding:.18rem .4rem;transition:border-color .2s,background .2s;
-  text-decoration:none;color:inherit;
+  text-decoration:none;color:inherit;cursor:default;
 }
-.rk-card:hover{border-color:rgba(201,168,76,.35);background:rgba(255,255,255,.06);}
+a.rk-card{cursor:pointer;}
+a.rk-card:hover{border-color:rgba(201,168,76,.45);background:rgba(255,255,255,.08);}
+.rk-card:not(a):hover{border-color:rgba(201,168,76,.35);background:rgba(255,255,255,.06);}
 .rk-card.top1{
   border-color:rgba(255,200,40,.32);
   background:rgba(255,180,20,.05);
 }
-.rk-card.top1:hover{background:rgba(255,180,20,.1);}
+a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
+.rk-card.top1:not(a):hover{background:rgba(255,180,20,.1);}
 .rk-num{
   font-family:'Cinzel',serif;font-size:.6rem;font-weight:900;
   min-width:16px;text-align:center;flex-shrink:0;
