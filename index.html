@@ -932,7 +932,7 @@ body{background:#080300;color:var(--text);}
 /* ── Ranking CELULAR (≤ 767px) — ajuste aqui ── */
 @media (max-width:767px){
   .ranking-strip{
-    bottom:460px;
+    bottom:410px;
     left:58%;
     transform:translateX(-50%);
     width:min(250px,45vw);
@@ -2483,6 +2483,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     setTimeout(() => {
       intro.classList.add('hidden');
       sessionStorage.setItem('bdm-nav', '1');
+      startBgMusic();
       if (window._bdmAfterIntro) window._bdmAfterIntro();
     }, 820);
   }
@@ -2562,6 +2563,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (!session && sessionStorage.getItem('bdm-visitante') === '1') {
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
       hideSplash();
+      startBgMusic();
       return;
     }
 
