@@ -2231,8 +2231,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   function makeCard(s, pos, fullName) {
     var isTop1   = pos === 1;
     var posClass = ['top1','pos2','pos3','pos4','pos5'][pos - 1] || 'pos5';
-    var nivel    = s.nivel || 1;
     var pts      = s.pontos || 0;
+    var nivel    = pts < 10 ? 0 : (s.nivel || 1);
     var nome     = s.nome_completo || '—';
     var parts    = nome.split(' ').filter(Boolean);
     var initials = parts.length >= 2

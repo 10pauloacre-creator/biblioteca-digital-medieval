@@ -97,6 +97,7 @@ body{overflow-y:auto;}
 
 /* ── Presença online ── */
 .s-avatar-wrap{position:relative;flex-shrink:0;}
+.s-frame{position:absolute;inset:-5px;width:calc(100% + 10px);height:calc(100% + 10px);pointer-events:none;z-index:5;object-fit:contain;}
 .presence-dot{
   position:absolute;bottom:2px;right:2px;
   width:12px;height:12px;border-radius:50%;
@@ -356,17 +357,26 @@ function renderStudents(students) {
     const avatarHtml = s.avatar_url
       ? `<img src="${s.avatar_url}" alt="">`
       : `<span>${ini.toUpperCase()}</span>`;
+    const pts   = s.pontos || 0;
+    const nivel = pts < 10 ? 0 : (s.nivel || 1);
+    const frameHtml = nivel > 0
+      ? `<img class="s-frame" src="../assets/images/frames/frame-nivel-${nivel}.png" alt="">`
+      : '';
     const semSenhaBadge = !s.password_hash
       ? '<div class="s-badge" style="background:rgba(255,100,0,.15);border-color:rgba(255,120,0,.3);color:#ff9060;">SEM SENHA</div>'
       : '';
+    const nomeHtml = s.id
+      ? `<a class="s-name" href="perfil-publico.html?id=${s.id}" onclick="event.stopPropagation()" style="color:inherit;text-decoration:none;">${s.nome_completo || '(sem nome)'}</a>`
+      : `<div class="s-name">${s.nome_completo || '(sem nome)'}</div>`;
     return `
       <div class="student-card" onclick="openEdit('${s.id}')">
         <div class="s-avatar-wrap">
           <div class="s-avatar">${avatarHtml}</div>
+          ${frameHtml}
           <span class="presence-dot offline" data-uid="${s.id}" title="offline"></span>
         </div>
         <div class="s-info">
-          <div class="s-name">${s.nome_completo || '(sem nome)'}</div>
+          ${nomeHtml}
           <div class="s-meta">${s.serie||'—'} ${s.turma ? '· Turma '+s.turma : ''}</div>
           <div class="s-meta">Nº ${s.numero_chamada ?? '—'}</div>
           ${semSenhaBadge}
