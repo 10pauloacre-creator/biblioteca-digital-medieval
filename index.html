@@ -1809,7 +1809,7 @@ function toggleMute(){
 function playSound(id){
   const a=document.getElementById(id);
   if(!a)return;
-  try{a.currentTime=0;a.volume=.1;a.play().catch(()=>{});}catch(e){}
+  try{a.currentTime=0;a.volume=.0.2;a.play().catch(()=>{});}catch(e){}
 }
 
 document.addEventListener('visibilitychange',()=>{
