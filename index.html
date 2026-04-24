@@ -913,6 +913,8 @@ body{background:#080300;color:var(--text);}
 .rk-name.top1{color:var(--gold-l);}
 .rk-level{font-size:.45rem;color:var(--text-d);font-family:'Cinzel',serif;letter-spacing:.07em;}
 .rk-serie{font-size:.4rem;opacity:.75;margin-left:.35em;letter-spacing:.04em;color:var(--text-d);}
+.rk-pendente{opacity:.55;cursor:default;}
+.rk-pendente:hover{border-color:rgba(201,168,76,.1) !important;background:rgba(255,255,255,.03) !important;}
 .rk-pts{
   font-family:'Cinzel',serif;font-size:.56rem;font-weight:700;
   color:var(--gold-l);white-space:nowrap;flex-shrink:0;
@@ -2192,14 +2194,14 @@ window.addEventListener('DOMContentLoaded',()=>{
   var rkDb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
   var allStudents = [];
 
-  /* ── Busca ranking do Supabase ── */
+  /* ── Busca ranking do Supabase (todos os 56, cadastrados ou não) ── */
   async function loadRanking() {
     try {
       var res = await rkDb
-        .from('profiles')
-        .select('id,nome_completo,avatar_url,pontos,nivel,serie')
-        .eq('role', 'aluno')
-        .order('pontos', { ascending: false });
+        .from('ranking_all')
+        .select('id,nome_completo,avatar_url,pontos,nivel,serie,numero_chamada,cadastrado')
+        .order('pontos', { ascending: false })
+        .order('numero_chamada', { ascending: true });
       if (res.error || !res.data) return;
       allStudents = res.data;
       renderTop5(allStudents.slice(0, 5));
@@ -2225,8 +2227,9 @@ window.addEventListener('DOMContentLoaded',()=>{
       : initials;
 
     var frameHtml  = nivel > 0 ? '<img class="rk-frame-img" src="assets/images/frames/frame-nivel-' + nivel + '.png" alt="">' : '';
-    var profileUrl = 'auth/perfil-publico.html?id=' + (s.id || '');
-    return '<a class="rk-card' + (isTop1 ? ' top1' : '') + '" href="' + profileUrl + '">' +
+    var tag        = s.cadastrado && s.id ? 'a' : 'div';
+    var tagAttr    = s.cadastrado && s.id ? ' href="auth/perfil-publico.html?id=' + s.id + '"' : '';
+    return '<' + tag + ' class="rk-card' + (isTop1 ? ' top1' : '') + (!s.cadastrado ? ' rk-pendente' : '') + '"' + tagAttr + '>' +
       '<div class="rk-num ' + posClass + '">' + (isTop1 ? '🏆' : pos + 'º') + '</div>' +
       '<div class="rk-avatar-wrap">' +
         '<div class="rk-avatar' + (isTop1 ? ' top1' : '') + '" style="color:' + NIVEIS_COR[nivel] + '">' + avatarInner + '</div>' +
@@ -2237,7 +2240,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         '<div class="rk-level" style="color:' + NIVEIS_COR[nivel] + '">' + NIVEIS_NOME[nivel] + (fullName ? (s.serie ? ' · ' + s.serie : '') : (s.serie ? '<span class="rk-serie">' + s.serie + '</span>' : '')) + '</div>' +
       '</div>' +
       '<div class="rk-pts' + (isTop1 ? ' top1' : '') + '">' + pts + ' pts</div>' +
-    '</a>';
+    '</' + tag + '>';
   }
 
   /* ── Renderiza top 5 na landing ── */
