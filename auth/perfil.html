@@ -325,7 +325,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
       <input type="file" id="avatar-file-input" accept="image/*" style="display:none" onchange="uploadAvatar(event)"/>
       <div id="badge-admin" class="badge-admin" style="display:none">⚜ MAGO SUPREMO ⚜</div>
       <div id="nivel-badge" class="nivel-badge nivel-badge-1" style="display:none">
-        <span id="nivel-nome-badge">PERGAMINHEIRO DAS RUNAS</span>
+        <span id="nivel-nome-badge">APRENDIZ</span>
+        <span id="nivel-serie-badge" style="font-size:.5rem;opacity:.7;margin-left:.5em;font-weight:400;letter-spacing:.1em"></span>
       </div>
       <div id="nivel-stars-display" class="nivel-stars-display" style="display:none;color:#a09878">★☆☆☆☆</div>
     </div>
@@ -405,11 +406,13 @@ function renderNivelBadge(profile) {
     frameImg.style.display = 'block';
   }
 
-  // Badge com nome do nível
+  // Badge com nome do nível + série
   const badge = document.getElementById('nivel-badge');
   badge.className = 'nivel-badge nivel-badge-' + nivel;
   badge.style.display = 'block';
   document.getElementById('nivel-nome-badge').textContent = info.nome.toUpperCase();
+  const serieBadge = document.getElementById('nivel-serie-badge');
+  if (serieBadge) serieBadge.textContent = profile.serie ? '· ' + profile.serie : '';
 
   // Estrelas
   const starsEl = document.getElementById('nivel-stars-display');
