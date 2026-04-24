@@ -2,7 +2,7 @@
 <!-- AUTO-UPDATED: este arquivo é atualizado automaticamente a cada git push -->
 
 **Última atualização:** 2026-04-24  
-**Último commit:** 940c15c — feat: sistema de chat privado com notificacoes em tempo real  
+**Último commit:** aa18b2a — fix: ranking clicavel + botao mensagem no admin  
 **Service Worker:** v13  
 **Branch:** main
 
