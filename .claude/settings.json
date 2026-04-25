@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls *)",
+      "Bash(awk '{print $NF}')"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
