@@ -3,7 +3,9 @@
 -- Execute no Supabase SQL Editor
 -- ═══════════════════════════════════════════════════════════════
 
-CREATE OR REPLACE VIEW public.ranking_all AS
+DROP VIEW IF EXISTS public.ranking_all;
+
+CREATE VIEW public.ranking_all AS
 SELECT
   COALESCE(p.id, a.id)                                          AS id,
   COALESCE(p.nome_completo, a.nome_completo, r.nome_completo)   AS nome_completo,
