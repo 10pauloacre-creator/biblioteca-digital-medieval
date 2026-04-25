@@ -190,6 +190,27 @@ body{overflow-y:auto;}
 
 .empty-state{text-align:center;padding:2rem;color:var(--text-d);font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.1em;}
 
+.btn-msg-admin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  width: 100%;
+  padding: .6rem;
+  margin-top: .5rem;
+  border-radius: 4px;
+  background: rgba(201,168,76,.08);
+  border: 1px solid rgba(201,168,76,.35);
+  color: var(--gold-l);
+  font-family: 'Cinzel', serif;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-decoration: none;
+  transition: all .2s;
+}
+.btn-msg-admin:hover { background: rgba(201,168,76,.18); border-color: var(--gold); }
+
 @keyframes revealUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -286,6 +307,7 @@ body{overflow-y:auto;}
     <div style="margin-top:.6rem;">
       <button class="btn-action btn-outline" style="width:100%;border-color:rgba(240,208,96,.3);color:var(--gold-l);" onclick="confirmarResetSenha()">🔑 Redefinir Senha do Aluno</button>
     </div>
+    <a id="modal-btn-msg" class="btn-msg-admin" href="#" style="display:none">✉ ENVIAR MENSAGEM</a>
   </div>
 </div>
 
@@ -425,6 +447,17 @@ function openEdit(uid) {
     previewIni.textContent = ini.toUpperCase(); previewImg.style.display='none'; previewIni.style.display='block';
   }
   document.getElementById('avatar-file').value = '';
+
+  const msgBtn = document.getElementById('modal-btn-msg');
+  if (msgBtn) {
+    if (s.profile_id) {
+      msgBtn.href = 'chat.html?with=' + s.profile_id;
+      msgBtn.style.display = 'flex';
+    } else {
+      msgBtn.style.display = 'none';
+    }
+  }
+
   document.getElementById('modal-edit').classList.add('open');
 }
 

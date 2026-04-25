@@ -539,6 +539,121 @@ body{background:#080300;color:var(--text);}
 }
 #mute-btn:hover{transform:scale(1.15);}
 
+/* Search button */
+#search-btn {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 14000;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #2a1400, #0e0700);
+  border: 1px solid rgba(201,168,76,.45);
+  color: var(--gold-l);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(201,168,76,.2);
+  transition: transform .2s, box-shadow .2s;
+}
+#search-btn:hover { transform: scale(1.12); box-shadow: 0 0 20px rgba(201,168,76,.4); }
+
+/* Search modal */
+#search-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 15000;
+  background: rgba(0,0,0,.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+  backdrop-filter: blur(4px);
+}
+#search-modal.open { opacity: 1; pointer-events: all; }
+#search-wrap {
+  width: min(420px, 92vw);
+}
+#search-input {
+  width: 100%;
+  padding: .7rem 1rem;
+  background: #1a0e04;
+  border: 2px solid rgba(201,168,76,.5);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'Cinzel', serif;
+  font-size: .85rem;
+  letter-spacing: .06em;
+  outline: none;
+}
+#search-input:focus { border-color: var(--gold-l); }
+#search-results {
+  margin-top: .7rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  max-height: 55vh;
+  overflow-y: auto;
+}
+.search-result-card {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .5rem .7rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(201,168,76,.18);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  text-decoration: none;
+  color: var(--text);
+}
+.search-result-card:hover { background: rgba(201,168,76,.12); border-color: rgba(201,168,76,.45); }
+.search-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #2a1400;
+  border: 1px solid rgba(201,168,76,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--gold-l);
+  flex-shrink: 0;
+}
+.search-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.search-name { font-family: 'Cinzel', serif; font-size: .72rem; font-weight: 600; }
+.search-meta { font-size: .58rem; color: var(--text-d); font-family: 'Cinzel', serif; }
+#search-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--gold-l);
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+}
+#search-empty {
+  text-align: center;
+  color: var(--text-d);
+  font-family: 'Cinzel', serif;
+  font-size: .68rem;
+  letter-spacing: .1em;
+  padding: 1rem;
+}
+
 /* ══════════════════════════════
    KEYFRAMES
 ══════════════════════════════ */
@@ -1258,6 +1373,18 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 <audio id="sfx-livro-indisponivel" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-livro-indisponivel.mp3" type="audio/mpeg"></audio>
 
 <button id="mute-btn" onclick="toggleMute()"></button>
+
+<!-- Search button -->
+<button id="search-btn" onclick="openSearch()" title="Pesquisar">🔍</button>
+
+<!-- Search modal -->
+<div id="search-modal">
+  <button id="search-close" onclick="closeSearch()">✕</button>
+  <div id="search-wrap">
+    <input id="search-input" type="text" placeholder="Pesquisar aluno ou professor…" oninput="doSearch(this.value)" autocomplete="off" autocorrect="off"/>
+    <div id="search-results"></div>
+  </div>
+</div>
 
 <!-- ════════════════════════════════════════
      MODAL RANKING COMPLETO
@@ -2626,6 +2753,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   var NIVEIS_COR  = ['#4a4040', '#a09878', '#c9a84c',  '#4fc3f7',  '#c084fc', '#ff6a1a'];
 
   var rkDb = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+  window._rkDb = rkDb;
   var allStudents = [];
 
   /* ── Busca ranking do Supabase (todos os 56, cadastrados ou não) ── */
@@ -2633,11 +2761,12 @@ window.addEventListener('DOMContentLoaded',()=>{
     try {
       var res = await rkDb
         .from('ranking_all')
-        .select('id,nome_completo,avatar_url,pontos,nivel,serie,numero_chamada,cadastrado,last_seen')
+        .select('id,nome_completo,avatar_url,pontos,nivel,serie,numero_chamada,cadastrado,last_seen,id_type')
         .order('pontos', { ascending: false })
         .order('numero_chamada', { ascending: true });
       if (res.error || !res.data) return;
       allStudents = res.data;
+      window._rkAllStudents = allStudents;
       renderTop5(allStudents.slice(0, 5));
     } catch (e) {}
   }
@@ -2662,7 +2791,11 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     var frameHtml  = nivel > 0 ? '<img class="rk-frame-img" src="assets/images/frames/frame-nivel-' + nivel + '.png" alt="">' : '';
     var tag        = s.cadastrado && s.id ? 'a' : 'div';
-    var tagAttr    = s.cadastrado && s.id ? ' href="auth/perfil-publico.html?id=' + s.id + '"' : '';
+    var tagAttr    = '';
+    if (s.cadastrado && s.id) {
+      var profilePath = s.id_type === 'aluno' ? 'auth/perfil-aluno.html' : 'auth/perfil-publico.html';
+      tagAttr = ' href="' + profilePath + '?id=' + s.id + '"';
+    }
     return '<' + tag + ' class="rk-card' + (isTop1 ? ' top1' : '') + (!s.cadastrado ? ' rk-pendente' : '') + '"' + tagAttr + '>' +
       '<div class="rk-num ' + posClass + '">' + (isTop1 ? '🏆' : pos + 'º') + '</div>' +
       '<div class="rk-avatar-wrap">' +
@@ -3007,6 +3140,80 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Expõe loadRanking globalmente para o trigger conseguir chamá-la
   // (definida no IIFE do ranking; re-exportada aqui se necessário)
 }());
+</script>
+
+<script>
+/* ── Search ── */
+function openSearch() {
+  document.getElementById('search-modal').classList.add('open');
+  setTimeout(() => document.getElementById('search-input').focus(), 100);
+}
+function closeSearch() {
+  document.getElementById('search-modal').classList.remove('open');
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-results').innerHTML = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+document.getElementById('search-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('search-modal')) closeSearch();
+});
+
+function _normSearch(s) {
+  return (s || '').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9 ]/g, '');
+}
+
+async function doSearch(term) {
+  const el = document.getElementById('search-results');
+  term = term.trim();
+  if (term.length < 2) { el.innerHTML = ''; return; }
+  const t = _normSearch(term);
+
+  const local = (window._rkAllStudents || []).filter(s =>
+    _normSearch(s.nome_completo).includes(t)
+  ).slice(0, 7);
+
+  let adminResults = [];
+  try {
+    const { data } = await window._rkDb.from('profiles')
+      .select('id,nome_completo,avatar_url,serie,role')
+      .eq('role', 'admin')
+      .ilike('nome_completo', '%' + term + '%')
+      .limit(2);
+    adminResults = data || [];
+  } catch(e) {}
+
+  const combined = [
+    ...adminResults.map(p => ({ id: p.id, nome_completo: p.nome_completo, avatar_url: p.avatar_url, serie: p.serie || 'Professor', id_type: 'profile', cadastrado: true })),
+    ...local
+  ];
+
+  if (combined.length === 0) {
+    el.innerHTML = '<div id="search-empty">Nenhum resultado encontrado</div>';
+    return;
+  }
+
+  el.innerHTML = combined.map(s => {
+    const nome = s.nome_completo || '—';
+    const parts = nome.split(' ').filter(Boolean);
+    const ini = parts.length >= 2 ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase() : (parts[0]?.[0]?.toUpperCase() || '?');
+    const avatarHtml = s.avatar_url
+      ? `<img src="${s.avatar_url}" alt="" loading="lazy">`
+      : `<span>${ini}</span>`;
+    const href = s.id_type === 'aluno'
+      ? `auth/perfil-aluno.html?id=${s.id}`
+      : `auth/perfil-publico.html?id=${s.id}`;
+    const meta = s.serie || (s.id_type === 'profile' && s.role === 'admin' ? 'Professor' : '');
+    return `<a class="search-result-card" href="${href}" onclick="closeSearch()">
+      <div class="search-avatar">${avatarHtml}</div>
+      <div>
+        <div class="search-name">${nome}</div>
+        ${meta ? `<div class="search-meta">${meta}</div>` : ''}
+      </div>
+    </a>`;
+  }).join('');
+}
 </script>
 
 </body>
