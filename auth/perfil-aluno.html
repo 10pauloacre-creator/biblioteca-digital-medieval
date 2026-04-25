@@ -207,9 +207,10 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     .select('correct,total')
     .eq('user_id', userId);
 
-  // Verifica sessão do visitante
+  // Verifica sessão do visitante (Supabase OU custom-auth)
   const { data: { session } } = await db.auth.getSession();
-  const viewerId = session?.user?.id;
+  const viewerAluno = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+  const viewerId = session?.user?.id || viewerAluno?.id;
 
   const nivel  = rankRow?.nivel  || 0;
   const pontos = rankRow?.pontos || 0;
@@ -296,7 +297,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   `;
 
   window.openChat = function() {
-    if (!session) {
+    if (!session && !viewerAluno) {
       window.location.href = 'login.html';
       return;
     }

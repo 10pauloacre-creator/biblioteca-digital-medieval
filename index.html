@@ -2333,6 +2333,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   let _notifIsAdmin = false;
   let _notifChannel = null;
   let _notifAdminId = null;
+  let _alunoNotifId = null; // custom-auth aluno
 
   function hideNotifBtn(){
     const btn = document.getElementById('notif-btn');
@@ -2352,11 +2353,35 @@ window.addEventListener('DOMContentLoaded',()=>{
     }
   }
 
+  /* Notificacoes para alunos custom-auth (sem sessao Supabase) */
+  async function initAlunoNotif(alunoId){
+    _alunoNotifId = alunoId;
+    try {
+      const { count } = await db.from('chat_messages')
+        .select('*',{count:'exact',head:true})
+        .eq('receiver_id', alunoId)
+        .is('read_at', null)
+        .is('deleted_at', null);
+      setNotifBadge(count || 0);
+    } catch(e){}
+
+    if (_notifChannel) db.removeChannel(_notifChannel);
+    _notifChannel = db.channel('notif-aluno-' + alunoId)
+      .on('postgres_changes',{
+        event:'INSERT', schema:'public', table:'chat_messages',
+        filter:'receiver_id=eq.' + alunoId
+      }, ()=>{
+        const badge = document.getElementById('notif-badge');
+        const cur = parseInt(badge?.textContent || '0') || 0;
+        setNotifBadge(cur + 1);
+      })
+      .subscribe();
+  }
+
   async function initNotifications(session){
     _notifSession = session;
     const uid = session.user.id;
 
-    // Descobre role do usuario
     try {
       const { data: p } = await db.from('profiles').select('role').eq('id', uid).single();
       _notifIsAdmin = p?.role === 'admin';
@@ -2365,12 +2390,10 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (_notifIsAdmin) {
       _notifAdminId = uid;
       await refreshAdminNotifCount();
-      // Realtime: novas mensagens entre alunos
       if (_notifChannel) db.removeChannel(_notifChannel);
       _notifChannel = db.channel('notif-admin')
-        .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},
+        .on('postgres_changes',{event:'INSERT',schema:'public',table:'chat_messages'},
           (p)=>{
-            // Conta apenas mensagens entre alunos (nao envolvendo o admin)
             if (p.new.sender_id === _notifAdminId || p.new.receiver_id === _notifAdminId) return;
             const badge = document.getElementById('notif-badge');
             const cur = parseInt(badge?.textContent || '0') || 0;
@@ -2379,11 +2402,10 @@ window.addEventListener('DOMContentLoaded',()=>{
         .subscribe();
     } else {
       await refreshStudentNotifCount(uid);
-      // Realtime: novas mensagens recebidas pelo aluno
       if (_notifChannel) db.removeChannel(_notifChannel);
       _notifChannel = db.channel('notif-student-' + uid)
         .on('postgres_changes',{
-          event:'INSERT',schema:'public',table:'messages',
+          event:'INSERT', schema:'public', table:'chat_messages',
           filter:'receiver_id=eq.' + uid
         }, ()=>{
           const badge = document.getElementById('notif-badge');
@@ -2396,10 +2418,11 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   async function refreshStudentNotifCount(uid){
     try {
-      const { count } = await db.from('messages')
+      const { count } = await db.from('chat_messages')
         .select('*',{count:'exact',head:true})
         .eq('receiver_id', uid)
-        .is('read_at', null);
+        .is('read_at', null)
+        .is('deleted_at', null);
       setNotifBadge(count || 0);
     } catch(e){}
   }
@@ -2408,10 +2431,11 @@ window.addEventListener('DOMContentLoaded',()=>{
     try {
       const { data: p } = await db.from('profiles')
         .select('notif_seen_at').eq('id', _notifAdminId).single();
-      let query = db.from('messages')
+      let query = db.from('chat_messages')
         .select('*',{count:'exact',head:true})
         .neq('sender_id', _notifAdminId)
-        .neq('receiver_id', _notifAdminId);
+        .neq('receiver_id', _notifAdminId)
+        .is('deleted_at', null);
       if (p?.notif_seen_at) query = query.gt('created_at', p.notif_seen_at);
       const { count } = await query;
       setNotifBadge(count || 0);
@@ -2420,7 +2444,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   /* ── Abrir modal de notificacoes ── */
   window.openNotifModal = async function(){
-    if (!_notifSession) return;
+    if (!_notifSession && !_alunoNotifId) return;
     document.getElementById('modal-notif').style.display = 'flex';
     const list = document.getElementById('notif-list');
     list.innerHTML = '<div style="padding:1rem;text-align:center;font-family:\'Cinzel\',serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-d)">Carregando...</div>';
@@ -2438,35 +2462,55 @@ window.addEventListener('DOMContentLoaded',()=>{
   };
 
   window.markAllNotifRead = async function(){
-    if (!_notifSession) return;
+    const uid = _notifSession?.user?.id || _alunoNotifId;
+    if (!uid) return;
     if (_notifIsAdmin){
       try {
         await db.from('profiles')
           .update({ notif_seen_at: new Date().toISOString() })
           .eq('id', _notifAdminId);
       } catch(e){}
-      setNotifBadge(0);
     } else {
       try {
-        await db.from('messages')
+        await db.rpc('mark_chat_read', { p_sender_id: uid, p_receiver_id: uid });
+        // Marca todas nao lidas recebidas por este usuario
+        await db.from('chat_messages')
           .update({ read_at: new Date().toISOString() })
-          .eq('receiver_id', _notifSession.user.id)
+          .eq('receiver_id', uid)
           .is('read_at', null);
       } catch(e){}
-      setNotifBadge(0);
     }
+    setNotifBadge(0);
     closeNotifModal();
   };
 
+  async function _resolveNames(ids){
+    // Busca nomes em profiles e alunos, retorna mapa id->nome
+    const map = {};
+    try {
+      const { data: ps } = await db.from('profiles').select('id,nome_completo').in('id', ids);
+      (ps||[]).forEach(p => { map[p.id] = p.nome_completo; });
+    } catch(e){}
+    // Para IDs nao encontrados em profiles, busca em alunos
+    const missing = ids.filter(id => !map[id]);
+    if (missing.length > 0){
+      try {
+        const { data: as } = await db.from('alunos').select('id,nome_completo').in('id', missing);
+        (as||[]).forEach(a => { map[a.id] = a.nome_completo; });
+      } catch(e){}
+    }
+    return map;
+  }
+
   async function loadStudentNotifModal(){
-    const uid  = _notifSession.user.id;
+    const uid  = _notifSession?.user?.id || _alunoNotifId;
     const list = document.getElementById('notif-list');
     try {
-      // Busca conversas com mensagens nao lidas, agrupadas por remetente
-      const { data: msgs } = await db.from('messages')
-        .select('sender_id, content, created_at, read_at')
+      const { data: msgs } = await db.from('chat_messages')
+        .select('sender_id, content, type, created_at, read_at')
         .eq('receiver_id', uid)
         .is('read_at', null)
+        .is('deleted_at', null)
         .order('created_at', { ascending: false });
 
       if (!msgs || msgs.length === 0){
@@ -2474,47 +2518,41 @@ window.addEventListener('DOMContentLoaded',()=>{
         return;
       }
 
-      // Agrupa por sender_id
       const bySender = {};
       msgs.forEach(m => {
         if (!bySender[m.sender_id]) bySender[m.sender_id] = [];
         bySender[m.sender_id].push(m);
       });
 
-      // Carrega nomes dos remetentes
       const senderIds = Object.keys(bySender);
-      const { data: profiles } = await db.from('profiles')
-        .select('id,nome_completo,avatar_url').in('id', senderIds);
-
-      const profileMap = {};
-      (profiles||[]).forEach(p => profileMap[p.id] = p);
+      const nameMap = await _resolveNames(senderIds);
 
       list.innerHTML = '';
-      const titleEl = document.getElementById('notif-title');
-      titleEl.textContent = '✦ MENSAGENS ✦';
+      document.getElementById('notif-title').textContent = '✦ MENSAGENS ✦';
 
       senderIds.forEach(sid => {
-        const p     = profileMap[sid] || {};
-        const nome  = p.nome_completo || 'Escudeiro';
+        const nome  = nameMap[sid] || 'Escudeiro';
         const count = bySender[sid].length;
         const last  = bySender[sid][0];
-        const item  = document.createElement('div');
+        const preview = last.type === 'text'
+          ? escapeHtmlSimple((last.content||'').substring(0,60))
+          : last.type === 'audio' ? '🎵 Mensagem de áudio'
+          : last.type === 'image' ? '📷 Foto'
+          : last.type === 'video' ? '🎥 Vídeo' : '📎 Mídia';
+        const item = document.createElement('div');
         item.className = 'notif-item';
         item.innerHTML = `
           <div class="notif-icon">✉</div>
           <div class="notif-text">
             <div class="notif-name">${escapeHtmlSimple(nome)}</div>
-            <div class="notif-preview">${escapeHtmlSimple(last.content.substring(0,60))}</div>
+            <div class="notif-preview">${preview}</div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
             <span style="background:var(--ember);color:#fff;border-radius:10px;padding:1px 7px;font-family:'Cinzel',serif;font-size:.45rem;font-weight:700">${count}</span>
             <span class="notif-time">${formatNotifTime(last.created_at)}</span>
           </div>
         `;
-        item.onclick = () => {
-          closeNotifModal();
-          window.location.href = 'auth/chat.html?with=' + sid;
-        };
+        item.onclick = () => { closeNotifModal(); window.location.href = 'auth/chat.html?with=' + sid; };
         list.appendChild(item);
       });
 
@@ -2526,14 +2564,13 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   async function loadAdminNotifModal(){
     const list = document.getElementById('notif-list');
-    const titleEl = document.getElementById('notif-title');
-    titleEl.textContent = '⚔ VIGILANCIA ⚔';
+    document.getElementById('notif-title').textContent = '⚔ VIGILANCIA ⚔';
     try {
-      // Busca mensagens recentes entre alunos (nao envolvendo o admin)
-      const { data: msgs } = await db.from('messages')
-        .select('sender_id, receiver_id, content, created_at')
+      const { data: msgs } = await db.from('chat_messages')
+        .select('sender_id, receiver_id, content, type, created_at')
         .neq('sender_id', _notifAdminId)
         .neq('receiver_id', _notifAdminId)
+        .is('deleted_at', null)
         .order('created_at', { ascending: false })
         .limit(50);
 
@@ -2542,7 +2579,6 @@ window.addEventListener('DOMContentLoaded',()=>{
         return;
       }
 
-      // Agrupa por par de usuarios (canonico: menor + maior UUID)
       const pairs = {};
       msgs.forEach(m => {
         const key = [m.sender_id, m.receiver_id].sort().join('|');
@@ -2550,42 +2586,36 @@ window.addEventListener('DOMContentLoaded',()=>{
         pairs[key].msgs.push(m);
       });
 
-      // Carrega perfis de todos os usuarios envolvidos
       const allIds = [...new Set(msgs.flatMap(m => [m.sender_id, m.receiver_id]))];
-      const { data: profiles } = await db.from('profiles')
-        .select('id,nome_completo').in('id', allIds);
-      const pMap = {};
-      (profiles||[]).forEach(p => pMap[p.id] = p);
+      const nameMap = await _resolveNames(allIds);
 
       list.innerHTML = '<div class="notif-section-title">CONVERSAS RECENTES</div>';
 
       Object.values(pairs).slice(0, 20).forEach(pair => {
-        const nomeA = pMap[pair.a]?.nome_completo || 'Escudeiro';
-        const nomeB = pMap[pair.b]?.nome_completo || 'Escudeiro';
+        const nomeA = nameMap[pair.a] || 'Escudeiro';
+        const nomeB = nameMap[pair.b] || 'Escudeiro';
         const last  = pair.msgs[0];
-        const item  = document.createElement('div');
+        const preview = last.type === 'text'
+          ? escapeHtmlSimple((last.content||'').substring(0,55))
+          : last.type === 'audio' ? '🎵 Áudio'
+          : last.type === 'image' ? '📷 Foto'
+          : last.type === 'video' ? '🎥 Vídeo' : '📎 Mídia';
+        const item = document.createElement('div');
         item.className = 'notif-item';
         item.innerHTML = `
           <div class="notif-icon">⚔</div>
           <div class="notif-text">
             <div class="notif-name">${escapeHtmlSimple(nomeA.split(' ')[0])} ↔ ${escapeHtmlSimple(nomeB.split(' ')[0])}</div>
-            <div class="notif-preview">${escapeHtmlSimple(last.content.substring(0,55))}</div>
+            <div class="notif-preview">${preview}</div>
           </div>
           <span class="notif-time">${formatNotifTime(last.created_at)}</span>
         `;
-        item.onclick = () => {
-          closeNotifModal();
-          window.location.href = 'auth/chat.html?with=' + pair.a + '&peer=' + pair.b;
-        };
+        item.onclick = () => { closeNotifModal(); window.location.href = 'auth/chat.html?with=' + pair.a + '&peer=' + pair.b; };
         list.appendChild(item);
       });
 
       document.getElementById('notif-mark-read').style.display = 'block';
-
-      // Marca como visto
-      await db.from('profiles')
-        .update({ notif_seen_at: new Date().toISOString() })
-        .eq('id', _notifAdminId);
+      await db.from('profiles').update({ notif_seen_at: new Date().toISOString() }).eq('id', _notifAdminId);
       setNotifBadge(0);
     } catch(e){
       list.innerHTML = '<div id="notif-empty">Erro ao carregar vigilancia</div>';
@@ -2685,6 +2715,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (alunoSession && !session) {
       hideSplash();
       setAuthImg('assets/images/perfil.png', 'auth/perfil-custom.html?id=' + alunoSession.id);
+      initAlunoNotif(alunoSession.id);
       if (doIntro || !sessionStorage.getItem('bdm-nav')) {
         window._bdmAfterIntro = () => window._goToSerie(null);
         playIntro();

@@ -309,7 +309,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
   /* ── Verifica sessao atual para o botao de mensagem ── */
   const { data: { session } } = await db.auth.getSession();
-  const viewerId = session?.user?.id;
+  const alunoLocal = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+  const viewerId = session?.user?.id || alunoLocal?.id;
 
   // Oculta o botao se o visitante for o proprio dono do perfil
   if (viewerId && viewerId === userId) {
@@ -317,9 +318,15 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     if (btn) btn.style.display = 'none';
   }
 
+  // Oculta o botao para visitantes nao autenticados
+  if (!viewerId) {
+    const btn = document.getElementById('btn-msg');
+    if (btn) btn.style.display = 'none';
+  }
+
   // Funcao chamada pelo botao
   window.openChat = function() {
-    if (!session) {
+    if (!session && !alunoLocal) {
       window.location.href = 'login.html';
       return;
     }
