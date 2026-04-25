@@ -541,6 +541,7 @@ body{background:#080300;color:var(--text);}
 
 /* Search button */
 #search-btn {
+  display: none;
   position: fixed;
   top: 14px;
   left: 14px;
@@ -1858,6 +1859,8 @@ function selectSerie(n) {
 
   const landing = document.getElementById('screen-landing');
   const content = document.getElementById('screen-content');
+  const sb = document.getElementById('search-btn');
+  if(sb) sb.style.display='none';
   landing.style.display='none';
   content.style.display='block';
   content.style.opacity='0';
@@ -1889,6 +1892,8 @@ function goBack() {
   content.style.transition='';
   content.scrollTop=0;
   landing.style.display='flex';
+  const sb = document.getElementById('search-btn');
+  if(sb) sb.style.display='flex';
 }
 
 /* ══════════════════════════════
@@ -2611,6 +2616,8 @@ window.addEventListener('DOMContentLoaded',()=>{
       intro.classList.add('hidden');
       sessionStorage.setItem('bdm-nav', '1');
       startBgMusic();
+      const _sb = document.getElementById('search-btn');
+      if(_sb) _sb.style.display='flex';
       if (window._bdmAfterIntro) window._bdmAfterIntro();
     }, 820);
   }
@@ -2691,6 +2698,8 @@ window.addEventListener('DOMContentLoaded',()=>{
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
       hideSplash();
       startBgMusic();
+      const _sb = document.getElementById('search-btn');
+      if(_sb) _sb.style.display='flex';
       return;
     }
 
