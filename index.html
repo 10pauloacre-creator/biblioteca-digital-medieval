@@ -2313,7 +2313,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
   async function updateAuthBtn(session) {
     const alunoSession = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
-    if (alunoSession) { setAuthImg('assets/images/perfil.png', 'auth/login.html'); return; }
+    if (alunoSession) { setAuthImg('assets/images/perfil.png', 'auth/perfil-custom.html?id=' + alunoSession.id); return; }
     if (!session) { setAuthImg('assets/images/login.png', 'auth/login.html'); return; }
     setAuthImg('assets/images/perfil.png', 'auth/perfil.html');
     try {
@@ -2684,7 +2684,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     const alunoSession = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
     if (alunoSession && !session) {
       hideSplash();
-      setAuthImg('assets/images/perfil.png', 'auth/login.html');
+      setAuthImg('assets/images/perfil.png', 'auth/perfil-custom.html?id=' + alunoSession.id);
       if (doIntro || !sessionStorage.getItem('bdm-nav')) {
         window._bdmAfterIntro = () => window._goToSerie(null);
         playIntro();

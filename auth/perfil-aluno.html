@@ -182,6 +182,13 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
   if (!userId) { notFound(); return; }
 
+  // Se for o próprio aluno (custom-auth), redireciona para o perfil editável
+  const selfSession = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+  if (selfSession && selfSession.id === userId) {
+    window.location.replace('perfil-custom.html?id=' + userId);
+    return;
+  }
+
   // Busca perfil básico via função pública
   const { data: alunoData, error: alunoErr } = await db.rpc('get_aluno_public', { p_id: userId });
   if (alunoErr || !alunoData || alunoData.length === 0) { notFound(); return; }
