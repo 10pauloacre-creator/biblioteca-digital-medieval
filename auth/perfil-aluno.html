@@ -56,12 +56,28 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   color:var(--gold-l);overflow:hidden;position:relative;
 }
 .avatar-ring img{width:100%;height:100%;object-fit:cover;}
+.avatar-frame-img{
+  position:absolute;inset:-14px;
+  width:calc(100% + 28px);height:calc(100% + 28px);
+  pointer-events:none;z-index:10;object-fit:contain;
+}
+.frame-nivel-1{border-color:#a09878;}
+.frame-nivel-2{border-color:#c9a84c;}
+.frame-nivel-3{border-color:#4fc3f7;}
+.frame-nivel-4{border-color:#c084fc;}
+.frame-nivel-5{border-color:#ff6a1a;}
 
-.role-badge{
+.nivel-badge{
   font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.14em;font-weight:700;
   border-radius:12px;padding:3px 12px;margin-bottom:.2rem;text-align:center;
-  color:var(--gold-l);border:1px solid rgba(201,168,76,.5);
 }
+.nivel-badge-0{color:#4a4040;border:1px solid rgba(74,64,64,.4);}
+.nivel-badge-1{color:#a09878;border:1px solid rgba(160,152,120,.4);}
+.nivel-badge-2{color:var(--gold-l);border:1px solid rgba(201,168,76,.5);}
+.nivel-badge-3{color:#4fc3f7;border:1px solid rgba(79,195,247,.5);background:rgba(79,195,247,.05);}
+.nivel-badge-4{color:#c084fc;border:1px solid rgba(192,132,252,.5);background:rgba(192,132,252,.05);}
+.nivel-badge-5{color:var(--ember);border:1px solid rgba(255,106,26,.55);background:rgba(255,106,26,.07);text-shadow:0 0 10px rgba(255,106,26,.5);}
+.nivel-stars{font-size:.95rem;letter-spacing:.22em;margin-bottom:.3rem;text-shadow:0 0 6px currentColor;}
 
 .profile-name{
   font-family:'Cinzel Decorative',serif;font-weight:700;
@@ -78,6 +94,43 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 }
 .info-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.14em;color:var(--text-d);margin-bottom:.25rem;}
 .info-value{font-size:.9rem;color:var(--text-m);}
+
+.level-bar-wrap{
+  background:rgba(0,0,0,.35);border-radius:20px;height:8px;overflow:hidden;
+  border:1px solid rgba(201,168,76,.2);margin-top:.4rem;
+}
+.level-bar-fill{
+  height:100%;border-radius:20px;
+  background:linear-gradient(90deg,#8a6414,#c9a84c,#ffe87a);
+  background-size:200% 100%;animation:sweep 2s linear infinite;
+  box-shadow:0 0 6px rgba(255,220,80,.5);
+  transition:width .6s ease;
+}
+
+.quiz-section{margin-top:.6rem;}
+.quiz-title{
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;font-weight:700;
+  color:var(--gold-l);text-align:center;margin-bottom:.7rem;
+  display:flex;align-items:center;gap:8px;
+}
+.quiz-title::before,.quiz-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.quiz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;}
+.quiz-stat{
+  background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);
+  border-radius:5px;padding:.6rem .4rem;text-align:center;
+}
+.quiz-stat-val{font-size:1.1rem;font-weight:700;color:var(--gold-l);font-family:'Cinzel',serif;}
+.quiz-stat-lbl{font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.12em;color:var(--text-d);margin-top:.2rem;}
+
+.btn-msg{
+  width:100%;padding:.7rem;border-radius:4px;cursor:pointer;
+  font-family:'Cinzel',serif;font-weight:700;font-size:.72rem;letter-spacing:.12em;
+  background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.35);color:var(--gold-l);
+  transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  margin-top:1rem;
+}
+.btn-msg:hover{background:rgba(201,168,76,.18);border-color:var(--gold);}
+.btn-msg:disabled{opacity:.4;cursor:not-allowed;}
 
 .not-found{text-align:center;padding:3rem 1rem;font-family:'Cinzel',serif;color:var(--text-d);}
 .not-found .nf-icon{font-size:3rem;margin-bottom:1rem;}
@@ -99,7 +152,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
 <div class="page">
   <nav class="top-nav">
-    <a class="nav-btn" href="../index.html">← VOLTAR</a>
+    <button class="nav-btn" onclick="history.back()">← VOLTAR</button>
     <span style="font-family:'UnifrakturMaguntia',cursive;font-size:1.1rem;color:var(--gold-l);opacity:.7">Escudeiro</span>
   </nav>
 
@@ -112,6 +165,7 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../assets/js/supabase-config.js"></script>
+<script src="../assets/js/nivel.js"></script>
 <script>
 (async function () {
   if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
@@ -128,20 +182,53 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
   if (!userId) { notFound(); return; }
 
-  const { data, error } = await db.rpc('get_aluno_public', { p_id: userId });
+  // Busca perfil básico via função pública
+  const { data: alunoData, error: alunoErr } = await db.rpc('get_aluno_public', { p_id: userId });
+  if (alunoErr || !alunoData || alunoData.length === 0) { notFound(); return; }
+  const profile = alunoData[0];
 
-  if (error || !data || data.length === 0) { notFound(); return; }
+  // Busca pontos/nível da view ranking_all (acessível a anon)
+  const { data: rankRow } = await db
+    .from('ranking_all')
+    .select('pontos,nivel')
+    .eq('id', userId)
+    .maybeSingle();
 
-  const profile = data[0];
-  const nome    = profile.nome_completo || '—';
-  const parts   = nome.split(' ').filter(Boolean);
+  // Busca quiz results
+  const { data: quizzes } = await db
+    .from('quiz_results')
+    .select('correct,total')
+    .eq('user_id', userId);
+
+  // Verifica sessão do visitante
+  const { data: { session } } = await db.auth.getSession();
+  const viewerId = session?.user?.id;
+
+  const nivel  = rankRow?.nivel  || 0;
+  const pontos = rankRow?.pontos || 0;
+  const info   = window.getNivelInfo(nivel);
+  const stars  = window.getNivelStars(nivel);
+  const prog   = window.getNivelProgress(nivel, pontos);
+  const proxTxt= window.getNivelProxTxt(nivel, pontos);
+
+  const nome   = profile.nome_completo || '—';
+  const parts  = nome.split(' ').filter(Boolean);
   const initials = parts.length >= 2
     ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase()
     : (parts[0] ? parts[0][0].toUpperCase() : '?');
 
+  const totalQuizzes  = quizzes ? quizzes.length : 0;
+  const totalCorrect  = quizzes ? quizzes.reduce((s,q)=>s+q.correct,0) : 0;
+  const totalQuest    = quizzes ? quizzes.reduce((s,q)=>s+q.total,0)   : 0;
+  const accuracy      = totalQuest > 0 ? Math.round(totalCorrect/totalQuest*100) : 0;
+
+  const frameUrl = nivel > 0 ? '../assets/images/frames/frame-nivel-' + nivel + '.png' : '';
   const avatarInner = profile.avatar_url
     ? '<img src="' + profile.avatar_url + '" alt="' + nome + '">'
     : initials;
+
+  // Oculta botão de mensagem se for o próprio perfil ou perfil sem conta Supabase
+  const showMsgBtn = !viewerId || viewerId !== userId;
 
   main.innerHTML = `
     <div class="pergaminho">
@@ -150,9 +237,11 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
 
       <div class="avatar-section">
         <div class="avatar-wrap">
-          <div class="avatar-ring">${avatarInner}</div>
+          <div class="avatar-ring frame-nivel-${nivel}">${avatarInner}</div>
+          ${frameUrl ? '<img class="avatar-frame-img" src="' + frameUrl + '" alt="">' : ''}
         </div>
-        <div class="role-badge">ESCUDEIRO</div>
+        <div class="nivel-badge nivel-badge-${nivel}">${info.nome.toUpperCase()}</div>
+        <div class="nivel-stars" style="color:${info.cor}">${stars}</div>
       </div>
 
       <div class="profile-name">${nome}</div>
@@ -166,9 +255,46 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
           <div class="info-label">Nº CHAMADA</div>
           <div class="info-value" style="font-size:.85rem">${profile.numero_chamada || '—'}</div>
         </div>
+        <div class="info-box">
+          <div class="info-label">PONTUAÇÃO</div>
+          <div class="info-value" style="color:var(--gold-b)">${pontos} pts</div>
+        </div>
+        <div class="info-box">
+          <div class="info-label">NÍVEL</div>
+          <div class="info-value" style="color:${info.cor}">${nivel} / 5</div>
+        </div>
       </div>
+
+      <div style="margin-bottom:1.1rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem">
+          <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;color:var(--text-d)">PROGRESSO</span>
+          <span style="font-family:'Cinzel',serif;font-size:.5rem;color:var(--text-d)">${nivel < 5 ? proxTxt : '⚜ NÍVEL MÁXIMO ⚜'}</span>
+        </div>
+        <div class="level-bar-wrap">
+          <div class="level-bar-fill" style="width:${prog}%"></div>
+        </div>
+      </div>
+
+      <div class="quiz-section">
+        <div class="quiz-title">DESEMPENHO NOS QUIZZES</div>
+        <div class="quiz-grid">
+          <div class="quiz-stat"><div class="quiz-stat-val">${totalQuizzes}</div><div class="quiz-stat-lbl">QUIZZES</div></div>
+          <div class="quiz-stat"><div class="quiz-stat-val">${totalCorrect}</div><div class="quiz-stat-lbl">ACERTOS</div></div>
+          <div class="quiz-stat"><div class="quiz-stat-val">${accuracy}%</div><div class="quiz-stat-lbl">PRECISÃO</div></div>
+        </div>
+      </div>
+
+      ${showMsgBtn ? '<button class="btn-msg" id="btn-msg" onclick="openChat()">✉ ENVIAR MENSAGEM</button>' : ''}
     </div>
   `;
+
+  window.openChat = function() {
+    if (!session) {
+      window.location.href = 'login.html';
+      return;
+    }
+    window.location.href = 'chat.html?with=' + userId;
+  };
 }());
 </script>
 </body>

@@ -319,8 +319,19 @@ function handleKey(e){
   const monitorMode = isAdmin && !!peerId; // admin monitorando conversa entre otherId e peerId
 
   /* ── Carregar perfil do "outro" ── */
-  const { data: otherProfile } = await db.from('profiles')
+  let otherProfile = null;
+  const { data: profileData } = await db.from('profiles')
     .select('nome_completo,avatar_url,nivel').eq('id', otherId).single();
+
+  if (profileData) {
+    otherProfile = profileData;
+  } else {
+    // Fallback: busca na tabela alunos (custom-auth)
+    const { data: alunoData } = await db.rpc('get_aluno_public', { p_id: otherId });
+    if (alunoData && alunoData.length > 0) {
+      otherProfile = { nome_completo: alunoData[0].nome_completo, avatar_url: alunoData[0].avatar_url, nivel: 0 };
+    }
+  }
 
   if (!otherProfile) { showToast('Escudeiro não encontrado'); history.back(); return; }
 

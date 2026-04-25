@@ -197,15 +197,21 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     .eq('id', userId)
     .single();
 
-  if (error || !profile || profile.role !== 'aluno') { notFound(); return; }
+  if (error || !profile) { notFound(); return; }
 
-  // Busca quiz results
-  const { data: quizzes } = await db
-    .from('quiz_results')
-    .select('correct,total,submitted_at')
-    .eq('user_id', userId);
+  const isAdmin = profile.role === 'admin';
 
-  const nivel  = profile.nivel  || 1;
+  // Busca quiz results (apenas para alunos)
+  let quizzes = [];
+  if (!isAdmin) {
+    const { data: qData } = await db
+      .from('quiz_results')
+      .select('correct,total,submitted_at')
+      .eq('user_id', userId);
+    quizzes = qData || [];
+  }
+
+  const nivel  = profile.nivel  || 0;
   const pontos = profile.pontos || 0;
   const info   = window.getNivelInfo(nivel);
   const stars  = window.getNivelStars(nivel);
@@ -217,33 +223,48 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase()
     : (parts[0] ? parts[0][0].toUpperCase() : '?');
 
-  const totalQuizzes  = quizzes ? quizzes.length : 0;
-  const totalCorrect  = quizzes ? quizzes.reduce((s,q)=>s+q.correct,0) : 0;
-  const totalQuest    = quizzes ? quizzes.reduce((s,q)=>s+q.total,0)   : 0;
+  const totalQuizzes  = quizzes.length;
+  const totalCorrect  = quizzes.reduce((s,q)=>s+q.correct,0);
+  const totalQuest    = quizzes.reduce((s,q)=>s+q.total,0);
   const accuracy      = totalQuest > 0 ? Math.round(totalCorrect/totalQuest*100) : 0;
 
-  const frameUrl = nivel > 0 ? '../assets/images/frames/frame-nivel-' + nivel + '.png' : '';
+  const frameUrl = (!isAdmin && nivel > 0) ? '../assets/images/frames/frame-nivel-' + nivel + '.png' : '';
   const avatarInner = profile.avatar_url
     ? '<img src="' + profile.avatar_url + '" alt="' + nome + '">'
     : initials;
 
-  main.innerHTML = `
-    <div class="pergaminho" id="pergaminho">
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
+  const badgeHtml = isAdmin
+    ? `<div class="nivel-badge" style="color:#f0d060;border:1px solid rgba(240,208,96,.5);background:rgba(240,208,96,.07)">MESTRE</div>`
+    : `<div class="nivel-badge nivel-badge-${nivel}">${info.nome.toUpperCase()}</div>
+       <div class="nivel-stars" style="color:${info.cor}">${stars}</div>`;
 
-      <div class="avatar-section">
-        <div class="avatar-wrap">
-          <div class="avatar-ring frame-nivel-${nivel}" id="avatar-ring">${avatarInner}</div>
-          ${frameUrl ? '<img class="avatar-frame-img" src="' + frameUrl + '" alt="">' : ''}
+  const statsHtml = isAdmin ? '' : `
+      <div style="margin-bottom:1.1rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem">
+          <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;color:var(--text-d)">PROGRESSO</span>
+          <span style="font-family:'Cinzel',serif;font-size:.5rem;color:var(--text-d)">${nivel < 5 ? proxTxt : '⚜ NÍVEL MÁXIMO ⚜'}</span>
         </div>
-        <div class="nivel-badge nivel-badge-${nivel}">${info.nome.toUpperCase()}</div>
-        <div class="nivel-stars" style="color:${info.cor}">${stars}</div>
+        <div class="level-bar-wrap">
+          <div class="level-bar-fill" style="width:${prog}%"></div>
+        </div>
       </div>
+      <div class="quiz-section">
+        <div class="quiz-title">DESEMPENHO NOS QUIZZES</div>
+        <div class="quiz-grid">
+          <div class="quiz-stat"><div class="quiz-stat-val">${totalQuizzes}</div><div class="quiz-stat-lbl">QUIZZES</div></div>
+          <div class="quiz-stat"><div class="quiz-stat-val">${totalCorrect}</div><div class="quiz-stat-lbl">ACERTOS</div></div>
+          <div class="quiz-stat"><div class="quiz-stat-val">${accuracy}%</div><div class="quiz-stat-lbl">PRECISÃO</div></div>
+        </div>
+      </div>`;
 
-      <div class="profile-name">${nome}</div>
-
-      <div class="info-grid">
+  const infoGridHtml = isAdmin
+    ? `<div class="info-grid" style="grid-template-columns:1fr">
+        <div class="info-box">
+          <div class="info-label">FUNÇÃO</div>
+          <div class="info-value">Professor / Administrador</div>
+        </div>
+       </div>`
+    : `<div class="info-grid">
         <div class="info-box">
           <div class="info-label">SÉRIE</div>
           <div class="info-value" style="font-size:.85rem">${profile.serie || '—'}</div>
@@ -260,41 +281,32 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
           <div class="info-label">NÍVEL</div>
           <div class="info-value" style="color:${info.cor}">${nivel} / 5</div>
         </div>
+       </div>`;
+
+  main.innerHTML = `
+    <div class="pergaminho" id="pergaminho">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+
+      <div class="avatar-section">
+        <div class="avatar-wrap">
+          <div class="avatar-ring frame-nivel-${nivel}" id="avatar-ring">${avatarInner}</div>
+          ${frameUrl ? '<img class="avatar-frame-img" src="' + frameUrl + '" alt="">' : ''}
+        </div>
+        ${badgeHtml}
       </div>
 
-      <div style="margin-bottom:1.1rem">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem">
-          <span style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.12em;color:var(--text-d)">PROGRESSO</span>
-          <span style="font-family:'Cinzel',serif;font-size:.5rem;color:var(--text-d)">${nivel < 5 ? proxTxt : '⚜ NÍVEL MÁXIMO ⚜'}</span>
-        </div>
-        <div class="level-bar-wrap">
-          <div class="level-bar-fill" style="width:${prog}%"></div>
-        </div>
-      </div>
+      <div class="profile-name">${nome}</div>
 
-      <div class="quiz-section">
-        <div class="quiz-title">DESEMPENHO NOS QUIZZES</div>
-        <div class="quiz-grid">
-          <div class="quiz-stat">
-            <div class="quiz-stat-val">${totalQuizzes}</div>
-            <div class="quiz-stat-lbl">QUIZZES</div>
-          </div>
-          <div class="quiz-stat">
-            <div class="quiz-stat-val">${totalCorrect}</div>
-            <div class="quiz-stat-lbl">ACERTOS</div>
-          </div>
-          <div class="quiz-stat">
-            <div class="quiz-stat-val">${accuracy}%</div>
-            <div class="quiz-stat-lbl">PRECISÃO</div>
-          </div>
-        </div>
-      </div>
+      ${infoGridHtml}
+      ${statsHtml}
 
       <button class="btn-msg" id="btn-msg" onclick="openChat()">
         ✉ ENVIAR MENSAGEM
       </button>
     </div>
   `;
+
   /* ── Verifica sessao atual para o botao de mensagem ── */
   const { data: { session } } = await db.auth.getSession();
   const viewerId = session?.user?.id;
