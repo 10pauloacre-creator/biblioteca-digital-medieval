@@ -289,16 +289,12 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
     showToast('Não podes enviar mensagem a ti mesmo','err');history.back();return;
   }
 
-  /* ── Perfil do peer ── */
+  /* ── Perfil do peer (otherId) ── */
   let peerName, peerAvatar;
   try{
     const {data:peerP} = await db.from('profiles').select('nome_completo,avatar_url').eq('id',otherId).maybeSingle();
-    if(peerP){
-      peerName   = peerP.nome_completo;
-      peerAvatar = peerP.avatar_url;
-    }
+    if(peerP){ peerName = peerP.nome_completo; peerAvatar = peerP.avatar_url; }
   }catch(e){}
-  // Se não estava em profiles, busca em alunos via RPC (anon-safe)
   if(!peerName){
     try{
       const {data:peerA} = await db.rpc('get_aluno_public',{p_id:otherId});
@@ -307,6 +303,21 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
     }catch(e){}
   }
   if(!peerName){showToast('Escudeiro não encontrado','err');history.back();return;}
+
+  /* ── Perfil do segundo aluno (peerId) — apenas modo vigilância ── */
+  let peerBName = '';
+  if(monitorMode && peerId){
+    try{
+      const {data:pBP} = await db.from('profiles').select('nome_completo').eq('id',peerId).maybeSingle();
+      if(pBP) peerBName = pBP.nome_completo;
+    }catch(e){}
+    if(!peerBName){
+      try{
+        const {data:pBA} = await db.rpc('get_aluno_public',{p_id:peerId});
+        peerBName = pBA?.[0]?.nome_completo || 'Escudeiro B';
+      }catch(e){ peerBName = 'Escudeiro B'; }
+    }
+  }
 
   /* ── Renderizar header ── */
   const initials = peerName.split(' ').filter(Boolean)
@@ -376,12 +387,16 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
 
     let q;
     if(monitorMode){
+      // .in() + .in() = sender IN (A,B) AND receiver IN (A,B) → conversa entre A e B
       q=db.from('chat_messages').select('*')
-        .or(`and(sender_id.eq.${otherId},receiver_id.eq.${peerId}),and(sender_id.eq.${peerId},receiver_id.eq.${otherId})`)
+        .in('sender_id',[otherId,peerId])
+        .in('receiver_id',[otherId,peerId])
         .order('created_at',{ascending:true});
     } else {
+      // sender IN (me,other) AND receiver IN (me,other) → conversa entre mim e outro
       q=db.from('chat_messages').select('*')
-        .or(`and(sender_id.eq.${myId},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${myId})`)
+        .in('sender_id',[myId,otherId])
+        .in('receiver_id',[myId,otherId])
         .order('created_at',{ascending:true});
     }
     const {data:msgs,error}=await q;
@@ -431,7 +446,7 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
 
   function updateMessageEl(el,msg){
     const isSent = !monitorMode && msg.sender_id===myId;
-    const senderLabel = monitorMode?`<div class="msg-sender">${msg.sender_id===otherId?peerName:myName}</div>`:'';
+    const senderLabel = monitorMode?`<div class="msg-sender">${msg.sender_id===otherId?peerName:peerBName}</div>`:'';
     const time = fmtTime(msg.created_at);
     const edited = msg.edited_at?`<span class="msg-edited">· editado</span>`:'';
     const readIcon = isSent&&msg.read_at?'<span class="msg-read">✓✓</span>':'';
