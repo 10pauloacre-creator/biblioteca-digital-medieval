@@ -18,24 +18,34 @@
 
   var db = null;
   var userId = null;
+  var _pendingResults = []; // fila para resultados que chegam antes do userId estar pronto
 
   /* ── Init Supabase ── */
   function initSupa() {
     if (typeof supabase === 'undefined') return;
     var client = supabase.createClient(SUPA_URL, SUPA_ANON);
     db = client;
+
+    // Tenta primeiro via localStorage (custom-auth) — síncrono, sem espera
+    try {
+      var al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+      if (al && al.id) userId = al.id;
+    } catch(e) {}
+
+    // Confirma/sobrescreve com sessão Supabase Auth se existir
     client.auth.getSession().then(function (res) {
       var session = res && res.data && res.data.session;
-      if (session) {
+      if (session && session.user && session.user.id) {
         userId = session.user.id;
-      } else {
-        // Aluno com custom-auth (sem sessão Supabase)
-        try {
-          var al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
-          if (al && al.id) userId = al.id;
-        } catch(e) {}
       }
-    }).catch(function () {});
+      // Flush resultados que ficaram na fila enquanto aguardava userId
+      if (userId && _pendingResults.length) {
+        var pending = _pendingResults.splice(0);
+        pending.forEach(function(p) { _doSend(p); });
+      }
+    }).catch(function(e) {
+      console.warn('[BDM Quiz] getSession erro:', e);
+    });
   }
 
   /* ── Book label from page title ── */
@@ -58,18 +68,37 @@
 
   /* ── Send result to Supabase ── */
   function sendResult(quizId, quizLabelStr, correct, total, answers) {
+    if (!db) return;
+    var payload = { quizId: quizId, quizLabelStr: quizLabelStr, correct: correct, total: total, answers: answers };
+    if (!userId) {
+      // userId ainda não resolveu (getSession assíncrono) — enfileira
+      _pendingResults.push(payload);
+      return;
+    }
+    _doSend(payload);
+  }
+
+  function _doSend(p) {
     if (!db || !userId) return;
     db.from('quiz_results').upsert({
-      user_id:       userId,
-      book_path:     bookPath,
-      book_label:    bookLabel(),
-      quiz_id:       quizId,
-      quiz_label:    quizLabelStr,
-      correct:       correct,
-      total:         total,
-      answers:       answers,
-      completed_at:  new Date().toISOString()
-    }, { onConflict: 'user_id,book_path,quiz_id' }).then(function () {}).catch(function () {});
+      user_id:      userId,
+      book_path:    bookPath,
+      book_label:   bookLabel(),
+      quiz_id:      p.quizId,
+      quiz_label:   p.quizLabelStr,
+      correct:      p.correct,
+      total:        p.total,
+      answers:      p.answers,
+      completed_at: new Date().toISOString()
+    }, { onConflict: 'user_id,book_path,quiz_id' })
+    .then(function(res) {
+      if (res && res.error) {
+        console.error('[BDM Quiz] Erro ao salvar resultado:', res.error.message, res.error);
+      }
+    })
+    .catch(function(e) {
+      console.error('[BDM Quiz] Falha de rede ao salvar resultado:', e);
+    });
   }
 
   /* ── Collect answers from a quiz container ── */
