@@ -274,8 +274,11 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
     myName   = alunoLocal.nome_completo;
     myRole   = 'aluno';
     isAdmin  = false;
-    const {data:av} = await db.from('alunos').select('avatar_url').eq('id',myId).maybeSingle();
-    myAvatar = av?.avatar_url;
+    // avatar já vem no localStorage; tenta atualizar via RPC (anon-safe)
+    try{
+      const {data:av}=await db.rpc('get_aluno_public',{p_id:myId});
+      myAvatar = av?.[0]?.avatar_url || null;
+    }catch(e){ myAvatar = null; }
   } else {
     location.href='login.html';return;
   }
@@ -288,14 +291,20 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
 
   /* ── Perfil do peer ── */
   let peerName, peerAvatar;
-  const {data:peerP} = await db.from('profiles').select('nome_completo,avatar_url').eq('id',otherId).maybeSingle();
-  if(peerP){
-    peerName   = peerP.nome_completo;
-    peerAvatar = peerP.avatar_url;
-  } else {
-    const {data:peerA} = await db.from('alunos').select('nome_completo,avatar_url').eq('id',otherId).maybeSingle();
-    peerName   = peerA?.nome_completo;
-    peerAvatar = peerA?.avatar_url;
+  try{
+    const {data:peerP} = await db.from('profiles').select('nome_completo,avatar_url').eq('id',otherId).maybeSingle();
+    if(peerP){
+      peerName   = peerP.nome_completo;
+      peerAvatar = peerP.avatar_url;
+    }
+  }catch(e){}
+  // Se não estava em profiles, busca em alunos via RPC (anon-safe)
+  if(!peerName){
+    try{
+      const {data:peerA} = await db.rpc('get_aluno_public',{p_id:otherId});
+      peerName   = peerA?.[0]?.nome_completo;
+      peerAvatar = peerA?.[0]?.avatar_url;
+    }catch(e){}
   }
   if(!peerName){showToast('Escudeiro não encontrado','err');history.back();return;}
 
