@@ -1,10 +1,12 @@
 /* ================================================================
    quiz-supabase.js — Biblioteca Digital Medieval
-   Funcionalidades:
-   1. Aviso obrigatório antes do primeiro clique em cada quiz
-   2. Quiz realizado UMA vez — travamento local + Supabase
-   3. Envio automático de resultados ao professor (Supabase)
-   4. Remove botões "Tentar novamente" / "Refazer"
+   Estratégia de envio:
+   1. Ao concluir o quiz: salva resultado em localStorage IMEDIATAMENTE
+   2. Tenta enviar ao Supabase em segundo plano
+   3. Se falhou (offline, erro de auth): ao abrir o livro de novo,
+      detecta resultados pendentes e tenta reenviar automaticamente
+   4. Aviso obrigatório antes do primeiro clique em cada quiz
+   5. Remove botões "Tentar novamente" / "Refazer"
    ================================================================ */
 (function () {
   'use strict';
@@ -13,12 +15,11 @@
   var SUPA_URL  = 'https://vgceathgwvtmjxbdpecr.supabase.co';
   var SUPA_ANON = 'sb_publishable_ba-g-ww4KwM2Wq0x2vsGVg_x_9pTqUQ';
 
-  var bookPath  = window.location.pathname;
-  var LOCK_PRE  = 'bdm-qdone::' + bookPath + '::';
+  var bookPath = window.location.pathname;
+  var LOCK_PRE = 'bdm-qdone::' + bookPath + '::';
 
-  var db = null;
+  var db     = null;
   var userId = null;
-  var _pendingResults = []; // fila para resultados que chegam antes do userId estar pronto
 
   /* ── Init Supabase ── */
   function initSupa() {
@@ -26,112 +27,192 @@
     var client = supabase.createClient(SUPA_URL, SUPA_ANON);
     db = client;
 
-    // Tenta primeiro via localStorage (custom-auth) — síncrono, sem espera
+    // Lê userId via custom-auth de forma síncrona (sem esperar Promise)
     try {
       var al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
       if (al && al.id) userId = al.id;
     } catch(e) {}
 
-    // Confirma/sobrescreve com sessão Supabase Auth se existir
-    client.auth.getSession().then(function (res) {
-      var session = res && res.data && res.data.session;
-      if (session && session.user && session.user.id) {
-        userId = session.user.id;
-      }
-      // Flush resultados que ficaram na fila enquanto aguardava userId
-      if (userId && _pendingResults.length) {
-        var pending = _pendingResults.splice(0);
-        pending.forEach(function(p) { _doSend(p); });
-      }
-    }).catch(function(e) {
-      console.warn('[BDM Quiz] getSession erro:', e);
+    // Sobrescreve com Supabase Auth se houver sessão ativa
+    client.auth.getSession().then(function(res) {
+      var s = res && res.data && res.data.session;
+      if (s && s.user && s.user.id) userId = s.user.id;
+
+      // Após ter o userId, tenta reenviar resultados que ficaram pendentes
+      if (userId) setTimeout(retrySyncPending, 800);
+    }).catch(function() {
+      if (userId) setTimeout(retrySyncPending, 800);
     });
   }
 
-  /* ── Book label from page title ── */
+  /* ── Book label ── */
   function bookLabel() {
     var t = document.title || '';
-    var parts = t.split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+    var parts = t.split('|').map(function(s) { return s.trim(); }).filter(Boolean);
     if (parts.length >= 2) return parts.slice(1).join(' · ');
     var m = bookPath.match(/livros\/(\d+)-serie\/([^\/]+)\/(\d+)-bimestre/);
-    if (m) return m[1] + 'ª Série · ' + m[2].replace(/-/g, ' ') + ' · ' + m[3] + 'º Bimestre';
+    if (m) return m[1] + 'ª Série · ' + m[2].replace(/-/g,' ') + ' · ' + m[3] + 'º Bimestre';
     return bookPath;
   }
 
-  /* ── Lock storage ── */
+  /* ════════════════════════════════════════════════════════════
+     LOCK STORAGE — armazena resultado junto com o travamento
+     Formato novo: { done:1, correct:N, total:M, label:'...', synced:false }
+     Formato antigo (legado): '1' — detectado e migrado
+  ════════════════════════════════════════════════════════════ */
   function isLocked(quizKey) {
-    try { return localStorage.getItem(LOCK_PRE + quizKey) === '1'; } catch(e) { return false; }
-  }
-  function setLocked(quizKey) {
-    try { localStorage.setItem(LOCK_PRE + quizKey, '1'); } catch(e) {}
-  }
-
-  /* ── Send result to Supabase ── */
-  function sendResult(quizId, quizLabelStr, correct, total, answers) {
-    if (!db) return;
-    var payload = { quizId: quizId, quizLabelStr: quizLabelStr, correct: correct, total: total, answers: answers };
-    if (!userId) {
-      // userId ainda não resolveu (getSession assíncrono) — enfileira
-      _pendingResults.push(payload);
-      return;
-    }
-    _doSend(payload);
+    try {
+      var v = localStorage.getItem(LOCK_PRE + quizKey);
+      if (!v) return false;
+      if (v === '1') return true;
+      var obj = JSON.parse(v);
+      return !!(obj && obj.done);
+    } catch(e) { return false; }
   }
 
-  function _doSend(p) {
+  function getLockData(quizKey) {
+    try {
+      var v = localStorage.getItem(LOCK_PRE + quizKey);
+      if (!v) return null;
+      if (v === '1') return { done: 1, correct: null, total: null, synced: false, legacy: true };
+      return JSON.parse(v);
+    } catch(e) { return null; }
+  }
+
+  function setLocked(quizKey, correct, total, label, synced) {
+    try {
+      localStorage.setItem(LOCK_PRE + quizKey, JSON.stringify({
+        done:    1,
+        correct: correct != null ? correct : 0,
+        total:   total   != null ? total   : 0,
+        label:   label   || quizKey,
+        synced:  !!synced
+      }));
+    } catch(e) {}
+  }
+
+  function markSynced(quizKey) {
+    try {
+      var data = getLockData(quizKey);
+      if (data) {
+        data.synced = true;
+        data.legacy = false;
+        localStorage.setItem(LOCK_PRE + quizKey, JSON.stringify(data));
+      }
+    } catch(e) {}
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     ENVIO AO SUPABASE
+  ════════════════════════════════════════════════════════════ */
+  function _doSend(quizId, label, correct, total, answers, onSuccess) {
     if (!db || !userId) return;
     db.from('quiz_results').upsert({
       user_id:      userId,
       book_path:    bookPath,
       book_label:   bookLabel(),
-      quiz_id:      p.quizId,
-      quiz_label:   p.quizLabelStr,
-      correct:      p.correct,
-      total:        p.total,
-      answers:      p.answers,
+      quiz_id:      quizId,
+      quiz_label:   label || quizId,
+      correct:      correct  || 0,
+      total:        total    || 0,
+      answers:      answers  || [],
       completed_at: new Date().toISOString()
     }, { onConflict: 'user_id,book_path,quiz_id' })
     .then(function(res) {
-      if (res && res.error) {
-        console.error('[BDM Quiz] Erro ao salvar resultado:', res.error.message, res.error);
-      }
+      if (res && res.error) return; // erro RLS/rede — tenta novamente na próxima abertura
+      if (onSuccess) onSuccess();
     })
-    .catch(function(e) {
-      console.error('[BDM Quiz] Falha de rede ao salvar resultado:', e);
+    .catch(function() {}); // silencioso — retry automático na próxima abertura
+  }
+
+  /* Chamado quando um quiz é concluído agora */
+  function sendResult(quizId, label, correct, total, answers) {
+    // 1. Salva no localStorage IMEDIATAMENTE (não perde mesmo offline)
+    setLocked(quizId, correct, total, label, false);
+
+    // 2. Tenta enviar ao Supabase
+    if (!db || !userId) return;
+    _doSend(quizId, label, correct, total, answers, function() {
+      markSynced(quizId);
     });
   }
 
-  /* ── Collect answers from a quiz container ── */
+  /* ════════════════════════════════════════════════════════════
+     RETRY AUTOMÁTICO — verifica quais locks não foram sincronizados
+     e reenvia ao Supabase ao abrir o livro novamente
+  ════════════════════════════════════════════════════════════ */
+  function retrySyncPending() {
+    if (!db || !userId) return;
+
+    // Coleta todos os quizzes deste livro que estão travados mas não sincronizados
+    var pending = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (!key || key.indexOf(LOCK_PRE) !== 0) continue;
+        var quizId = key.slice(LOCK_PRE.length);
+        var data   = getLockData(quizId);
+        if (data && data.done && !data.synced) {
+          pending.push({ quizId: quizId, data: data });
+        }
+      }
+    } catch(e) {}
+
+    if (!pending.length) return;
+
+    // Busca quais já existem no Supabase para este usuário + livro
+    db.from('quiz_results')
+      .select('quiz_id')
+      .eq('user_id',   userId)
+      .eq('book_path', bookPath)
+      .then(function(res) {
+        var saved = {};
+        ((res && res.data) || []).forEach(function(r) { saved[r.quiz_id] = true; });
+
+        pending.forEach(function(item) {
+          if (saved[item.quizId]) {
+            // Já existe — apenas marca como sincronizado localmente
+            markSynced(item.quizId);
+            return;
+          }
+          // Não existe — reenvia
+          var d = item.data;
+          _doSend(
+            item.quizId,
+            d.label || item.quizId,
+            d.correct != null ? d.correct : 0,
+            d.total   != null ? d.total   : 0,
+            [],
+            function() { markSynced(item.quizId); }
+          );
+        });
+      })
+      .catch(function() {});
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     COLETAR RESPOSTAS DO DOM
+  ════════════════════════════════════════════════════════════ */
   function collectAnswers(container) {
     if (!container) return { answers: [], correct: 0, total: 0 };
     var answers = [];
     var correct = 0;
 
-    /* Pattern A: .mc-q[data-answered] with .qmc-opt.correct/.wrong */
     var mqCards = container.querySelectorAll('.mc-q[data-answered], .mc-q.answered, .qmc-card.answered');
-    if (mqCards.length === 0) {
-      /* Pattern B: any .answered card */
-      mqCards = container.querySelectorAll('.answered[id]');
-    }
+    if (!mqCards.length) mqCards = container.querySelectorAll('.answered[id]');
 
-    mqCards.forEach(function (card) {
-      /* Student was wrong if any option has class 'wrong' */
-      var wasWrong = !!(
-        card.querySelector('.qmc-opt.wrong, .qmc-opt.mc-wrong, .qmc-opt.sel-wrong, button.wrong')
-      );
+    mqCards.forEach(function(card) {
+      var wasWrong = !!(card.querySelector('.qmc-opt.wrong, .qmc-opt.mc-wrong, .qmc-opt.sel-wrong, button.wrong'));
       answers.push({ questionId: card.id, correct: !wasWrong });
       if (!wasWrong) correct++;
     });
 
-    /* Pattern C: .mc-group (checkMC books) */
-    if (answers.length === 0) {
-      var groups = container.querySelectorAll('.mc-group');
-      groups.forEach(function (g, i) {
+    if (!answers.length) {
+      container.querySelectorAll('.mc-group').forEach(function(g, i) {
         var hasWrong   = !!g.querySelector('.mc-opt.mc-wrong');
         var hasCorrect = !!g.querySelector('.mc-opt.mc-correct');
-        var answered   = hasWrong || hasCorrect;
-        if (answered) {
-          answers.push({ questionId: g.id || ('q' + i), correct: hasCorrect && !hasWrong });
+        if (hasWrong || hasCorrect) {
+          answers.push({ questionId: g.id || ('q'+i), correct: hasCorrect && !hasWrong });
           if (hasCorrect && !hasWrong) correct++;
         }
       });
@@ -140,26 +221,24 @@
     return { answers: answers, correct: correct, total: answers.length };
   }
 
-  /* ── Quiz label from container ── */
   function getQuizLabel(container) {
     if (!container) return 'Quiz';
-    var titleEl = container.querySelector('.quiz-title, .bloco-title, h3');
-    if (titleEl) return titleEl.textContent.trim().replace(/^[\s📊📚⚔️🏰🎨]+/, '').trim();
+    var el = container.querySelector('.quiz-title, .bloco-title, h3');
+    if (el) return el.textContent.trim().replace(/^[\s📊📚⚔️🏰🎨]+/, '').trim();
     return container.id || 'Quiz';
   }
 
-  /* ── Lock a quiz section UI ── */
+  /* ════════════════════════════════════════════════════════════
+     TRAVAR SEÇÃO NA UI
+  ════════════════════════════════════════════════════════════ */
   function lockSection(container) {
     if (!container) return;
-    /* Disable all option buttons */
-    container.querySelectorAll('.qmc-opt, .mc-opt, .ativ-mc-opt, .quiz-opt').forEach(function (btn) {
+    container.querySelectorAll('.qmc-opt, .mc-opt, .ativ-mc-opt, .quiz-opt').forEach(function(btn) {
       btn.disabled = true;
     });
-    /* Remove all retry/reset buttons */
     container.querySelectorAll(
       '.qrb-retry, .qr-retry, [onclick*="retryQuiz"], [onclick*="resetQuiz"], [onclick*="retryBlocoQuiz"], [onclick*="retryQuizF"]'
-    ).forEach(function (btn) { btn.remove(); });
-    /* Add "done" notice if not already there */
+    ).forEach(function(btn) { btn.remove(); });
     if (!container.querySelector('.bdm-done-notice')) {
       var notice = document.createElement('div');
       notice.className = 'bdm-done-notice';
@@ -171,7 +250,9 @@
     }
   }
 
-  /* ── Warning modal ── */
+  /* ════════════════════════════════════════════════════════════
+     MODAL DE AVISO
+  ════════════════════════════════════════════════════════════ */
   var warnedKeys = {};
 
   function showWarning(quizKey, onConfirm) {
@@ -206,168 +287,156 @@
       '</div>';
 
     document.body.appendChild(overlay);
-    overlay.querySelector('#bdm-warn-yes').onclick = function () { overlay.remove(); onConfirm(); };
-    overlay.querySelector('#bdm-warn-no').onclick  = function () { overlay.remove(); };
-    overlay.onclick = function (e) { if (e.target === overlay) overlay.remove(); };
+    overlay.querySelector('#bdm-warn-yes').onclick = function() { overlay.remove(); onConfirm(); };
+    overlay.querySelector('#bdm-warn-no').onclick  = function() { overlay.remove(); };
+    overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
   }
 
-  /* ── Find quiz section key for a given element ── */
+  /* ════════════════════════════════════════════════════════════
+     DETECTAR CONTAINER DO QUIZ
+  ════════════════════════════════════════════════════════════ */
   function getQuizContainer(el) {
-    /* Try: named quiz section (quiz01, b1, c01, q1…) */
     var c = el.closest('[id^="quiz"],[id^="b1"],[id^="b2"],[id^="b3"],[id^="b4"],' +
                        '[id^="bloco"],[id^="c0"],[id^="q1"],[id^="q2"],[id^="q3"],' +
                        '[id^="q4"],[id^="q5"],[id^="q6"],[id^="q7"],[id^="q8"]');
-    if (c) return c;
-    /* Fallback: topico-sec */
-    return el.closest('section[id]');
+    return c || el.closest('section[id]');
   }
 
-  /* ── Click interception (capture phase) ── */
+  /* ════════════════════════════════════════════════════════════
+     INTERCEPTAÇÃO DE CLIQUES
+  ════════════════════════════════════════════════════════════ */
   var confirmedButtons = (typeof WeakSet !== 'undefined') ? new WeakSet() : null;
 
-  document.addEventListener('click', function (e) {
+  document.addEventListener('click', function(e) {
     var btn = e.target.closest
       ? e.target.closest('.qmc-opt, .mc-opt, .ativ-mc-opt, .quiz-opt')
       : null;
     if (!btn) return;
-    /* Already confirmed this click */
     if (confirmedButtons && confirmedButtons.has(btn)) return;
 
     var container = getQuizContainer(btn);
     var quizKey   = container ? container.id : '_page_';
 
-    /* Block if already locked */
     if (isLocked(quizKey)) {
       e.stopImmediatePropagation();
       e.preventDefault();
       return;
     }
 
-    /* Has any question in container already been answered? */
-    var hasAnswered = container && !!(
-      container.querySelector(
-        '.mc-q[data-answered], .mc-q.answered, .qmc-card.answered, .answered[id],' +
-        '.mc-opt.mc-correct, .mc-opt.mc-wrong, .qmc-opt.correct, .qmc-opt.wrong'
-      )
-    );
+    var hasAnswered = container && !!(container.querySelector(
+      '.mc-q[data-answered], .mc-q.answered, .qmc-card.answered, .answered[id],' +
+      '.mc-opt.mc-correct, .mc-opt.mc-wrong, .qmc-opt.correct, .qmc-opt.wrong'
+    ));
+    if (hasAnswered) return;
 
-    if (hasAnswered) return; /* Quiz already started — no warning needed */
-
-    /* Show warning before first answer */
     e.stopImmediatePropagation();
     e.preventDefault();
     var capturedBtn = btn;
-    showWarning(quizKey, function () {
+    showWarning(quizKey, function() {
       if (confirmedButtons) confirmedButtons.add(capturedBtn);
       capturedBtn.click();
     });
   }, true);
 
-  /* ── Handle quiz completion via MutationObserver ── */
+  /* ════════════════════════════════════════════════════════════
+     DETECÇÃO DE CONCLUSÃO DE QUIZ
+  ════════════════════════════════════════════════════════════ */
   function onBannerShown(banner) {
-    /* Find parent quiz container */
     var container = banner.closest(
       '.quiz-section, .quiz-section-f, .bloco-quiz, [id^="quiz"], section[id]'
     ) || banner.parentElement;
 
-    /* Derive quiz key: prefer container ID, fallback to banner ID */
     var quizKey = (container && container.id) ? container.id : banner.id;
-
     if (isLocked(quizKey)) return;
-    setLocked(quizKey);
 
-    var data = collectAnswers(container || banner.parentElement);
+    var data  = collectAnswers(container || banner.parentElement);
     var label = getQuizLabel(container || banner.parentElement);
+
+    // Salva localmente + envia ao Supabase
     sendResult(quizKey, label, data.correct, data.total, data.answers);
 
-    /* Remove retry buttons inside this banner and container */
     var scope = container || banner.parentElement;
     if (scope) {
       scope.querySelectorAll(
         '.qrb-retry, .qr-retry, [onclick*="retryQuiz"], [onclick*="resetQuiz"],' +
         '[onclick*="retryBlocoQuiz"], [onclick*="retryQuizF"]'
-      ).forEach(function (b) { b.remove(); });
+      ).forEach(function(b) { b.remove(); });
     }
   }
 
-  /* ── Handle checkMC books: detect per-section completion ── */
   function checkSectionComplete(section) {
     var groups = section.querySelectorAll('.mc-group');
     if (!groups.length) return;
     var allDone = true;
-    groups.forEach(function (g) {
+    groups.forEach(function(g) {
       if (!g.querySelector('.mc-opt.mc-correct, .mc-opt.mc-wrong')) allDone = false;
     });
     if (!allDone) return;
     var secId = section.id;
     if (isLocked(secId)) return;
-    setLocked(secId);
-    var data = collectAnswers(section);
+    var data  = collectAnswers(section);
     var label = getQuizLabel(section);
     sendResult(secId, label, data.correct, data.total, data.answers);
   }
 
-  window.addEventListener('load', function () {
-    /* ── Disable retry/reset functions ── */
-    ['resetQuiz','retryQuiz','retryQuizF','retryBlocoQuiz'].forEach(function (fn) {
-      if (typeof window[fn] === 'function') window[fn] = function () {};
+  /* ════════════════════════════════════════════════════════════
+     WINDOW LOAD
+  ════════════════════════════════════════════════════════════ */
+  window.addEventListener('load', function() {
+    ['resetQuiz','retryQuiz','retryQuizF','retryBlocoQuiz'].forEach(function(fn) {
+      if (typeof window[fn] === 'function') window[fn] = function() {};
     });
 
-    /* ── Remove existing retry buttons ── */
     document.querySelectorAll(
       '.qrb-retry, .qr-retry, [onclick*="retryQuiz"], [onclick*="resetQuiz"],' +
       '[onclick*="retryBlocoQuiz"], [onclick*="retryQuizF"]'
-    ).forEach(function (btn) { btn.remove(); });
+    ).forEach(function(btn) { btn.remove(); });
 
-    /* ── Lock already-completed sections ── */
-    document.querySelectorAll('[id]').forEach(function (el) {
+    document.querySelectorAll('[id]').forEach(function(el) {
       if (isLocked(el.id)) lockSection(el);
     });
 
-    /* ── MutationObserver: watch result banners ── */
+    /* MutationObserver: banners de resultado */
     var resultBanners = document.querySelectorAll('.quiz-result-banner, .quiz-result');
-    if (resultBanners.length > 0) {
-      var observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mut) {
+    if (resultBanners.length) {
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mut) {
           if (mut.type !== 'attributes' || mut.attributeName !== 'class') return;
-          var el = mut.target;
-          if (el.classList.contains('show')) onBannerShown(el);
+          if (mut.target.classList.contains('show')) onBannerShown(mut.target);
         });
       });
-      resultBanners.forEach(function (banner) {
-        observer.observe(banner, { attributes: true, attributeFilter: ['class'] });
+      resultBanners.forEach(function(b) {
+        observer.observe(b, { attributes: true, attributeFilter: ['class'] });
       });
     }
 
-    /* ── checkMC books: watch for mc-group answers via MutationObserver ── */
+    /* MutationObserver: livros checkMC */
     var mcGroups = document.querySelectorAll('.mc-group');
-    if (mcGroups.length > 0) {
-      var mcObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mut) {
+    if (mcGroups.length) {
+      var mcObs = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mut) {
           var section = mut.target.closest('section[id]');
           if (section) checkSectionComplete(section);
         });
       });
-      mcGroups.forEach(function (g) {
-        mcObserver.observe(g, { subtree: true, attributes: true, attributeFilter: ['class', 'disabled'] });
+      mcGroups.forEach(function(g) {
+        mcObs.observe(g, { subtree: true, attributes: true, attributeFilter: ['class','disabled'] });
       });
     }
 
-    /* ── Wrap showQuizResult / showResult (extra safety for 1-serie/LP) ── */
-    ['showQuizResult', 'showResult'].forEach(function (fnName) {
+    /* Wrap showQuizResult / showResult */
+    ['showQuizResult','showResult'].forEach(function(fnName) {
       var orig = window[fnName];
-      if (typeof orig === 'function') {
-        window[fnName] = function (qId, correct, total) {
-          orig.apply(this, arguments);
-          /* Find the result banner by common ID patterns */
-          var banner = document.getElementById('qr' + (qId || '').replace('quiz', ''))
-                    || document.getElementById('res-' + qId)
-                    || document.getElementById(qId + '_banner')
-                    || document.getElementById(qId + '-banner')
-                    || document.getElementById('qres-' + qId);
-          if (banner) onBannerShown(banner);
-        };
-      }
+      if (typeof orig !== 'function') return;
+      window[fnName] = function(qId, correct, total) {
+        orig.apply(this, arguments);
+        var banner = document.getElementById('qr' + (qId||'').replace('quiz',''))
+                  || document.getElementById('res-' + qId)
+                  || document.getElementById(qId + '_banner')
+                  || document.getElementById(qId + '-banner')
+                  || document.getElementById('qres-' + qId);
+        if (banner) onBannerShown(banner);
+      };
     });
   });
 
