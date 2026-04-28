@@ -28,6 +28,7 @@ GRANT INSERT, UPDATE, SELECT ON public.quiz_results TO authenticated;
 -- ── 5. RLS — recria TODAS as políticas de quiz_results ────────
 DROP POLICY IF EXISTS "alunos_own_results"    ON public.quiz_results;
 DROP POLICY IF EXISTS "admin_read_all"        ON public.quiz_results;
+DROP POLICY IF EXISTS "auth_aluno_all"        ON public.quiz_results;
 DROP POLICY IF EXISTS "custom_aluno_insert"   ON public.quiz_results;
 DROP POLICY IF EXISTS "custom_aluno_select"   ON public.quiz_results;
 DROP POLICY IF EXISTS "custom_aluno_update"   ON public.quiz_results;
