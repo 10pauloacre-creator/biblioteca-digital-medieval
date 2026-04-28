@@ -26,7 +26,15 @@
     db = client;
     client.auth.getSession().then(function (res) {
       var session = res && res.data && res.data.session;
-      if (session) userId = session.user.id;
+      if (session) {
+        userId = session.user.id;
+      } else {
+        // Aluno com custom-auth (sem sessão Supabase)
+        try {
+          var al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+          if (al && al.id) userId = al.id;
+        } catch(e) {}
+      }
     }).catch(function () {});
   }
 
