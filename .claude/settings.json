@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(xargs ls *)",
-      "Bash(awk '{print $NF}')"
+      "Bash(awk '{print $NF}')",
+      "Read(//c/c/Users/PAULO ROBERTO/biblioteca-digital-medieval-1/**)",
+      "Read(//c/c/Users/PAULO ROBERTO/biblioteca-digital-medieval-1/auth/**)"
     ]
   },
   "hooks": {
