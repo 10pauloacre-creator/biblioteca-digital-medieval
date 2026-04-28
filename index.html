@@ -2484,20 +2484,20 @@ window.addEventListener('DOMContentLoaded',()=>{
   };
 
   async function _resolveNames(ids){
-    // Busca nomes em profiles e alunos, retorna mapa id->nome
+    // Busca nomes em profiles (authenticated) e alunos via RPC (anon-safe)
     const map = {};
     try {
       const { data: ps } = await db.from('profiles').select('id,nome_completo').in('id', ids);
       (ps||[]).forEach(p => { map[p.id] = p.nome_completo; });
     } catch(e){}
-    // Para IDs nao encontrados em profiles, busca em alunos
+    // IDs nao encontrados em profiles: usa get_aluno_public (SECURITY DEFINER, funciona com anon)
     const missing = ids.filter(id => !map[id]);
-    if (missing.length > 0){
+    await Promise.all(missing.map(async id => {
       try {
-        const { data: as } = await db.from('alunos').select('id,nome_completo').in('id', missing);
-        (as||[]).forEach(a => { map[a.id] = a.nome_completo; });
+        const { data } = await db.rpc('get_aluno_public', { p_id: id });
+        if (data?.[0]?.nome_completo) map[id] = data[0].nome_completo;
       } catch(e){}
-    }
+    }));
     return map;
   }
 
