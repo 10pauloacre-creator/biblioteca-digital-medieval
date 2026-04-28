@@ -99,6 +99,12 @@
         data.legacy = false;
         localStorage.setItem(LOCK_PRE + quizKey, JSON.stringify(data));
       }
+      // Atualiza texto na UI se o quiz estiver visível
+      var container = document.getElementById(quizKey);
+      if (container) {
+        var notice = container.querySelector('.bdm-done-notice');
+        if (notice) notice.textContent = '✅ Quiz já realizado — resultado enviado ao professor.';
+      }
     } catch(e) {}
   }
 
@@ -119,10 +125,15 @@
       completed_at: new Date().toISOString()
     }, { onConflict: 'user_id,book_path,quiz_id' })
     .then(function(res) {
-      if (res && res.error) return; // erro RLS/rede — tenta novamente na próxima abertura
+      if (res && res.error) {
+        console.error('[BDM quiz] Falha ao salvar resultado:', res.error.message, res.error);
+        return;
+      }
       if (onSuccess) onSuccess();
     })
-    .catch(function() {}); // silencioso — retry automático na próxima abertura
+    .catch(function(err) {
+      console.error('[BDM quiz] Erro de rede ao salvar resultado:', err);
+    });
   }
 
   /* Chamado quando um quiz é concluído agora */
@@ -245,7 +256,11 @@
       notice.style.cssText =
         'background:rgba(0,80,20,.2);border:1px solid #4a9a60;border-radius:10px;' +
         'padding:.7rem 1rem;text-align:center;color:#8effa0;font-size:.82rem;margin:1rem 0;';
-      notice.textContent = '✅ Quiz já realizado — resultado enviado ao professor.';
+      var lockData = getLockData(container.id || '');
+      var synced = lockData && lockData.synced;
+      notice.textContent = synced
+        ? '✅ Quiz já realizado — resultado enviado ao professor.'
+        : '✅ Quiz já realizado — resultado salvo (será sincronizado em breve).';
       container.appendChild(notice);
     }
   }
