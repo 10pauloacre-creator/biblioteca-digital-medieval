@@ -1287,6 +1287,166 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
   background:rgba(6,3,0,.7);padding:2px 8px;border-radius:10px;
   white-space:nowrap;
 }
+
+/* ══════════════════════════════════════
+   MAGO SUPREMO — Avatar Flutuante
+══════════════════════════════════════ */
+#mago-wrapper{
+  position:fixed;bottom:100px;right:16px;
+  z-index:12500;
+  display:none;
+  flex-direction:column;align-items:flex-end;gap:10px;
+}
+#mago-wrapper.visible{display:flex;}
+
+/* Balão de fala */
+#mago-bubble{
+  position:relative;
+  width:min(300px,78vw);
+  background:linear-gradient(160deg,#1e1004,#100801);
+  border:2px solid var(--gold);border-radius:14px;
+  padding:1.1rem 1.2rem 1rem;
+  box-shadow:0 0 40px rgba(201,168,76,.35),0 10px 40px rgba(0,0,0,.85);
+  transform:scale(0);transform-origin:bottom right;
+  transition:transform .38s cubic-bezier(.34,1.56,.64,1),opacity .3s;
+  opacity:0;pointer-events:none;
+}
+#mago-bubble.open{transform:scale(1);opacity:1;pointer-events:all;}
+/* Triângulo do balão apontando para o mago */
+#mago-bubble::after{
+  content:'';position:absolute;
+  bottom:-12px;right:24px;
+  border-left:11px solid transparent;border-right:11px solid transparent;
+  border-top:13px solid var(--gold);
+}
+#mago-bubble::before{
+  content:'';position:absolute;
+  bottom:-9px;right:26px;
+  border-left:9px solid transparent;border-right:9px solid transparent;
+  border-top:11px solid #100801;z-index:1;
+}
+#mago-bubble-header{
+  display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;
+}
+#mago-bubble-icon{font-size:1.3rem;line-height:1;}
+#mago-bubble-title{
+  font-family:'Cinzel Decorative',serif;font-size:.62rem;
+  letter-spacing:.1em;color:var(--gold-l);flex:1;
+  background:linear-gradient(90deg,#f9e3a0,#f2c25c);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+#mago-bubble-close{
+  background:none;border:none;color:var(--text-d);cursor:pointer;
+  font-size:.9rem;line-height:1;padding:2px 4px;transition:color .2s;
+}
+#mago-bubble-close:hover{color:var(--gold);}
+#mago-bubble-sep{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),transparent);
+  margin-bottom:.8rem;
+}
+#mago-bubble-text{
+  font-family:'IM Fell English',serif;font-size:.9rem;line-height:1.6;
+  color:var(--text);margin-bottom:1rem;
+  max-height:180px;overflow-y:auto;
+  white-space:pre-line;
+}
+#mago-btn-ok{
+  width:100%;padding:.6rem;
+  background:linear-gradient(135deg,#c9a84c,#f0d060,#8a6414);
+  border:none;border-radius:6px;
+  font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;
+  letter-spacing:.12em;color:#1a0800;cursor:pointer;
+  transition:all .2s;box-shadow:0 2px 10px rgba(201,168,76,.25);
+}
+#mago-btn-ok:hover{box-shadow:0 4px 20px rgba(201,168,76,.55);transform:translateY(-1px);}
+#mago-btn-ok:disabled{opacity:.55;cursor:default;transform:none;}
+
+/* Figura do Mago */
+#mago-figure{
+  position:relative;width:76px;height:96px;
+  cursor:pointer;pointer-events:all;flex-shrink:0;
+  animation:mago-float 3.8s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px rgba(150,50,255,.55));
+  transition:filter .25s,transform .2s;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+#mago-figure:hover,#mago-figure:active{
+  filter:drop-shadow(0 0 24px rgba(210,100,255,.85));
+  transform:scale(1.08);
+}
+
+/* Chapéu pontudo */
+.mh-cone{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:0;height:0;
+  border-left:21px solid transparent;
+  border-right:21px solid transparent;
+  border-bottom:44px solid #6b0db3;
+  z-index:2;
+}
+.mh-cone::before{
+  content:'★';position:absolute;
+  top:5px;left:-8px;
+  color:#ffd700;font-size:11px;
+  text-shadow:0 0 8px #ffd700,0 0 14px #ffa500;
+  animation:star-pulse 2s ease-in-out infinite;
+}
+.mh-brim{
+  position:absolute;top:36px;left:50%;transform:translateX(-50%);
+  width:56px;height:11px;
+  background:linear-gradient(180deg,#7a0dc8,#5a0a96);
+  border-radius:50%;z-index:2;
+  box-shadow:0 3px 10px rgba(106,13,173,.5);
+}
+/* Corpo/rosto — emoji de mago */
+.mb-emoji{
+  position:absolute;top:38px;left:50%;
+  transform:translateX(-50%);
+  font-size:48px;line-height:1;z-index:1;
+}
+/* Estrelas orbitando */
+.mo-ring{
+  position:absolute;inset:-12px;
+  animation:mago-orbit 5s linear infinite;
+  pointer-events:none;
+}
+.mo-ring2{
+  position:absolute;inset:-6px;
+  animation:mago-orbit 7.5s linear infinite reverse;
+  pointer-events:none;
+}
+.mo-star{
+  position:absolute;color:#ffd700;
+  font-size:9px;
+  text-shadow:0 0 5px #ffd700;
+  opacity:.85;
+}
+/* Ponto vermelho de notificação */
+#mago-dot{
+  position:absolute;top:-3px;right:-3px;
+  width:17px;height:17px;border-radius:50%;
+  background:#ff3333;border:2px solid #080300;
+  box-shadow:0 0 10px #ff4444;
+  display:none;z-index:10;
+  animation:dot-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes mago-float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-11px);}
+}
+@keyframes mago-orbit{
+  from{transform:rotate(0deg);}to{transform:rotate(360deg);}
+}
+@keyframes star-pulse{
+  0%,100%{text-shadow:0 0 8px #ffd700,0 0 14px #ffa500;}
+  50%{text-shadow:0 0 16px #ffe566,0 0 28px #ffd700;}
+}
+@keyframes dot-pulse{
+  0%,100%{box-shadow:0 0 10px #ff4444;}
+  50%{box-shadow:0 0 18px #ff6666,0 0 30px #ff3333;}
+}
 </style>
 </head>
 <body>
@@ -1383,6 +1543,40 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
   <div id="search-wrap">
     <input id="search-input" type="text" placeholder="Pesquisar aluno ou professor…" oninput="doSearch(this.value)" autocomplete="off" autocorrect="off"/>
     <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MAGO SUPREMO — Avatar Flutuante
+════════════════════════════════════════ -->
+<div id="mago-wrapper">
+  <!-- Balão de mensagem -->
+  <div id="mago-bubble">
+    <div id="mago-bubble-header">
+      <span id="mago-bubble-icon">📜</span>
+      <span id="mago-bubble-title">Mensagem do Mago Supremo</span>
+      <button id="mago-bubble-close" onclick="closeMagoBubble()" title="Fechar">✕</button>
+    </div>
+    <div id="mago-bubble-sep"></div>
+    <div id="mago-bubble-text"></div>
+    <button id="mago-btn-ok" onclick="confirmMagoMessage()">✓ Entendido!</button>
+  </div>
+  <!-- Figura do mago -->
+  <div id="mago-figure" onclick="toggleMagoBubble()" title="Mago Supremo">
+    <div class="mh-cone"></div>
+    <div class="mh-brim"></div>
+    <div class="mb-emoji">🧙‍♂️</div>
+    <div class="mo-ring">
+      <span class="mo-star" style="top:50%;left:0;transform:translateY(-50%)">✦</span>
+      <span class="mo-star" style="top:0;left:50%;transform:translateX(-50%)">★</span>
+      <span class="mo-star" style="top:50%;right:0;transform:translateY(-50%)">✦</span>
+      <span class="mo-star" style="bottom:0;left:50%;transform:translateX(-50%)">★</span>
+    </div>
+    <div class="mo-ring2">
+      <span class="mo-star" style="top:15%;left:8%;opacity:.5">✷</span>
+      <span class="mo-star" style="bottom:15%;right:8%;opacity:.5">✷</span>
+    </div>
+    <div id="mago-dot"></div>
   </div>
 </div>
 
@@ -2715,6 +2909,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       hideSplash();
       setAuthImg('assets/images/perfil.png', 'auth/perfil-custom.html?id=' + alunoSession.id);
       initAlunoNotif(alunoSession.id);
+      initMago(alunoSession.id, 'aluno', alunoSession.nome_completo || '');
       if (doIntro || !sessionStorage.getItem('bdm-nav')) {
         window._bdmAfterIntro = () => window._goToSerie(null);
         playIntro();
@@ -2746,6 +2941,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     initNotifications(session);
 
     const isAdmin = localStorage.getItem('bdm-cached-role') === 'admin';
+    if (!isAdmin) initMago(session.user.id, 'profile', null);
 
     if (isAdmin) {
       // Admin: nunca toca intro, vai direto pra landing
@@ -3252,6 +3448,139 @@ async function doSearch(term) {
       </div>
     </a>`;
   }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// MAGO SUPREMO — sistema de mensagens do professor
+// ══════════════════════════════════════════════════════════════
+var _magoMsgId   = null;
+var _magoUserId  = null;
+var _magoUserType= null;
+var _magoNome    = null;
+var _magoBubbleOpen = false;
+
+// Chave pública VAPID — gere com: npx web-push generate-vapid-keys
+// Substitua pelo valor real gerado; enquanto começar com 'GERAR' push é desativado.
+var MAGO_VAPID_PUBLIC_KEY = 'GERAR_COM_npx_web-push_generate-vapid-keys';
+
+async function initMago(userId, userType, nomePassado) {
+  if (!userId) return;
+  _magoUserId   = userId;
+  _magoUserType = userType || 'profile';
+
+  // Busca nome se não foi passado (Supabase Auth)
+  if (!nomePassado && userType === 'profile') {
+    try {
+      const { data: p } = await db.from('profiles')
+        .select('nome_completo').eq('id', userId).single();
+      _magoNome = p?.nome_completo || '';
+    } catch(e) { _magoNome = ''; }
+  } else {
+    _magoNome = nomePassado || '';
+  }
+
+  const wrapper = document.getElementById('mago-wrapper');
+  if (wrapper) wrapper.classList.add('visible');
+
+  await checkMagoMessage();
+  subscribePushMago(); // fire-and-forget
+}
+
+async function checkMagoMessage() {
+  if (!_magoUserId) return;
+  try {
+    const { data: msgs } = await db.from('mago_mensagens')
+      .select('id,titulo,texto')
+      .eq('ativo', true)
+      .order('created_at', { ascending: false })
+      .limit(1);
+    if (!msgs || !msgs.length) return;
+
+    const msg = msgs[0];
+
+    const { data: resp } = await db.from('mago_respostas')
+      .select('id')
+      .eq('mensagem_id', msg.id)
+      .eq('respondente_id', _magoUserId)
+      .limit(1);
+    if (resp && resp.length) return; // já confirmou
+
+    _magoMsgId = msg.id;
+    document.getElementById('mago-bubble-title').textContent = msg.titulo || 'Mensagem do Mago Supremo';
+    document.getElementById('mago-bubble-text').textContent  = msg.texto;
+    document.getElementById('mago-dot').style.display = 'block';
+
+    // Abre o balão automaticamente após 1.6s
+    setTimeout(() => openMagoBubble(), 1600);
+  } catch(e) {}
+}
+
+function openMagoBubble() {
+  const b = document.getElementById('mago-bubble');
+  if (!b) return;
+  b.classList.add('open');
+  _magoBubbleOpen = true;
+}
+
+function closeMagoBubble() {
+  const b = document.getElementById('mago-bubble');
+  if (b) b.classList.remove('open');
+  _magoBubbleOpen = false;
+}
+
+function toggleMagoBubble() {
+  _magoBubbleOpen ? closeMagoBubble() : openMagoBubble();
+}
+
+async function confirmMagoMessage() {
+  if (!_magoMsgId || !_magoUserId) { closeMagoBubble(); return; }
+  const btn = document.getElementById('mago-btn-ok');
+  if (btn) { btn.disabled = true; btn.textContent = '⌛ Confirmando…'; }
+  try {
+    await db.from('mago_respostas').upsert({
+      mensagem_id:     _magoMsgId,
+      respondente_id:  _magoUserId,
+      respondente_nome: _magoNome || ''
+    }, { onConflict: 'mensagem_id,respondente_id' });
+  } catch(e) {}
+
+  closeMagoBubble();
+  document.getElementById('mago-dot').style.display = 'none';
+  _magoMsgId = null;
+  if (btn) { btn.disabled = false; btn.textContent = '✓ Entendido!'; }
+}
+
+async function subscribePushMago() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  if (!_magoUserId) return;
+  if (!MAGO_VAPID_PUBLIC_KEY || MAGO_VAPID_PUBLIC_KEY.startsWith('GERAR')) return;
+
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) {
+      const appKey = _urlBase64ToUint8Array(MAGO_VAPID_PUBLIC_KEY);
+      sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: appKey
+      });
+    }
+    const j = sub.toJSON();
+    await db.from('push_subscriptions').upsert({
+      user_id:   _magoUserId,
+      user_type: _magoUserType,
+      user_nome: _magoNome || '',
+      endpoint:  j.endpoint,
+      p256dh:    j.keys?.p256dh || '',
+      auth_key:  j.keys?.auth   || ''
+    }, { onConflict: 'user_id' });
+  } catch(e) {}
+}
+
+function _urlBase64ToUint8Array(b64) {
+  const pad = '='.repeat((4 - b64.length % 4) % 4);
+  const raw = atob((b64 + pad).replace(/-/g,'+').replace(/_/g,'/'));
+  return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
 }
 </script>
 

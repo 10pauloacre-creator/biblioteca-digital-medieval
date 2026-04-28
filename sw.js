@@ -1,13 +1,14 @@
 // ═══════════════════════════════════════════════════════════════
-// BIBLIOTECA DIGITAL MEDIEVAL — Service Worker v9
+// BIBLIOTECA DIGITAL MEDIEVAL — Service Worker v14
 // Estratégia: cache completo no primeiro acesso
 //   Shell + áudio → pré-cache na instalação
 //   Vídeo/animação → cache em background após install
 //   Livros HTML → pré-cache na instalação + atualização automática
 //   Periodic Background Sync → verifica novos livros 1x/dia
+//   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v13';
+const SW_VERSION   = 'v14';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -367,6 +368,45 @@ async function checkForUpdates() {
     }
   } catch (e) {}
 }
+
+// ═══════════════════════════════════════════════════════════════
+// PUSH NOTIFICATIONS — Mago Supremo
+// ═══════════════════════════════════════════════════════════════
+self.addEventListener('push', event => {
+  let payload = { titulo: 'Mago Supremo', texto: 'Nova mensagem do seu professor!' };
+  try {
+    if (event.data) {
+      const d = event.data.json();
+      payload.titulo = d.titulo || payload.titulo;
+      payload.texto  = d.texto  || payload.texto;
+    }
+  } catch(e) {}
+
+  event.waitUntil(
+    self.registration.showNotification('🧙‍♂️ ' + payload.titulo, {
+      body:    payload.texto,
+      icon:    './assets/icons/icon-192x192.png',
+      badge:   './assets/icons/icon-192x192.png',
+      tag:     'mago-mensagem',
+      renotify: true,
+      data:    { url: './' },
+      actions: [{ action: 'open', title: 'Abrir Biblioteca' }]
+    })
+  );
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = (event.notification.data && event.notification.data.url) || './';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clients => {
+      for (const c of clients) {
+        if (c.url.includes(self.location.origin) && 'focus' in c) return c.focus();
+      }
+      return self.clients.openWindow(target);
+    })
+  );
+});
 
 // ═══════════════════════════════════════════════════════════════
 // MENSAGENS vindas da página
