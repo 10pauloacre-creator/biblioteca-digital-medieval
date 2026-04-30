@@ -335,10 +335,16 @@
         '<div style="font-size:2.2rem;margin-bottom:.6rem">⚠️</div>' +
         '<h3 style="font-family:\'Cinzel\',Georgia,serif;color:#f0d060;font-size:1rem;' +
         'margin-bottom:.7rem;letter-spacing:.06em">ATENÇÃO — QUIZ ÚNICO</h3>' +
-        '<p style="color:#f5e8c0;font-size:.88rem;line-height:1.7;margin-bottom:1.3rem">' +
+        '<p style="color:#f5e8c0;font-size:.88rem;line-height:1.7;margin-bottom:.8rem">' +
         'Este quiz <strong>só pode ser realizado uma única vez</strong>.<br>' +
-        'Responda todas as questões e clique em<br><strong>📨 Enviar Resultado</strong> ao terminar.<br><br>' +
-        'Tem certeza que deseja começar agora?</p>' +
+        'Responda todas as questões e clique em<br><strong>📨 Enviar Resultado</strong> ao terminar.</p>' +
+        '<div style="background:rgba(255,60,60,.12);border:1px solid rgba(255,80,80,.4);' +
+        'border-radius:8px;padding:.65rem .9rem;margin-bottom:1rem;font-size:.78rem;' +
+        'color:#ffbbbb;line-height:1.55;text-align:left;">' +
+        '🚫 <strong>Anti-Cola:</strong> Sair desta aba, trocar de janela ou dividir a tela<br>' +
+        'causará o <strong style="color:#ff6666">cancelamento com 0 pontos</strong>.<br>' +
+        '📸 A tela possui marca d\'água com seu nome.</div>' +
+        '<p style="color:#f5e8c0;font-size:.88rem;margin-bottom:1.3rem">Tem certeza que deseja começar agora?</p>' +
         '<div style="display:flex;gap:.8rem;justify-content:center">' +
           '<button id="bdm-warn-no" style="font-family:\'Cinzel\',Georgia,serif;font-size:.72rem;' +
           'letter-spacing:.08em;padding:.55rem 1.3rem;border-radius:8px;' +
@@ -471,6 +477,258 @@
         if (banner) onBannerShown(banner);
       };
     });
+  });
+
+  /* ════════════════════════════════════════════════════════════
+     MÓDULO DE SEGURANÇA ANTI-COLA v1
+     - Proteção de conteúdo (sem cópia, sem arrastar, sem print)
+     - Marca d'água com nome do aluno
+     - Monitor de quiz: aba oculta / blur / split screen → cancelamento
+     - Intercepta getDisplayMedia (captura de tela via API)
+  ════════════════════════════════════════════════════════════ */
+  var _sec = {
+    v: 0,          // contagem de violações
+    done: false,   // quiz cancelado ou todos enviados
+    on: false,     // quiz em andamento
+    alert: false,  // overlay visível
+    ready: false   // período de graça após load
+  };
+
+  // Período de graça: ignora eventos nos primeiros 2.5s
+  setTimeout(function() { _sec.ready = true; }, 2500);
+
+  // Hook: quiz iniciado (usuário confirma "INICIAR QUIZ")
+  var _swOrig = showWarning;
+  showWarning = function(qk, cb) {
+    _swOrig(qk, function() { _sec.on = true; cb(); });
+  };
+
+  // Hook: quiz enviado — verifica se ainda há quizzes pendentes
+  var _msOrig = markSynced;
+  markSynced = function(k) {
+    _msOrig(k);
+    if (_sec.done) return;
+    setTimeout(function() {
+      var found = false;
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var key = localStorage.key(i);
+          if (key && key.indexOf(LOCK_PRE) === 0) {
+            var d = JSON.parse(localStorage.getItem(key) || 'null');
+            if (d && d.done && !d.synced) { found = true; break; }
+          }
+        }
+      } catch(e) {}
+      if (!found) _sec.on = false;
+    }, 300);
+  };
+
+  /* ── Proteção de Conteúdo ── */
+  (function() {
+    var s = document.createElement('style');
+    s.textContent =
+      'body,body *{-webkit-user-select:none!important;user-select:none!important;' +
+      '-webkit-touch-callout:none!important;}' +
+      'input,textarea{-webkit-user-select:text!important;user-select:text!important;}' +
+      '@media print{body{display:none!important;visibility:hidden!important}}';
+    (document.head || document.documentElement).appendChild(s);
+
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, true);
+    document.addEventListener('dragstart',   function(e) { e.preventDefault(); }, true);
+    document.addEventListener('keydown', function(e) {
+      var k = (e.key || '').toLowerCase();
+      var c = e.ctrlKey || e.metaKey;
+      if (c && 'caaxspuv'.indexOf(k) !== -1 && k.length === 1) { e.preventDefault(); return; }
+      if (k === 'f12' || k === 'printscreen') e.preventDefault();
+    }, true);
+
+    // Intercepta API de captura de tela
+    if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+      navigator.mediaDevices.getDisplayMedia = function() {
+        _secViolate('screen_record', true);
+        return Promise.reject(new DOMException('Not allowed', 'NotAllowedError'));
+      };
+    }
+  })();
+
+  /* ── Marca d'água com nome do aluno ── */
+  function _secWatermark(name) {
+    try {
+      var old = document.getElementById('bdm-wm');
+      if (old) return;
+      var cv = document.createElement('canvas');
+      cv.width = 340; cv.height = 160;
+      var cx = cv.getContext('2d');
+      cx.save();
+      cx.translate(170, 80); cx.rotate(-Math.PI / 7);
+      cx.textAlign = 'center';
+      cx.font = 'bold 15px Arial,sans-serif';
+      cx.fillStyle = 'rgba(180,130,20,0.11)';
+      cx.fillText(name, 0, -4);
+      cx.font = '11px Arial,sans-serif';
+      cx.fillStyle = 'rgba(180,130,20,0.08)';
+      cx.fillText(new Date().toLocaleDateString('pt-BR'), 0, 14);
+      cx.restore();
+      var wm = document.createElement('div');
+      wm.id = 'bdm-wm';
+      wm.setAttribute('aria-hidden', 'true');
+      wm.style.cssText =
+        'position:fixed;inset:0;z-index:9997;pointer-events:none;' +
+        'background:url(' + cv.toDataURL() + ') repeat;background-size:340px 160px;';
+      document.body.appendChild(wm);
+    } catch(e) {}
+  }
+
+  /* ── Overlay de alerta personalizado ── */
+  function _secShowOverlay(msg, fatal) {
+    if (_sec.alert && !fatal) return;
+    var old = document.getElementById('bdm-sec-ov');
+    if (old) old.remove();
+    _sec.alert = true;
+    var ov = document.createElement('div');
+    ov.id = 'bdm-sec-ov';
+    ov.style.cssText =
+      'position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.92);' +
+      'display:flex;align-items:center;justify-content:center;padding:1.2rem;';
+    var clr = fatal ? '#ff4444' : '#f0c040';
+    var ico = fatal ? '🚫' : '⚠️';
+    var tit = fatal ? 'QUIZ CANCELADO' : 'ATIVIDADE SUSPEITA DETECTADA';
+    ov.innerHTML =
+      '<div style="background:linear-gradient(135deg,#1a0000,#2a0800);max-width:400px;width:100%;' +
+      'border:2px solid ' + clr + ';border-radius:14px;padding:2rem 1.8rem;text-align:center;' +
+      'box-shadow:0 0 80px rgba(255,50,50,.5);">' +
+        '<div style="font-size:3.5rem;line-height:1;margin-bottom:.8rem">' + ico + '</div>' +
+        '<h2 style="font-family:Cinzel,Georgia,serif;color:' + clr + ';font-size:.95rem;' +
+        'letter-spacing:.12em;margin-bottom:.9rem">' + tit + '</h2>' +
+        '<div style="color:#f5deb0;font-size:.88rem;line-height:1.75;margin-bottom:1.2rem">' + msg + '</div>' +
+        (fatal ? '' :
+          '<button id="bdm-sec-btn" style="font-family:Cinzel,Georgia,serif;padding:.6rem 2rem;' +
+          'border-radius:8px;border:2px solid #c4860a;background:linear-gradient(135deg,#5a0e0e,#c4860a);' +
+          'color:#fff;font-weight:700;font-size:.75rem;cursor:pointer;letter-spacing:.08em">ENTENDIDO</button>'
+        ) +
+      '</div>';
+    document.body.appendChild(ov);
+    if (!fatal) {
+      var btn = document.getElementById('bdm-sec-btn');
+      if (btn) btn.onclick = function() { ov.remove(); _sec.alert = false; };
+      setTimeout(function() { if (ov.parentNode) { ov.remove(); _sec.alert = false; } }, 7000);
+    }
+  }
+
+  /* ── Cancelar quiz com 0 pontos ── */
+  function _secCancel(reason) {
+    if (_sec.done) return;
+    _sec.done = true; _sec.on = false;
+    var sel =
+      '[id^="quiz"],[id^="b1"],[id^="b2"],[id^="b3"],[id^="b4"],' +
+      '[id^="bloco"],[id^="c0"],[id^="q1"],[id^="q2"],[id^="q3"],[id^="q4"],[id^="q5"]';
+    document.querySelectorAll(sel).forEach(function(c) {
+      if (!c.id) return;
+      var ld = getLockData(c.id);
+      if (ld && ld.synced) return;
+      var tot = c.querySelectorAll('.mc-q,.mc-group').length || (ld && ld.total) || 1;
+      var ans = [{ cancelled: true, reason: reason }];
+      setLocked(c.id, 0, tot, (ld && ld.label) || c.id, ans);
+      lockSection(c);
+      var sw = c.querySelector('.bdm-send-wrap');
+      if (sw) sw.remove();
+      _doSend(c.id, (ld && ld.label) || c.id, 0, tot, ans,
+        function() { _msOrig(c.id); }, function() {});
+      if (!c.querySelector('.bdm-cancelled-notice')) {
+        var n = document.createElement('div');
+        n.className = 'bdm-cancelled-notice';
+        n.style.cssText =
+          'background:rgba(80,0,0,.35);border:2px solid #ff4444;border-radius:10px;' +
+          'padding:.9rem 1.2rem;text-align:center;margin:1rem 0;';
+        n.innerHTML =
+          '<strong style="color:#ff5555;font-family:Cinzel,Georgia,serif;display:block;' +
+          'margin-bottom:.35rem;font-size:.85rem">🚫 QUIZ CANCELADO</strong>' +
+          '<span style="color:#ffaaaa;font-size:.78rem;line-height:1.6">' +
+          'Saída de tela detectada. Resultado: <strong>0 pontos</strong>.<br>' +
+          'Ação registrada no sistema.</span>';
+        c.appendChild(n);
+      }
+    });
+    _secShowOverlay(
+      'Saída de tela detectada durante o quiz.<br><br>' +
+      '<strong style="color:#ff5555;font-size:1.1em">Resultado: 0 pontos</strong><br><br>' +
+      '<span style="font-size:.8rem;opacity:.75">Esta ação foi registrada no sistema do professor.</span>',
+      true
+    );
+  }
+
+  /* ── Processar violação ── */
+  var _secLastViol = 0;
+  function _secViolate(type, immediate) {
+    if (_sec.done || !_sec.ready || !_sec.on) return;
+    var now = Date.now();
+    if (!immediate && now - _secLastViol < 300) return; // debounce
+    _secLastViol = now;
+    if (immediate || type === 'split_screen') {
+      _secCancel(type); return;
+    }
+    _sec.v++;
+    if (_sec.v >= 2) {
+      _secCancel(type);
+    } else {
+      _secShowOverlay(
+        'Você saiu da tela durante o quiz!<br><br>' +
+        '<span style="color:#ffdd55">⚠️ ÚLTIMO AVISO</span><br>' +
+        'Se sair novamente, o quiz será<br>' +
+        '<strong style="color:#ff5555">cancelado com 0 pontos</strong>.',
+        false
+      );
+    }
+  }
+
+  /* ── Monitores de detecção ── */
+  // Tab oculta
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) _secViolate('tab_hidden');
+  });
+
+  // Janela sem foco (outro app, dividir tela manual)
+  var _secBlurT = null;
+  window.addEventListener('blur', function() {
+    clearTimeout(_secBlurT);
+    _secBlurT = setTimeout(function() {
+      if (!document.hasFocus()) _secViolate('window_blur');
+    }, 400);
+  });
+  window.addEventListener('focus', function() { clearTimeout(_secBlurT); });
+
+  // Redimensionamento → tela dividida
+  var _secRzT = null;
+  window.addEventListener('resize', function() {
+    clearTimeout(_secRzT);
+    _secRzT = setTimeout(function() {
+      if (!_sec.on || _sec.done) return;
+      var touch = 'ontouchstart' in window || (navigator.maxTouchPoints || 0) > 0;
+      if (!touch) {
+        var wr = window.innerWidth  / (screen.width  || 1920);
+        var hr = window.innerHeight / (screen.height || 1080);
+        if (wr < 0.62 || hr < 0.60) _secViolate('split_screen', true);
+      }
+    }, 800);
+  });
+
+  /* ── Inicializa marca d'água após load ── */
+  window.addEventListener('load', function() {
+    var nm = '';
+    try {
+      var al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
+      nm = (al && (al.nome_completo || al.nome || al.email)) || '';
+    } catch(e) {}
+    if (nm) {
+      _secWatermark(nm);
+    } else if (typeof supabase !== 'undefined') {
+      try {
+        supabase.createClient(SUPA_URL, SUPA_ANON).auth.getSession().then(function(r) {
+          var s = r && r.data && r.data.session;
+          if (s && s.user) _secWatermark(s.user.email || s.user.id || 'Aluno');
+        }).catch(function() {});
+      } catch(e) {}
+    }
   });
 
   /* ── Init ── */
