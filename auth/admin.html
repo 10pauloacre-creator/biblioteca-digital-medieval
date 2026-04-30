@@ -757,10 +757,13 @@ const db = createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
 let allStudents = [];
 let editingId   = null;
 let newAvatarFile = null;
+var _adminId = null;
 
 (async () => {
   const { data: { session } } = await db.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return; }
+
+  _adminId = session.user.id;
 
   const isAdmin = session.user.email === '10pauloacre@gmail.com';
   if (!isAdmin) {
@@ -1296,14 +1299,11 @@ function renderDashboardHeader(s) {
   fillEl.style.background = 'linear-gradient(90deg,'+nc_clr.grad+')';
   document.getElementById('db-prog-txt').textContent = proxTxt;
 
-  // Message button
+  // Botão "Conversar" — usa profile_id (Supabase Auth) ou alunos.id (custom auth)
   var msgBtn = document.getElementById('db-btn-msg');
-  if (s.profile_id) {
-    msgBtn.href = 'chat.html?with='+s.profile_id;
-    msgBtn.style.display = 'flex';
-  } else {
-    msgBtn.style.display = 'none';
-  }
+  var chatTarget = s.profile_id || s.id;
+  msgBtn.href = 'chat.html?with=' + chatTarget;
+  msgBtn.style.display = 'flex';
 }
 
 function showDashboardTab(tab, noLoad) {
@@ -1507,25 +1507,43 @@ async function loadDashboardChats(s) {
       .order('created_at', {ascending:false})
       .limit(200);
 
-    loading.style.display = 'none';
-
     if (error || !msgs || !msgs.length) {
+      loading.style.display = 'none';
       content.innerHTML = '<div class="db-no-data">Nenhuma conversa encontrada.</div>';
       return;
     }
 
-    // Agrupa por parceiro de conversa (última mensagem de cada)
+    // Agrupa por parceiro (última mensagem de cada conversa)
     var convMap = {};
     (msgs||[]).forEach(function(m){
       var partner = (m.sender_id===chatId) ? m.receiver_id : m.sender_id;
       if (!convMap[partner]) convMap[partner] = m;
     });
 
-    var html = '<div style="margin-bottom:.5rem;font-family:\'Cinzel\',serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-d);">'+
-               Object.keys(convMap).length+' conversa(s) encontrada(s)</div>';
+    var partnerIds = Object.keys(convMap).filter(function(id){ return id !== chatId; });
+
+    // Busca nomes dos parceiros nas duas tabelas em paralelo
+    var nameMap = {};
+    if (partnerIds.length) {
+      var [profRes, alunosRes] = await Promise.all([
+        db.from('profiles').select('id,nome_completo').in('id', partnerIds),
+        db.from('alunos').select('id,nome_completo').in('id', partnerIds)
+      ]);
+      (profRes.data   || []).forEach(function(p){ nameMap[p.id] = p.nome_completo; });
+      (alunosRes.data || []).forEach(function(a){ if (!nameMap[a.id]) nameMap[a.id] = a.nome_completo; });
+    }
+    // Marca o próprio admin
+    if (_adminId) nameMap[_adminId] = '👑 Você (Admin)';
+
+    loading.style.display = 'none';
+
+    var total = Object.keys(convMap).length;
+    var html = '<div style="margin-bottom:.6rem;font-family:\'Cinzel\',serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-d);">'+
+               total+' conversa'+(total!==1?'s':'')+' encontrada'+(total!==1?'s':'')+'</div>';
 
     Object.entries(convMap).forEach(function(entry){
       var partnerId = entry[0], m = entry[1];
+      var partnerName = nameMap[partnerId] || '(desconhecido — '+partnerId.slice(0,8)+'…)';
       var preview = m.type==='text' ? _esc((m.content||'').substring(0,80)) : '📎 Mídia';
       var dt  = new Date(m.created_at);
       var now = new Date();
@@ -1533,13 +1551,16 @@ async function loadDashboardChats(s) {
         ? dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
         : dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
 
-      var href = s.profile_id ? 'chat.html?with='+s.profile_id : '#';
+      // Admin conversa diretamente; aluno ↔ aluno → modo vigilância
+      var isAdminConv = partnerId === _adminId;
+      var href = isAdminConv
+        ? 'chat.html?with='+chatId          // admin abre conversa direta com o aluno
+        : 'chat.html?with='+chatId+'&peer='+partnerId;  // admin monitora conversa entre dois alunos
+
       html += '<a class="chat-conv" href="'+href+'" target="_blank">';
-      html += '<div class="chat-conv-ico">💬</div>';
+      html += '<div class="chat-conv-ico">'+(isAdminConv?'👑':'💬')+'</div>';
       html += '<div class="chat-conv-info">';
-      html += '<div class="chat-conv-partner">'+
-               (partnerId===chatId ? 'Você mesmo' : 'Admin / Professor')+
-               '</div>';
+      html += '<div class="chat-conv-partner">'+_esc(partnerName)+'</div>';
       html += '<div class="chat-conv-preview">'+preview+'</div>';
       html += '</div>';
       html += '<div class="chat-conv-time">'+ts+'</div>';
@@ -1550,6 +1571,7 @@ async function loadDashboardChats(s) {
 
   } catch(e) {
     loading.textContent = 'Conversas não disponíveis (sem permissão ou erro).';
+    console.error(e);
   }
 }
 
