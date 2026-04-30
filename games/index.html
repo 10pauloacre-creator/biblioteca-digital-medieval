@@ -237,35 +237,117 @@
       color: rgba(138,126,106,.45);
     }
 
-    /* ── Ranking modal overlay ── */
-    .rank-section {
-      margin-top: 38px;
+    /* ── Rankings por jogo ── */
+    .rankings-section { margin-top: 42px; display: flex; flex-direction: column; gap: 36px; }
+
+    .rank-game-block { display: block; }
+
+    .rank-game-header {
+      font-family: 'Cinzel', serif;
+      font-size: .66rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--text-d);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .rank-table {
-      width: 100%;
-      border-collapse: collapse;
+    .rank-game-header::before,
+    .rank-game-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .rank-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .rank-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(201,168,76,.1);
+      border-radius: 7px;
+      transition: border-color .2s;
+    }
+    .rank-row:hover { border-color: rgba(201,168,76,.25); }
+    .rank-row.gold-row  { border-color: rgba(201,168,76,.32); background: rgba(201,168,76,.04); }
+    .rank-row.silver-row { border-color: rgba(192,192,192,.2); }
+    .rank-row.bronze-row { border-color: rgba(180,130,70,.2); }
+
+    .rank-pos {
+      width: 26px;
+      text-align: center;
       font-family: 'Cinzel', serif;
       font-size: .78rem;
-    }
-    .rank-table th {
-      padding: 7px 12px;
-      text-align: left;
-      font-weight: 600;
-      letter-spacing: .1em;
       color: var(--gold);
-      border-bottom: 1px solid var(--border);
-      font-size: .68rem;
-      text-transform: uppercase;
+      font-weight: 700;
+      flex-shrink: 0;
     }
-    .rank-table td {
-      padding: 8px 12px;
-      border-bottom: 1px solid rgba(201,168,76,.08);
+
+    .rank-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid rgba(201,168,76,.35);
+      flex-shrink: 0;
+      background: rgba(30,20,8,.8);
+    }
+    .rank-avatar-ph {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201,168,76,.18);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(30,20,8,.9);
+      font-family: 'Cinzel', serif;
+      font-size: .82rem;
       color: var(--text-d);
     }
-    .rank-table tr:first-child td { color: var(--gold-l); }
-    .rank-table tr:nth-child(2) td { color: #d0c8b4; }
-    .rank-table .pos { color: var(--gold); font-weight: 700; }
-    .rank-table .pts { color: var(--text); font-weight: 600; }
+
+    .rank-info { flex: 1; overflow: hidden; }
+    .rank-name {
+      font-family: 'Cinzel', serif;
+      font-size: .8rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rank-serie {
+      font-size: .64rem;
+      color: var(--text-d);
+      margin-top: 1px;
+    }
+    .rank-row.gold-row   .rank-name { color: var(--gold-l); }
+    .rank-row.silver-row .rank-name { color: #d4cfc0; }
+    .rank-row.bronze-row .rank-name { color: #c4a77a; }
+
+    .rank-score {
+      font-family: 'Cinzel', serif;
+      font-size: .85rem;
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      letter-spacing: .04em;
+    }
+
+    .rank-empty {
+      text-align: center;
+      color: var(--text-d);
+      font-family: 'Cinzel', serif;
+      font-size: .72rem;
+      padding: 20px;
+      border: 1px solid rgba(201,168,76,.08);
+      border-radius: 7px;
+    }
 
     @media (max-width: 420px) {
       .header { padding: 16px 12px 12px; }
@@ -292,19 +374,7 @@
 
   <div class="games-grid" id="games-grid"></div>
 
-  <div id="global-rank" class="rank-section" style="display:none">
-    <p class="section-label" style="margin-top:0">Ranking global — Ascensão Medieval</p>
-    <table class="rank-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Jogador</th>
-          <th>Pontos</th>
-        </tr>
-      </thead>
-      <tbody id="global-rank-body"></tbody>
-    </table>
-  </div>
+  <div id="rankings-section" class="rankings-section"></div>
 
   <p class="coming-soon">✦ Mais jogos chegando em breve ✦</p>
 
@@ -376,33 +446,65 @@ GAMES.forEach(g => {
     }
   }
 
-  /* Carrega ranking global do primeiro jogo para exibir na página */
-  async function loadGlobalRank() {
-    const firstGame = GAMES[0];
-    if (!firstGame) return;
-    const { data } = await db
-      .from('game_scores')
-      .select('score, profiles(nome_completo, serie)')
-      .eq('game_id', firstGame.id)
-      .order('score', { ascending: false })
-      .limit(10);
-    if (!data?.length) return;
-    const tbody = document.getElementById('global-rank-body');
-    tbody.innerHTML = data.map((row, i) => {
-      const name  = row.profiles?.nome_completo || '???';
-      const serie = row.profiles?.serie ? ` <span style="color:var(--text-d);font-size:.65rem">(${row.profiles.serie})</span>` : '';
-      const medal = ['🥇','🥈','🥉'][i] || '';
-      return `<tr>
-        <td class="pos">${medal || (i + 1)}</td>
-        <td>${name}${serie}</td>
-        <td class="pts">${row.score}</td>
-      </tr>`;
-    }).join('');
-    document.getElementById('global-rank').style.display = 'block';
+  /* Carrega ranking de cada jogo com foto e nome do aluno */
+  async function loadGameRankings() {
+    const section = document.getElementById('rankings-section');
+    if (!section) return;
+    const medals = ['🥇', '🥈', '🥉'];
+    const rowClass = ['gold-row', 'silver-row', 'bronze-row'];
+
+    for (const g of GAMES) {
+      const { data } = await db
+        .from('game_scores')
+        .select('score, profiles(nome_completo, avatar_url, serie)')
+        .eq('game_id', g.id)
+        .order('score', { ascending: false })
+        .limit(10);
+
+      let rowsHtml;
+      if (!data?.length) {
+        rowsHtml = `<div class="rank-empty">Nenhum aventureiro registrado ainda</div>`;
+      } else {
+        rowsHtml = data.map((row, i) => {
+          const name       = row.profiles?.nome_completo || '???';
+          const serie      = row.profiles?.serie || '';
+          const avatarUrl  = row.profiles?.avatar_url || '';
+          const initial    = name.trim()[0]?.toUpperCase() || '?';
+          const pos        = medals[i] || String(i + 1);
+          const cls        = rowClass[i] || '';
+          const pts        = row.score.toLocaleString('pt-BR');
+
+          const imgTag = avatarUrl
+            ? `<img class="rank-avatar" src="${avatarUrl}" alt="${initial}" loading="lazy"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+            : '';
+          const phStyle = avatarUrl ? 'style="display:none"' : '';
+          const placeholder = `<div class="rank-avatar-ph" ${phStyle}>${initial}</div>`;
+          const serieHtml   = serie ? `<div class="rank-serie">${serie}</div>` : '';
+
+          return `
+            <div class="rank-row ${cls}">
+              <span class="rank-pos">${pos}</span>
+              ${imgTag}${placeholder}
+              <div class="rank-info">
+                <div class="rank-name">${name}</div>
+                ${serieHtml}
+              </div>
+              <span class="rank-score">${pts}</span>
+            </div>`;
+        }).join('');
+      }
+
+      section.insertAdjacentHTML('beforeend', `
+        <div class="rank-game-block">
+          <p class="rank-game-header">${g.icon} Ranking — ${g.name}</p>
+          <div class="rank-list">${rowsHtml}</div>
+        </div>`);
+    }
   }
 
   loadCardTops();
-  loadGlobalRank();
+  loadGameRankings();
 })();
 </script>
 

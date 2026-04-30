@@ -1303,10 +1303,23 @@
       }
     }
 
-    /* Salva score e atualiza ranking */
+    /* Salva apenas o melhor score do jogador neste jogo */
     window._gameSaveScore = async function (pts) {
-      if (!_userId) return;
-      await db.from('game_scores').insert({ user_id: _userId, game_id: GAME_ID, score: pts });
+      if (!_userId || pts <= 0) return;
+
+      const { data: existing } = await db
+        .from('game_scores')
+        .select('id, score')
+        .eq('user_id', _userId)
+        .eq('game_id', GAME_ID)
+        .maybeSingle();
+
+      if (!existing) {
+        await db.from('game_scores').insert({ user_id: _userId, game_id: GAME_ID, score: pts });
+      } else if (pts > existing.score) {
+        await db.from('game_scores').update({ score: pts }).eq('id', existing.id);
+      }
+
       await refreshRanking();
     };
 
