@@ -523,26 +523,45 @@
     }, 300);
   };
 
-  /* ── Proteção de Conteúdo ── */
+  /* ── Proteção de Conteúdo (mobile-first) ── */
   (function() {
     var s = document.createElement('style');
     s.textContent =
-      'body,body *{-webkit-user-select:none!important;user-select:none!important;' +
-      '-webkit-touch-callout:none!important;}' +
-      'input,textarea{-webkit-user-select:text!important;user-select:text!important;}' +
+      // Seleção de texto: mobile e desktop
+      'body,body *{' +
+        '-webkit-user-select:none!important;user-select:none!important;' +
+        '-webkit-touch-callout:none!important;' +    // iOS: sem callout no long-press
+        '-webkit-tap-highlight-color:transparent;' + // iOS: sem flash de seleção
+        'touch-action:pan-y pan-x;' +               // permite scroll, bloqueia zoom por pinça
+      '}' +
+      // Permitir digitação em campos
+      'input,textarea,select{' +
+        '-webkit-user-select:text!important;user-select:text!important;' +
+        'touch-action:auto!important;' +
+      '}' +
+      // Imagens: bloquear salvar/arrastar no mobile (iOS long-press)
+      'img,picture,video{' +
+        'pointer-events:none!important;' +
+        '-webkit-user-drag:none!important;' +
+        'user-drag:none!important;' +
+      '}' +
+      // Bloquear impressão
       '@media print{body{display:none!important;visibility:hidden!important}}';
     (document.head || document.documentElement).appendChild(s);
 
+    // Sem menu de contexto (desktop e Android long-press)
     document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, true);
-    document.addEventListener('dragstart',   function(e) { e.preventDefault(); }, true);
+    // Sem arrastar (desktop)
+    document.addEventListener('dragstart', function(e) { e.preventDefault(); }, true);
+    // Atalhos de teclado (desktop / teclado físico no mobile)
     document.addEventListener('keydown', function(e) {
       var k = (e.key || '').toLowerCase();
       var c = e.ctrlKey || e.metaKey;
-      if (c && 'caaxspuv'.indexOf(k) !== -1 && k.length === 1) { e.preventDefault(); return; }
+      if (c && k.length === 1 && 'caaxspuv'.indexOf(k) !== -1) { e.preventDefault(); return; }
       if (k === 'f12' || k === 'printscreen') e.preventDefault();
     }, true);
 
-    // Intercepta API de captura de tela
+    // Intercepta API de captura de tela (Chrome desktop, alguns Androids)
     if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
       navigator.mediaDevices.getDisplayMedia = function() {
         _secViolate('screen_record', true);
@@ -681,30 +700,60 @@
     }
   }
 
-  /* ── Monitores de detecção ── */
-  // Tab oculta
+  /* ── Monitores de detecção (mobile-first) ── */
+
+  // Detecta dispositivo touch UMA vez aqui — usado em todos os monitores abaixo
+  var _secIsTouch = 'ontouchstart' in window || (navigator.maxTouchPoints || 0) > 0;
+
+  // Dimensões de referência (viewport real, não pixels físicos do device)
+  var _secInitW = window.innerWidth;
+  var _secInitH = window.innerHeight;
+
+  // Ao mudar orientação atualiza referência para não gerar falso positivo
+  function _secResetRef() {
+    setTimeout(function() {
+      _secInitW = window.innerWidth;
+      _secInitH = window.innerHeight;
+    }, 600);
+  }
+  window.addEventListener('orientationchange', _secResetRef);
+  if (screen.orientation) screen.orientation.addEventListener('change', _secResetRef);
+
+  // 1. Tab oculta / app em background (principal sinal no mobile)
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) _secViolate('tab_hidden');
   });
 
-  // Janela sem foco (outro app, dividir tela manual)
+  // 2. Janela sem foco (outro app sobreposto, Alt+Tab no desktop)
+  //    Mobile: só conta quando visibilitychange também confirma (evita falsos
+  //    disparados por notificações do sistema, teclado, barra de status)
   var _secBlurT = null;
   window.addEventListener('blur', function() {
     clearTimeout(_secBlurT);
     _secBlurT = setTimeout(function() {
-      if (!document.hasFocus()) _secViolate('window_blur');
-    }, 400);
+      if (!document.hasFocus()) {
+        if (_secIsTouch) {
+          if (document.hidden) _secViolate('window_blur'); // mobile: exige dupla confirmação
+        } else {
+          _secViolate('window_blur'); // desktop: blur sozinho já é suficiente
+        }
+      }
+    }, _secIsTouch ? 600 : 400);
   });
   window.addEventListener('focus', function() { clearTimeout(_secBlurT); });
 
-  // Redimensionamento → tela dividida
+  // 3. Tela dividida (split screen Android / iPad / desktop)
+  //    Mobile: só checa LARGURA (teclado virtual muda a ALTURA, não a LARGURA)
+  //    Desktop: checa largura e altura absolutas
   var _secRzT = null;
   window.addEventListener('resize', function() {
     clearTimeout(_secRzT);
     _secRzT = setTimeout(function() {
       if (!_sec.on || _sec.done) return;
-      var touch = 'ontouchstart' in window || (navigator.maxTouchPoints || 0) > 0;
-      if (!touch) {
+      if (_secIsTouch) {
+        var wRatio = window.innerWidth / (_secInitW || 1);
+        if (wRatio < 0.65) _secViolate('split_screen', true);
+      } else {
         var wr = window.innerWidth  / (screen.width  || 1920);
         var hr = window.innerHeight / (screen.height || 1080);
         if (wr < 0.62 || hr < 0.60) _secViolate('split_screen', true);
