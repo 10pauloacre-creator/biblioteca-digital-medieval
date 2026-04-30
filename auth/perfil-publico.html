@@ -211,8 +211,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
     quizzes = qData || [];
   }
 
-  const nivel  = profile.nivel  || 0;
   const pontos = profile.pontos || 0;
+  const nivel  = pontos < 10 ? 0 : (profile.nivel || 0);
   const info   = window.getNivelInfo(nivel);
   const stars  = window.getNivelStars(nivel);
   const prog   = window.getNivelProgress(nivel, pontos);

@@ -212,8 +212,8 @@ body{display:flex;align-items:flex-start;justify-content:center;padding:20px 16p
   const viewerAluno = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
   const viewerId = session?.user?.id || viewerAluno?.id;
 
-  const nivel  = rankRow?.nivel  || 0;
   const pontos = rankRow?.pontos || 0;
+  const nivel  = pontos < 10 ? 0 : (rankRow?.nivel || 0);
   const info   = window.getNivelInfo(nivel);
   const stars  = window.getNivelStars(nivel);
   const prog   = window.getNivelProgress(nivel, pontos);
