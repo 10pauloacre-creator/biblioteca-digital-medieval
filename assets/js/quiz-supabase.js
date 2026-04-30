@@ -500,6 +500,21 @@
   // Hook: quiz iniciado (usuário confirma "INICIAR QUIZ")
   var _swOrig = showWarning;
   showWarning = function(qk, cb) {
+    // Bloqueia quiz se o app não estiver em tela cheia (janela flutuante / app reduzido)
+    // screen.width é a largura física do dispositivo em CSS-px — comparação confiável no mobile
+    var sw = screen.width || window.screen.width;
+    var isTouch = 'ontouchstart' in window || (navigator.maxTouchPoints || 0) > 0;
+    if (isTouch && sw && (window.innerWidth / sw) < 0.84) {
+      _secShowOverlay(
+        '🪟 O app está em <strong>modo de janela reduzida ou flutuante</strong>.<br><br>' +
+        'Por segurança, o quiz só pode ser realizado com o app em ' +
+        '<strong style="color:#ffdd55">tela cheia</strong>.<br><br>' +
+        '<span style="font-size:.82rem;opacity:.8">Feche a janela flutuante, abra o app ' +
+        'normalmente e tente novamente.</span>',
+        false
+      );
+      return; // não inicia o quiz
+    }
     _swOrig(qk, function() { _sec.on = true; cb(); });
   };
 
@@ -545,15 +560,36 @@
         '-webkit-user-drag:none!important;' +
         'user-drag:none!important;' +
       '}' +
-      // Bloquear impressão
-      '@media print{body{display:none!important;visibility:hidden!important}}';
+      // Impressão: html E body + todos os filhos — garante bloqueio no Android Chrome e iOS
+      '@media print{' +
+        'html,body{display:none!important;visibility:hidden!important;}' +
+        '*{display:none!important;visibility:hidden!important;}' +
+      '}';
     (document.head || document.documentElement).appendChild(s);
+
+    // beforeprint: sobrepõe tela preta ANTES da renderização para impressão
+    // Necessário no mobile porque Android/iOS às vezes ignora @media print
+    window.addEventListener('beforeprint', function() {
+      var el = document.getElementById('bdm-print-blk') || document.createElement('div');
+      el.id = 'bdm-print-blk';
+      el.style.cssText =
+        'position:fixed;inset:0;background:#000;z-index:2147483647;' +
+        'display:flex;align-items:center;justify-content:center;';
+      el.innerHTML =
+        '<span style="color:#333;font-family:sans-serif;font-size:.9rem">' +
+        'Conteúdo protegido</span>';
+      document.body.appendChild(el);
+      document.documentElement.style.setProperty('display', 'none', 'important');
+    });
+    window.addEventListener('afterprint', function() {
+      var el = document.getElementById('bdm-print-blk');
+      if (el) el.remove();
+      document.documentElement.style.removeProperty('display');
+    });
 
     // Sem menu de contexto (desktop e Android long-press)
     document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, true);
-    // Sem arrastar (desktop)
-    document.addEventListener('dragstart', function(e) { e.preventDefault(); }, true);
-    // Atalhos de teclado (desktop / teclado físico no mobile)
+    document.addEventListener('dragstart',   function(e) { e.preventDefault(); }, true);
     document.addEventListener('keydown', function(e) {
       var k = (e.key || '').toLowerCase();
       var c = e.ctrlKey || e.metaKey;
@@ -561,11 +597,22 @@
       if (k === 'f12' || k === 'printscreen') e.preventDefault();
     }, true);
 
-    // Intercepta API de captura de tela (Chrome desktop, alguns Androids)
+    // Intercepta getDisplayMedia (Chrome desktop + Chrome Android/iPad)
     if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
       navigator.mediaDevices.getDisplayMedia = function() {
         _secViolate('screen_record', true);
         return Promise.reject(new DOMException('Not allowed', 'NotAllowedError'));
+      };
+    }
+    // Intercepta getUserMedia com mediaSource=screen (APIs mais antigas)
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      var _gumOrig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+      navigator.mediaDevices.getUserMedia = function(c) {
+        if (c && c.video && (c.video === true || c.video.mediaSource === 'screen')) {
+          _secViolate('screen_record', true);
+          return Promise.reject(new DOMException('Not allowed', 'NotAllowedError'));
+        }
+        return _gumOrig(c);
       };
     }
   })();
@@ -742,17 +789,20 @@
   });
   window.addEventListener('focus', function() { clearTimeout(_secBlurT); });
 
-  // 3. Tela dividida (split screen Android / iPad / desktop)
-  //    Mobile: só checa LARGURA (teclado virtual muda a ALTURA, não a LARGURA)
-  //    Desktop: checa largura e altura absolutas
+  // 3. Tela dividida / janela reduzida durante quiz (Android split screen, iPad, desktop)
+  //    Mobile: usa screen.width como referência absoluta (não _secInitW, que pode ter sido
+  //    capturado já dentro de uma janela flutuante)
+  //    Teclado virtual → só muda altura, nunca a largura → só checamos largura no mobile
   var _secRzT = null;
   window.addEventListener('resize', function() {
     clearTimeout(_secRzT);
     _secRzT = setTimeout(function() {
       if (!_sec.on || _sec.done) return;
+      var sw = screen.width || window.screen.width;
       if (_secIsTouch) {
-        var wRatio = window.innerWidth / (_secInitW || 1);
-        if (wRatio < 0.65) _secViolate('split_screen', true);
+        // Referência: screen.width (largura física real do dispositivo em CSS px)
+        var wRatio = sw ? (window.innerWidth / sw) : (window.innerWidth / _secInitW);
+        if (wRatio < 0.84) _secViolate('split_screen', true);
       } else {
         var wr = window.innerWidth  / (screen.width  || 1920);
         var hr = window.innerHeight / (screen.height || 1080);
@@ -761,8 +811,26 @@
     }, 800);
   });
 
-  /* ── Inicializa marca d'água após load ── */
+  /* ── Inicializa marca d'água e aviso de janela reduzida após load ── */
   window.addEventListener('load', function() {
+    // Aviso não-bloqueante se o app carregou em janela reduzida (antes do quiz)
+    var sw = screen.width || window.screen.width;
+    if (_secIsTouch && sw && (window.innerWidth / sw) < 0.84) {
+      var banner = document.createElement('div');
+      banner.id = 'bdm-small-warn';
+      banner.style.cssText =
+        'position:fixed;top:0;left:0;right:0;z-index:99999;' +
+        'background:linear-gradient(90deg,#3a0000,#5a1500);' +
+        'border-bottom:2px solid #ff4444;' +
+        'padding:.65rem 1rem;text-align:center;' +
+        'font-family:Cinzel,Georgia,serif;font-size:.72rem;color:#ffaaaa;' +
+        'letter-spacing:.05em;';
+      banner.innerHTML =
+        '⚠️ App em modo de janela reduzida — quizzes bloqueados até usar tela cheia';
+      document.body.appendChild(banner);
+    }
+
+    // Marca d'água com nome do aluno
     var nm = '';
     try {
       var al = JSON.parse(localStorage.getItem('bdm-aluno') || 'null');
