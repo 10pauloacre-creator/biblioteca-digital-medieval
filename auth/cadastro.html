@@ -93,9 +93,12 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 
 @keyframes sweep{from{background-position:0% 50%}to{background-position:200% 50%}}
 @keyframes revealUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+#btn-voltar{position:fixed;top:.7rem;left:.7rem;z-index:9999;background:rgba(0,0,0,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1.5px solid rgba(255,255,255,.22);border-radius:999px;padding:.38rem .95rem;color:rgba(255,255,255,.92);font-size:.72rem;font-weight:700;font-family:system-ui,sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;letter-spacing:.03em;transition:background .18s,border-color .18s;}
+#btn-voltar:hover{background:rgba(0,0,0,.78);border-color:rgba(255,255,255,.55);}
 </style>
 </head>
 <body>
+<a id="btn-voltar" href="../index.html">&#8592; Biblioteca</a>
 <video id="bg-video" autoplay muted loop playsinline>
   <source src="../assets/gif/vide-de-fundo.mp4" type="video/mp4">
 </video>
