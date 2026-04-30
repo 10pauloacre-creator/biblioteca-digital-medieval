@@ -1524,6 +1524,10 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
   max-height:180px;overflow-y:auto;
   white-space:pre-line;
 }
+#mago-counter{
+  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;
+  color:rgba(201,168,76,.6);text-align:center;margin-bottom:.4rem;
+}
 #mago-btn-ok{
   width:100%;padding:.6rem;
   background:linear-gradient(135deg,#c9a84c,#f0d060,#8a6414);
@@ -1732,6 +1736,7 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
     </div>
     <div id="mago-bubble-sep"></div>
     <div id="mago-bubble-text"></div>
+    <div id="mago-counter"></div>
     <button id="mago-btn-ok" onclick="confirmMagoMessage()">✓ Entendido!</button>
   </div>
   <!-- Figura do mago -->
@@ -3681,6 +3686,9 @@ var _magoUserType= null;
 var _magoNome    = null;
 var _magoTurma   = null;
 var _magoBubbleOpen = false;
+var _magoQueue      = [];
+var _magoQueueTotal = 0;
+var _magoQueueIndex = 0;
 
 // Chave pública VAPID — gere com: npx web-push generate-vapid-keys
 // Substitua pelo valor real gerado; enquanto começar com 'GERAR' push é desativado.
@@ -3711,12 +3719,10 @@ async function initMago(userId, userType, nomePassado, turmaPassada) {
 async function checkMagoMessage() {
   if (!_magoUserId || !_magoDb) return;
   try {
-    // Filtra: mensagens gerais (turma_destino nula) OU da turma do aluno
     let query = _magoDb.from('mago_mensagens')
       .select('id,titulo,texto,turma_destino')
       .eq('ativo', true)
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .order('created_at', { ascending: true });
     if (_magoTurma) {
       query = query.or('turma_destino.is.null,turma_destino.eq.' + _magoTurma);
     } else {
@@ -3725,25 +3731,43 @@ async function checkMagoMessage() {
     const { data: msgs } = await query;
     if (!msgs || !msgs.length) return;
 
-    const msg = msgs[0];
-
-    const { data: resp } = await _magoDb.from('mago_respostas')
-      .select('id')
-      .eq('mensagem_id', msg.id)
+    // Busca todas as confirmações do aluno de uma vez
+    const ids = msgs.map(m => m.id);
+    const { data: resps } = await _magoDb.from('mago_respostas')
+      .select('mensagem_id')
       .eq('respondente_id', _magoUserId)
-      .limit(1);
-    if (resp && resp.length) return; // já confirmou
+      .in('mensagem_id', ids);
+    const confirmed = new Set((resps || []).map(r => r.mensagem_id));
 
-    _magoMsgId = msg.id;
-    document.getElementById('mago-bubble-title').textContent = msg.titulo || 'Mensagem do Mago Supremo';
-    document.getElementById('mago-bubble-text').textContent  = msg.texto;
+    _magoQueue = msgs.filter(m => !confirmed.has(m.id));
+    if (!_magoQueue.length) return;
+    _magoQueueTotal = _magoQueue.length;
+    _magoQueueIndex = 0;
+
     document.getElementById('mago-dot').style.display = 'block';
-
-    // Exibe o mago e abre o balão automaticamente após 1.6s
     const wrapper = document.getElementById('mago-wrapper');
     if (wrapper) wrapper.classList.add('visible');
-    setTimeout(() => openMagoBubble(), 1600);
+    setTimeout(() => _magoShowNext(), 1600);
   } catch(e) {}
+}
+
+function _magoShowNext() {
+  if (!_magoQueue.length) {
+    closeMagoBubble();
+    document.getElementById('mago-dot').style.display = 'none';
+    const wrapper = document.getElementById('mago-wrapper');
+    if (wrapper) wrapper.classList.remove('visible');
+    return;
+  }
+  const msg = _magoQueue[0];
+  _magoMsgId = msg.id;
+  document.getElementById('mago-bubble-title').textContent = msg.titulo || 'Mensagem do Mago Supremo';
+  document.getElementById('mago-bubble-text').textContent  = msg.texto;
+  const ctr = document.getElementById('mago-counter');
+  if (ctr) ctr.textContent = _magoQueueTotal > 1 ? 'Aviso ' + (_magoQueueIndex + 1) + ' de ' + _magoQueueTotal : '';
+  const btn = document.getElementById('mago-btn-ok');
+  if (btn) { btn.disabled = false; btn.textContent = '✓ Entendido!'; }
+  openMagoBubble();
 }
 
 function openMagoBubble() {
@@ -3775,12 +3799,20 @@ async function confirmMagoMessage() {
     }, { onConflict: 'mensagem_id,respondente_id' });
   } catch(e) {}
 
-  closeMagoBubble();
-  document.getElementById('mago-dot').style.display = 'none';
+  // Remove mensagem confirmada da fila e mostra a próxima
+  _magoQueue.shift();
+  _magoQueueIndex++;
   _magoMsgId = null;
-  if (btn) { btn.disabled = false; btn.textContent = '✓ Entendido!'; }
-  const wrapper = document.getElementById('mago-wrapper');
-  if (wrapper) wrapper.classList.remove('visible');
+
+  if (_magoQueue.length) {
+    _magoShowNext();
+  } else {
+    closeMagoBubble();
+    document.getElementById('mago-dot').style.display = 'none';
+    const wrapper = document.getElementById('mago-wrapper');
+    if (wrapper) wrapper.classList.remove('visible');
+    if (btn) { btn.disabled = false; btn.textContent = '✓ Entendido!'; }
+  }
 }
 
 async function subscribePushMago() {

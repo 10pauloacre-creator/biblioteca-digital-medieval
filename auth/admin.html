@@ -575,26 +575,20 @@ body{overflow-y:auto;}
         <div id="mago-compose-msg" class="msg" style="margin-top:.7rem;"></div>
       </div>
 
-      <!-- Mensagem ativa -->
-      <div id="mago-active-wrap" style="display:none;margin-top:1rem;">
-        <div class="mago-active-box">
-          <div class="mago-active-title" id="mago-active-title"></div>
-          <div class="mago-active-text"  id="mago-active-text"></div>
-          <div class="mago-active-meta"  id="mago-active-meta"></div>
-          <button class="btn-action btn-red" onclick="deactivateMagoMessage()" style="margin-top:.8rem;width:100%;padding:.5rem;">
-            🗑 Desativar Mensagem
-          </button>
-        </div>
+      <!-- Mensagens ativas (geradas dinamicamente) -->
+      <div id="mago-active-wrap" style="display:none;margin-top:1rem;"></div>
 
-        <!-- Estatísticas de resposta -->
+      <!-- Estatísticas de resposta (da mensagem mais recente) -->
+      <div id="mago-resp-wrap" style="display:none;margin-top:.5rem;">
         <div class="mago-resp-stats">
           <div class="mago-resp-num" id="mago-resp-confirmados">0</div>
           <div class="mago-resp-lbl">Confirmaram</div>
           <div class="mago-resp-num" id="mago-resp-pendentes" style="color:#ff9060;">0</div>
           <div class="mago-resp-lbl">Aguardando</div>
         </div>
-
-        <!-- Listas colapsáveis -->
+        <div style="font-family:'Cinzel',serif;font-size:.55rem;color:rgba(201,168,76,.5);text-align:center;margin-bottom:.4rem;">
+          (estatísticas da mensagem mais recente)
+        </div>
         <div class="mago-list-wrap">
           <div class="mago-list-header" onclick="toggleMagoList('conf')">
             <span>✅ Confirmaram</span><span id="mago-list-conf-arrow">▶</span>
@@ -1062,12 +1056,14 @@ async function loadMagoTurmas() {
 
 // Inicializa seção Mago após loadStudents()
 async function loadMagoSection() {
-  const loading = document.getElementById('mago-loading');
+  const loading    = document.getElementById('mago-loading');
   const activeWrap = document.getElementById('mago-active-wrap');
-  const compose = document.getElementById('mago-compose');
+  const respWrap   = document.getElementById('mago-resp-wrap');
+  const compose    = document.getElementById('mago-compose');
   if (loading) loading.style.display = 'block';
-  if (activeWrap) activeWrap.style.display = 'none';
-  if (compose) compose.style.display = 'block';
+  if (activeWrap) { activeWrap.innerHTML = ''; activeWrap.style.display = 'none'; }
+  if (respWrap)   respWrap.style.display = 'none';
+  if (compose)    compose.style.display = 'block';
 
   loadMagoTurmas(); // fire-and-forget
 
@@ -1075,26 +1071,31 @@ async function loadMagoSection() {
     const { data: msgs } = await db.from('mago_mensagens')
       .select('id,titulo,texto,created_at,turma_destino')
       .eq('ativo', true)
-      .order('created_at', { ascending: false })
-      .limit(1);
+      .order('created_at', { ascending: false });
 
     if (loading) loading.style.display = 'none';
+    if (!msgs || !msgs.length) return;
 
-    if (!msgs || !msgs.length) { return; }
+    _magoActiveMsgId = msgs[0].id;
 
-    const msg = msgs[0];
-    _magoActiveMsgId = msg.id;
+    activeWrap.innerHTML = msgs.map(msg => {
+      const dt = new Date(msg.created_at).toLocaleString('pt-BR');
+      const destino = msg.turma_destino ? '🏰 Turma ' + msg.turma_destino : '📢 Geral';
+      return `
+        <div class="mago-active-box" style="margin-bottom:.7rem;">
+          <div class="mago-active-title">${msg.titulo || 'Mensagem do Mago Supremo'}</div>
+          <div class="mago-active-text">${msg.texto}</div>
+          <div class="mago-active-meta">${destino} · ${dt}</div>
+          <button class="btn-action btn-red" onclick="deactivateMagoMessage('${msg.id}')" style="margin-top:.8rem;width:100%;padding:.5rem;">
+            🗑 Desativar
+          </button>
+        </div>`;
+    }).join('');
 
-    document.getElementById('mago-active-title').textContent = msg.titulo || 'Mensagem do Mago Supremo';
-    document.getElementById('mago-active-text').textContent  = msg.texto;
-    const dt = new Date(msg.created_at).toLocaleString('pt-BR');
-    const destino = msg.turma_destino ? '🏰 Turma ' + msg.turma_destino : '📢 Geral';
-    document.getElementById('mago-active-meta').textContent  = destino + ' · Publicada em ' + dt;
+    activeWrap.style.display = 'block';
+    if (respWrap) respWrap.style.display = 'block';
 
-    if (activeWrap) activeWrap.style.display = 'block';
-    if (compose) compose.style.display = 'none';
-
-    await loadMagoResponses(msg.id, msg.turma_destino);
+    await loadMagoResponses(msgs[0].id, msgs[0].turma_destino);
   } catch(e) {
     if (loading) loading.textContent = 'Erro ao carregar.';
   }
@@ -1187,9 +1188,7 @@ async function publishMagoMessage() {
   msgEl.className = 'msg';
 
   try {
-    // Desativa mensagens anteriores
-    await db.from('mago_mensagens').update({ ativo: false }).eq('ativo', true);
-    // Insere nova mensagem
+    // Insere nova mensagem (mantém anteriores ativas)
     const payload = {
       titulo: titulo || 'Mensagem do Mago Supremo',
       texto,
@@ -1215,11 +1214,12 @@ async function publishMagoMessage() {
   btn.disabled = false; btn.textContent = '📜 Publicar Mensagem';
 }
 
-async function deactivateMagoMessage() {
-  if (!_magoActiveMsgId) return;
-  if (!confirm('Desativar a mensagem atual? Os alunos não a verão mais.')) return;
-  await db.from('mago_mensagens').update({ ativo: false }).eq('id', _magoActiveMsgId);
-  _magoActiveMsgId = null;
+async function deactivateMagoMessage(msgId) {
+  const id = msgId || _magoActiveMsgId;
+  if (!id) return;
+  if (!confirm('Desativar esta mensagem? Os alunos não a verão mais.')) return;
+  await db.from('mago_mensagens').update({ ativo: false }).eq('id', id);
+  if (id === _magoActiveMsgId) _magoActiveMsgId = null;
   await loadMagoSection();
 }
 
