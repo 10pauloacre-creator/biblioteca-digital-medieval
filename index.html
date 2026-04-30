@@ -2946,6 +2946,8 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (isAdmin) {
       // Admin: nunca toca intro, vai direto pra landing
       sessionStorage.setItem('bdm-nav', '1');
+      const _sb = document.getElementById('search-btn');
+      if (_sb) _sb.style.display = 'flex';
       return;
     }
 
