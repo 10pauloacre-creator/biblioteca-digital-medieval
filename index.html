@@ -2892,6 +2892,11 @@ window.addEventListener('DOMContentLoaded',()=>{
         // Admin: nunca toca intro de novo, salva role no localStorage
         sessionStorage.setItem('bdm-nav', '1');
         try { localStorage.setItem('bdm-cached-role', 'admin'); } catch(e) {}
+        const _sbA = document.getElementById('search-btn');
+        if (_sbA) _sbA.style.display = 'flex';
+        const _rsA = document.getElementById('ranking-strip');
+        if (_rsA) _rsA.style.display = '';
+        if (typeof window.loadRanking === 'function') window.loadRanking();
         return;
       }
       try { localStorage.removeItem('bdm-cached-role'); } catch(e) {}
@@ -2948,6 +2953,10 @@ window.addEventListener('DOMContentLoaded',()=>{
       sessionStorage.setItem('bdm-nav', '1');
       const _sb = document.getElementById('search-btn');
       if (_sb) _sb.style.display = 'flex';
+      // Garante ranking visível (initRanking() pode ter rodado antes da sessão resolver)
+      const _rs = document.getElementById('ranking-strip');
+      if (_rs) _rs.style.display = '';
+      if (typeof window.loadRanking === 'function') window.loadRanking();
       return;
     }
 
