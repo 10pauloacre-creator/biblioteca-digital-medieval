@@ -3490,9 +3490,6 @@ async function initMago(userId, userType, nomePassado) {
     _magoNome = nomePassado || '';
   }
 
-  const wrapper = document.getElementById('mago-wrapper');
-  if (wrapper) wrapper.classList.add('visible');
-
   await checkMagoMessage();
   subscribePushMago(); // fire-and-forget
 }
@@ -3521,7 +3518,9 @@ async function checkMagoMessage() {
     document.getElementById('mago-bubble-text').textContent  = msg.texto;
     document.getElementById('mago-dot').style.display = 'block';
 
-    // Abre o balão automaticamente após 1.6s
+    // Exibe o mago e abre o balão automaticamente após 1.6s
+    const wrapper = document.getElementById('mago-wrapper');
+    if (wrapper) wrapper.classList.add('visible');
     setTimeout(() => openMagoBubble(), 1600);
   } catch(e) {}
 }
@@ -3559,6 +3558,8 @@ async function confirmMagoMessage() {
   document.getElementById('mago-dot').style.display = 'none';
   _magoMsgId = null;
   if (btn) { btn.disabled = false; btn.textContent = '✓ Entendido!'; }
+  const wrapper = document.getElementById('mago-wrapper');
+  if (wrapper) wrapper.classList.remove('visible');
 }
 
 async function subscribePushMago() {
