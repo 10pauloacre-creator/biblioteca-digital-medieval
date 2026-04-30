@@ -13,12 +13,13 @@
   --bg:#080300;--card:#1a0e04;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;background:var(--bg);color:var(--text);}
+html{height:100%;height:-webkit-fill-available;}
+body{height:100%;height:-webkit-fill-available;overflow:hidden;font-family:'IM Fell English',serif;background:var(--bg);color:var(--text);}
 
 #bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.2;pointer-events:none;}
 #bg-veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(4,2,0,.85),rgba(4,2,0,.65));}
 
-#chat-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100dvh;max-width:640px;margin:0 auto;}
+#chat-wrap{position:relative;z-index:2;display:flex;flex-direction:column;height:100vh;height:100dvh;max-width:640px;margin:0 auto;}
 
 /* ── Header ── */
 #chat-nav{display:flex;align-items:center;gap:.7rem;padding:10px 12px;background:linear-gradient(180deg,rgba(20,10,2,.97),rgba(12,6,1,.93));border-bottom:1px solid rgba(201,168,76,.3);flex-shrink:0;min-height:58px;}
@@ -40,7 +41,7 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
 #monitor-header{display:none;background:rgba(140,40,10,.15);border-bottom:1px solid rgba(200,60,10,.3);padding:.45rem .8rem;flex-shrink:0;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.1em;color:#e08060;text-align:center;}
 
 /* ── Área de mensagens ── */
-#messages-area{flex:1;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:.5rem;scroll-behavior:smooth;}
+#messages-area{flex:1;min-height:0;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:.5rem;scroll-behavior:smooth;}
 #messages-area::-webkit-scrollbar{width:3px;}
 #messages-area::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);border-radius:2px;}
 
@@ -107,7 +108,7 @@ html,body{height:100%;overflow:hidden;font-family:'IM Fell English',serif;backgr
 #preview-remove{flex-shrink:0;background:none;border:none;color:var(--text-d);font-size:1.2rem;cursor:pointer;padding:4px;}
 
 /* ── Input area ── */
-#input-area{flex-shrink:0;padding:8px 10px;background:linear-gradient(0deg,rgba(20,10,2,.98),rgba(14,7,1,.95));border-top:1px solid rgba(201,168,76,.2);display:flex;gap:.45rem;align-items:flex-end;}
+#input-area{flex-shrink:0;padding:8px 10px;padding-bottom:max(8px,env(safe-area-inset-bottom,8px));background:linear-gradient(0deg,rgba(20,10,2,.98),rgba(14,7,1,.95));border-top:1px solid rgba(201,168,76,.2);display:flex;gap:.45rem;align-items:flex-end;}
 #attach-btn,#mic-btn,#send-btn{flex-shrink:0;width:42px;height:40px;border-radius:8px;border:1px solid rgba(201,168,76,.35);background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(180,120,20,.12));color:var(--gold-l);font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 #attach-btn:hover,#mic-btn:hover,#send-btn:hover:not(:disabled){background:rgba(201,168,76,.28);box-shadow:0 0 10px rgba(201,168,76,.15);}
 #send-btn:disabled{opacity:.3;cursor:default;}
