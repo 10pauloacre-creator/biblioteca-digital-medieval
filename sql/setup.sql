@@ -110,7 +110,32 @@ CREATE POLICY "avatares_own_delete" ON storage.objects
          OR auth.email() = '10pauloacre@gmail.com')
   );
 
--- ── 6. Configurações de Auth (faça manualmente no painel) ────────
+-- ── 6. Tabela de pontuações por jogo (Sala de Jogos) ────────────
+CREATE TABLE IF NOT EXISTS public.game_scores (
+  id         UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id    UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  game_id    TEXT        NOT NULL,
+  score      INTEGER     NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS game_scores_game_score_idx
+  ON public.game_scores (game_id, score DESC);
+
+ALTER TABLE public.game_scores ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "game_scores_read_all" ON public.game_scores
+  FOR SELECT USING (true);
+
+CREATE POLICY "game_scores_insert_own" ON public.game_scores
+  FOR INSERT TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "game_scores_delete_admin" ON public.game_scores
+  FOR DELETE TO authenticated
+  USING (auth.email() = '10pauloacre@gmail.com');
+
+-- ── 7. Configurações de Auth (faça manualmente no painel) ────────
 -- Authentication → Settings → Site URL:
 --   https://biblioteca-digital-medieval.vercel.app
 --

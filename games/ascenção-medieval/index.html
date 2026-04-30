@@ -229,6 +229,22 @@
 
     .hidden { display: none !important; }
 
+    .exit-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 7px 16px;
+      border: 1px solid rgba(245,200,106,.28);
+      border-radius: 6px;
+      background: transparent;
+      color: rgba(245,200,106,.55);
+      font: 12px Georgia,"Times New Roman",serif;
+      letter-spacing: .05em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+    }
+    .exit-btn:hover { color: #f5c86a; border-color: rgba(245,200,106,.6); }
+
     @media (max-width: 380px) {
       #scoreDisplay { width: 94px; }
       #stageDisplay { width: 132px; }
@@ -263,6 +279,7 @@
           <span>6000: Paraiso divino. Deus aguarda no topo, mas tudo fica brutal.</span>
         </div>
         <button id="startBtn" type="button">Iniciar jornada</button>
+        <a href="../index.html" class="exit-btn">← Sala de Jogos</a>
       </div>
 
       <div id="gameOverScreen" class="screen hidden">
@@ -272,6 +289,7 @@
         <button id="loreBtn" type="button">Criar epitafio</button>
         <div id="loreText" class="hidden"></div>
         <button id="restartBtn" type="button">Tentar novamente</button>
+        <a href="../index.html" class="exit-btn">← Sala de Jogos</a>
       </div>
     </section>
   </main>
@@ -679,6 +697,7 @@
         localStorage.setItem("ascensaoMedievalRecorde", String(record));
       }
       saveRanking(score);
+      if (score > 0 && window._gameSaveScore) window._gameSaveScore(score);
       setTimeout(() => ui.over.classList.remove("hidden"), 420);
     }
 
@@ -1243,6 +1262,57 @@
     resize();
     resetWorld();
     draw();
+  </script>
+
+  <!-- ── Supabase: ranking online e salvamento de scores ── -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../../assets/js/supabase-config.js"></script>
+  <script>
+  (function () {
+    if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
+
+    const db      = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+    const GAME_ID = 'ascensao-medieval';
+    let _userId   = null;
+
+    /* Identifica o jogador logado */
+    db.auth.getUser().then(({ data: { user } }) => {
+      if (user) _userId = user.id;
+    });
+
+    /* Busca top-5 do banco e atualiza o painel HUD */
+    async function refreshRanking() {
+      const { data } = await db
+        .from('game_scores')
+        .select('score, profiles(nome_completo)')
+        .eq('game_id', GAME_ID)
+        .order('score', { ascending: false })
+        .limit(5);
+      if (!data?.length) return;
+
+      /* Atualiza array local para exibição durante a partida */
+      ranking = data.map(r => r.score);
+      try { localStorage.setItem('ascensaoMedievalRanking', JSON.stringify(ranking)); } catch(_) {}
+
+      const list = document.getElementById('rankingList');
+      if (list) {
+        list.innerHTML = data.map((row, i) => {
+          const first = (row.profiles?.nome_completo || '???').split(' ')[0].substring(0, 9);
+          return `<span>${i + 1}. ${first} ${row.score}</span>`;
+        }).join('');
+      }
+    }
+
+    /* Salva score e atualiza ranking */
+    window._gameSaveScore = async function (pts) {
+      if (!_userId) return;
+      await db.from('game_scores').insert({ user_id: _userId, game_id: GAME_ID, score: pts });
+      await refreshRanking();
+    };
+
+    /* Carrega ranking ao iniciar a página */
+    refreshRanking();
+  })();
   </script>
 </body>
 </html>

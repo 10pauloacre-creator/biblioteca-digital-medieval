@@ -526,6 +526,35 @@ body{background:#080300;color:var(--text);}
 }
 #back-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
+/* Sala de Jogos btn */
+#games-btn{
+  position:absolute;
+  bottom:14px;left:50%;
+  transform:translateX(-50%);
+  z-index:12;
+  display:flex;align-items:center;gap:7px;
+  padding:8px 22px;
+  background:linear-gradient(180deg,rgba(40,25,10,.92),rgba(20,12,4,.96));
+  border:1px solid rgba(201,168,76,.45);
+  border-radius:7px;
+  font-family:'Cinzel',serif;
+  font-size:.72rem;letter-spacing:.13em;
+  color:#c9a84c;
+  text-transform:uppercase;
+  text-decoration:none;
+  cursor:pointer;
+  transition:border-color .2s,color .2s,box-shadow .2s,transform .15s;
+  white-space:nowrap;
+  box-shadow:0 4px 18px rgba(0,0,0,.5);
+}
+#games-btn:hover{
+  border-color:rgba(201,168,76,.75);
+  color:#f5d78a;
+  box-shadow:0 0 22px rgba(201,168,76,.18),0 4px 18px rgba(0,0,0,.5);
+  transform:translateX(-50%) scale(1.04);
+}
+#games-btn:active{transform:translateX(-50%) scale(.98);}
+
 /* Mute btn */
 #mute-btn{
   position:fixed;bottom:24px;right:20px;z-index:500;
@@ -1976,6 +2005,9 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
     <div class="pilha-livros">
       <img src="assets/images/pilhadelivros.png" alt="">
     </div>
+
+    <!-- Sala de Jogos -->
+    <a href="games/index.html" id="games-btn">⚔ Sala de Jogos</a>
 
   </div><!-- /landing-inner -->
 </section>

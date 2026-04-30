@@ -8,7 +8,7 @@
 //   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v16';
+const SW_VERSION   = 'v17';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -49,6 +49,9 @@ const SHELL_ASSETS_OPTIONAL = [
   './auth/perfil.html',
   './auth/admin.html',
   './assets/js/supabase-config.js',
+  // Sala de Jogos
+  './games/index.html',
+  './games/ascenção-medieval/index.html',
 ];
 
 // Retrocompatibilidade: lista completa usada em staleWhileRevalidate
