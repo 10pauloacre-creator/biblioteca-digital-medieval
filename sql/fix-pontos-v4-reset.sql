@@ -19,3 +19,21 @@ DELETE FROM public.quiz_results;
 -- ── RESET: zera pontos e nível de todos os alunos ──
 UPDATE public.profiles SET pontos = 0, nivel = 1 WHERE role = 'aluno';
 UPDATE public.alunos   SET pontos = 0, nivel = 1;
+
+-- ── Garante permissões na tabela presence (indicador online) ──
+ALTER TABLE public.presence ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "presence_select" ON public.presence;
+DROP POLICY IF EXISTS "presence_insert" ON public.presence;
+DROP POLICY IF EXISTS "presence_update" ON public.presence;
+
+CREATE POLICY "presence_select" ON public.presence
+  FOR SELECT TO anon, authenticated USING (true);
+
+CREATE POLICY "presence_insert" ON public.presence
+  FOR INSERT TO anon, authenticated WITH CHECK (true);
+
+CREATE POLICY "presence_update" ON public.presence
+  FOR UPDATE TO anon, authenticated USING (true) WITH CHECK (true);
+
+GRANT SELECT, INSERT, UPDATE ON public.presence TO anon, authenticated;

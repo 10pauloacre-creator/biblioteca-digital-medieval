@@ -8,7 +8,7 @@
 //   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v14';
+const SW_VERSION   = 'v15';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -240,7 +240,8 @@ async function staleWhileRevalidate(request, cacheName) {
   const cached = await caches.match(request);
   const networkPromise = fetch(request).then(response => {
     if (response && response.status === 200 && response.type !== 'opaque') {
-      caches.open(cacheName).then(cache => cache.put(request, response.clone()));
+      const toCache = response.clone(); // clona sincronicamente ANTES de qualquer await
+      caches.open(cacheName).then(cache => cache.put(request, toCache));
     }
     return response;
   }).catch(() => null);
