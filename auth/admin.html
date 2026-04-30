@@ -213,6 +213,199 @@ body{overflow-y:auto;}
 
 @keyframes revealUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
+/* ════════════════════════════════════════════════════════════
+   STUDENT DASHBOARD MODAL
+════════════════════════════════════════════════════════════ */
+.db-box{
+  max-width:760px;width:96%;max-height:92vh;overflow-y:auto;
+  background:linear-gradient(160deg,#1e1004,#130a02);
+  border:2px solid var(--gold);border-radius:10px;padding:0;
+  box-shadow:0 0 80px rgba(201,168,76,.35);
+  scrollbar-width:thin;scrollbar-color:rgba(201,168,76,.3) transparent;
+}
+.db-box::-webkit-scrollbar{width:5px;}
+.db-box::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:3px;}
+
+.db-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 1.2rem;border-bottom:1px solid rgba(201,168,76,.2);
+  background:rgba(0,0,0,.35);position:sticky;top:0;z-index:10;
+}
+.db-close-btn{
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;
+  background:transparent;border:1px solid rgba(201,168,76,.25);
+  color:var(--text-d);border-radius:4px;padding:5px 12px;cursor:pointer;
+  transition:all .2s;
+}
+.db-close-btn:hover{background:rgba(201,168,76,.1);color:var(--text-m);}
+.db-edit-btn{
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;font-weight:700;
+  background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.4);
+  color:var(--gold-l);border-radius:4px;padding:5px 14px;cursor:pointer;
+  transition:all .2s;
+}
+.db-edit-btn:hover{background:rgba(201,168,76,.25);}
+
+/* Hero */
+.db-hero{
+  display:flex;gap:1.3rem;padding:1.3rem 1.5rem;
+  align-items:center;border-bottom:1px solid rgba(201,168,76,.12);
+  background:linear-gradient(180deg,rgba(40,20,4,.4),transparent);
+}
+@media(max-width:480px){.db-hero{flex-direction:column;align-items:flex-start;}}
+.db-av-wrap{position:relative;flex-shrink:0;}
+.db-av{
+  width:90px;height:90px;border-radius:50%;
+  border:2px solid rgba(201,168,76,.5);
+  background:linear-gradient(135deg,#2a1400,#1a0a00);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cinzel Decorative',serif;font-size:1.6rem;
+  color:var(--gold-l);overflow:hidden;
+}
+.db-av img{width:100%;height:100%;object-fit:cover;}
+.db-frame-hero{
+  position:absolute;inset:-9px;
+  width:calc(100% + 18px);height:calc(100% + 18px);
+  pointer-events:none;z-index:5;object-fit:contain;
+}
+#db-presence-dot{position:absolute;bottom:4px;right:4px;z-index:20;}
+
+.db-hero-info{flex:1;min-width:0;}
+.db-hero-name{
+  font-family:'Cinzel Decorative',serif;font-weight:900;
+  font-size:clamp(.85rem,3vw,1.1rem);
+  background:linear-gradient(135deg,#f9e3a0,#f2c25c,#b98b28);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.3rem;
+}
+.db-hero-meta{
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.1em;
+  color:var(--text-d);margin-bottom:.55rem;
+}
+.db-level-row{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;margin-bottom:.45rem;}
+.db-stars{font-size:1rem;letter-spacing:.06em;color:var(--gold);}
+.db-level-badge{
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.14em;font-weight:700;
+  padding:2px 9px;border-radius:20px;border:1px solid;
+}
+.db-pontos{font-family:'Cinzel Decorative',serif;font-size:.75rem;color:var(--gold-l);}
+.db-progress-row{display:flex;align-items:center;gap:.7rem;}
+.db-prog-track{
+  flex:1;max-width:200px;height:7px;
+  background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;
+}
+.db-prog-fill{height:100%;border-radius:4px;transition:width .5s ease;}
+.db-prog-txt{
+  font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.06em;color:var(--text-d);
+  white-space:nowrap;
+}
+
+/* Actions */
+.db-action-row{
+  display:flex;gap:.7rem;padding:.85rem 1.5rem;
+  border-bottom:1px solid rgba(201,168,76,.1);flex-wrap:wrap;
+}
+.db-action-btn{
+  flex:1;min-width:130px;display:flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.6rem .8rem;border-radius:5px;
+  font-family:'Cinzel',serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;
+  cursor:pointer;text-decoration:none;transition:all .2s;border:1px solid;
+}
+.db-btn-msg{background:rgba(20,100,180,.1);border-color:rgba(60,140,220,.35);color:#80c8f0;}
+.db-btn-msg:hover{background:rgba(20,100,180,.22);}
+.db-btn-chats{background:rgba(80,180,80,.08);border-color:rgba(80,180,80,.3);color:#80d080;}
+.db-btn-chats:hover{background:rgba(80,180,80,.18);}
+
+/* Tabs */
+.db-tabs-row{display:flex;border-bottom:2px solid rgba(201,168,76,.15);padding:0 1.5rem;gap:0;}
+.db-tab-btn{
+  font-family:'Cinzel',serif;font-size:.63rem;font-weight:700;letter-spacing:.1em;
+  background:transparent;border:none;border-bottom:2px solid transparent;
+  color:var(--text-d);padding:.7rem 1.1rem;cursor:pointer;transition:all .2s;margin-bottom:-2px;
+}
+.db-tab-btn:hover{color:var(--text-m);}
+.db-tab-btn.active{color:var(--gold-l);border-bottom-color:var(--gold);}
+
+/* Panel */
+.db-panel{padding:1.2rem 1.5rem 1.6rem;min-height:180px;}
+.db-loading{
+  font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;
+  color:var(--text-d);text-align:center;padding:2.5rem;
+}
+.db-no-data{
+  font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;
+  color:var(--text-d);text-align:center;padding:2rem;
+}
+
+/* Quiz Report */
+.disc-block{margin-bottom:.9rem;border:1px solid rgba(201,168,76,.2);border-radius:7px;overflow:hidden;}
+.disc-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1rem;cursor:pointer;user-select:none;transition:background .2s;
+  background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.06));
+}
+.disc-header:hover{background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(201,168,76,.1));}
+.disc-header-left{display:flex;align-items:center;gap:.7rem;}
+.disc-icon{font-size:.95rem;}
+.disc-title{
+  font-family:'Cinzel',serif;font-size:.75rem;font-weight:700;
+  letter-spacing:.1em;color:var(--gold-l);
+}
+.disc-stats{font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-d);letter-spacing:.07em;margin-top:.1rem;}
+.disc-arrow{color:var(--gold);font-size:.68rem;transition:transform .25s;}
+.disc-arrow.open{transform:rotate(90deg);}
+
+.disc-body-wrap{display:none;background:rgba(0,0,0,.2);}
+.disc-body{padding:.9rem;overflow-x:auto;}
+
+.bim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;min-width:460px;}
+.bim-col-header{
+  font-family:'Cinzel',serif;font-size:.6rem;font-weight:700;letter-spacing:.12em;
+  color:var(--gold);text-align:center;padding:.4rem .2rem;
+  border-bottom:1px solid rgba(201,168,76,.25);margin-bottom:.5rem;
+}
+.quiz-item{
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  border-radius:4px;padding:.45rem .55rem;margin-bottom:.4rem;
+}
+.quiz-item:last-child{margin-bottom:0;}
+.quiz-item.q-good{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05);}
+.quiz-item.q-bad{border-color:rgba(220,38,38,.3);background:rgba(220,38,38,.05);}
+.quiz-item.q-nd{border-color:rgba(100,100,100,.2);opacity:.65;}
+.quiz-lbl{font-family:'IM Fell English',serif;font-size:.72rem;color:var(--text);line-height:1.35;margin-bottom:.22rem;}
+.quiz-res-row{display:flex;align-items:center;gap:.3rem;}
+.quiz-ico{font-size:.75rem;}
+.quiz-score{font-family:'Cinzel',serif;font-size:.62rem;font-weight:700;}
+.quiz-score.g{color:#4ade80;} .quiz-score.r{color:#f87171;}
+.quiz-detail{font-family:'Cinzel',serif;font-size:.55rem;color:var(--text-d);margin-top:.12rem;letter-spacing:.04em;}
+.quiz-nd-txt{font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-d);letter-spacing:.08em;}
+.bim-empty{font-family:'Cinzel',serif;font-size:.6rem;color:var(--text-d);text-align:center;padding:.6rem;opacity:.5;}
+
+.disc-summary{
+  display:flex;gap:.9rem;padding:.55rem 1rem;flex-wrap:wrap;
+  border-top:1px solid rgba(201,168,76,.1);background:rgba(0,0,0,.15);
+}
+.ds-item{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.07em;color:var(--text-d);}
+.ds-item b{font-size:.68rem;margin-right:.15rem;}
+.ds-item.g b{color:#4ade80;} .ds-item.r b{color:#f87171;} .ds-item.gold b{color:var(--gold-l);}
+
+/* Chat list */
+.chat-conv{
+  display:flex;align-items:center;gap:.8rem;padding:.7rem .8rem;
+  border:1px solid rgba(201,168,76,.15);border-radius:5px;margin-bottom:.5rem;
+  cursor:pointer;text-decoration:none;color:var(--text);
+  background:rgba(255,255,255,.02);transition:all .2s;
+}
+.chat-conv:hover{background:rgba(201,168,76,.07);border-color:rgba(201,168,76,.3);}
+.chat-conv-ico{font-size:1.1rem;width:28px;text-align:center;flex-shrink:0;}
+.chat-conv-info{flex:1;min-width:0;}
+.chat-conv-partner{
+  font-family:'Cinzel',serif;font-size:.7rem;font-weight:700;
+  color:var(--gold-l);margin-bottom:.12rem;
+}
+.chat-conv-preview{font-size:.73rem;color:var(--text-d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chat-conv-time{font-family:'Cinzel',serif;font-size:.58rem;color:var(--text-d);flex-shrink:0;}
+
 /* ══ MAGO SUPREMO ══ */
 .mago-section{
   background:linear-gradient(160deg,rgba(30,10,40,.95),rgba(14,4,22,.95));
@@ -486,8 +679,76 @@ body{overflow-y:auto;}
   </div>
 </div>
 
+<!-- ═══ DASHBOARD DO ALUNO ═══ -->
+<div class="modal-overlay" id="modal-dashboard">
+  <div class="db-box">
+
+    <!-- Top bar -->
+    <div class="db-topbar">
+      <button class="db-close-btn" onclick="closeDashboard()">✕ Fechar</button>
+      <button class="db-edit-btn" onclick="openEditFromDashboard()">✏ Editar Aluno</button>
+    </div>
+
+    <!-- Hero: avatar + nível + info -->
+    <div class="db-hero">
+      <div class="db-av-wrap">
+        <div class="db-av" id="db-av"></div>
+        <img class="db-frame-hero" id="db-frame-hero" style="display:none" alt=""/>
+        <span class="presence-dot offline" id="db-presence-dot"></span>
+      </div>
+      <div class="db-hero-info">
+        <div class="db-hero-name" id="db-hero-name">—</div>
+        <div class="db-hero-meta" id="db-hero-meta">—</div>
+        <div class="db-level-row">
+          <span class="db-stars"    id="db-stars">☆☆☆☆☆</span>
+          <span class="db-level-badge" id="db-level-badge">Novato</span>
+          <span class="db-pontos"   id="db-pontos">0 pts</span>
+        </div>
+        <div class="db-progress-row">
+          <div class="db-prog-track"><div class="db-prog-fill" id="db-prog-fill" style="width:0%"></div></div>
+          <span class="db-prog-txt" id="db-prog-txt"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="db-action-row">
+      <a class="db-action-btn db-btn-msg" id="db-btn-msg" href="#" style="display:none" target="_blank">
+        ✉ Enviar Mensagem
+      </a>
+      <button class="db-action-btn db-btn-chats" onclick="showDashboardTab('chat')">
+        💬 Ver Conversas
+      </button>
+    </div>
+
+    <!-- Abas -->
+    <div class="db-tabs-row">
+      <button class="db-tab-btn active" id="db-tab-btn-quiz" onclick="showDashboardTab('quiz')">
+        📚 Desempenho nos Quizzes
+      </button>
+      <button class="db-tab-btn" id="db-tab-btn-chat" onclick="showDashboardTab('chat')">
+        💬 Conversas
+      </button>
+    </div>
+
+    <!-- Painel: Quiz -->
+    <div id="db-panel-quiz" class="db-panel">
+      <div id="db-quiz-loading" class="db-loading">Carregando desempenho…</div>
+      <div id="db-quiz-content"></div>
+    </div>
+
+    <!-- Painel: Chat -->
+    <div id="db-panel-chat" class="db-panel" style="display:none">
+      <div id="db-chat-loading" class="db-loading">Carregando conversas…</div>
+      <div id="db-chat-content"></div>
+    </div>
+
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../assets/js/supabase-config.js"></script>
+<script src="../assets/js/nivel.js"></script>
 <script src="../assets/js/presence.js"></script>
 <script>
 const { createClient } = supabase;
@@ -583,7 +844,7 @@ function renderStudents(students) {
       ? `<a class="s-name" href="perfil-publico.html?id=${s.profile_id}" onclick="event.stopPropagation()" style="color:inherit;text-decoration:none;">${s.nome_completo || '(sem nome)'}</a>`
       : `<div class="s-name">${s.nome_completo || '(sem nome)'}</div>`;
     return `
-      <div class="student-card" onclick="openEdit('${s.id}')">
+      <div class="student-card" onclick="openDashboard('${s.id}')">
         <div class="s-avatar-wrap">
           <div class="s-avatar">${avatarHtml}</div>
           ${frameHtml}
@@ -915,6 +1176,389 @@ function clearMagoCompose() {
   document.getElementById('mago-texto').value  = '';
   document.getElementById('mago-compose-msg').className = 'msg';
 }
+
+// ════════════════════════════════════════════════════════════
+// DASHBOARD DO ALUNO
+// ════════════════════════════════════════════════════════════
+
+var _dashStudent  = null;
+var _chatLoaded   = false;
+
+var DISC_DISPLAY = {
+  'lingua-portuguesa':    'Língua Portuguesa',
+  'trilhas-de-c-humanas': 'Ciências Humanas',
+  'trilhas-de-linguagens':'Trilhas de Linguagens',
+  'artes':                'Artes'
+};
+var DISC_ICONS = {
+  'lingua-portuguesa':    '📖',
+  'trilhas-de-c-humanas': '🌍',
+  'trilhas-de-linguagens':'✍️',
+  'artes':                '🎨'
+};
+var NIVEL_COLORS = [
+  {cor:'#4a4040',grad:'#4a4040,#6a6060'},
+  {cor:'#a09878',grad:'#a09878,#c0b898'},
+  {cor:'#c9a84c',grad:'#c9a84c,#f0d060'},
+  {cor:'#4fc3f7',grad:'#4fc3f7,#81d4fa'},
+  {cor:'#c084fc',grad:'#c084fc,#d8a4ff'},
+  {cor:'#ff6a1a',grad:'#ff6a1a,#ff9a4a'}
+];
+
+function openDashboard(uid) {
+  var s = allStudents.find(function(x){ return x.id === uid; });
+  if (!s) return;
+  _dashStudent = s;
+  _chatLoaded  = false;
+
+  // Reset tabs
+  showDashboardTab('quiz', true);
+
+  renderDashboardHeader(s);
+  document.getElementById('db-quiz-loading').style.display = 'block';
+  document.getElementById('db-quiz-content').innerHTML = '';
+  document.getElementById('db-chat-loading').style.display = 'block';
+  document.getElementById('db-chat-content').innerHTML = '';
+
+  document.getElementById('modal-dashboard').classList.add('open');
+  loadDashboardQuizzes(s);
+}
+
+function closeDashboard() {
+  document.getElementById('modal-dashboard').classList.remove('open');
+  _dashStudent = null;
+}
+
+function openEditFromDashboard() {
+  var uid = _dashStudent ? _dashStudent.id : null;
+  closeDashboard();
+  if (uid) setTimeout(function(){ openEdit(uid); }, 80);
+}
+
+function renderDashboardHeader(s) {
+  var pts   = s.pontos || 0;
+  var nivel = pts < 10 ? 0 : Math.min(s.nivel || 1, 5);
+
+  var nc      = window.getNivelInfo    ? window.getNivelInfo(nivel)       : {nome:'Novato',estrelas:0};
+  var stars   = window.getNivelStars   ? window.getNivelStars(nivel)      : '☆☆☆☆☆';
+  var pct     = window.getNivelProgress? window.getNivelProgress(nivel,pts): 0;
+  var proxTxt = window.getNivelProxTxt ? window.getNivelProxTxt(nivel,pts): '';
+
+  // Avatar
+  var avEl  = document.getElementById('db-av');
+  var parts = (s.nome_completo || '').split(' ').filter(Boolean);
+  var ini   = parts.length >= 2 ? parts[0][0]+parts[parts.length-1][0] : (parts[0]||'?')[0];
+  if (s.avatar_url) {
+    avEl.innerHTML = '<img src="'+s.avatar_url+'" alt=""/>';
+  } else {
+    avEl.textContent = ini.toUpperCase();
+  }
+
+  // Frame
+  var frameEl = document.getElementById('db-frame-hero');
+  if (nivel > 0) {
+    frameEl.src = '../assets/images/frames/frame-nivel-'+nivel+'.png';
+    frameEl.style.display = 'block';
+  } else {
+    frameEl.style.display = 'none';
+  }
+
+  // Presence dot
+  var dot = document.getElementById('db-presence-dot');
+  dot.setAttribute('data-uid', s.id);
+  dot.className = 'presence-dot offline';
+  loadPresence(); // re-sync dots
+
+  // Texts
+  document.getElementById('db-hero-name').textContent = s.nome_completo || '—';
+  var meta = [];
+  if (s.serie) meta.push(s.serie);
+  if (s.turma) meta.push('Turma '+s.turma);
+  if (s.numero_chamada) meta.push('Nº '+s.numero_chamada);
+  document.getElementById('db-hero-meta').textContent = meta.join(' · ');
+
+  // Level
+  document.getElementById('db-stars').textContent = stars;
+  var nc_clr = NIVEL_COLORS[nivel] || NIVEL_COLORS[0];
+  var badgeEl = document.getElementById('db-level-badge');
+  badgeEl.textContent = nc.nome;
+  badgeEl.style.cssText = 'color:'+nc_clr.cor+';border-color:'+nc_clr.cor+';background:'+nc_clr.cor.replace('#','rgba(')+',0.15)';
+  // Use a simpler inline approach
+  badgeEl.style.color = nc_clr.cor;
+  badgeEl.style.borderColor = nc_clr.cor;
+  badgeEl.style.background = 'rgba(0,0,0,.35)';
+
+  document.getElementById('db-pontos').textContent = pts+' pts';
+
+  // Progress
+  var fillEl = document.getElementById('db-prog-fill');
+  fillEl.style.width = pct+'%';
+  fillEl.style.background = 'linear-gradient(90deg,'+nc_clr.grad+')';
+  document.getElementById('db-prog-txt').textContent = proxTxt;
+
+  // Message button
+  var msgBtn = document.getElementById('db-btn-msg');
+  if (s.profile_id) {
+    msgBtn.href = 'chat.html?with='+s.profile_id;
+    msgBtn.style.display = 'flex';
+  } else {
+    msgBtn.style.display = 'none';
+  }
+}
+
+function showDashboardTab(tab, noLoad) {
+  document.getElementById('db-panel-quiz').style.display = tab==='quiz'?'block':'none';
+  document.getElementById('db-panel-chat').style.display = tab==='chat'?'block':'none';
+  document.getElementById('db-tab-btn-quiz').className = 'db-tab-btn'+(tab==='quiz'?' active':'');
+  document.getElementById('db-tab-btn-chat').className = 'db-tab-btn'+(tab==='chat'?' active':'');
+
+  if (!noLoad && tab==='chat' && _dashStudent && !_chatLoaded) {
+    _chatLoaded = true;
+    loadDashboardChats(_dashStudent);
+  }
+}
+
+// ── Parsing helpers ───────────────────────────────────────────
+function _parsePath(p) {
+  var m = (p||'').match(/livros\/(\d+)-serie\/([^\/]+)\/(\d+)-bimestre/);
+  if (!m) return null;
+  return { serieNum:m[1], discSlug:m[2], bim:parseInt(m[3]) };
+}
+
+function _esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Quiz Performance Report ───────────────────────────────────
+async function loadDashboardQuizzes(s) {
+  var loading = document.getElementById('db-quiz-loading');
+  var content = document.getElementById('db-quiz-content');
+  loading.style.display = 'block';
+  content.innerHTML = '';
+
+  try {
+    // Resultados do aluno
+    var { data: myRes } = await db.from('quiz_results')
+      .select('book_path,quiz_id,quiz_label,correct,total,completed_at')
+      .eq('user_id', s.id);
+
+    // Catálogo global: todos os quizzes conhecidos da série deste aluno
+    var serieNum = (s.serie||'').replace(/[^0-9]/g,'');
+    var serieSlug = serieNum ? serieNum+'-serie' : null;
+    var catalogQ = db.from('quiz_results')
+      .select('book_path,quiz_id,quiz_label')
+      .limit(2000);
+    if (serieSlug) catalogQ = catalogQ.ilike('book_path','%'+serieSlug+'%');
+    var { data: catRaw } = await catalogQ;
+
+    loading.style.display = 'none';
+    content.innerHTML = _buildQuizHTML(s, myRes||[], catRaw||[]);
+
+    // Wire accordion
+    content.querySelectorAll('.disc-header').forEach(function(h) {
+      h.addEventListener('click', function() {
+        var id = h.dataset.disc;
+        var body  = document.getElementById('disc-bw-'+id);
+        var arrow = document.getElementById('disc-arr-'+id);
+        var open  = body.style.display !== 'none';
+        body.style.display = open ? 'none' : 'block';
+        if (arrow) arrow.className = 'disc-arrow'+(open?'':' open');
+      });
+    });
+
+    // Auto-expand first
+    var first = content.querySelector('.disc-header');
+    if (first) first.click();
+
+  } catch(e) {
+    loading.textContent = 'Erro ao carregar desempenho.';
+    console.error(e);
+  }
+}
+
+function _buildQuizHTML(student, myRes, catRaw) {
+  // Mapa de resultados do aluno
+  var myMap = {};
+  (myRes||[]).forEach(function(r) {
+    if (!myMap[r.book_path]) myMap[r.book_path] = {};
+    myMap[r.book_path][r.quiz_id] = r;
+  });
+
+  // Catálogo: discSlug → bim → [{quiz_id, quiz_label, book_path}]  deduplicated
+  var catMap = {};
+  var seen   = {};
+  (catRaw||[]).forEach(function(r) {
+    var p = _parsePath(r.book_path);
+    if (!p) return;
+    var key = r.book_path+'::'+r.quiz_id;
+    if (seen[key]) return;
+    seen[key] = true;
+    if (!catMap[p.discSlug])       catMap[p.discSlug] = {};
+    if (!catMap[p.discSlug][p.bim]) catMap[p.discSlug][p.bim] = [];
+    catMap[p.discSlug][p.bim].push({quiz_id:r.quiz_id, quiz_label:r.quiz_label||r.quiz_id, book_path:r.book_path});
+  });
+
+  // Disciplinas esperadas para a série
+  var sn = (student.serie||'').replace(/[^0-9]/g,'');
+  var discs;
+  if (sn==='1') discs = ['lingua-portuguesa','trilhas-de-c-humanas','trilhas-de-linguagens'];
+  else discs = ['lingua-portuguesa','trilhas-de-c-humanas','trilhas-de-linguagens','artes'];
+  // Adiciona disciplinas extras que estejam no catálogo
+  Object.keys(catMap).forEach(function(d){ if (discs.indexOf(d)<0) discs.push(d); });
+
+  if (!discs.length) return '<div class="db-no-data">Nenhum quiz disponível ainda.</div>';
+
+  var html = '';
+
+  discs.forEach(function(disc, idx) {
+    var dName  = DISC_DISPLAY[disc]  || disc.replace(/-/g,' ');
+    var dIcon  = DISC_ICONS[disc]    || '📚';
+    var dData  = catMap[disc]        || {};
+
+    var totalQ=0, doneQ=0, totCor=0, totAll=0;
+    [1,2,3,4].forEach(function(b){
+      (dData[b]||[]).forEach(function(q){
+        totalQ++;
+        var r = myMap[q.book_path]&&myMap[q.book_path][q.quiz_id];
+        if (r){ doneQ++; totCor+=r.correct||0; totAll+=r.total||0; }
+      });
+    });
+    var acc = totAll>0 ? Math.round(totCor/totAll*100) : 0;
+
+    html += '<div class="disc-block">';
+    html += '<div class="disc-header" data-disc="'+idx+'">';
+    html += '<div class="disc-header-left">';
+    html += '<span class="disc-icon">'+dIcon+'</span>';
+    html += '<div><div class="disc-title">'+_esc(dName)+'</div>';
+    html += '<div class="disc-stats">'+doneQ+'/'+totalQ+' quizzes realizados'+(totAll>0?' · '+acc+'% acertos':'')+'</div></div>';
+    html += '</div>';
+    html += '<span class="disc-arrow" id="disc-arr-'+idx+'">▶</span>';
+    html += '</div>'; // disc-header
+
+    html += '<div class="disc-body-wrap" id="disc-bw-'+idx+'">';
+    html += '<div class="disc-body">';
+    html += '<div class="bim-grid">';
+
+    [1,2,3,4].forEach(function(bim){
+      var quizzes = dData[bim] || [];
+      html += '<div class="bim-col">';
+      html += '<div class="bim-col-header">'+bim+'º BIMESTRE</div>';
+
+      if (!quizzes.length) {
+        html += '<div class="bim-empty">—</div>';
+      } else {
+        quizzes.forEach(function(q){
+          var r = myMap[q.book_path]&&myMap[q.book_path][q.quiz_id];
+          if (r) {
+            var cor = r.correct||0, tot = r.total||0, err = tot-cor;
+            var good = tot>0 && cor>=tot/2;
+            html += '<div class="quiz-item '+(good?'q-good':'q-bad')+'">';
+            html += '<div class="quiz-lbl">'+_esc(q.quiz_label||q.quiz_id)+'</div>';
+            html += '<div class="quiz-res-row">';
+            html += '<span class="quiz-ico">'+(good?'✓':'✗')+'</span>';
+            html += '<span class="quiz-score '+(good?'g':'r')+'">'+cor+'/'+tot+'</span>';
+            html += '</div>';
+            html += '<div class="quiz-detail">'+cor+' acerto'+(cor!==1?'s':'')+' · '+err+' erro'+(err!==1?'s':'')+'</div>';
+            html += '</div>';
+          } else {
+            html += '<div class="quiz-item q-nd">';
+            html += '<div class="quiz-lbl">'+_esc(q.quiz_label||q.quiz_id)+'</div>';
+            html += '<div class="quiz-res-row"><span class="quiz-ico">○</span><span class="quiz-nd-txt">Não realizado</span></div>';
+            html += '</div>';
+          }
+        });
+      }
+      html += '</div>'; // bim-col
+    });
+
+    html += '</div>'; // bim-grid
+    html += '</div></div>'; // disc-body + disc-body-wrap
+
+    // Barra de resumo
+    html += '<div class="disc-summary">';
+    html += '<div class="ds-item gold"><b>'+doneQ+'</b> realizados</div>';
+    html += '<div class="ds-item"><b>'+(totalQ-doneQ)+'</b> pendentes</div>';
+    if (totAll>0){
+      html += '<div class="ds-item g"><b>'+totCor+'</b> acertos</div>';
+      html += '<div class="ds-item r"><b>'+(totAll-totCor)+'</b> erros</div>';
+      html += '<div class="ds-item"><b>'+acc+'%</b> taxa</div>';
+    }
+    html += '</div>'; // disc-summary
+    html += '</div>'; // disc-block
+  });
+
+  return html || '<div class="db-no-data">Sem dados de quizzes para esta série.</div>';
+}
+
+// ── Chat List ─────────────────────────────────────────────────
+async function loadDashboardChats(s) {
+  var loading = document.getElementById('db-chat-loading');
+  var content = document.getElementById('db-chat-content');
+  loading.style.display = 'block';
+  content.innerHTML = '';
+
+  var chatId = s.profile_id || s.id;
+
+  try {
+    var { data: msgs, error } = await db.from('chat_messages')
+      .select('id,sender_id,receiver_id,content,type,created_at')
+      .or('sender_id.eq.'+chatId+',receiver_id.eq.'+chatId)
+      .is('deleted_at', null)
+      .order('created_at', {ascending:false})
+      .limit(200);
+
+    loading.style.display = 'none';
+
+    if (error || !msgs || !msgs.length) {
+      content.innerHTML = '<div class="db-no-data">Nenhuma conversa encontrada.</div>';
+      return;
+    }
+
+    // Agrupa por parceiro de conversa (última mensagem de cada)
+    var convMap = {};
+    (msgs||[]).forEach(function(m){
+      var partner = (m.sender_id===chatId) ? m.receiver_id : m.sender_id;
+      if (!convMap[partner]) convMap[partner] = m;
+    });
+
+    var html = '<div style="margin-bottom:.5rem;font-family:\'Cinzel\',serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-d);">'+
+               Object.keys(convMap).length+' conversa(s) encontrada(s)</div>';
+
+    Object.entries(convMap).forEach(function(entry){
+      var partnerId = entry[0], m = entry[1];
+      var preview = m.type==='text' ? _esc((m.content||'').substring(0,80)) : '📎 Mídia';
+      var dt  = new Date(m.created_at);
+      var now = new Date();
+      var ts  = dt.toDateString()===now.toDateString()
+        ? dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
+        : dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+
+      var href = s.profile_id ? 'chat.html?with='+s.profile_id : '#';
+      html += '<a class="chat-conv" href="'+href+'" target="_blank">';
+      html += '<div class="chat-conv-ico">💬</div>';
+      html += '<div class="chat-conv-info">';
+      html += '<div class="chat-conv-partner">'+
+               (partnerId===chatId ? 'Você mesmo' : 'Admin / Professor')+
+               '</div>';
+      html += '<div class="chat-conv-preview">'+preview+'</div>';
+      html += '</div>';
+      html += '<div class="chat-conv-time">'+ts+'</div>';
+      html += '</a>';
+    });
+
+    content.innerHTML = html;
+
+  } catch(e) {
+    loading.textContent = 'Conversas não disponíveis (sem permissão ou erro).';
+  }
+}
+
+// Fecha dashboard clicando fora
+document.getElementById('modal-dashboard').addEventListener('click', function(e){
+  if (e.target===document.getElementById('modal-dashboard')) closeDashboard();
+});
+
+// ════════════════════════════════════════════════════════════
 
 // Chama a Edge Function Supabase para enviar push (se configurada)
 async function triggerMagoPush(titulo, texto) {
