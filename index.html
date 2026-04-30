@@ -1703,11 +1703,11 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 </video>
 
 <!-- AUDIO -->
-<audio id="bg-music" loop preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/musica-fundo.mp3" type="audio/mpeg"></audio>
-<audio id="sfx-serie" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-serie.mp3" type="audio/mpeg"></audio>
-<audio id="sfx-livro-disponivel" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-livro-disponivel.mp3" type="audio/mpeg"></audio>
-<audio id="sfx-livro-abrindo" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/livro-abrindo.mp3" type="audio/mpeg"></audio>
-<audio id="sfx-livro-indisponivel" preload="auto"><source src="https://biblioteca-digital-medieval.vercel.app/assets/audio/som-livro-indisponivel.mp3" type="audio/mpeg"></audio>
+<audio id="bg-music" preload="none"></audio>
+<audio id="sfx-serie" preload="auto"><source src="assets/audio/sfx/som-serie.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-livro-disponivel" preload="auto"><source src="assets/audio/sfx/som-livro-disponivel.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-livro-abrindo" preload="auto"><source src="assets/audio/sfx/livro-abrindo.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-livro-indisponivel" preload="auto"><source src="assets/audio/sfx/som-livro-indisponivel.mp3" type="audio/mpeg"></audio>
 
 <button id="mute-btn" onclick="toggleMute()"></button>
 
@@ -2303,11 +2303,28 @@ function goBack() {
    AUDIO
 ══════════════════════════════ */
 let musicStarted=false, muted=false, musicPausedBySystem=false;
+const BG_TRACKS=[
+  'assets/audio/musica-bg/musica-fundo-1.mp3',
+  'assets/audio/musica-bg/musica-fundo-2.mp3',
+  'assets/audio/musica-bg/musica-fundo-3.mp3',
+  'assets/audio/musica-bg/musica-fundo-4.mp3',
+  'assets/audio/musica-bg/musica-fundo-5.mp3',
+];
+let bgTrackIdx=-1;
 
-function startBgMusic() {
+function _nextBgTrack(){
+  let idx;
+  do{idx=Math.floor(Math.random()*BG_TRACKS.length);}while(idx===bgTrackIdx&&BG_TRACKS.length>1);
+  bgTrackIdx=idx;
+  return BG_TRACKS[idx];
+}
+
+function startBgMusic(){
   const m=document.getElementById('bg-music');
   if(!m||musicStarted)return;
-  m.volume=.04;
+  m.volume=.4;
+  m.src=_nextBgTrack();
+  m.addEventListener('ended',()=>{if(muted)return;m.src=_nextBgTrack();m.play().catch(()=>{});},{passive:true});
   m.play().then(()=>{
     musicStarted=true;
     const btn=document.getElementById('mute-btn');

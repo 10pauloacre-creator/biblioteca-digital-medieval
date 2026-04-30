@@ -8,7 +8,7 @@
 //   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v15';
+const SW_VERSION   = 'v16';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -56,11 +56,16 @@ const SHELL_ASSETS = [...SHELL_ASSETS_CRITICAL, ...SHELL_ASSETS_OPTIONAL];
 
 // ── Áudio: pré-cache junto com o shell
 const AUDIO_ASSETS = [
-  './assets/audio/musica-fundo.mp3',
-  './assets/audio/som-serie.mp3',
-  './assets/audio/som-livro-disponivel.mp3',
-  './assets/audio/som-livro-indisponivel.mp3',
-  './assets/audio/livro-abrindo.mp3',
+  './assets/audio/musica-bg/musica-fundo-1.mp3',
+  './assets/audio/musica-bg/musica-fundo-2.mp3',
+  './assets/audio/musica-bg/musica-fundo-3.mp3',
+  './assets/audio/musica-bg/musica-fundo-4.mp3',
+  './assets/audio/musica-bg/musica-fundo-5.mp3',
+  './assets/audio/sfx/som-serie.mp3',
+  './assets/audio/sfx/som-livro-disponivel.mp3',
+  './assets/audio/sfx/som-livro-indisponivel.mp3',
+  './assets/audio/sfx/livro-abrindo.mp3',
+  './assets/audio/sfx/musica-aviso.mp3',
 ];
 
 // ── Vídeo/animação: cache em background (arquivos grandes)
