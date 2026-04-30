@@ -2914,7 +2914,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       hideSplash();
       setAuthImg('assets/images/perfil.png', 'auth/perfil-custom.html?id=' + alunoSession.id);
       initAlunoNotif(alunoSession.id);
-      initMago(alunoSession.id, 'aluno', alunoSession.nome_completo || '');
+      initMago(alunoSession.id, 'aluno', alunoSession.nome_completo || '', alunoSession.turma || '');
       if (doIntro || !sessionStorage.getItem('bdm-nav')) {
         window._bdmAfterIntro = () => window._goToSerie(null);
         playIntro();
@@ -3472,24 +3472,27 @@ var _magoMsgId   = null;
 var _magoUserId  = null;
 var _magoUserType= null;
 var _magoNome    = null;
+var _magoTurma   = null;
 var _magoBubbleOpen = false;
 
 // Chave pública VAPID — gere com: npx web-push generate-vapid-keys
 // Substitua pelo valor real gerado; enquanto começar com 'GERAR' push é desativado.
 var MAGO_VAPID_PUBLIC_KEY = 'GERAR_COM_npx_web-push_generate-vapid-keys';
 
-async function initMago(userId, userType, nomePassado) {
+async function initMago(userId, userType, nomePassado, turmaPassada) {
   if (!userId) return;
   _magoUserId   = userId;
   _magoUserType = userType || 'profile';
+  _magoTurma    = turmaPassada || '';
 
-  // Busca nome se não foi passado (Supabase Auth)
-  if (!nomePassado && userType === 'profile') {
+  // Busca nome e turma se não foram passados (Supabase Auth)
+  if (userType === 'profile') {
     try {
       const { data: p } = await _magoDb.from('profiles')
-        .select('nome_completo').eq('id', userId).single();
-      _magoNome = p?.nome_completo || '';
-    } catch(e) { _magoNome = ''; }
+        .select('nome_completo,turma').eq('id', userId).single();
+      _magoNome  = p?.nome_completo || nomePassado || '';
+      _magoTurma = p?.turma || '';
+    } catch(e) { _magoNome = nomePassado || ''; }
   } else {
     _magoNome = nomePassado || '';
   }
@@ -3501,11 +3504,18 @@ async function initMago(userId, userType, nomePassado) {
 async function checkMagoMessage() {
   if (!_magoUserId || !_magoDb) return;
   try {
-    const { data: msgs } = await _magoDb.from('mago_mensagens')
-      .select('id,titulo,texto')
+    // Filtra: mensagens gerais (turma_destino nula) OU da turma do aluno
+    let query = _magoDb.from('mago_mensagens')
+      .select('id,titulo,texto,turma_destino')
       .eq('ativo', true)
       .order('created_at', { ascending: false })
       .limit(1);
+    if (_magoTurma) {
+      query = query.or('turma_destino.is.null,turma_destino.eq.' + _magoTurma);
+    } else {
+      query = query.is('turma_destino', null);
+    }
+    const { data: msgs } = await query;
     if (!msgs || !msgs.length) return;
 
     const msg = msgs[0];

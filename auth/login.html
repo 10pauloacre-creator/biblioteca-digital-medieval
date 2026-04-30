@@ -423,6 +423,7 @@ function salvarSessao(data) {
     id:             data.id,
     nome_completo:  data.nome_completo,
     serie:          data.serie,
+    turma:          data.turma || '',
     numero_chamada: data.numero_chamada,
     role:           data.role || 'aluno'
   }));

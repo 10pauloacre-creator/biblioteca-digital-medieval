@@ -151,6 +151,7 @@ body{overflow-y:auto;}
 }
 .field input:focus,.field select:focus{border-color:var(--gold);}
 .field select option{background:#1a0e04;}
+#mago-turma-destino option{background:#1a0e04;}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
 
 /* Upload avatar */
@@ -552,6 +553,12 @@ body{overflow-y:auto;}
         <div class="field">
           <label>TÍTULO DA MENSAGEM</label>
           <input id="mago-titulo" type="text" placeholder="Ex: Aviso Importante" maxlength="80" value="Mensagem do Mago Supremo"/>
+        </div>
+        <div class="field">
+          <label>DESTINO</label>
+          <select id="mago-turma-destino" style="width:100%;padding:.6rem .85rem;background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.25);border-radius:6px;color:var(--text);font-family:'IM Fell English',serif;font-size:.85rem;">
+            <option value="">📢 Geral — todos os alunos</option>
+          </select>
         </div>
         <div class="field">
           <label>TEXTO DA MENSAGEM</label>
@@ -1025,6 +1032,34 @@ var _magoActiveMsgId = null;
 var _magoTotalAlunos = 0;
 var _magoSecOpen = true;
 
+// Carrega turmas disponíveis no select de destino
+async function loadMagoTurmas() {
+  const sel = document.getElementById('mago-turma-destino');
+  if (!sel) return;
+  try {
+    const [{ data: profTurmas }, { data: alunoTurmas }] = await Promise.all([
+      db.from('profiles').select('serie,turma').eq('role','aluno'),
+      db.from('alunos').select('serie,turma')
+    ]);
+    const all = [...(profTurmas||[]), ...(alunoTurmas||[])];
+    const seen = new Set();
+    const opts = [];
+    all.forEach(r => {
+      const turma = (r.turma || '').trim();
+      const serie = (r.serie || '').trim();
+      if (!turma) return;
+      const key = serie + '|' + turma;
+      if (seen.has(key)) return;
+      seen.add(key);
+      opts.push({ serie, turma, label: serie ? serie + ' — Turma ' + turma : 'Turma ' + turma });
+    });
+    opts.sort((a,b) => a.label.localeCompare(b.label));
+    // Mantém opção "Geral" e adiciona turmas
+    sel.innerHTML = '<option value="">📢 Geral — todos os alunos</option>'
+      + opts.map(o => `<option value="${o.turma}">🏰 ${o.label}</option>`).join('');
+  } catch(e) {}
+}
+
 // Inicializa seção Mago após loadStudents()
 async function loadMagoSection() {
   const loading = document.getElementById('mago-loading');
@@ -1034,9 +1069,11 @@ async function loadMagoSection() {
   if (activeWrap) activeWrap.style.display = 'none';
   if (compose) compose.style.display = 'block';
 
+  loadMagoTurmas(); // fire-and-forget
+
   try {
     const { data: msgs } = await db.from('mago_mensagens')
-      .select('id,titulo,texto,created_at')
+      .select('id,titulo,texto,created_at,turma_destino')
       .eq('ativo', true)
       .order('created_at', { ascending: false })
       .limit(1);
@@ -1051,31 +1088,38 @@ async function loadMagoSection() {
     document.getElementById('mago-active-title').textContent = msg.titulo || 'Mensagem do Mago Supremo';
     document.getElementById('mago-active-text').textContent  = msg.texto;
     const dt = new Date(msg.created_at).toLocaleString('pt-BR');
-    document.getElementById('mago-active-meta').textContent  = 'Publicada em ' + dt;
+    const destino = msg.turma_destino ? '🏰 Turma ' + msg.turma_destino : '📢 Geral';
+    document.getElementById('mago-active-meta').textContent  = destino + ' · Publicada em ' + dt;
 
     if (activeWrap) activeWrap.style.display = 'block';
     if (compose) compose.style.display = 'none';
 
-    await loadMagoResponses(msg.id);
+    await loadMagoResponses(msg.id, msg.turma_destino);
   } catch(e) {
     if (loading) loading.textContent = 'Erro ao carregar.';
   }
 }
 
-async function loadMagoResponses(msgId) {
+async function loadMagoResponses(msgId, turmaDestino) {
   try {
+    let profQuery  = db.from('profiles').select('id,nome_completo,serie,turma').eq('role','aluno');
+    let alunoQuery = db.from('alunos').select('id,nome_completo,serie,turma');
+    if (turmaDestino) {
+      profQuery  = profQuery.eq('turma', turmaDestino);
+      alunoQuery = alunoQuery.eq('turma', turmaDestino);
+    }
     const [{ data: respostas }, { data: profiles }, { data: alunosCustom }] = await Promise.all([
       db.from('mago_respostas').select('respondente_id,respondente_nome,created_at').eq('mensagem_id', msgId),
-      db.from('profiles').select('id,nome_completo,serie').eq('role','aluno'),
-      db.from('alunos').select('id,nome_completo,serie')
+      profQuery,
+      alunoQuery
     ]);
 
     const confirmSet = new Set((respostas || []).map(r => r.respondente_id));
 
     // Une todos os alunos (profiles + custom)
     const allAlunos = [
-      ...(profiles || []).map(p => ({ id: p.id, nome: p.nome_completo, serie: p.serie || '' })),
-      ...(alunosCustom || []).map(a => ({ id: a.id, nome: a.nome_completo, serie: a.serie || '' }))
+      ...(profiles || []).map(p => ({ id: p.id, nome: p.nome_completo, serie: p.serie || '', turma: p.turma || '' })),
+      ...(alunosCustom || []).map(a => ({ id: a.id, nome: a.nome_completo, serie: a.serie || '', turma: a.turma || '' }))
     ];
 
     // Desduplicação por id
@@ -1129,10 +1173,11 @@ function toggleMagoSection() {
 }
 
 async function publishMagoMessage() {
-  const titulo = (document.getElementById('mago-titulo').value || '').trim();
-  const texto  = (document.getElementById('mago-texto').value || '').trim();
-  const msgEl  = document.getElementById('mago-compose-msg');
-  const btn    = document.getElementById('btn-publish-mago');
+  const titulo  = (document.getElementById('mago-titulo').value || '').trim();
+  const texto   = (document.getElementById('mago-texto').value || '').trim();
+  const turma   = (document.getElementById('mago-turma-destino').value || '').trim();
+  const msgEl   = document.getElementById('mago-compose-msg');
+  const btn     = document.getElementById('btn-publish-mago');
 
   if (!texto) {
     msgEl.textContent = 'Escreva a mensagem antes de publicar.';
@@ -1145,16 +1190,20 @@ async function publishMagoMessage() {
     // Desativa mensagens anteriores
     await db.from('mago_mensagens').update({ ativo: false }).eq('ativo', true);
     // Insere nova mensagem
-    const { error } = await db.from('mago_mensagens').insert({
+    const payload = {
       titulo: titulo || 'Mensagem do Mago Supremo',
       texto,
-      ativo: true
-    });
+      ativo: true,
+      turma_destino: turma || null
+    };
+    const { error } = await db.from('mago_mensagens').insert(payload);
     if (error) throw error;
 
-    msgEl.textContent = '✓ Mensagem publicada! O mago está falando com os alunos.';
+    const destinoTxt = turma ? '🏰 Turma ' + turma : '📢 todos os alunos';
+    msgEl.textContent = '✓ Mensagem publicada para ' + destinoTxt + '!';
     msgEl.className = 'msg success show';
     document.getElementById('mago-texto').value = '';
+    document.getElementById('mago-turma-destino').value = '';
     await loadMagoSection();
 
     // Tenta enviar push via Edge Function (se configurada)
