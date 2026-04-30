@@ -3464,6 +3464,10 @@ async function doSearch(term) {
 // ══════════════════════════════════════════════════════════════
 // MAGO SUPREMO — sistema de mensagens do professor
 // ══════════════════════════════════════════════════════════════
+var _magoDb = (window.SUPABASE_URL && window.SUPABASE_URL !== 'SUA_URL_AQUI')
+  ? supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON)
+  : null;
+
 var _magoMsgId   = null;
 var _magoUserId  = null;
 var _magoUserType= null;
@@ -3482,7 +3486,7 @@ async function initMago(userId, userType, nomePassado) {
   // Busca nome se não foi passado (Supabase Auth)
   if (!nomePassado && userType === 'profile') {
     try {
-      const { data: p } = await db.from('profiles')
+      const { data: p } = await _magoDb.from('profiles')
         .select('nome_completo').eq('id', userId).single();
       _magoNome = p?.nome_completo || '';
     } catch(e) { _magoNome = ''; }
@@ -3495,9 +3499,9 @@ async function initMago(userId, userType, nomePassado) {
 }
 
 async function checkMagoMessage() {
-  if (!_magoUserId) return;
+  if (!_magoUserId || !_magoDb) return;
   try {
-    const { data: msgs } = await db.from('mago_mensagens')
+    const { data: msgs } = await _magoDb.from('mago_mensagens')
       .select('id,titulo,texto')
       .eq('ativo', true)
       .order('created_at', { ascending: false })
@@ -3506,7 +3510,7 @@ async function checkMagoMessage() {
 
     const msg = msgs[0];
 
-    const { data: resp } = await db.from('mago_respostas')
+    const { data: resp } = await _magoDb.from('mago_respostas')
       .select('id')
       .eq('mensagem_id', msg.id)
       .eq('respondente_id', _magoUserId)
@@ -3547,7 +3551,7 @@ async function confirmMagoMessage() {
   const btn = document.getElementById('mago-btn-ok');
   if (btn) { btn.disabled = true; btn.textContent = '⌛ Confirmando…'; }
   try {
-    await db.from('mago_respostas').upsert({
+    await _magoDb.from('mago_respostas').upsert({
       mensagem_id:     _magoMsgId,
       respondente_id:  _magoUserId,
       respondente_nome: _magoNome || ''
@@ -3578,7 +3582,7 @@ async function subscribePushMago() {
       });
     }
     const j = sub.toJSON();
-    await db.from('push_subscriptions').upsert({
+    await _magoDb.from('push_subscriptions').upsert({
       user_id:   _magoUserId,
       user_type: _magoUserType,
       user_nome: _magoNome || '',
