@@ -4066,7 +4066,7 @@ function _urlBase64ToUint8Array(b64) {
 
   // ── Helpers de input ──────────────────────────────────────────
   window.cgHandleKey = function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cgSendMessage(); }
+    // Enter sempre quebra linha; envio só pelo botão
   };
   window.cgAutoResize = function(el) {
     el.style.height = 'auto';
