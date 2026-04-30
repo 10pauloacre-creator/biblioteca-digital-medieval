@@ -1289,6 +1289,179 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 }
 
 /* ══════════════════════════════════════
+   CHAT GERAL DA GUILDA
+══════════════════════════════════════ */
+#chat-geral-btn{
+  position:fixed;bottom:24px;left:16px;z-index:12000;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#1a2a4a,#0e1a30);
+  border:2px solid rgba(100,160,255,.5);
+  color:#90c0ff;font-size:1.4rem;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 0 18px rgba(80,130,255,.35);
+  transition:transform .2s,box-shadow .2s;
+}
+#chat-geral-btn:hover{transform:scale(1.1);box-shadow:0 0 26px rgba(80,130,255,.55);}
+#chat-geral-btn.visible{display:flex;}
+#chat-geral-badge{
+  position:absolute;top:-4px;right:-4px;
+  background:#e53e3e;color:#fff;
+  font-family:'Cinzel',serif;font-size:.55rem;font-weight:700;
+  min-width:18px;height:18px;border-radius:999px;padding:0 4px;
+  display:none;align-items:center;justify-content:center;
+  border:2px solid #080300;
+}
+#chat-geral-badge.show{display:flex;}
+/* Modal do chat */
+#modal-chat-geral{
+  position:fixed;inset:0;z-index:13000;
+  background:rgba(4,2,0,.88);backdrop-filter:blur(8px);
+  display:none;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+}
+#modal-chat-geral.open{display:flex;}
+#chat-geral-box{
+  width:100%;max-width:640px;height:88vh;
+  display:flex;flex-direction:column;
+  background:linear-gradient(180deg,#0e0903,#060300);
+  border-top:2px solid rgba(100,160,255,.35);
+  border-left:1px solid rgba(100,160,255,.15);
+  border-right:1px solid rgba(100,160,255,.15);
+  border-radius:14px 14px 0 0;
+  overflow:hidden;
+}
+#chat-geral-header{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.7rem 1rem;
+  background:linear-gradient(180deg,rgba(14,20,40,.98),rgba(8,12,26,.95));
+  border-bottom:1px solid rgba(100,160,255,.2);
+  flex-shrink:0;
+}
+#chat-geral-title{
+  flex:1;font-family:'Cinzel',serif;font-size:.75rem;
+  letter-spacing:.12em;color:#90c0ff;font-weight:700;
+}
+#chat-geral-online{
+  font-family:'Cinzel',serif;font-size:.55rem;
+  color:rgba(100,200,100,.8);letter-spacing:.08em;
+}
+#chat-geral-close{
+  background:none;border:none;color:rgba(144,192,255,.6);
+  font-size:1.1rem;cursor:pointer;padding:.2rem .4rem;
+  border-radius:4px;transition:color .2s;
+}
+#chat-geral-close:hover{color:#90c0ff;}
+/* Área de mensagens */
+#chat-geral-msgs{
+  flex:1;min-height:0;overflow-y:auto;
+  padding:.8rem .9rem .4rem;
+  display:flex;flex-direction:column;gap:.45rem;
+  scroll-behavior:smooth;
+}
+#chat-geral-msgs::-webkit-scrollbar{width:3px;}
+#chat-geral-msgs::-webkit-scrollbar-thumb{background:rgba(100,160,255,.2);border-radius:2px;}
+.cg-msg{
+  display:flex;flex-direction:column;max-width:80%;
+  animation:cgFadeIn .2s ease-out;
+}
+@keyframes cgFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.cg-msg.mine{align-self:flex-end;align-items:flex-end;}
+.cg-msg.other{align-self:flex-start;align-items:flex-start;}
+.cg-sender{
+  font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.08em;
+  color:rgba(144,192,255,.7);margin-bottom:.15rem;
+}
+.cg-sender.admin-label{color:#d4a0ff;}
+.cg-bubble{
+  padding:.45rem .75rem;border-radius:12px;
+  font-size:.82rem;line-height:1.5;word-break:break-word;
+  font-family:'IM Fell English',serif;
+  position:relative;
+}
+.cg-msg.mine .cg-bubble{
+  background:linear-gradient(135deg,#1a3a6b,#0e2248);
+  border:1px solid rgba(100,160,255,.35);
+  color:#d0e8ff;border-radius:12px 12px 2px 12px;
+}
+.cg-msg.other .cg-bubble{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--text);border-radius:12px 12px 12px 2px;
+}
+.cg-msg.admin-msg .cg-bubble{
+  background:linear-gradient(135deg,#2d1a4a,#1a0e30);
+  border:1px solid rgba(180,100,255,.4);
+  color:#e8d0ff;
+}
+.cg-time{
+  font-size:.5rem;color:rgba(200,200,200,.35);
+  margin-top:.12rem;font-family:'Cinzel',serif;
+}
+.cg-del-btn{
+  background:none;border:none;color:rgba(255,80,80,.5);
+  font-size:.65rem;cursor:pointer;padding:.1rem .3rem;
+  border-radius:3px;transition:color .2s;margin-left:.3rem;
+  display:none;
+}
+.cg-bubble:hover .cg-del-btn{display:inline;}
+.cg-deleted{
+  font-style:italic;font-size:.75rem;
+  color:rgba(200,200,200,.3);font-family:'Cinzel',serif;
+}
+#chat-geral-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:.6rem;color:rgba(144,192,255,.3);
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.1em;
+  text-align:center;
+}
+#chat-geral-empty-icon{font-size:2.2rem;opacity:.3;}
+/* Input */
+#chat-geral-footer{
+  display:flex;align-items:flex-end;gap:.6rem;
+  padding:.65rem .9rem;
+  background:rgba(8,12,26,.98);
+  border-top:1px solid rgba(100,160,255,.15);
+  flex-shrink:0;
+}
+#chat-geral-input{
+  flex:1;resize:none;max-height:90px;min-height:38px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(100,160,255,.25);border-radius:8px;
+  color:var(--text);font-family:'IM Fell English',serif;font-size:.85rem;
+  padding:.5rem .75rem;outline:none;line-height:1.45;
+  scrollbar-width:none;
+  transition:border-color .2s;
+}
+#chat-geral-input::-webkit-scrollbar{display:none;}
+#chat-geral-input:focus{border-color:rgba(100,160,255,.55);}
+#chat-geral-send{
+  width:40px;height:40px;flex-shrink:0;border-radius:50%;
+  background:linear-gradient(135deg,#1a4a8a,#0e2a55);
+  border:1.5px solid rgba(100,160,255,.5);
+  color:#90c0ff;font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,transform .15s;
+}
+#chat-geral-send:hover{background:linear-gradient(135deg,#2a5aaa,#1a3a70);transform:scale(1.07);}
+#chat-geral-send:disabled{opacity:.4;cursor:default;transform:none;}
+#chat-geral-charcount{
+  position:absolute;bottom:56px;right:60px;
+  font-size:.5rem;color:rgba(100,160,255,.4);
+  font-family:'Cinzel',serif;pointer-events:none;
+  transition:color .2s;
+}
+#chat-geral-charcount.warn{color:rgba(255,160,80,.7);}
+#chat-geral-scroll-btn{
+  position:absolute;bottom:70px;right:16px;
+  background:rgba(20,30,60,.9);border:1px solid rgba(100,160,255,.3);
+  color:#90c0ff;border-radius:50%;width:32px;height:32px;
+  font-size:.8rem;cursor:pointer;display:none;
+  align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+#chat-geral-scroll-btn.show{display:flex;}
+/* ══════════════════════════════════════
    MAGO SUPREMO — Avatar Flutuante
 ══════════════════════════════════════ */
 #mago-wrapper{
@@ -1577,6 +1750,38 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
       <span class="mo-star" style="bottom:15%;right:8%;opacity:.5">✷</span>
     </div>
     <div id="mago-dot"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     CHAT GERAL DA GUILDA
+════════════════════════════════════════ -->
+<button id="chat-geral-btn" onclick="openChatGeral()" title="Chat da Guilda" aria-label="Chat Geral">
+  💬
+  <span id="chat-geral-badge"></span>
+</button>
+
+<div id="modal-chat-geral" onclick="if(event.target===this)closeChatGeral()">
+  <div id="chat-geral-box">
+    <div id="chat-geral-header">
+      <span style="font-size:1.1rem">⚔</span>
+      <span id="chat-geral-title">CHAT DA GUILDA</span>
+      <span id="chat-geral-online"></span>
+      <button id="chat-geral-close" onclick="closeChatGeral()" title="Fechar">✕</button>
+    </div>
+    <div id="chat-geral-msgs">
+      <div id="chat-geral-empty">
+        <div id="chat-geral-empty-icon">💬</div>
+        <span>Nenhuma mensagem ainda.<br>Sê o primeiro a falar, guerreiro.</span>
+      </div>
+    </div>
+    <div id="chat-geral-footer">
+      <textarea id="chat-geral-input" placeholder="Escreve tua mensagem…" rows="1" maxlength="500"
+        onkeydown="cgHandleKey(event)" oninput="cgAutoResize(this);cgUpdateCharCount()"></textarea>
+      <button id="chat-geral-send" onclick="cgSendMessage()" title="Enviar">➤</button>
+    </div>
+    <div id="chat-geral-charcount"></div>
+    <button id="chat-geral-scroll-btn" onclick="cgScrollToBottom(true)" title="Rolar para baixo">↓</button>
   </div>
 </div>
 
@@ -2915,6 +3120,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       setAuthImg('assets/images/perfil.png', 'auth/perfil-custom.html?id=' + alunoSession.id);
       initAlunoNotif(alunoSession.id);
       initMago(alunoSession.id, 'aluno', alunoSession.nome_completo || '', alunoSession.turma || '');
+      initChatGeral(alunoSession.id, 'aluno', alunoSession.nome_completo || '', alunoSession.serie || '', false);
       if (doIntro || !sessionStorage.getItem('bdm-nav')) {
         window._bdmAfterIntro = () => window._goToSerie(null);
         playIntro();
@@ -2947,6 +3153,7 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     const isAdmin = localStorage.getItem('bdm-cached-role') === 'admin';
     if (!isAdmin) initMago(session.user.id, 'profile', null);
+    initChatGeral(session.user.id, 'profile', null, '', isAdmin);
 
     if (isAdmin) {
       // Admin: nunca toca intro, vai direto pra landing
@@ -3608,6 +3815,279 @@ function _urlBase64ToUint8Array(b64) {
   const raw = atob((b64 + pad).replace(/-/g,'+').replace(/_/g,'/'));
   return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
 }
+</script>
+
+<!-- ════════════════════════════════════════
+     CHAT GERAL DA GUILDA — JS
+════════════════════════════════════════ -->
+<script>
+(function(){
+  if (!window.SUPABASE_URL || window.SUPABASE_URL === 'SUA_URL_AQUI') return;
+
+  var _cgDb      = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON);
+  var _cgUserId  = null;
+  var _cgNome    = null;
+  var _cgTipo    = null;  // 'aluno' | 'profile' | 'admin'
+  var _cgSerie   = null;
+  var _cgIsAdmin = false;
+  var _cgOpen    = false;
+  var _cgChannel = null;
+  var _cgMsgs    = [];
+  var _cgLastRead= parseInt(localStorage.getItem('bdm-chat-lastread') || '0', 10);
+  var _cgAtBottom= true;
+
+  // ── Inicializa o chat ─────────────────────────────────────────
+  window.initChatGeral = async function(userId, tipo, nome, serie, isAdmin) {
+    if (!userId) return;
+    _cgUserId  = userId;
+    _cgTipo    = tipo || 'aluno';
+    _cgIsAdmin = !!isAdmin;
+    _cgSerie   = serie || '';
+
+    // Busca nome do banco se não foi passado (Supabase Auth users)
+    if (!nome && tipo === 'profile') {
+      try {
+        const { data: p } = await _cgDb.from('profiles').select('nome_completo,serie').eq('id', userId).single();
+        _cgNome  = p?.nome_completo || 'Mestre';
+        _cgSerie = p?.serie || '';
+      } catch(e) { _cgNome = isAdmin ? 'Mago Supremo' : 'Guerreiro'; }
+    } else {
+      _cgNome = nome || 'Guerreiro';
+    }
+
+    document.getElementById('chat-geral-btn').classList.add('visible');
+    await _cgLoadMessages();
+    _cgSubscribe();
+  };
+
+  // ── Carrega últimas 80 mensagens ───────────────────────────────
+  async function _cgLoadMessages() {
+    try {
+      const { data } = await _cgDb.from('chat_geral')
+        .select('*')
+        .is('deleted_at', null)
+        .order('created_at', { ascending: false })
+        .limit(80);
+      _cgMsgs = (data || []).reverse();
+      _cgUpdateUnread();
+    } catch(e) {}
+  }
+
+  // ── Conta não lidas e atualiza badge ──────────────────────────
+  function _cgUpdateUnread() {
+    if (_cgOpen) { _cgMarkRead(); return; }
+    const count = _cgMsgs.filter(m =>
+      m.sender_id !== _cgUserId &&
+      new Date(m.created_at).getTime() > _cgLastRead
+    ).length;
+    const badge = document.getElementById('chat-geral-badge');
+    if (!badge) return;
+    if (count > 0) {
+      badge.textContent = count > 99 ? '99+' : count;
+      badge.classList.add('show');
+    } else {
+      badge.classList.remove('show');
+    }
+  }
+
+  function _cgMarkRead() {
+    _cgLastRead = Date.now();
+    localStorage.setItem('bdm-chat-lastread', _cgLastRead);
+    const badge = document.getElementById('chat-geral-badge');
+    if (badge) badge.classList.remove('show');
+  }
+
+  // ── Realtime ──────────────────────────────────────────────────
+  function _cgSubscribe() {
+    if (_cgChannel) return;
+    _cgChannel = _cgDb.channel('chat-geral-room')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_geral' }, function(payload) {
+        if (!payload.new || payload.new.deleted_at) return;
+        _cgMsgs.push(payload.new);
+        if (_cgOpen) {
+          _cgRenderOne(payload.new, true);
+          if (_cgAtBottom) setTimeout(cgScrollToBottom, 60);
+        }
+        _cgUpdateUnread();
+      })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'chat_geral' }, function(payload) {
+        if (!payload.new) return;
+        _cgMsgs = _cgMsgs.filter(m => m.id !== payload.new.id);
+        const el = document.getElementById('cgmsg-' + payload.new.id);
+        if (el) {
+          el.querySelector('.cg-bubble').innerHTML = '<span class="cg-deleted">🗑 Mensagem apagada</span>';
+          const delBtn = el.querySelector('.cg-del-btn');
+          if (delBtn) delBtn.remove();
+        }
+      })
+      .subscribe();
+  }
+
+  // ── Renderiza todas as mensagens ──────────────────────────────
+  function _cgRenderAll() {
+    const area = document.getElementById('chat-geral-msgs');
+    if (!area) return;
+    const empty = document.getElementById('chat-geral-empty');
+    if (_cgMsgs.length === 0) {
+      if (!empty) area.innerHTML = '<div id="chat-geral-empty"><div id="chat-geral-empty-icon">💬</div><span>Nenhuma mensagem ainda.<br>Sê o primeiro a falar, guerreiro.</span></div>';
+      return;
+    }
+    if (empty) empty.remove();
+    area.innerHTML = '';
+    // Agrupa por data
+    let lastDate = null;
+    _cgMsgs.forEach(function(m) {
+      const d = new Date(m.created_at).toLocaleDateString('pt-BR');
+      if (d !== lastDate) {
+        lastDate = d;
+        const sep = document.createElement('div');
+        sep.style.cssText = 'text-align:center;font-family:Cinzel,serif;font-size:.5rem;color:rgba(144,192,255,.3);letter-spacing:.1em;margin:.4rem 0;';
+        sep.textContent = d === new Date().toLocaleDateString('pt-BR') ? 'Hoje' : d;
+        area.appendChild(sep);
+      }
+      area.appendChild(_cgBuildMsg(m));
+    });
+  }
+
+  // ── Renderiza uma mensagem nova no final ──────────────────────
+  function _cgRenderOne(m, isNew) {
+    const area = document.getElementById('chat-geral-msgs');
+    if (!area) return;
+    const empty = document.getElementById('chat-geral-empty');
+    if (empty) empty.remove();
+    area.appendChild(_cgBuildMsg(m));
+  }
+
+  function _cgBuildMsg(m) {
+    const isMine  = m.sender_id === _cgUserId;
+    const isAdmin = m.sender_tipo === 'admin';
+    const div = document.createElement('div');
+    div.className = 'cg-msg' + (isMine ? ' mine' : ' other') + (isAdmin ? ' admin-msg' : '');
+    div.id = 'cgmsg-' + m.id;
+
+    const t = new Date(m.created_at);
+    const timeStr = t.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+
+    const canDelete = _cgIsAdmin || isMine;
+    const delBtn = canDelete && !m.deleted_at
+      ? `<button class="cg-del-btn" onclick="cgDeleteMsg('${m.id}')" title="Apagar">🗑</button>`
+      : '';
+
+    const bubbleContent = m.deleted_at
+      ? '<span class="cg-deleted">🗑 Mensagem apagada</span>'
+      : _cgEscape(m.content) + delBtn;
+
+    div.innerHTML =
+      (!isMine ? `<div class="cg-sender${isAdmin ? ' admin-label' : ''}">${_cgEscape(m.sender_nome)}${m.sender_serie ? ' · ' + _cgEscape(m.sender_serie) : ''}</div>` : '') +
+      `<div class="cg-bubble">${bubbleContent}</div>` +
+      `<div class="cg-time">${timeStr}</div>`;
+    return div;
+  }
+
+  function _cgEscape(s) {
+    return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  // ── Abrir/fechar ──────────────────────────────────────────────
+  window.openChatGeral = function() {
+    const modal = document.getElementById('modal-chat-geral');
+    if (!modal) return;
+    modal.classList.add('open');
+    _cgOpen = true;
+    _cgMarkRead();
+    _cgRenderAll();
+    setTimeout(function() {
+      cgScrollToBottom(false);
+      _cgWatchScroll();
+    }, 80);
+    const input = document.getElementById('chat-geral-input');
+    if (input) setTimeout(() => input.focus(), 200);
+  };
+
+  window.closeChatGeral = function() {
+    const modal = document.getElementById('modal-chat-geral');
+    if (modal) modal.classList.remove('open');
+    _cgOpen = false;
+    _cgMarkRead();
+  };
+
+  // ── Enviar mensagem ───────────────────────────────────────────
+  window.cgSendMessage = async function() {
+    if (!_cgUserId) return;
+    const input = document.getElementById('chat-geral-input');
+    const btn   = document.getElementById('chat-geral-send');
+    const content = (input.value || '').trim();
+    if (!content) return;
+    if (content.length > 500) return;
+
+    btn.disabled = true;
+    input.value = '';
+    cgAutoResize(input);
+    cgUpdateCharCount();
+
+    try {
+      await _cgDb.from('chat_geral').insert({
+        sender_id:   _cgUserId,
+        sender_nome: _cgNome,
+        sender_tipo: _cgIsAdmin ? 'admin' : _cgTipo,
+        sender_serie: _cgSerie || '',
+        content: content
+      });
+    } catch(e) {}
+    btn.disabled = false;
+    input.focus();
+  };
+
+  // ── Deletar mensagem (soft-delete) ────────────────────────────
+  window.cgDeleteMsg = async function(msgId) {
+    if (!confirm('Apagar esta mensagem?')) return;
+    try {
+      await _cgDb.from('chat_geral').update({ deleted_at: new Date().toISOString() }).eq('id', msgId);
+    } catch(e) {}
+  };
+
+  // ── Scroll ────────────────────────────────────────────────────
+  window.cgScrollToBottom = function(smooth) {
+    const area = document.getElementById('chat-geral-msgs');
+    if (!area) return;
+    area.scrollTo({ top: area.scrollHeight, behavior: smooth ? 'smooth' : 'instant' });
+  };
+
+  function _cgWatchScroll() {
+    const area = document.getElementById('chat-geral-msgs');
+    const btn  = document.getElementById('chat-geral-scroll-btn');
+    if (!area) return;
+    area.onscroll = function() {
+      const atBottom = area.scrollHeight - area.scrollTop - area.clientHeight < 60;
+      _cgAtBottom = atBottom;
+      if (btn) btn.classList.toggle('show', !atBottom);
+    };
+  }
+
+  // ── Helpers de input ──────────────────────────────────────────
+  window.cgHandleKey = function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cgSendMessage(); }
+  };
+  window.cgAutoResize = function(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 90) + 'px';
+  };
+  window.cgUpdateCharCount = function() {
+    const input = document.getElementById('chat-geral-input');
+    const el    = document.getElementById('chat-geral-charcount');
+    if (!el || !input) return;
+    const len = (input.value || '').length;
+    if (len > 400) {
+      el.textContent = (500 - len) + ' restantes';
+      el.className = len > 470 ? 'warn' : '';
+    } else {
+      el.textContent = '';
+    }
+  };
+
+  // ── Expõe DB para depuração ───────────────────────────────────
+  window._cgDb = _cgDb;
+}());
 </script>
 
 </body>
