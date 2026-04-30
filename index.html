@@ -1096,7 +1096,7 @@ body{background:#080300;color:var(--text);}
 @media (min-width:768px){
   .ranking-strip{
     bottom:373px;
-    left:63%;
+    left:50%;
     transform:translateX(-63%);
     width:min(303px,61vw);
     padding:.39rem .58rem .29rem;
@@ -3130,7 +3130,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     setTimeout(() => splash.classList.add('hidden'), 640);
   }
 
-  /* ── Auto-seleciona série do aluno ── */
+  /* ── Prepara sessão do aluno e fica na landing ── */
   window._goToSerie = async function(session) {
     // Aluno via localStorage
     if (!session) {
@@ -3140,9 +3140,10 @@ window.addEventListener('DOMContentLoaded',()=>{
           try { localStorage.removeItem('bdm-cached-role'); } catch(e) {}
           const map = {'1ª Série': 1, '2ª Série': 2, '3ª Série': 3};
           const n = map[al.serie];
-          if (n) { window.bdmAllowedSerie = n; selectSerie(n); }
+          if (n) window.bdmAllowedSerie = n;
         }
       } catch(e) {}
+      startBgMusic();
       return;
     }
     try {
@@ -3156,13 +3157,15 @@ window.addEventListener('DOMContentLoaded',()=>{
         const _rsA = document.getElementById('ranking-strip');
         if (_rsA) _rsA.style.display = '';
         if (typeof window.loadRanking === 'function') window.loadRanking();
+        startBgMusic();
         return;
       }
       try { localStorage.removeItem('bdm-cached-role'); } catch(e) {}
       const map = {'1ª Série': 1, '2ª Série': 2, '3ª Série': 3};
       const n = map[p.serie];
-      if (n) { window.bdmAllowedSerie = n; selectSerie(n); }
+      if (n) window.bdmAllowedSerie = n;
     } catch(e) {}
+    startBgMusic();
   };
 
   /* ── Lógica principal ── */
