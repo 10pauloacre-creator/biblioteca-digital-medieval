@@ -636,16 +636,52 @@ function buildValuePanel() {
   valPanel.id = 'hud-val-panel';
   valPanel.style.cssText =
     'position:fixed;bottom:0;left:0;right:0;z-index:50003;' +
-    'background:rgba(6,2,0,.72);border-top:2px solid #c9a84c;' +
-    'backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);' +
     'font-family:monospace;font-size:11px;color:#fff;' +
-    'padding:8px 12px 10px;max-height:42vh;overflow-y:auto;' +
     'transform:translateY(100%);transition:transform .3s ease;' +
     'box-sizing:border-box';
-  valPanel.innerHTML =
+
+  /* olho sempre visível no topo do painel */
+  const eyeBar = document.createElement('div');
+  eyeBar.id = 'hud-eye-bar';
+  eyeBar.style.cssText =
+    'display:flex;justify-content:center;pointer-events:all';
+  const eyeBtn = document.createElement('button');
+  eyeBtn.id = 'hud-eye-btn';
+  eyeBtn.textContent = '👁';
+  eyeBtn.title = 'Ocultar / mostrar painel';
+  eyeBtn.style.cssText =
+    'background:rgba(6,2,0,.85);border:2px solid #c9a84c;border-bottom:none;' +
+    'color:#c9a84c;font-size:14px;padding:2px 14px 0;cursor:pointer;' +
+    'border-radius:6px 6px 0 0;line-height:1.6;pointer-events:all';
+  eyeBtn.addEventListener('click', _toggleValPanel);
+  eyeBar.appendChild(eyeBtn);
+  valPanel.appendChild(eyeBar);
+
+  /* corpo ocultável */
+  const body = document.createElement('div');
+  body.id = 'hud-val-body';
+  body.style.cssText =
+    'background:rgba(6,2,0,.72);border-top:2px solid #c9a84c;' +
+    'backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);' +
+    'padding:8px 12px 10px;max-height:42vh;overflow-y:auto;' +
+    'box-sizing:border-box';
+  body.innerHTML =
     '<div style="color:#444;font-size:10px;text-align:center;padding:.4rem 0">' +
     'Selecione um elemento no sidebar para ver seus valores</div>';
+  valPanel.appendChild(body);
+
   document.body.appendChild(valPanel);
+}
+
+let _valPanelHidden = false;
+
+function _toggleValPanel() {
+  const body = document.getElementById('hud-val-body');
+  const btn  = document.getElementById('hud-eye-btn');
+  if (!body) return;
+  _valPanelHidden = !_valPanelHidden;
+  body.style.display = _valPanelHidden ? 'none' : '';
+  btn.textContent    = _valPanelHidden ? '🙈' : '👁';
 }
 
 function _updateValPanel(key, el) {
@@ -683,7 +719,10 @@ function _updateValPanel(key, el) {
     'z-index: ' + zv + ';',
   ].join('\n');
 
-  valPanel.innerHTML =
+  const valBody = document.getElementById('hud-val-body');
+  if (!valBody) return;
+  if (_valPanelHidden) { /* mantém oculto mas atualiza conteúdo */ }
+  valBody.innerHTML =
     /* cabeçalho */
     '<div style="display:flex;justify-content:space-between;align-items:center;' +
     'margin-bottom:6px;flex-wrap:wrap;gap:4px">' +
