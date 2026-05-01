@@ -36,6 +36,9 @@ const REGISTRY = [
     items: [
       { key: 'rk-strip',    name: 'Tabela lateral de ranking',  sel: '#ranking-strip'                   },
       { key: 'rk-top5',     name: 'Alunos da tabela',           sel: '#ranking-top5'                    },
+      { key: 'rk-name-txt',      name: 'Nome do aluno — texto',     sel: '.rk-name',   textEdit: true, multiSel: true },
+      { key: 'rk-pts-txt',       name: 'Pontuação — texto',         sel: '.rk-pts',    textEdit: true, multiSel: true },
+      { key: 'rk-avatar-sz',     name: 'Foto do perfil — tamanho',  sel: '.rk-avatar', sizeEdit: true, multiSel: true },
       { key: 'rk-explain',       name: 'Modal de explicação',       sel: '#modal-rk-explain .rk-explain-box'},
       { key: 'rk-explain-close', name: 'Explicação — botão fechar', sel: '.rk-explain-close'            },
       { key: 'rk-full-box',      name: 'Modal lista de escudeiros', sel: '#modal-rk-full .rk-modal-box' },
@@ -319,7 +322,13 @@ function buildSidebarHTML() {
         'background:rgba(201,168,76,.08);border:none;' +
         'border-bottom:1px solid rgba(201,168,76,.1);color:#f0d060;' +
         'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
-        '▶ Abrir modal de explicação</button>';
+        '▶ Abrir modal de explicação</button>' +
+        '<button onclick="window._hudShowRkFull()" style="display:flex;align-items:center;' +
+        'gap:.5rem;width:100%;padding:.42rem .85rem .42rem 1.4rem;' +
+        'background:rgba(201,168,76,.08);border:none;' +
+        'border-bottom:1px solid rgba(201,168,76,.1);color:#f0d060;' +
+        'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
+        '▶ Abrir lista de escudeiros</button>';
     }
     if (cat.cat === 'Página de Livros') {
       html +=
@@ -365,6 +374,10 @@ window._hudZFocusedBot    = function ()  { if (focusedKey) _zBot(focusedKey); };
 window._hudShowAviso      = showTestMessage;
 window._hudShowRkExplain  = function () {
   var m = document.getElementById('modal-rk-explain');
+  if (m) m.classList.add('open');
+};
+window._hudShowRkFull = function () {
+  var m = document.getElementById('modal-rk-full');
   if (m) m.classList.add('open');
 };
 window._hudShowContent    = function () {
@@ -821,12 +834,24 @@ function _updateValPanel(key, el) {
     'line-height:1.5">' + css + '</pre>' +
     '</div>';
 
-  /* painel de texto — só aparece se o elemento tiver textEdit:true */
+  /* painéis extras conforme flags do registro */
   const regItem = _registryItem(key);
+  if (regItem && regItem.multiSel) {
+    const noteDiv = document.createElement('div');
+    noteDiv.innerHTML = '<div style="background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.25);' +
+      'border-radius:3px;padding:4px 8px;margin-top:4px;font-size:8px;color:#4fc3f7">' +
+      '⚡ Aplicado a todos os <b>' + regItem.sel + '</b> (tabela + modal)</div>';
+    valBody.appendChild(noteDiv);
+  }
   if (regItem && regItem.textEdit) {
     const txtDiv = document.createElement('div');
     txtDiv.innerHTML = _buildTextControls(key, el);
     valBody.appendChild(txtDiv);
+  }
+  if (regItem && regItem.sizeEdit) {
+    const szDiv = document.createElement('div');
+    szDiv.innerHTML = _buildSizeControls(key, el);
+    valBody.appendChild(szDiv);
   }
 }
 
@@ -841,6 +866,82 @@ function _registryItem(key) {
   }
   return null;
 }
+
+/* mapa de estilos de classe injetados dinamicamente (persistem enquanto o HUD estiver ativo) */
+var _classStyles = {};
+
+function _injectClassStyle(sel, prop, val) {
+  if (!_classStyles[sel]) _classStyles[sel] = {};
+  _classStyles[sel][prop] = val;
+  var styleEl = document.getElementById('hud-dynamic-styles');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'hud-dynamic-styles';
+    document.head.appendChild(styleEl);
+  }
+  var cssText = '';
+  Object.keys(_classStyles).forEach(function (s) {
+    var decls = Object.keys(_classStyles[s]).map(function (p) {
+      var cp = p.replace(/([A-Z])/g, function (m) { return '-' + m.toLowerCase(); });
+      return cp + ':' + _classStyles[s][p] + ' !important';
+    }).join(';');
+    cssText += s + '{' + decls + '}\n';
+  });
+  styleEl.textContent = cssText;
+}
+
+function _buildSizeControls(key, el) {
+  var cs  = getComputedStyle(el);
+  var sz  = parseFloat(cs.width) || 20;
+  var sliderStyle = 'flex:1;accent-color:#4fc3f7;height:4px;cursor:pointer';
+  var valStyle    = 'color:#4fc3f7;font-size:10px;min-width:42px;text-align:right';
+  var k = key;
+  return '<div style="background:#0d0800;border:1px solid rgba(201,168,76,.25);' +
+    'border-radius:4px;padding:8px;margin-top:6px">' +
+    '<div style="color:#f0d060;font-size:10px;font-weight:bold;' +
+    'letter-spacing:.1em;margin-bottom:7px">⬡ DIMENSIONAR</div>' +
+    _txtRow('Tamanho',
+      '<input type="range" min="12" max="80" step="1" value="' + sz.toFixed(0) + '" ' +
+      'oninput="window._hudSzApply(\'' + k + '\',this.value);' +
+      'document.getElementById(\'hud-sz-v\').textContent=this.value+\'px\'" ' +
+      'style="' + sliderStyle + '">' +
+      '<span id="hud-sz-v" style="' + valStyle + '">' + sz.toFixed(0) + 'px</span>') +
+    '<div style="background:#050200;border:1px solid rgba(201,168,76,.15);' +
+    'border-radius:3px;padding:6px 8px;margin-top:7px">' +
+    '<div style="color:#666;font-size:9px;margin-bottom:3px">CSS (copiar):</div>' +
+    '<pre id="hud-sz-css" style="margin:0;color:#a8ff78;font-size:9px;' +
+    'white-space:pre-wrap;line-height:1.6">' +
+    '.rk-avatar       { width:' + sz.toFixed(0) + 'px; height:' + sz.toFixed(0) + 'px; }\n' +
+    '.rk-avatar.top1  { width:' + (sz + 3).toFixed(0) + 'px; height:' + (sz + 3).toFixed(0) + 'px; }' +
+    '</pre></div></div>';
+}
+
+window._hudSzApply = function (key, val) {
+  var state = activeItems.get(key);
+  if (!state) return;
+  var size = parseFloat(val);
+  state.el.style.width  = size + 'px';
+  state.el.style.height = size + 'px';
+  var item = _registryItem(key);
+  if (item && item.multiSel) {
+    document.querySelectorAll(item.sel).forEach(function (el) {
+      el.style.width  = size + 'px';
+      el.style.height = size + 'px';
+    });
+    document.querySelectorAll(item.sel + '.top1').forEach(function (el) {
+      el.style.width  = (size + 3) + 'px';
+      el.style.height = (size + 3) + 'px';
+    });
+    _injectClassStyle(item.sel,         'width',  size + 'px');
+    _injectClassStyle(item.sel,         'height', size + 'px');
+    _injectClassStyle(item.sel + '.top1', 'width',  (size + 3) + 'px');
+    _injectClassStyle(item.sel + '.top1', 'height', (size + 3) + 'px');
+  }
+  var pre = document.getElementById('hud-sz-css');
+  if (pre) pre.textContent =
+    '.rk-avatar       { width:' + size + 'px; height:' + size + 'px; }\n' +
+    '.rk-avatar.top1  { width:' + (size + 3) + 'px; height:' + (size + 3) + 'px; }';
+};
 
 function _rgbToHex(rgb) {
   var m = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
@@ -991,6 +1092,14 @@ window._hudTxtApply = function (key, prop, val) {
   var state = activeItems.get(key);
   if (!state) return;
   state.el.style[prop] = val;
+  /* multiSel: propaga para todos os elementos da classe e injeta stylesheet */
+  var item = _registryItem(key);
+  if (item && item.multiSel) {
+    document.querySelectorAll(item.sel).forEach(function (el) {
+      el.style[prop] = val;
+    });
+    _injectClassStyle(item.sel, prop, val);
+  }
   var pre = document.getElementById('hud-txt-css');
   if (pre) pre.textContent = _txtCSS(state.el);
   /* atualiza botões de alinhamento */
