@@ -402,6 +402,16 @@ function _selectElem(key, sel) {
   let el = document.querySelector(sel);
   if (!el) { _dotErr(key); return; }
 
+  /* itens multiSel (classe global): sem overlay, sem drag — só painel de edição */
+  const item = _registryItem(key);
+  if (item && item.multiSel) {
+    activeItems.set(key, { el, sel, wasHidden: false, ov: null,
+      origStyle: el.getAttribute('style') || '' });
+    _dotOn(key);
+    _focusElem(key);
+    return;
+  }
+
   /* garante elemento visível */
   const wasHidden = getComputedStyle(el).display === 'none';
   if (wasHidden) { el.style.display = ''; el.style.visibility = 'visible'; }
@@ -758,6 +768,36 @@ function _updateValPanel(key, el) {
   }
   valPanel.style.transform = 'translateY(0)';
 
+  /* itens multiSel: só painéis de edição, sem métricas de posição */
+  const regItemMulti = _registryItem(key);
+  if (regItemMulti && regItemMulti.multiSel) {
+    const valBody = document.getElementById('hud-val-body');
+    if (!valBody) return;
+    valBody.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;' +
+      'margin-bottom:6px;flex-wrap:wrap;gap:4px">' +
+      '<span style="color:#c9a84c;font-weight:bold;font-size:12px">' + key + '</span>' +
+      '<span style="background:rgba(201,168,76,.18);padding:2px 8px;border-radius:3px;' +
+      'font-size:9px;color:#f0d060">' + iface() + ' · ' + window.innerWidth + '×' + window.innerHeight + 'px</span>' +
+      '</div>';
+    const noteDiv = document.createElement('div');
+    noteDiv.innerHTML = '<div style="background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.25);' +
+      'border-radius:3px;padding:4px 8px;margin-bottom:4px;font-size:8px;color:#4fc3f7">' +
+      '⚡ Aplicado a todos os <b>' + regItemMulti.sel + '</b> (tabela + modal)</div>';
+    valBody.appendChild(noteDiv);
+    if (regItemMulti.textEdit) {
+      const d = document.createElement('div');
+      d.innerHTML = _buildTextControls(key, el);
+      valBody.appendChild(d);
+    }
+    if (regItemMulti.sizeEdit) {
+      const d = document.createElement('div');
+      d.innerHTML = _buildSizeControls(key, el);
+      valBody.appendChild(d);
+    }
+    return;
+  }
+
   const r   = el.getBoundingClientRect();
   const cs  = getComputedStyle(el);
   const vw  = window.innerWidth;
@@ -834,24 +874,12 @@ function _updateValPanel(key, el) {
     'line-height:1.5">' + css + '</pre>' +
     '</div>';
 
-  /* painéis extras conforme flags do registro */
+  /* painel de texto — só para itens com textEdit:true (sem multiSel, já tratado acima) */
   const regItem = _registryItem(key);
-  if (regItem && regItem.multiSel) {
-    const noteDiv = document.createElement('div');
-    noteDiv.innerHTML = '<div style="background:rgba(79,195,247,.08);border:1px solid rgba(79,195,247,.25);' +
-      'border-radius:3px;padding:4px 8px;margin-top:4px;font-size:8px;color:#4fc3f7">' +
-      '⚡ Aplicado a todos os <b>' + regItem.sel + '</b> (tabela + modal)</div>';
-    valBody.appendChild(noteDiv);
-  }
   if (regItem && regItem.textEdit) {
     const txtDiv = document.createElement('div');
     txtDiv.innerHTML = _buildTextControls(key, el);
     valBody.appendChild(txtDiv);
-  }
-  if (regItem && regItem.sizeEdit) {
-    const szDiv = document.createElement('div');
-    szDiv.innerHTML = _buildSizeControls(key, el);
-    valBody.appendChild(szDiv);
   }
 }
 
