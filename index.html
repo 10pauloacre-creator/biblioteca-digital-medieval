@@ -1694,6 +1694,40 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 }
 #mago-btn-ok:disabled{cursor:not-allowed;opacity:.5;}
 
+/* ── Aviso: layout mobile (WEB-MOBILE + APP — mesmas dimensões sem barra de navegador) ── */
+@media (max-width:767px),
+       (display-mode:standalone) {
+  #mago-aviso-scene{
+    position:absolute;inset:0;
+    display:block;            /* sai do flex, cada filho fica absolute */
+    max-width:none;
+  }
+  #mago-aviso-mago{
+    position:absolute;
+    top:54.3vh; left:-2.2vw;
+    width:47.5vw; height:40.5vh;
+    flex-shrink:unset;
+  }
+  #mago-aviso-board{
+    position:absolute;
+    top:38.1vh; left:-5.9vw;
+    width:139.9vw; height:61.8vh;
+    flex-shrink:unset;
+  }
+  #mago-bubble-text{
+    top:22.4%; left:35.3%;
+    right:auto; width:36.9%; height:52.6%;
+  }
+  #mago-counter{
+    top:75.4%; left:41.8%;
+    right:auto; width:21.5%; height:5.6%;
+  }
+  #mago-btn-ok{
+    top:82%; left:35%; right:auto;
+    width:30%; height:10%;
+  }
+}
+
 /* Figura pequena no canto */
 #mago-figure{
   position:relative;display:inline-block;
