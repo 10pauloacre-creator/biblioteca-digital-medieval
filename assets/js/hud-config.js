@@ -25,8 +25,8 @@ const REGISTRY = [
       { key: 'mago-corner',  name: 'Mago — figura do canto',   sel: '#mago-figure'         },
       { key: 'mago-img',     name: 'Aviso — figura do mago',   sel: '#mago-aviso-mago'     },
       { key: 'mago-board',   name: 'Aviso — painel de avisos', sel: '#mago-aviso-board'    },
-      { key: 'mago-txt',     name: 'Aviso — caixa de texto',   sel: '#mago-bubble-text'    },
-      { key: 'mago-ctr',     name: 'Aviso — contador',         sel: '#mago-counter'        },
+      { key: 'mago-txt',     name: 'Aviso — caixa de texto',   sel: '#mago-bubble-text', textEdit: true },
+      { key: 'mago-ctr',     name: 'Aviso — contador',         sel: '#mago-counter',       textEdit: true },
       { key: 'mago-ok',      name: 'Aviso — botão Entendi',    sel: '#mago-btn-ok'         },
     ]
   },
@@ -820,7 +820,189 @@ function _updateValPanel(key, el) {
     '<pre style="margin:0;color:#a8ff78;font-size:10px;white-space:pre-wrap;' +
     'line-height:1.5">' + css + '</pre>' +
     '</div>';
+
+  /* painel de texto — só aparece se o elemento tiver textEdit:true */
+  const regItem = _registryItem(key);
+  if (regItem && regItem.textEdit) {
+    const txtDiv = document.createElement('div');
+    txtDiv.innerHTML = _buildTextControls(key, el);
+    valBody.appendChild(txtDiv);
+  }
 }
+
+/* ════════════════════════════════════════
+   EDITOR DE TEXTO
+════════════════════════════════════════ */
+function _registryItem(key) {
+  for (var c = 0; c < REGISTRY.length; c++) {
+    for (var i = 0; i < REGISTRY[c].items.length; i++) {
+      if (REGISTRY[c].items[i].key === key) return REGISTRY[c].items[i];
+    }
+  }
+  return null;
+}
+
+function _rgbToHex(rgb) {
+  var m = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+  if (!m) return '#000000';
+  return '#' + [m[1], m[2], m[3]].map(function (x) {
+    return ('0' + parseInt(x).toString(16)).slice(-2);
+  }).join('');
+}
+
+function _txtCSS(el) {
+  var cs = getComputedStyle(el);
+  var fs = parseFloat(cs.fontSize) || 13;
+  var lhRaw = cs.lineHeight;
+  var lh = lhRaw === 'normal' ? '1.5' : (parseFloat(lhRaw) / fs).toFixed(2);
+  var ls = parseFloat(cs.letterSpacing) || 0;
+  return [
+    'font-size:      ' + cs.fontSize + ';',
+    'line-height:    ' + lh + ';',
+    'letter-spacing: ' + ls.toFixed(2) + 'px;',
+    'color:          ' + cs.color + ';',
+    'font-family:    ' + cs.fontFamily + ';',
+    'text-align:     ' + cs.textAlign + ';',
+    'white-space:    ' + cs.whiteSpace + ';',
+    'padding:        ' + cs.padding + ';',
+  ].join('\n');
+}
+
+function _txtRow(label, ctrl) {
+  return '<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px">' +
+    '<span style="color:#888;font-size:9px;width:68px;flex-shrink:0">' + label + '</span>' +
+    ctrl + '</div>';
+}
+
+function _buildTextControls(key, el) {
+  var cs  = getComputedStyle(el);
+  var fs  = parseFloat(cs.fontSize) || 13;
+  var lhRaw = cs.lineHeight;
+  var lh  = lhRaw === 'normal' ? 1.5 : parseFloat(lhRaw) / fs;
+  var ls  = parseFloat(cs.letterSpacing) || 0;
+  var col = _rgbToHex(cs.color);
+  var ta  = cs.textAlign;
+  var ws  = cs.whiteSpace;
+  var k   = key;
+
+  var fonts = [
+    "'IM Fell English', serif",
+    "'Cinzel', serif",
+    "'Cinzel Decorative', serif",
+    "serif", "sans-serif"
+  ];
+  var fontOpts = fonts.map(function (f) {
+    var name = f.split(',')[0].replace(/'/g, '').trim();
+    var sel  = cs.fontFamily.indexOf(name) >= 0 ? ' selected' : '';
+    return '<option value="' + f + '"' + sel + '>' + name + '</option>';
+  }).join('');
+
+  var wsOpts = ['normal','pre-line','pre-wrap','nowrap'].map(function (w) {
+    return '<option value="' + w + '"' + (ws === w ? ' selected' : '') + '>' + w + '</option>';
+  }).join('');
+
+  var alignIcons = { left: '⬅', center: '↔', right: '➡', justify: '☰' };
+  var alignBtns = ['left','center','right','justify'].map(function (a) {
+    var active = ta === a
+      ? 'background:#4fc3f7;color:#000'
+      : 'background:#222;color:#aaa';
+    return '<button id="hud-ta-' + k + '-' + a + '" ' +
+      'onclick="window._hudTxtApply(\'' + k + '\',\'textAlign\',\'' + a + '\')" ' +
+      'style="' + active + ';border:1px solid #444;padding:3px 7px;' +
+      'cursor:pointer;border-radius:2px;font-size:12px;line-height:1">' +
+      alignIcons[a] + '</button>';
+  }).join('');
+
+  var sliderStyle = 'flex:1;accent-color:#4fc3f7;height:4px;cursor:pointer';
+  var valStyle = 'color:#4fc3f7;font-size:10px;min-width:42px;text-align:right';
+
+  return '<div style="background:#0d0800;border:1px solid rgba(201,168,76,.25);' +
+    'border-radius:4px;padding:8px;margin-top:6px">' +
+    '<div style="color:#f0d060;font-size:10px;font-weight:bold;' +
+    'letter-spacing:.1em;margin-bottom:7px">✏ EDITAR TEXTO</div>' +
+
+    /* Font size */
+    _txtRow('Tamanho',
+      '<input type="range" min="6" max="72" step="0.5" value="' + fs.toFixed(1) + '" ' +
+      'oninput="window._hudTxtApply(\'' + k + '\',\'fontSize\',this.value+\'px\');' +
+      'document.getElementById(\'hud-fs-v\').textContent=parseFloat(this.value).toFixed(1)+\'px\'" ' +
+      'style="' + sliderStyle + '">' +
+      '<span id="hud-fs-v" style="' + valStyle + '">' + fs.toFixed(1) + 'px</span>') +
+
+    /* Line height */
+    _txtRow('Entrelinha',
+      '<input type="range" min="0.8" max="3.5" step="0.05" value="' + lh.toFixed(2) + '" ' +
+      'oninput="window._hudTxtApply(\'' + k + '\',\'lineHeight\',this.value);' +
+      'document.getElementById(\'hud-lh-v\').textContent=parseFloat(this.value).toFixed(2)" ' +
+      'style="' + sliderStyle + '">' +
+      '<span id="hud-lh-v" style="' + valStyle + '">' + lh.toFixed(2) + '</span>') +
+
+    /* Letter spacing */
+    _txtRow('Espaç.letra',
+      '<input type="range" min="-2" max="10" step="0.1" value="' + ls.toFixed(1) + '" ' +
+      'oninput="window._hudTxtApply(\'' + k + '\',\'letterSpacing\',this.value+\'px\');' +
+      'document.getElementById(\'hud-ls-v\').textContent=parseFloat(this.value).toFixed(1)+\'px\'" ' +
+      'style="' + sliderStyle + '">' +
+      '<span id="hud-ls-v" style="' + valStyle + '">' + ls.toFixed(1) + 'px</span>') +
+
+    /* Color */
+    _txtRow('Cor do texto',
+      '<input type="color" value="' + col + '" ' +
+      'oninput="window._hudTxtApply(\'' + k + '\',\'color\',this.value);' +
+      'document.getElementById(\'hud-col-v\').textContent=this.value" ' +
+      'style="width:38px;height:26px;border:1px solid #444;background:none;cursor:pointer;padding:0;border-radius:3px">' +
+      '<span id="hud-col-v" style="' + valStyle + ';font-size:9px">' + col + '</span>') +
+
+    /* Font family */
+    _txtRow('Fonte',
+      '<select onchange="window._hudTxtApply(\'' + k + '\',\'fontFamily\',this.value)" ' +
+      'style="flex:1;background:#1a0e04;border:1px solid #444;color:#ccc;' +
+      'font-size:9px;padding:3px 4px;border-radius:3px">' + fontOpts + '</select>') +
+
+    /* Text align */
+    _txtRow('Alinhamento',
+      '<div style="display:flex;gap:3px">' + alignBtns + '</div>') +
+
+    /* White space */
+    _txtRow('Quebra linha',
+      '<select onchange="window._hudTxtApply(\'' + k + '\',\'whiteSpace\',this.value)" ' +
+      'style="flex:1;background:#1a0e04;border:1px solid #444;color:#ccc;' +
+      'font-size:9px;padding:3px 4px;border-radius:3px">' + wsOpts + '</select>') +
+
+    /* Padding */
+    _txtRow('Padding',
+      '<input type="range" min="0" max="40" step="1" value="' + (parseFloat(cs.paddingTop)||0).toFixed(0) + '" ' +
+      'oninput="var v=this.value+\'px\';window._hudTxtApply(\'' + k + '\',\'padding\',v);' +
+      'document.getElementById(\'hud-pd-v\').textContent=this.value+\'px\'" ' +
+      'style="' + sliderStyle + '">' +
+      '<span id="hud-pd-v" style="' + valStyle + '">' + (parseFloat(cs.paddingTop)||0).toFixed(0) + 'px</span>') +
+
+    /* CSS do texto */
+    '<div style="background:#050200;border:1px solid rgba(201,168,76,.15);' +
+    'border-radius:3px;padding:6px 8px;margin-top:7px">' +
+    '<div style="color:#666;font-size:9px;margin-bottom:3px">CSS do texto (copiar):</div>' +
+    '<pre id="hud-txt-css" style="margin:0;color:#ffd700;font-size:9px;' +
+    'white-space:pre-wrap;line-height:1.6">' + _txtCSS(el) + '</pre>' +
+    '</div>' +
+    '</div>';
+}
+
+window._hudTxtApply = function (key, prop, val) {
+  var state = activeItems.get(key);
+  if (!state) return;
+  state.el.style[prop] = val;
+  var pre = document.getElementById('hud-txt-css');
+  if (pre) pre.textContent = _txtCSS(state.el);
+  /* atualiza botões de alinhamento */
+  if (prop === 'textAlign') {
+    ['left','center','right','justify'].forEach(function (a) {
+      var b = document.getElementById('hud-ta-' + key + '-' + a);
+      if (!b) return;
+      b.style.background = (a === val) ? '#4fc3f7' : '#222';
+      b.style.color      = (a === val) ? '#000'    : '#aaa';
+    });
+  }
+};
 
 function _metricBox(label, px, rel) {
   return '<div style="background:#111;padding:4px 6px;border-radius:3px">' +
