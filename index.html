@@ -1858,6 +1858,54 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
   }
 }
 
+/* ── Aviso: layout PC (desktop >= 768px) ── */
+@media (min-width:768px) and (display-mode:browser) {
+  #mago-aviso-scene{
+    position:absolute;inset:0;
+    display:block;
+    max-width:none;
+  }
+  #mago-aviso-mago{
+    position:absolute;
+    top:20.8vh; left:22.2vw;
+    width:21.9vw; height:72.9vh;
+    flex-shrink:unset;
+    z-index:1;
+    transform:scaleX(-1);
+  }
+  #mago-aviso-board{
+    position:absolute;
+    top:4.9vh; left:24.9vw;
+    width:53.6vw; height:94.8vh;
+    flex-shrink:unset;
+  }
+  #mago-bubble-text{
+    top:25.2%; left:35.4%;
+    right:auto; width:35.4%; height:50.6%;
+    font-size:23.5px;
+    line-height:1.50;
+    letter-spacing:0.20px;
+    color:rgb(58,30,0);
+    font-family:'IM Fell English',serif;
+    text-align:start;
+    white-space:pre-line;
+    padding:3px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  #mago-counter{
+    top:80.5%; left:40.1%;
+    right:auto; width:27.2%; height:7.2%;
+    font-size:7.7px;
+    line-height:1.50;
+    letter-spacing:0.8px;
+  }
+  #mago-btn-ok{
+    top:80.2%; left:41.2%; right:auto;
+    width:22.4%; height:7.8%;
+  }
+}
+
 /* Figura pequena no canto */
 #mago-figure{
   position:relative;display:inline-block;
