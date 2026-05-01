@@ -1064,8 +1064,19 @@ body{background:#080300;color:var(--text);}
   }
   /* Sino de notificacoes — reposicionado pelo HUD */
   #notif-btn{
-    top:0.8vh; right:1.2vw;
-    width:8.8vw; height:4.1vh;
+    top:1.1vh; right:2.0vw;
+    width:7.3vw; height:3.4vh;
+  }
+  /* Barra superior aba de bimestres — back-btn e serie-name-header (flex children, sem position:fixed) */
+  .back-btn{
+    width:23.5vw; height:4.2vh;
+    font-size:clamp(.6rem,2.8vw,.85rem);
+    padding:0 2vw;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #serie-name-header{
+    font-size:clamp(.75rem,3.5vw,1rem);
+    width:19.6vw;
   }
 }
 
