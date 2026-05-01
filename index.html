@@ -1027,6 +1027,31 @@ body{background:#080300;color:var(--text);}
   }
 }
 
+/* ── Landing: posições configuradas via HUD (WEB-MOBILE + APP) ── */
+@media (max-width:767px),
+       (display-mode:standalone){
+  .plaque-img-wrapper{
+    position:absolute;
+    top:3.1vh; left:3.3vw;
+    width:92.7vw; height:19.9vh;
+    margin:0; max-height:none;
+    z-index:0;
+  }
+  .books-scene{
+    top:31.2vh; left:4.8vw;
+    width:93.0vw; height:47.2vh;
+    bottom:auto; transform:none;
+    z-index:10;
+  }
+  .pilha-livros{
+    position:absolute;
+    top:72.7vh; left:87.3vw;
+    width:35.1vw; height:11.2vh;
+    bottom:auto;
+    z-index:11;
+  }
+}
+
 /* ══════════════════════════════
    LANDSCAPE — celular horizontal
    altura <= 480px  E  largura >= 480px
@@ -2066,13 +2091,13 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
     <!-- 3 Books -->
     <div class="books-scene" style="animation:revealUp .7s .5s ease-out both;">
 
-      <div class="serie-btn" onclick="selectSerie(1)" role="button" aria-label="1ª Série">
+      <div id="serie-btn-1" class="serie-btn" onclick="selectSerie(1)" role="button" aria-label="1ª Série">
         <img src="assets/images/1-serie-home.png" alt="1ª Série" class="serie-img">
       </div>
-      <div class="serie-btn" onclick="selectSerie(2)" role="button" aria-label="2ª Série">
+      <div id="serie-btn-2" class="serie-btn" onclick="selectSerie(2)" role="button" aria-label="2ª Série">
         <img src="assets/images/2-serie-home.png" alt="2ª Série" class="serie-img">
       </div>
-      <div class="serie-btn" onclick="selectSerie(3)" role="button" aria-label="3ª Série">
+      <div id="serie-btn-3" class="serie-btn" onclick="selectSerie(3)" role="button" aria-label="3ª Série">
         <img src="assets/images/3-serie-home.png" alt="3ª Série" class="serie-img">
       </div>
 

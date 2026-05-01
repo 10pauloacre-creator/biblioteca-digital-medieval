@@ -46,9 +46,12 @@ const REGISTRY = [
     icon: '🏰',
     items: [
       { key: 'plaque',       name: 'Placa de entrada',       sel: '.plaque-img-wrapper'  },
-      { key: 'books-scene',  name: 'Livros das séries',      sel: '.books-scene'         },
+      { key: 'books-scene',  name: 'Livros das series',      sel: '.books-scene'         },
+      { key: 'serie-btn-1',  name: '1a Serie — botao',       sel: '#serie-btn-1'         },
+      { key: 'serie-btn-2',  name: '2a Serie — botao',       sel: '#serie-btn-2'         },
+      { key: 'serie-btn-3',  name: '3a Serie — botao',       sel: '#serie-btn-3'         },
       { key: 'pilha',        name: 'Pilha de livros',        sel: '.pilha-livros'        },
-      { key: 'games-btn',    name: 'Botão sala de jogos',    sel: '#games-btn'           },
+      { key: 'games-btn',    name: 'Botao sala de jogos',    sel: '#games-btn'           },
     ]
   },
   {
