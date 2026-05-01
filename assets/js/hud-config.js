@@ -36,8 +36,9 @@ const REGISTRY = [
     items: [
       { key: 'rk-strip',    name: 'Tabela lateral de ranking',  sel: '#ranking-strip'                   },
       { key: 'rk-top5',     name: 'Alunos da tabela',           sel: '#ranking-top5'                    },
-      { key: 'rk-explain',  name: 'Modal de explicação',        sel: '#modal-rk-explain .rk-explain-box'},
-      { key: 'rk-full-box', name: 'Modal lista de escudeiros',  sel: '#modal-rk-full .rk-modal-box'    },
+      { key: 'rk-explain',       name: 'Modal de explicação',       sel: '#modal-rk-explain .rk-explain-box'},
+      { key: 'rk-explain-close', name: 'Explicação — botão fechar', sel: '.rk-explain-close'            },
+      { key: 'rk-full-box',      name: 'Modal lista de escudeiros', sel: '#modal-rk-full .rk-modal-box' },
     ]
   },
   {
@@ -289,6 +290,15 @@ function buildSidebarHTML() {
         'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
         '▶ Abrir painel de aviso (teste)</button>';
     }
+    if (cat.cat === 'Ranking do Poder') {
+      html +=
+        '<button onclick="window._hudShowRkExplain()" style="display:flex;align-items:center;' +
+        'gap:.5rem;width:100%;padding:.42rem .85rem .42rem 1.4rem;' +
+        'background:rgba(201,168,76,.08);border:none;' +
+        'border-bottom:1px solid rgba(201,168,76,.1);color:#f0d060;' +
+        'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
+        '▶ Abrir modal de explicação</button>';
+    }
 
     cat.items.forEach(function (item) {
       html +=
@@ -322,6 +332,10 @@ window._hudZFocusedStep   = function (d) { if (focusedKey) _zStep(focusedKey, d)
 window._hudZFocusedTop    = function ()  { if (focusedKey) _zTop(focusedKey); };
 window._hudZFocusedBot    = function ()  { if (focusedKey) _zBot(focusedKey); };
 window._hudShowAviso      = showTestMessage;
+window._hudShowRkExplain  = function () {
+  var m = document.getElementById('modal-rk-explain');
+  if (m) m.classList.add('open');
+};
 
 /* ════════════════════════════════════════
    SELECIONAR / DESSELECIONAR ELEMENTO
