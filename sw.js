@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════
-// BIBLIOTECA DIGITAL MEDIEVAL — Service Worker v14
+// BIBLIOTECA DIGITAL MEDIEVAL — Service Worker v15
 // Estratégia: cache completo no primeiro acesso
 //   Shell + áudio → pré-cache na instalação
 //   Vídeo/animação → cache em background após install
@@ -8,7 +8,7 @@
 //   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v18';
+const SW_VERSION   = 'v19';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
