@@ -193,9 +193,6 @@ function activateHUD() {
   hudActive = true;
   document.body.classList.add('hud-active');
 
-  /* mostra overlay do aviso com mensagem de teste */
-  showTestMessage();
-
   /* transforma sidebar */
   const title = document.getElementById('dash-title');
   if (title) title.textContent = '⚙ LAYOUT CONFIG';
@@ -225,15 +222,11 @@ function deactivateHUD() {
   if (valPanel) { valPanel.remove(); valPanel = null; }
   document.querySelectorAll('.hud-iface-tag').forEach(e => e.remove());
 
-  /* esconde mensagem de teste */
-  const b = document.getElementById('mago-bubble');
-  if (b) b.classList.remove('open');
-
   /* recarrega página para restaurar sidebar */
   location.reload();
 }
 
-/* ── Mensagem de teste ── */
+/* ── Abre o painel de aviso com conteúdo de teste (chamado pelo botão no sidebar) ── */
 function showTestMessage() {
   const b = document.getElementById('mago-bubble');
   if (!b) return;
@@ -286,6 +279,17 @@ function buildSidebarHTML() {
       '<span style="margin-left:auto;font-size:.48rem;opacity:.5">▼</span></button>' +
       '<div id="' + catId + '" style="display:none">';
 
+    /* botão auxiliar por categoria */
+    if (cat.cat === 'Avisos') {
+      html +=
+        '<button onclick="window._hudShowAviso()" style="display:flex;align-items:center;' +
+        'gap:.5rem;width:100%;padding:.42rem .85rem .42rem 1.4rem;' +
+        'background:rgba(201,168,76,.08);border:none;' +
+        'border-bottom:1px solid rgba(201,168,76,.1);color:#f0d060;' +
+        'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
+        '▶ Abrir painel de aviso (teste)</button>';
+    }
+
     cat.items.forEach(function (item) {
       html +=
         '<button id="hud-btn-' + item.key + '" data-key="' + item.key + '"' +
@@ -317,6 +321,7 @@ window._hudDeactivate     = deactivateHUD;
 window._hudZFocusedStep   = function (d) { if (focusedKey) _zStep(focusedKey, d); };
 window._hudZFocusedTop    = function ()  { if (focusedKey) _zTop(focusedKey); };
 window._hudZFocusedBot    = function ()  { if (focusedKey) _zBot(focusedKey); };
+window._hudShowAviso      = showTestMessage;
 
 /* ════════════════════════════════════════
    SELECIONAR / DESSELECIONAR ELEMENTO
