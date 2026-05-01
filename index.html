@@ -1228,12 +1228,6 @@ body{background:#080300;color:var(--text);}
     aspect-ratio:unset;
     z-index:13;
   }
-  .ranking-strip .ranking-top5{
-    top:23%;
-    left:4%;
-    right:8%;
-    height:67%;
-  }
   .rk-name{font-size:.70rem;}
   .rk-level{font-size:.55rem;}
   .rk-pts{font-size:.68rem;}
@@ -1362,6 +1356,16 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 .ranking-strip .ranking-ver-mais-btn{
   position:absolute;bottom:0;left:0;right:0;height:15%;
   color:transparent;font-size:0;background:transparent;border:none;padding:0;margin:0;
+}
+/* ── rk-top5 mobile: deve vir DEPOIS da regra escopada para não ser sobrescrito ── */
+@media (max-width:767px),
+       (display-mode:standalone){
+  .ranking-strip .ranking-top5{
+    top:23%;
+    left:4%;
+    right:8%;
+    height:67%;
+  }
 }
 
 /* ── Modal ranking completo ── */
