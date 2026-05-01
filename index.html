@@ -609,6 +609,22 @@ body{background:#080300;color:var(--text);}
   content:'✕';
   transform:rotate(90deg);
 }
+/* Ponto dourado de novas mensagens no toggle */
+#dash-toggle-dot{
+  position:absolute;top:6px;right:6px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--gold-b);
+  border:1.5px solid #080300;
+  box-shadow:0 0 6px rgba(255,220,60,.8);
+  display:none;
+  animation:dash-dot-pulse 1.8s ease-in-out infinite;
+  pointer-events:none;
+}
+#dash-toggle-dot.show{ display:block; }
+@keyframes dash-dot-pulse{
+  0%,100%{ box-shadow:0 0 5px rgba(255,220,60,.7); }
+  50%{     box-shadow:0 0 12px rgba(255,220,60,1),0 0 20px rgba(255,180,20,.5); }
+}
 
 /* Overlay escurecido quando dashboard aberto */
 #dash-overlay{
@@ -1039,14 +1055,8 @@ body{background:#080300;color:var(--text);}
   }
 }
 
-/* ── Auth button (canto superior direito) ── */
-#auth-btn{
-  position:fixed;top:10px;right:12px;z-index:500;
-  cursor:pointer;transition:transform .2s,filter .2s;text-decoration:none;
-  display:block;
-}
-#auth-btn:hover{transform:scale(1.06);filter:brightness(1.12) drop-shadow(0 0 10px rgba(201,168,76,.5));}
-#auth-btn img{height:48px;width:auto;display:block;}
+/* ── Auth button — oculto; perfil acessível pelo dashboard lateral ── */
+#auth-btn{ display:none !important; }
 
 /* ── Botão sino de notificações ── */
 #notif-btn{
@@ -1207,7 +1217,7 @@ body{background:#080300;color:var(--text);}
 /* ── Ranking CELULAR (≤ 767px) — ajuste aqui ── */
 @media (max-width:767px){
   .ranking-strip{
-    top:24vh;
+    top:32vh;
     bottom:auto;
     left:52%;
     transform:translateX(-50%);
@@ -1227,7 +1237,7 @@ body{background:#080300;color:var(--text);}
 /* ── Ranking DESKTOP (≥ 768px) — ajuste aqui ── */
 @media (min-width:968px){
   .ranking-strip{
-    top:25vh;
+    top:33vh;
     bottom:auto;
     left:67%;
     transform:translateX(-63%);
@@ -1453,18 +1463,7 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 /* ══════════════════════════════════════
    CHAT GERAL DA GUILDA
 ══════════════════════════════════════ */
-#chat-geral-btn{
-  position:fixed;bottom:24px;left:16px;z-index:12000;
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(135deg,#1a2a4a,#0e1a30);
-  border:2px solid rgba(100,160,255,.5);
-  color:#90c0ff;font-size:1.4rem;cursor:pointer;
-  display:none;align-items:center;justify-content:center;
-  box-shadow:0 0 18px rgba(80,130,255,.35);
-  transition:transform .2s,box-shadow .2s;
-}
-#chat-geral-btn:hover{transform:scale(1.1);box-shadow:0 0 26px rgba(80,130,255,.55);}
-#chat-geral-btn.visible{display:flex;}
+#chat-geral-btn{ display:none !important; }
 #chat-geral-badge{
   position:absolute;top:-4px;right:-4px;
   background:#e53e3e;color:#fff;
@@ -1848,6 +1847,7 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 ════════════════════════════════════════ -->
 <button id="dash-toggle" onclick="toggleDash()" title="Menu" aria-label="Abrir menu lateral">
   <span id="dash-toggle-icon">☰</span>
+  <span id="dash-toggle-dot"></span>
 </button>
 
 <div id="dash-overlay" onclick="closeDash()"></div>
@@ -3503,15 +3503,20 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (admin)   admin.style.display   = (role === 'admin')   ? 'flex' : 'none';
   };
 
-  /* ── Espelha badge do chat geral ── */
+  /* ── Espelha badge do chat e ponto no toggle ── */
   window._syncChatBadge = function(count) {
-    var b = document.getElementById('dash-chat-badge');
-    if (!b) return;
-    if (count > 0) {
-      b.textContent = count > 99 ? '99+' : count;
-      b.classList.add('show');
-    } else {
-      b.classList.remove('show');
+    var b   = document.getElementById('dash-chat-badge');
+    var dot = document.getElementById('dash-toggle-dot');
+    if (b) {
+      if (count > 0) {
+        b.textContent = count > 99 ? '99+' : count;
+        b.classList.add('show');
+      } else {
+        b.classList.remove('show');
+      }
+    }
+    if (dot) {
+      dot.classList.toggle('show', count > 0);
     }
   };
 
