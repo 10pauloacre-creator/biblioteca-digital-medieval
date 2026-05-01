@@ -672,6 +672,10 @@ function _zBot(key) {
 function _makeFixed(el, rect) {
   const pos = getComputedStyle(el).position;
   if (pos === 'static' || pos === 'relative') {
+    /* não converte filhos de flex/grid — remove do fluxo e quebra layout */
+    const parentDisplay = el.parentElement
+      ? getComputedStyle(el.parentElement).display : '';
+    if (parentDisplay.includes('flex') || parentDisplay.includes('grid')) return;
     el.style.position = 'fixed';
     el.style.margin   = '0';
     el.style.top      = rect.top  + 'px';
