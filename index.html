@@ -2498,7 +2498,7 @@ function _nextBgTrack(){
 function startBgMusic(){
   const m=document.getElementById('bg-music');
   if(!m||musicStarted)return;
-  m.volume=.4;
+  m.volume=.2;
   m.src=_nextBgTrack();
   m.addEventListener('ended',()=>{if(muted)return;m.src=_nextBgTrack();m.play().catch(()=>{});},{passive:true});
   m.play().then(()=>{
