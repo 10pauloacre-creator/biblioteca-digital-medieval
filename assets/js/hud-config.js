@@ -59,8 +59,27 @@ const REGISTRY = [
     icon: '🧭',
     items: [
       { key: 'mago-wrapper', name: 'Notificação — ícone mago', sel: '#mago-wrapper'       },
+      { key: 'notif-btn',    name: 'Sino de notificações',     sel: '#notif-btn'          },
       { key: 'chat-btn',     name: 'Chat da guilda',           sel: '#chat-geral-btn'     },
       { key: 'dash-toggle',  name: 'Menu — botão hamburguer',  sel: '#dash-toggle'        },
+    ]
+  },
+  {
+    cat: 'Página de Livros',
+    icon: '📚',
+    items: [
+      { key: 'content-header',    name: 'Barra de cabeçalho',    sel: '.content-header'      },
+      { key: 'back-btn',          name: 'Botão Voltar',          sel: '.back-btn'            },
+      { key: 'serie-name-header', name: 'Nome da série',         sel: '#serie-name-header'   },
+      { key: 'tabs-bar',          name: 'Barra de abas',         sel: '#tabs-bar'            },
+      { key: 'disc-panel',        name: 'Painel de disciplina',  sel: '.disc-panel'          },
+      { key: 'disc-icon',         name: 'Ícone da disciplina',   sel: '.disc-icon'           },
+      { key: 'disc-title',        name: 'Título da disciplina',  sel: '.disc-title'          },
+      { key: 'books-grid',        name: 'Grade de livros',       sel: '.books-grid'          },
+      { key: 'book-card',         name: 'Card do livro',         sel: '.book-card'           },
+      { key: 'card-label',        name: 'Etiqueta do bimestre',  sel: '.card-label'          },
+      { key: 'btn-access',        name: 'Botão ACESSAR',         sel: '.btn-access'          },
+      { key: 'btn-unavail',       name: 'Botão INDISPONÍVEL',    sel: '.btn-unavail'         },
     ]
   },
 ];
@@ -302,6 +321,15 @@ function buildSidebarHTML() {
         'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
         '▶ Abrir modal de explicação</button>';
     }
+    if (cat.cat === 'Página de Livros') {
+      html +=
+        '<button onclick="window._hudShowContent()" style="display:flex;align-items:center;' +
+        'gap:.5rem;width:100%;padding:.42rem .85rem .42rem 1.4rem;' +
+        'background:rgba(201,168,76,.08);border:none;' +
+        'border-bottom:1px solid rgba(201,168,76,.1);color:#f0d060;' +
+        'font-family:Cinzel,serif;font-size:.52rem;letter-spacing:.07em;cursor:pointer">' +
+        '▶ Abrir página de livros (1ª Série)</button>';
+    }
 
     cat.items.forEach(function (item) {
       html +=
@@ -338,6 +366,9 @@ window._hudShowAviso      = showTestMessage;
 window._hudShowRkExplain  = function () {
   var m = document.getElementById('modal-rk-explain');
   if (m) m.classList.add('open');
+};
+window._hudShowContent    = function () {
+  if (typeof selectSerie === 'function') selectSerie(1);
 };
 
 /* ════════════════════════════════════════
