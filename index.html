@@ -1208,10 +1208,11 @@ body{background:#080300;color:var(--text);}
   position:absolute;
   z-index:13;
   animation:revealUp .6s .7s ease-out both;
-  background:rgba(6,3,0,.78);
-  border:1px solid rgba(201,168,76,.22);
-  border-radius:7px;
-  backdrop-filter:blur(6px);
+  background-image:url('assets/images/ranking-tabela.png');
+  background-size:100% 100%;
+  background-color:transparent;
+  border:none;border-radius:0;backdrop-filter:none;
+  padding:0;overflow:hidden;
 }
 
 /* ── Ranking CELULAR (≤ 767px) — ajuste aqui ── */
@@ -1222,14 +1223,11 @@ body{background:#080300;color:var(--text);}
     left:52%;
     transform:translateX(-50%);
     width:min(200px,55vw);
-    padding:.39rem .58rem .29rem;
+    aspect-ratio:2706/3328;
   }
-  .ranking-title-btn{font-size:.68rem;}
-  .rk-card{padding:.22rem .48rem;gap:.48rem;}
   .rk-name{font-size:.70rem;}
   .rk-level{font-size:.55rem;}
   .rk-pts{font-size:.68rem;}
-  .rk-num{font-size:.73rem;min-width:20px;}
   .rk-avatar{width:24px;height:24px;}
   .rk-avatar.top1{width:28px;height:28px;}
 }
@@ -1242,14 +1240,11 @@ body{background:#080300;color:var(--text);}
     left:67%;
     transform:translateX(-63%);
     width:min(200px,55vw);
-    padding:.79rem .88rem .49rem;
+    aspect-ratio:2706/3328;
   }
-  .ranking-title-btn{font-size:.88rem;}
-  .rk-card{padding:.22rem .48rem;gap:.48rem;}
   .rk-name{font-size:.70rem;}
   .rk-level{font-size:.55rem;}
   .rk-pts{font-size:.68rem;}
-  .rk-num{font-size:.73rem;min-width:20px;}
   .rk-avatar{width:24px;height:24px;}
   .rk-avatar.top1{width:28px;height:28px;}
 }
@@ -1338,6 +1333,28 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 }
 .ranking-ver-mais-btn:hover{color:var(--gold-l);}
 
+/* ── Ranking strip — imagem de fundo (sobreposições) ── */
+.ranking-strip .ranking-title-btn{
+  position:absolute;top:0;left:0;right:0;height:11%;
+  color:transparent;font-size:0;background:transparent;border:none;padding:0;margin:0;
+}
+.ranking-strip .ranking-top5{
+  position:absolute;top:11%;left:0;right:0;height:74%;
+  display:flex;flex-direction:column;gap:0;
+}
+.ranking-strip .rk-num{display:none;}
+.ranking-strip .rk-card,
+.ranking-strip a.rk-card{
+  background:transparent !important;border:none !important;
+  flex:1;padding:0 6% 0 19%;min-height:0;border-radius:0;
+}
+.ranking-strip a.rk-card:hover,
+.ranking-strip .rk-card:not(a):hover{background:transparent !important;border:none !important;}
+.ranking-strip .ranking-ver-mais-btn{
+  position:absolute;bottom:0;left:0;right:0;height:15%;
+  color:transparent;font-size:0;background:transparent;border:none;padding:0;margin:0;
+}
+
 /* ── Modal ranking completo ── */
 #modal-rk-full{
   position:fixed;inset:0;z-index:8000;
@@ -1388,19 +1405,18 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 #modal-rk-explain.open{display:flex;}
 .rk-explain-box{
   max-width:420px;width:100%;
-  background:linear-gradient(160deg,#1e1004,#130a02);
-  border:2px solid var(--gold);border-radius:8px;
-  padding:1.8rem 1.5rem;
-  box-shadow:0 0 60px rgba(201,168,76,.3);
-  animation:modalIn .32s ease;
   position:relative;margin:auto;
+  animation:modalIn .32s ease;
+  background:none;border:none;padding:0;box-shadow:none;border-radius:0;
 }
 .rk-explain-close{
-  position:absolute;top:.8rem;right:.8rem;
-  background:none;border:none;color:var(--text-d);cursor:pointer;
-  font-size:1.1rem;line-height:1;
+  position:absolute;top:.5rem;right:.5rem;z-index:1;
+  background:rgba(0,0,0,.6);border:1px solid rgba(201,168,76,.45);
+  color:var(--gold-l);border-radius:50%;width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:.85rem;line-height:1;
 }
-.rk-explain-close:hover{color:var(--gold-l);}
+.rk-explain-close:hover{color:var(--gold-b);}
 .rk-section-title{
   font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;font-weight:700;
   color:var(--gold-l);margin:.9rem 0 .4rem;
@@ -1627,83 +1643,61 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 ══════════════════════════════════════ */
 #mago-wrapper{
   position:fixed;bottom:100px;right:16px;
-  z-index:12500;
-  display:none;
-  flex-direction:column;align-items:flex-end;gap:10px;
+  z-index:12500;display:none;
 }
-#mago-wrapper.visible{display:flex;}
+#mago-wrapper.visible{display:block;}
 
-/* Balão de fala */
+/* Overlay de aviso — full-screen */
 #mago-bubble{
-  position:relative;
-  width:min(300px,78vw);
-  background:linear-gradient(160deg,#1e1004,#100801);
-  border:2px solid var(--gold);border-radius:14px;
-  padding:1.1rem 1.2rem 1rem;
-  box-shadow:0 0 40px rgba(201,168,76,.35),0 10px 40px rgba(0,0,0,.85);
-  transform:scale(0);transform-origin:bottom right;
-  transition:transform .38s cubic-bezier(.34,1.56,.64,1),opacity .3s;
+  position:fixed;inset:0;z-index:12600;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
 }
-#mago-bubble.open{transform:scale(1);opacity:1;pointer-events:all;}
-/* Triângulo do balão apontando para o mago */
-#mago-bubble::after{
-  content:'';position:absolute;
-  bottom:-12px;right:24px;
-  border-left:11px solid transparent;border-right:11px solid transparent;
-  border-top:13px solid var(--gold);
+#mago-bubble.open{opacity:1;pointer-events:all;}
+
+#mago-aviso-scene{
+  display:flex;align-items:flex-end;
+  max-width:96vw;
 }
-#mago-bubble::before{
-  content:'';position:absolute;
-  bottom:-9px;right:26px;
-  border-left:9px solid transparent;border-right:9px solid transparent;
-  border-top:11px solid #100801;z-index:1;
+#mago-aviso-mago{
+  height:min(55vh,320px);width:auto;flex-shrink:0;
+  filter:drop-shadow(0 0 18px rgba(120,30,200,.6));
+  transform:scaleX(-1);
 }
-#mago-bubble-header{
-  display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;
+#mago-aviso-board{
+  position:relative;
+  width:min(260px,70vw);flex-shrink:0;
 }
-#mago-bubble-icon{font-size:1.3rem;line-height:1;}
-#mago-bubble-title{
-  font-family:'Cinzel Decorative',serif;font-size:.62rem;
-  letter-spacing:.1em;color:var(--gold-l);flex:1;
-  background:linear-gradient(90deg,#f9e3a0,#f2c25c);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-#mago-bubble-close{
-  background:none;border:none;color:var(--text-d);cursor:pointer;
-  font-size:.9rem;line-height:1;padding:2px 4px;transition:color .2s;
-}
-#mago-bubble-close:hover{color:var(--gold);}
-#mago-bubble-sep{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),transparent);
-  margin-bottom:.8rem;
-}
+#mago-aviso-board>img{width:100%;display:block;}
 #mago-bubble-text{
-  font-family:'IM Fell English',serif;font-size:.9rem;line-height:1.6;
-  color:var(--text);margin-bottom:1rem;
-  max-height:180px;overflow-y:auto;
-  white-space:pre-line;
+  position:absolute;
+  top:16%;left:8%;right:8%;height:55%;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  font-family:'IM Fell English',serif;
+  font-size:.82rem;line-height:1.6;
+  color:#3a1e00;white-space:pre-line;
+  padding:.2rem;
 }
 #mago-counter{
-  font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.1em;
-  color:rgba(201,168,76,.6);text-align:center;margin-bottom:.4rem;
+  position:absolute;top:73%;left:0;right:0;
+  text-align:center;
+  font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.1em;
+  color:rgba(58,30,0,.6);
 }
 #mago-btn-ok{
-  width:100%;padding:.6rem;
-  background:linear-gradient(135deg,#c9a84c,#f0d060,#8a6414);
-  border:none;border-radius:6px;
-  font-family:'Cinzel',serif;font-weight:700;font-size:.75rem;
-  letter-spacing:.12em;color:#1a0800;cursor:pointer;
-  transition:all .2s;box-shadow:0 2px 10px rgba(201,168,76,.25);
+  position:absolute;top:77%;left:8%;right:8%;height:13%;
+  background:transparent;border:none;cursor:pointer;
+  font-size:0;color:transparent;
 }
-#mago-btn-ok:hover{box-shadow:0 4px 20px rgba(201,168,76,.55);transform:translateY(-1px);}
-#mago-btn-ok:disabled{opacity:.55;cursor:default;transform:none;}
+#mago-btn-ok:disabled{cursor:not-allowed;opacity:.5;}
 
-/* Figura do Mago */
+/* Figura pequena no canto */
 #mago-figure{
-  position:relative;width:76px;height:96px;
-  cursor:pointer;pointer-events:all;flex-shrink:0;
+  position:relative;display:inline-block;
+  cursor:pointer;pointer-events:all;
   animation:mago-float 3.8s ease-in-out infinite;
   filter:drop-shadow(0 0 14px rgba(150,50,255,.55));
   transition:filter .25s,transform .2s;
@@ -1713,53 +1707,8 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
   filter:drop-shadow(0 0 24px rgba(210,100,255,.85));
   transform:scale(1.08);
 }
+#mago-figure-img{width:72px;height:auto;display:block;}
 
-/* Chapéu pontudo */
-.mh-cone{
-  position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:0;height:0;
-  border-left:21px solid transparent;
-  border-right:21px solid transparent;
-  border-bottom:44px solid #6b0db3;
-  z-index:2;
-}
-.mh-cone::before{
-  content:'★';position:absolute;
-  top:5px;left:-8px;
-  color:#ffd700;font-size:11px;
-  text-shadow:0 0 8px #ffd700,0 0 14px #ffa500;
-  animation:star-pulse 2s ease-in-out infinite;
-}
-.mh-brim{
-  position:absolute;top:36px;left:50%;transform:translateX(-50%);
-  width:56px;height:11px;
-  background:linear-gradient(180deg,#7a0dc8,#5a0a96);
-  border-radius:50%;z-index:2;
-  box-shadow:0 3px 10px rgba(106,13,173,.5);
-}
-/* Corpo/rosto — emoji de mago */
-.mb-emoji{
-  position:absolute;top:38px;left:50%;
-  transform:translateX(-50%);
-  font-size:48px;line-height:1;z-index:1;
-}
-/* Estrelas orbitando */
-.mo-ring{
-  position:absolute;inset:-12px;
-  animation:mago-orbit 5s linear infinite;
-  pointer-events:none;
-}
-.mo-ring2{
-  position:absolute;inset:-6px;
-  animation:mago-orbit 7.5s linear infinite reverse;
-  pointer-events:none;
-}
-.mo-star{
-  position:absolute;color:#ffd700;
-  font-size:9px;
-  text-shadow:0 0 5px #ffd700;
-  opacity:.85;
-}
 /* Ponto vermelho de notificação */
 #mago-dot{
   position:absolute;top:-3px;right:-3px;
@@ -1773,13 +1722,6 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 @keyframes mago-float{
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-11px);}
-}
-@keyframes mago-orbit{
-  from{transform:rotate(0deg);}to{transform:rotate(360deg);}
-}
-@keyframes star-pulse{
-  0%,100%{text-shadow:0 0 8px #ffd700,0 0 14px #ffa500;}
-  50%{text-shadow:0 0 16px #ffe566,0 0 28px #ffd700;}
 }
 @keyframes dot-pulse{
   0%,100%{box-shadow:0 0 10px #ff4444;}
@@ -1932,36 +1874,26 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 </div>
 
 <!-- ════════════════════════════════════════
-     MAGO SUPREMO — Avatar Flutuante
+     AVISO DO MAGO — Overlay full-screen
+════════════════════════════════════════ -->
+<div id="mago-bubble" onclick="if(event.target===this)closeMagoBubble()">
+  <div id="mago-aviso-scene">
+    <img id="mago-aviso-mago" src="assets/images/avatar-mago/mago-1.png" alt="">
+    <div id="mago-aviso-board">
+      <img src="assets/images/painel-de-avisos.png" alt="Aviso do Mago Supremo">
+      <div id="mago-bubble-text"></div>
+      <div id="mago-counter"></div>
+      <button id="mago-btn-ok" onclick="confirmMagoMessage()"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MAGO SUPREMO — Figura flutuante
 ════════════════════════════════════════ -->
 <div id="mago-wrapper">
-  <!-- Balão de mensagem -->
-  <div id="mago-bubble">
-    <div id="mago-bubble-header">
-      <span id="mago-bubble-icon">📜</span>
-      <span id="mago-bubble-title">Mensagem do Mago Supremo</span>
-      <button id="mago-bubble-close" onclick="closeMagoBubble()" title="Fechar">✕</button>
-    </div>
-    <div id="mago-bubble-sep"></div>
-    <div id="mago-bubble-text"></div>
-    <div id="mago-counter"></div>
-    <button id="mago-btn-ok" onclick="confirmMagoMessage()">✓ Entendido!</button>
-  </div>
-  <!-- Figura do mago -->
   <div id="mago-figure" onclick="toggleMagoBubble()" title="Mago Supremo">
-    <div class="mh-cone"></div>
-    <div class="mh-brim"></div>
-    <div class="mb-emoji">🧙‍♂️</div>
-    <div class="mo-ring">
-      <span class="mo-star" style="top:50%;left:0;transform:translateY(-50%)">✦</span>
-      <span class="mo-star" style="top:0;left:50%;transform:translateX(-50%)">★</span>
-      <span class="mo-star" style="top:50%;right:0;transform:translateY(-50%)">✦</span>
-      <span class="mo-star" style="bottom:0;left:50%;transform:translateX(-50%)">★</span>
-    </div>
-    <div class="mo-ring2">
-      <span class="mo-star" style="top:15%;left:8%;opacity:.5">✷</span>
-      <span class="mo-star" style="bottom:15%;right:8%;opacity:.5">✷</span>
-    </div>
+    <img id="mago-figure-img" src="assets/images/avatar-mago/mago-1.png" alt="Mago Supremo">
     <div id="mago-dot"></div>
   </div>
 </div>
@@ -2021,103 +1953,10 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 <div id="modal-rk-explain" onclick="if(event.target===this)closeRankingExplain()">
   <div class="rk-explain-box">
     <button class="rk-explain-close" onclick="closeRankingExplain()">✕</button>
-
-    <h2 style="font-family:'Cinzel Decorative',serif;font-size:.95rem;color:var(--gold-l);
-      text-align:center;margin-bottom:1rem;letter-spacing:.05em">
-      ⚔ RANKING DE PODER ⚔
-    </h2>
-
-    <p style="font-size:.78rem;color:var(--text-m);line-height:1.65;text-align:center;margin-bottom:.2rem">
-      O Ranking de Poder classifica todos os alunos da Biblioteca Digital Medieval
-      com base na pontuação acumulada nos quizzes ao longo do ano.
-    </p>
-
-    <div class="rk-section-title">COMO PONTUAR</div>
-    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);border-radius:5px;padding:.65rem .8rem;font-size:.75rem;color:var(--text-m);line-height:1.7">
-      <div>✅ <strong style="color:var(--gold-l)">+1 ponto</strong> por cada resposta correta</div>
-      <div>❌ <strong style="color:#f08080">−1 ponto</strong> por cada resposta errada</div>
-      <div style="margin-top:.35rem;font-size:.68rem;color:var(--text-d)">
-        O ranking atualiza automaticamente a cada quiz realizado.
-      </div>
-    </div>
-
-    <div class="rk-section-title">OS NÍVEIS DE PODER</div>
-    <div style="display:flex;flex-direction:column;gap:.22rem">
-      <div class="rk-level-row">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <div style="width:28px;height:28px;border-radius:50%;background:rgba(74,64,64,.3);border:1px solid #4a4040;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#4a4040;flex-shrink:0">—</div>
-          <div>
-            <div class="rk-level-name" style="color:#6a5a5a">☆☆☆☆☆ Novato</div>
-            <div class="rk-level-pts-label">0 – 9 pontos · sem frame</div>
-          </div>
-        </div>
-        <div class="rk-level-bonus" style="color:#6a5a5a;border-color:rgba(106,90,90,.3)">sem bônus</div>
-      </div>
-      <div class="rk-level-row">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <img src="assets/images/frames/frame-nivel-1.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
-          <div>
-            <div class="rk-level-name" style="color:#a09878">★☆☆☆☆ Aprendiz</div>
-            <div class="rk-level-pts-label">10 – 49 pontos</div>
-          </div>
-        </div>
-        <div class="rk-level-bonus">+0 na média</div>
-      </div>
-      <div class="rk-level-row">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <img src="assets/images/frames/frame-nivel-2.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
-          <div>
-            <div class="rk-level-name" style="color:#c9a84c">★★☆☆☆ Camponês</div>
-            <div class="rk-level-pts-label">50 – 199 pontos</div>
-          </div>
-        </div>
-        <div class="rk-level-bonus">+1 na média</div>
-      </div>
-      <div class="rk-level-row">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <img src="assets/images/frames/frame-nivel-3.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
-          <div>
-            <div class="rk-level-name" style="color:#4fc3f7">★★★☆☆ Gladiador</div>
-            <div class="rk-level-pts-label">200 – 299 pontos</div>
-          </div>
-        </div>
-        <div class="rk-level-bonus">+2 na média</div>
-      </div>
-      <div class="rk-level-row">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <img src="assets/images/frames/frame-nivel-4.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
-          <div>
-            <div class="rk-level-name" style="color:#c084fc">★★★★☆ Rei</div>
-            <div class="rk-level-pts-label">300 – 499 pontos</div>
-          </div>
-        </div>
-        <div class="rk-level-bonus">+6 na média</div>
-      </div>
-      <div class="rk-level-row" style="border:1px solid rgba(255,106,26,.3);background:rgba(255,106,26,.06)">
-        <div style="display:flex;align-items:center;gap:.5rem">
-          <img src="assets/images/frames/frame-nivel-5.png" style="width:28px;height:28px;object-fit:contain;flex-shrink:0">
-          <div>
-            <div class="rk-level-name" style="color:#ff6a1a;text-shadow:0 0 8px rgba(255,106,26,.5)">★★★★★ Mago Supremo</div>
-            <div class="rk-level-pts-label">500+ pontos</div>
-          </div>
-        </div>
-        <div class="rk-level-bonus" style="color:var(--ember);border-color:rgba(255,106,26,.4)">+8 na média</div>
-      </div>
-    </div>
-
-    <div class="rk-section-title">RECOMPENSAS NO FIM DO ANO</div>
-    <div style="font-size:.75rem;color:var(--text-m);line-height:1.7;background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.15);border-radius:5px;padding:.65rem .8rem">
-      <div>🏅 Cada nível concede <strong style="color:var(--gold-l)">pontos extras na média final</strong> de cada disciplina</div>
-      <div>📜 Todo aluno receberá um <strong style="color:var(--gold-l)">certificado físico</strong> de acordo com seu nível alcançado</div>
-      <div>🏆 As pontuações ficam <strong style="color:var(--gold-l)">guardadas para a história</strong> — nos próximos anos os alunos tentarão bater o recorde de hoje</div>
-    </div>
-
-    <div class="rk-motivational">
-      "Quer terminar o ano como um mero Aprendiz ou como um grande Mago Supremo
-      e ser lembrado para toda a história?"
-    </div>
+    <img src="assets/images/ranking-detalhes.png" alt="Ranking de Poder — Como funciona" style="width:100%;display:block;border-radius:6px;">
   </div>
 </div>
+
 
 <!-- ════════════════════════════════════════
      MODAL
@@ -4086,7 +3925,6 @@ function _magoShowNext() {
   }
   const msg = _magoQueue[0];
   _magoMsgId = msg.id;
-  document.getElementById('mago-bubble-title').textContent = msg.titulo || 'Mensagem do Mago Supremo';
   document.getElementById('mago-bubble-text').textContent  = msg.texto;
   const ctr = document.getElementById('mago-counter');
   if (ctr) ctr.textContent = _magoQueueTotal > 1 ? 'Aviso ' + (_magoQueueIndex + 1) + ' de ' + _magoQueueTotal : '';
@@ -4098,6 +3936,8 @@ function _magoShowNext() {
 function openMagoBubble() {
   const b = document.getElementById('mago-bubble');
   if (!b) return;
+  const magoImg = document.getElementById('mago-aviso-mago');
+  if (magoImg) magoImg.src = 'assets/images/avatar-mago/mago-' + (Math.floor(Math.random() * 8) + 1) + '.png';
   b.classList.add('open');
   _magoBubbleOpen = true;
 }

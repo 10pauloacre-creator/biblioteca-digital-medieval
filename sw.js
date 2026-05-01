@@ -8,7 +8,7 @@
 //   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v17';
+const SW_VERSION   = 'v18';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -39,6 +39,17 @@ const SHELL_ASSETS_OPTIONAL = [
   './assets/images/login.png',
   './assets/images/perfil.png',
   './assets/images/forasteiro.png',
+  './assets/images/ranking-tabela.png',
+  './assets/images/ranking-detalhes.png',
+  './assets/images/painel-de-avisos.png',
+  './assets/images/avatar-mago/mago-1.png',
+  './assets/images/avatar-mago/mago-2.png',
+  './assets/images/avatar-mago/mago-3.png',
+  './assets/images/avatar-mago/mago-4.png',
+  './assets/images/avatar-mago/mago-5.png',
+  './assets/images/avatar-mago/mago-6.png',
+  './assets/images/avatar-mago/mago-7.png',
+  './assets/images/avatar-mago/mago-8.png',
   './assets/icons/icon-192x192.png',
   './assets/icons/icon-512x512.png',
   './assets/icons/apple-touch-icon.png',
