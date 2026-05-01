@@ -636,7 +636,8 @@ function buildValuePanel() {
   valPanel.id = 'hud-val-panel';
   valPanel.style.cssText =
     'position:fixed;bottom:0;left:0;right:0;z-index:50003;' +
-    'background:rgba(6,2,0,.97);border-top:2px solid #c9a84c;' +
+    'background:rgba(6,2,0,.72);border-top:2px solid #c9a84c;' +
+    'backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);' +
     'font-family:monospace;font-size:11px;color:#fff;' +
     'padding:8px 12px 10px;max-height:42vh;overflow-y:auto;' +
     'transform:translateY(100%);transition:transform .3s ease;' +
