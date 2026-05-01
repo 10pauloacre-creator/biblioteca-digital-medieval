@@ -2498,7 +2498,7 @@ function _nextBgTrack(){
 function startBgMusic(){
   const m=document.getElementById('bg-music');
   if(!m||musicStarted)return;
-  m.volume=.2;
+  m.volume=.1;
   m.src=_nextBgTrack();
   m.addEventListener('ended',()=>{if(muted)return;m.src=_nextBgTrack();m.play().catch(()=>{});},{passive:true});
   m.play().then(()=>{
@@ -2639,6 +2639,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   if(screen.orientation&&screen.orientation.lock){
     screen.orientation.lock('portrait').catch(()=>{});
   }
+  // Tenta iniciar música imediatamente; se bloqueado pelo browser,
+  // o unlock listener dentro de startBgMusic dispara no primeiro toque
+  startBgMusic();
 });
 </script>
 
