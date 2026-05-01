@@ -1725,6 +1725,39 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
 }
 #chat-geral-scroll-btn.show{display:flex;}
 /* ══════════════════════════════════════
+   BANNER DE PERMISSÃO DE NOTIFICAÇÕES
+══════════════════════════════════════ */
+#notif-push-banner{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  z-index:13000;display:none;align-items:center;gap:.8rem;
+  background:linear-gradient(135deg,#1e1004ee,#130a02ee);
+  border:1.5px solid rgba(201,168,76,.5);border-radius:12px;
+  padding:.85rem 1rem;width:min(360px,92vw);
+  box-shadow:0 8px 32px rgba(0,0,0,.7),0 0 24px rgba(201,168,76,.15);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:opacity .3s,transform .3s;opacity:0;
+}
+#notif-push-banner.visible{display:flex;opacity:1;transform:translateX(-50%) translateY(0);}
+#notif-push-icon{width:40px;height:40px;border-radius:8px;flex-shrink:0;}
+#notif-push-text{flex:1;display:flex;flex-direction:column;gap:.2rem;}
+#notif-push-text strong{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.08em;color:var(--gold-l);}
+#notif-push-text span{font-size:.65rem;color:var(--text-m);line-height:1.4;}
+#notif-push-btns{display:flex;flex-direction:column;gap:.4rem;flex-shrink:0;}
+#notif-push-grant{
+  padding:.35rem .75rem;border:none;border-radius:6px;cursor:pointer;
+  background:linear-gradient(135deg,#c9a84c,#f0d060);
+  color:#1a0800;font-family:'Cinzel',serif;font-size:.62rem;font-weight:700;
+  letter-spacing:.08em;white-space:nowrap;
+}
+#notif-push-deny{
+  padding:.3rem .75rem;border:1px solid rgba(201,168,76,.3);border-radius:6px;cursor:pointer;
+  background:transparent;color:var(--text-d);font-family:'Cinzel',serif;
+  font-size:.6rem;letter-spacing:.06em;
+}
+#notif-push-grant:hover{opacity:.85;}
+#notif-push-deny:hover{color:var(--text-m);}
+
+/* ══════════════════════════════════════
    MAGO SUPREMO — Avatar Flutuante
 ══════════════════════════════════════ */
 #mago-wrapper{
@@ -2016,6 +2049,21 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
       <div id="mago-counter"></div>
       <button id="mago-btn-ok" onclick="confirmMagoMessage()"></button>
     </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     BANNER: PERMISSÃO DE NOTIFICAÇÕES
+════════════════════════════════════════ -->
+<div id="notif-push-banner">
+  <img src="assets/icons/icon-192x192.png" alt="app" id="notif-push-icon">
+  <div id="notif-push-text">
+    <strong>Receba avisos do Mago Supremo</strong>
+    <span>Ative as notificações para ser alertado quando seu professor enviar um aviso.</span>
+  </div>
+  <div id="notif-push-btns">
+    <button id="notif-push-grant" onclick="grantMagoNotif()">Ativar</button>
+    <button id="notif-push-deny"  onclick="denyMagoNotif()">Agora não</button>
   </div>
 </div>
 
@@ -3989,9 +4037,7 @@ var _magoQueue      = [];
 var _magoQueueTotal = 0;
 var _magoQueueIndex = 0;
 
-// Chave pública VAPID — gere com: npx web-push generate-vapid-keys
-// Substitua pelo valor real gerado; enquanto começar com 'GERAR' push é desativado.
-var MAGO_VAPID_PUBLIC_KEY = 'GERAR_COM_npx_web-push_generate-vapid-keys';
+var MAGO_VAPID_PUBLIC_KEY = 'BKw7urUddI6ygJGYfinHsaabglB5AVJW3rLeP6YMHVkzMjVYqDtUvsPJYxAc5ffHUeUju-DhoynkZv-i4drB4NU';
 
 async function initMago(userId, userType, nomePassado, turmaPassada) {
   if (!userId) return;
@@ -4012,7 +4058,7 @@ async function initMago(userId, userType, nomePassado, turmaPassada) {
   }
 
   await checkMagoMessage();
-  subscribePushMago(); // fire-and-forget
+  _requestMagoNotifPermission();
 }
 
 async function checkMagoMessage() {
@@ -4118,10 +4164,40 @@ async function confirmMagoMessage() {
   }
 }
 
+function _requestMagoNotifPermission() {
+  if (!('Notification' in window) || !('PushManager' in window)) return;
+  if (!_magoUserId) return;
+  if (localStorage.getItem('bdm-notif-asked') === '1') {
+    // Permissão já foi respondida antes — apenas assina silenciosamente se concedida
+    if (Notification.permission === 'granted') subscribePushMago();
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    subscribePushMago();
+    return;
+  }
+  if (Notification.permission === 'denied') return;
+  // Mostra banner amigável
+  const banner = document.getElementById('notif-push-banner');
+  if (banner) banner.classList.add('visible');
+}
+
+window.grantMagoNotif = async function() {
+  const banner = document.getElementById('notif-push-banner');
+  if (banner) banner.classList.remove('visible');
+  localStorage.setItem('bdm-notif-asked', '1');
+  await subscribePushMago();
+};
+
+window.denyMagoNotif = function() {
+  const banner = document.getElementById('notif-push-banner');
+  if (banner) banner.classList.remove('visible');
+  localStorage.setItem('bdm-notif-asked', '1');
+};
+
 async function subscribePushMago() {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
-  if (!_magoUserId) return;
-  if (!MAGO_VAPID_PUBLIC_KEY || MAGO_VAPID_PUBLIC_KEY.startsWith('GERAR')) return;
+  if (!_magoUserId || !_magoDb) return;
 
   try {
     const reg = await navigator.serviceWorker.ready;

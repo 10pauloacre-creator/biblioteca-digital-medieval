@@ -8,7 +8,7 @@
 //   Push Notifications → Mensagem do Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 
-const SW_VERSION   = 'v20';
+const SW_VERSION   = 'v21';
 const SHELL_CACHE  = `bdm-shell-${SW_VERSION}`;  // assets versionados
 const MEDIA_CACHE  = 'bdm-media-v3';             // vídeo/webm — persiste entre updates
 const BOOKS_CACHE  = 'bdm-books-v2';             // livros HTML — persiste entre updates
@@ -393,24 +393,25 @@ async function checkForUpdates() {
 // PUSH NOTIFICATIONS — Mago Supremo
 // ═══════════════════════════════════════════════════════════════
 self.addEventListener('push', event => {
-  let payload = { titulo: 'Mago Supremo', texto: 'Nova mensagem do seu professor!' };
+  let titulo = 'Biblioteca Digital Medieval';
+  let texto  = 'Um aviso foi emitido pelo mestre, compareça à biblioteca';
   try {
     if (event.data) {
       const d = event.data.json();
-      payload.titulo = d.titulo || payload.titulo;
-      payload.texto  = d.texto  || payload.texto;
+      if (d.titulo) titulo = d.titulo;
+      if (d.texto)  texto  = d.texto;
     }
   } catch(e) {}
 
   event.waitUntil(
-    self.registration.showNotification('🧙‍♂️ ' + payload.titulo, {
-      body:    payload.texto,
-      icon:    './assets/icons/icon-192x192.png',
-      badge:   './assets/icons/icon-192x192.png',
-      tag:     'mago-mensagem',
+    self.registration.showNotification('🧙‍♂️ ' + titulo, {
+      body:     texto,
+      icon:     './assets/icons/icon-192x192.png',
+      badge:    './assets/icons/icon-192x192.png',
+      tag:      'mago-mensagem',
       renotify: true,
-      data:    { url: './' },
-      actions: [{ action: 'open', title: 'Abrir Biblioteca' }]
+      data:     { url: './' },
+      actions:  [{ action: 'open', title: 'Abrir Biblioteca' }]
     })
   );
 });
