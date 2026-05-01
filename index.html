@@ -577,43 +577,38 @@ body{background:#080300;color:var(--text);}
 /* Botão de abertura — canto superior esquerdo, integrado à borda */
 #dash-toggle{
   position:fixed;
-  top:50%;
-  left:0;
-  transform:translateY(-50%);
+  top:10px;
+  left:10px;
   z-index:14500;
-  width:28px;
-  height:64px;
-  background:linear-gradient(180deg,rgba(40,22,4,.97),rgba(20,10,2,.99));
-  border:1px solid rgba(201,168,76,.45);
-  border-left:none;
-  border-radius:0 8px 8px 0;
+  width:40px;
+  height:40px;
+  background:linear-gradient(135deg,rgba(40,22,4,.96),rgba(20,10,2,.99));
+  border:1px solid rgba(201,168,76,.5);
+  border-radius:8px;
   color:var(--gold-l);
-  font-size:.85rem;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:3px 0 18px rgba(0,0,0,.55),inset -1px 0 8px rgba(201,168,76,.08);
-  transition:width .2s,box-shadow .2s,background .2s;
+  box-shadow:0 2px 14px rgba(0,0,0,.6),0 0 10px rgba(201,168,76,.08);
+  transition:box-shadow .2s,background .2s,transform .15s;
   padding:0;
-  writing-mode:vertical-rl;
-  letter-spacing:.18em;
-  font-family:'Cinzel',serif;
-  font-weight:700;
-  font-size:.52rem;
 }
 #dash-toggle:hover{
-  width:34px;
-  box-shadow:4px 0 24px rgba(201,168,76,.22),inset -1px 0 10px rgba(201,168,76,.12);
-  background:linear-gradient(180deg,rgba(50,28,6,.99),rgba(28,14,3,.99));
+  box-shadow:0 4px 20px rgba(201,168,76,.25),0 2px 14px rgba(0,0,0,.6);
+  background:linear-gradient(135deg,rgba(55,30,6,.99),rgba(28,14,3,.99));
+  transform:scale(1.08);
 }
+#dash-toggle:active{ transform:scale(.94); }
 #dash-toggle-icon{
-  font-size:1rem;
-  writing-mode:horizontal-tb;
+  font-size:1.15rem;
   line-height:1;
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  transition:opacity .2s, transform .25s cubic-bezier(.4,0,.2,1);
 }
-#dash-toggle.open #dash-toggle-icon{ transform:rotate(180deg); }
+#dash-toggle.open #dash-toggle-icon{
+  content:'✕';
+  transform:rotate(90deg);
+}
 
 /* Overlay escurecido quando dashboard aberto */
 #dash-overlay{
@@ -2476,8 +2471,7 @@ function selectSerie(n) {
 
   const landing = document.getElementById('screen-landing');
   const content = document.getElementById('screen-content');
-  const sb = document.getElementById('search-btn');
-  if(sb) sb.style.display='none';
+  if(window.closeDash) window.closeDash();
   landing.style.display='none';
   content.style.display='block';
   content.style.opacity='0';
@@ -2509,8 +2503,6 @@ function goBack() {
   content.style.transition='';
   content.scrollTop=0;
   landing.style.display='flex';
-  const sb = document.getElementById('search-btn');
-  if(sb) sb.style.display='flex';
 }
 
 /* ══════════════════════════════
@@ -3280,8 +3272,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       intro.classList.add('hidden');
       sessionStorage.setItem('bdm-nav', '1');
       startBgMusic();
-      const _sb = document.getElementById('search-btn');
-      if(_sb) _sb.style.display='flex';
+      if (window._showDashItems) window._showDashItems('aluno');
       if (window._bdmAfterIntro) window._bdmAfterIntro();
     }, 820);
   }
@@ -3363,6 +3354,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         window._bdmAfterIntro = () => window._goToSerie(null);
         playIntro();
       } else {
+        if (window._showDashItems) window._showDashItems('aluno');
         window._goToSerie(null);
       }
       return;
@@ -3395,8 +3387,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (isAdmin) {
       // Admin: nunca toca intro, vai direto pra landing
       sessionStorage.setItem('bdm-nav', '1');
-      const _sb = document.getElementById('search-btn');
-      if (_sb) _sb.style.display = 'flex';
+      if (window._showDashItems) window._showDashItems('admin');
       // Garante ranking visível (initRanking() pode ter rodado antes da sessão resolver)
       const _rs = document.getElementById('ranking-strip');
       if (_rs) _rs.style.display = '';
@@ -3438,22 +3429,28 @@ window.addEventListener('DOMContentLoaded',()=>{
   var panel   = document.getElementById('dash-panel');
   var overlay = document.getElementById('dash-overlay');
   var toggle  = document.getElementById('dash-toggle');
+  var icon    = document.getElementById('dash-toggle-icon');
 
-  window.toggleDash = function() {
-    var open = panel.classList.contains('open');
-    if (open) closeDash(); else openDash();
-  };
+  function setIcon(open) {
+    if (icon) icon.textContent = open ? '✕' : '☰';
+  }
 
   window.openDash = function() {
     panel.classList.add('open');
     overlay.classList.add('show');
     toggle.classList.add('open');
+    setIcon(true);
   };
 
   window.closeDash = function() {
     panel.classList.remove('open');
     overlay.classList.remove('show');
     toggle.classList.remove('open');
+    setIcon(false);
+  };
+
+  window.toggleDash = function() {
+    panel.classList.contains('open') ? closeDash() : openDash();
   };
 
   /* Fecha ao pressionar Escape */
@@ -3461,9 +3458,40 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (e.key === 'Escape') closeDash();
   });
 
+  /* ── Swipe da esquerda para direita abre; direita para esquerda fecha ── */
+  (function(){
+    var startX = 0, startY = 0, tracking = false;
+    var EDGE_ZONE = 40;   /* px da borda esquerda para iniciar abertura */
+    var MIN_DIST  = 60;   /* px mínimo de deslocamento horizontal        */
+    var MAX_VERT  = 80;   /* px máximo de deslocamento vertical (evita scroll) */
+
+    document.addEventListener('touchstart', function(e){
+      var t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      /* Abre só se o toque começou perto da borda esquerda */
+      tracking = !panel.classList.contains('open')
+        ? startX <= EDGE_ZONE
+        : true; /* Quando aberto, qualquer arrasto pode fechar */
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e){
+      if (!tracking) return;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - startX;
+      var dy = Math.abs(t.clientY - startY);
+      tracking = false;
+      if (dy > MAX_VERT) return; /* foi mais vertical — provavelmente scroll */
+      if (!panel.classList.contains('open') && dx > MIN_DIST) {
+        openDash();
+      } else if (panel.classList.contains('open') && dx < -MIN_DIST) {
+        closeDash();
+      }
+    }, { passive: true });
+  })();
+
   /* ── Exibe itens do menu conforme papel do usuário ── */
   window._showDashItems = function(role) {
-    var toggle = document.getElementById('dash-toggle');
     if (toggle) toggle.style.display = 'flex';
     var search  = document.getElementById('dash-search');
     var perfil  = document.getElementById('dash-perfil');
@@ -3473,10 +3501,6 @@ window.addEventListener('DOMContentLoaded',()=>{
     if (ranking) ranking.style.display = (role === 'visitor') ? 'none' : 'flex';
     if (perfil)  perfil.style.display  = (role === 'visitor') ? 'none' : 'flex';
     if (admin)   admin.style.display   = (role === 'admin')   ? 'flex' : 'none';
-  };
-
-  window._hideDashItemsForContent = function() {
-    /* O toggle continua visível mesmo na tela de conteúdo */
   };
 
   /* ── Espelha badge do chat geral ── */
@@ -4184,6 +4208,8 @@ function _urlBase64ToUint8Array(b64) {
     }
 
     document.getElementById('chat-geral-btn').classList.add('visible');
+    var _dc = document.getElementById('dash-chat');
+    if (_dc) _dc.style.display = 'flex';
     await _cgLoadMessages();
     _cgSubscribe();
   };
@@ -4209,13 +4235,15 @@ function _urlBase64ToUint8Array(b64) {
       new Date(m.created_at).getTime() > _cgLastRead
     ).length;
     const badge = document.getElementById('chat-geral-badge');
-    if (!badge) return;
-    if (count > 0) {
-      badge.textContent = count > 99 ? '99+' : count;
-      badge.classList.add('show');
-    } else {
-      badge.classList.remove('show');
+    if (badge) {
+      if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.classList.add('show');
+      } else {
+        badge.classList.remove('show');
+      }
     }
+    if (window._syncChatBadge) window._syncChatBadge(count);
   }
 
   function _cgMarkRead() {
