@@ -568,27 +568,163 @@ body{background:#080300;color:var(--text);}
 }
 #mute-btn:hover{transform:scale(1.15);}
 
-/* Search button */
-#search-btn {
-  display: none;
-  position: fixed;
-  top: 14px;
-  left: 14px;
-  z-index: 14000;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #2a1400, #0e0700);
-  border: 1px solid rgba(201,168,76,.45);
-  color: var(--gold-l);
-  font-size: 1rem;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 12px rgba(201,168,76,.2);
-  transition: transform .2s, box-shadow .2s;
+/* Search button — agora dentro do dashboard lateral */
+#search-btn { display: none; }
+
+/* ══════════════════════════════
+   DASHBOARD LATERAL
+══════════════════════════════ */
+/* Botão de abertura — canto superior esquerdo, integrado à borda */
+#dash-toggle{
+  position:fixed;
+  top:50%;
+  left:0;
+  transform:translateY(-50%);
+  z-index:14500;
+  width:28px;
+  height:64px;
+  background:linear-gradient(180deg,rgba(40,22,4,.97),rgba(20,10,2,.99));
+  border:1px solid rgba(201,168,76,.45);
+  border-left:none;
+  border-radius:0 8px 8px 0;
+  color:var(--gold-l);
+  font-size:.85rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:3px 0 18px rgba(0,0,0,.55),inset -1px 0 8px rgba(201,168,76,.08);
+  transition:width .2s,box-shadow .2s,background .2s;
+  padding:0;
+  writing-mode:vertical-rl;
+  letter-spacing:.18em;
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:.52rem;
 }
-#search-btn:hover { transform: scale(1.12); box-shadow: 0 0 20px rgba(201,168,76,.4); }
+#dash-toggle:hover{
+  width:34px;
+  box-shadow:4px 0 24px rgba(201,168,76,.22),inset -1px 0 10px rgba(201,168,76,.12);
+  background:linear-gradient(180deg,rgba(50,28,6,.99),rgba(28,14,3,.99));
+}
+#dash-toggle-icon{
+  font-size:1rem;
+  writing-mode:horizontal-tb;
+  line-height:1;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+#dash-toggle.open #dash-toggle-icon{ transform:rotate(180deg); }
+
+/* Overlay escurecido quando dashboard aberto */
+#dash-overlay{
+  position:fixed;inset:0;z-index:14200;
+  background:rgba(0,0,0,.45);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s;
+  backdrop-filter:blur(2px);
+}
+#dash-overlay.show{opacity:1;pointer-events:all;}
+
+/* Painel lateral */
+#dash-panel{
+  position:fixed;
+  top:0;left:0;bottom:0;
+  width:220px;
+  z-index:14300;
+  background:linear-gradient(180deg,#150a01 0%,#0d0600 60%,#080400 100%);
+  border-right:1px solid rgba(201,168,76,.32);
+  box-shadow:6px 0 40px rgba(0,0,0,.7);
+  transform:translateX(-100%);
+  transition:transform .38s cubic-bezier(.4,0,.2,1);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+#dash-panel.open{ transform:translateX(0); }
+
+/* Borda decorativa interna */
+#dash-panel::after{
+  content:'';
+  position:absolute;top:0;left:0;bottom:0;
+  width:2px;
+  background:linear-gradient(180deg,transparent,rgba(201,168,76,.4) 30%,rgba(201,168,76,.4) 70%,transparent);
+  pointer-events:none;
+}
+
+/* Cabeçalho do painel */
+#dash-header{
+  padding:1.1rem 1rem .7rem;
+  border-bottom:1px solid rgba(201,168,76,.18);
+  flex-shrink:0;
+}
+#dash-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:.62rem;letter-spacing:.18em;font-weight:700;
+  background:linear-gradient(90deg,#f9e3a0,#c9a84c);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:center;display:block;
+}
+#dash-divider{
+  width:100%;height:1px;margin-top:.55rem;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.35),transparent);
+}
+
+/* Botões internos do dashboard */
+.dash-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.78rem 1.1rem;
+  background:transparent;
+  border:none;border-bottom:1px solid rgba(201,168,76,.08);
+  color:var(--text-m);
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.12em;font-weight:600;
+  cursor:pointer;
+  text-align:left;width:100%;
+  text-decoration:none;
+  transition:background .2s,color .2s,padding-left .2s;
+  position:relative;
+}
+.dash-item:last-child{ border-bottom:none; }
+.dash-item:hover{
+  background:rgba(201,168,76,.1);
+  color:var(--gold-l);
+  padding-left:1.45rem;
+}
+.dash-item:hover .dash-item-icon{ filter:drop-shadow(0 0 6px rgba(255,200,40,.6)); }
+.dash-item-icon{
+  font-size:1.15rem;flex-shrink:0;
+  transition:filter .2s;
+  width:22px;text-align:center;
+}
+.dash-item-badge{
+  position:absolute;right:1rem;top:50%;transform:translateY(-50%);
+  background:var(--ember);color:#fff;
+  font-family:'Cinzel',serif;font-size:.44rem;font-weight:700;
+  min-width:16px;height:16px;border-radius:999px;padding:0 4px;
+  display:none;align-items:center;justify-content:center;
+  border:1.5px solid #080300;
+}
+.dash-item-badge.show{ display:flex; }
+
+/* Rodapé do dashboard */
+#dash-footer{
+  padding:.7rem 1rem;
+  border-top:1px solid rgba(201,168,76,.12);
+  flex-shrink:0;
+  margin-top:auto;
+  text-align:center;
+}
+#dash-footer-text{
+  font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.12em;
+  color:rgba(120,80,30,.55);
+}
+
+/* Lista de itens do dashboard (zona scrollável) */
+#dash-items{
+  flex:1;overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+#dash-items::-webkit-scrollbar{width:2px;}
+#dash-items::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);}
 
 /* Search modal */
 #search-modal {
@@ -1076,7 +1212,7 @@ body{background:#080300;color:var(--text);}
 /* ── Ranking CELULAR (≤ 767px) — ajuste aqui ── */
 @media (max-width:767px){
   .ranking-strip{
-    top:38vh;
+    top:24vh;
     bottom:auto;
     left:52%;
     transform:translateX(-50%);
@@ -1712,6 +1848,52 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
   <div id="notif-badge"></div>
 </div>
 
+<!-- ════════════════════════════════════════
+     DASHBOARD LATERAL
+════════════════════════════════════════ -->
+<button id="dash-toggle" onclick="toggleDash()" title="Menu" aria-label="Abrir menu lateral">
+  <span id="dash-toggle-icon">☰</span>
+</button>
+
+<div id="dash-overlay" onclick="closeDash()"></div>
+
+<div id="dash-panel">
+  <div id="dash-header">
+    <span id="dash-title">✦ BIBLIOTECA ✦</span>
+    <div id="dash-divider"></div>
+  </div>
+  <div id="dash-items">
+    <button class="dash-item" onclick="closeDash();openSearch();" id="dash-search" style="display:none">
+      <span class="dash-item-icon">🔍</span>
+      Pesquisar
+    </button>
+    <a class="dash-item" href="auth/perfil.html" id="dash-perfil" style="display:none">
+      <span class="dash-item-icon">👤</span>
+      Meu Perfil
+    </a>
+    <button class="dash-item" onclick="closeDash();openRankingExplain();" id="dash-ranking" style="display:none">
+      <span class="dash-item-icon">⚔</span>
+      Ranking de Poder
+    </button>
+    <a class="dash-item" href="games/index.html" id="dash-games">
+      <span class="dash-item-icon">🎮</span>
+      Sala de Jogos
+    </a>
+    <button class="dash-item" onclick="closeDash();openChatGeral();" id="dash-chat" style="display:none">
+      <span class="dash-item-icon">💬</span>
+      Chat da Guilda
+      <span class="dash-item-badge" id="dash-chat-badge"></span>
+    </button>
+    <a class="dash-item" href="auth/admin.html" id="dash-admin" style="display:none">
+      <span class="dash-item-icon">🛡</span>
+      Painel Admin
+    </a>
+  </div>
+  <div id="dash-footer">
+    <span id="dash-footer-text">⚜ E.E. RURAL PE. CARLOS CASAVEQUÍA ⚜</span>
+  </div>
+</div>
+
 <!-- Modal de notificacoes -->
 <div id="modal-notif" onclick="if(event.target===this)closeNotifModal()">
   <div id="notif-box">
@@ -2008,8 +2190,6 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
       <img src="assets/images/pilhadelivros.png" alt="">
     </div>
 
-    <!-- Sala de Jogos -->
-    <a href="games/index.html" id="games-btn">⚔ Sala de Jogos</a>
 
   </div><!-- /landing-inner -->
 </section>
@@ -2082,7 +2262,7 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
         <span class="disc-icon">🏛️</span>
         <span class="disc-title">TRILHAS DE C. HUMANAS</span>
         <div class="books-grid">
-          <div class="book-card unavailable" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">1º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+          <div class="book-card available" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/1-bimestre.html','done')">ACESSAR</button></div>
           <div class="book-card unavailable" onclick="openBook('2º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
           <div class="book-card unavailable" onclick="openBook('3º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
           <div class="book-card unavailable" onclick="openBook('4º Bimestre — Trilhas de C. Humanas — 1ª Série','./livros/1-serie/trilhas-de-c-humanas/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
@@ -2142,13 +2322,13 @@ a.rk-card.top1:hover{background:rgba(255,180,20,.15);}
         <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/trilhas-de-linguagens/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
       </div></div>
       <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🏛️</span><span class="disc-title">TRILHAS DE C. HUMANAS</span><div class="books-grid">
-        <div class="book-card unavailable" onclick="openBook('1º','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">1º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card available" onclick="openBook('1º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Trilhas de C. Humanas — 3ª Série','./livros/3-serie/trilhas-de-c-humanas/1-bimestre.html','done')">ACESSAR</button></div>
         <div class="book-card unavailable" onclick="openBook('2º','./livros/3-serie/trilhas-de-c-humanas/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
         <div class="book-card unavailable" onclick="openBook('3º','./livros/3-serie/trilhas-de-c-humanas/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
         <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/trilhas-de-c-humanas/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
       </div></div>
       <div class="disc-panel"><div class="disc-panel-corner tl"></div><div class="disc-panel-corner tr"></div><div class="disc-panel-corner bl"></div><div class="disc-panel-corner br"></div><span class="disc-icon">🎨</span><span class="disc-title">ARTES</span><div class="books-grid">
-        <div class="book-card unavailable" onclick="openBook('1º','./livros/3-serie/artes/1-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">1º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
+        <div class="book-card available" onclick="openBook('1º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/1-bimestre.html','done')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-verde.png"><div class="card-label">1º BIMESTRE</div><button class="btn-access" onclick="event.stopPropagation();openBook('1º Bimestre — Artes — 3ª Série','./livros/3-serie/artes/1-bimestre.html','done')">ACESSAR</button></div>
         <div class="book-card unavailable" onclick="openBook('2º','./livros/3-serie/artes/2-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">2º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
         <div class="book-card unavailable" onclick="openBook('3º','./livros/3-serie/artes/3-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">3º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
         <div class="book-card unavailable" onclick="openBook('4º','./livros/3-serie/artes/4-bimestre.html','none')"><img class="card-img" src="https://biblioteca-digital-medieval.vercel.app/assets/images/livro-azul.png"><div class="card-label">4º BIMESTRE</div><button class="btn-unavail">INDISPONÍVEL</button></div>
@@ -3154,8 +3334,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         // Admin: nunca toca intro de novo, salva role no localStorage
         sessionStorage.setItem('bdm-nav', '1');
         try { localStorage.setItem('bdm-cached-role', 'admin'); } catch(e) {}
-        const _sbA = document.getElementById('search-btn');
-        if (_sbA) _sbA.style.display = 'flex';
+        if (window._showDashItems) window._showDashItems('admin');
         const _rsA = document.getElementById('ranking-strip');
         if (_rsA) _rsA.style.display = '';
         if (typeof window.loadRanking === 'function') window.loadRanking();
@@ -3193,8 +3372,7 @@ window.addEventListener('DOMContentLoaded',()=>{
       setAuthImg('assets/images/forasteiro.png', 'auth/login.html');
       hideSplash();
       startBgMusic();
-      const _sb = document.getElementById('search-btn');
-      if(_sb) _sb.style.display='flex';
+      if (window._showDashItems) window._showDashItems('visitor');
       return;
     }
 
@@ -3251,6 +3429,70 @@ window.addEventListener('DOMContentLoaded',()=>{
     clearTimeout(timer);
     timer=setTimeout(()=>{once=false;toast.classList.remove('show');},2000);
   });
+})();
+</script>
+
+<!-- DASHBOARD LATERAL -->
+<script>
+(function(){
+  var panel   = document.getElementById('dash-panel');
+  var overlay = document.getElementById('dash-overlay');
+  var toggle  = document.getElementById('dash-toggle');
+
+  window.toggleDash = function() {
+    var open = panel.classList.contains('open');
+    if (open) closeDash(); else openDash();
+  };
+
+  window.openDash = function() {
+    panel.classList.add('open');
+    overlay.classList.add('show');
+    toggle.classList.add('open');
+  };
+
+  window.closeDash = function() {
+    panel.classList.remove('open');
+    overlay.classList.remove('show');
+    toggle.classList.remove('open');
+  };
+
+  /* Fecha ao pressionar Escape */
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDash();
+  });
+
+  /* ── Exibe itens do menu conforme papel do usuário ── */
+  window._showDashItems = function(role) {
+    var toggle = document.getElementById('dash-toggle');
+    if (toggle) toggle.style.display = 'flex';
+    var search  = document.getElementById('dash-search');
+    var perfil  = document.getElementById('dash-perfil');
+    var ranking = document.getElementById('dash-ranking');
+    var admin   = document.getElementById('dash-admin');
+    if (search)  search.style.display  = 'flex';
+    if (ranking) ranking.style.display = (role === 'visitor') ? 'none' : 'flex';
+    if (perfil)  perfil.style.display  = (role === 'visitor') ? 'none' : 'flex';
+    if (admin)   admin.style.display   = (role === 'admin')   ? 'flex' : 'none';
+  };
+
+  window._hideDashItemsForContent = function() {
+    /* O toggle continua visível mesmo na tela de conteúdo */
+  };
+
+  /* ── Espelha badge do chat geral ── */
+  window._syncChatBadge = function(count) {
+    var b = document.getElementById('dash-chat-badge');
+    if (!b) return;
+    if (count > 0) {
+      b.textContent = count > 99 ? '99+' : count;
+      b.classList.add('show');
+    } else {
+      b.classList.remove('show');
+    }
+  };
+
+  /* Oculta toggle até o splash sumir */
+  if (toggle) toggle.style.display = 'none';
 })();
 </script>
 
