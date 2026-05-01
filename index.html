@@ -1055,26 +1055,14 @@ body{background:#080300;color:var(--text);}
   }
 }
 
-/* ── Landing + Conteúdo: valores específicos para APP (display-mode:standalone) ── */
+/* ── Valores especificos para APP (display-mode:standalone) ── */
 @media (display-mode:standalone){
   /* Landing — books-scene */
   .books-scene{
     top:56.5vh; left:4.3vw;
     width:93.8vw; height:19.9vh;
   }
-  /* Página de livros — cabeçalho fixo */
-  .back-btn{
-    position:fixed;
-    top:1.5vh; left:15.6vw;
-    width:22.5vw; height:4.0vh;
-  }
-  #serie-name-header{
-    position:fixed;
-    top:2.7vh; left:66.2vw;
-    width:19.6vw; height:2.5vh;
-    z-index:-1;
-  }
-  /* Sino de notificações */
+  /* Sino de notificacoes — reposicionado pelo HUD */
   #notif-btn{
     top:0.8vh; right:1.2vw;
     width:8.8vw; height:4.1vh;
