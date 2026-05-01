@@ -313,7 +313,10 @@ function buildSidebarHTML() {
   return html;
 }
 
-window._hudDeactivate = deactivateHUD;
+window._hudDeactivate     = deactivateHUD;
+window._hudZFocusedStep   = function (d) { if (focusedKey) _zStep(focusedKey, d); };
+window._hudZFocusedTop    = function ()  { if (focusedKey) _zTop(focusedKey); };
+window._hudZFocusedBot    = function ()  { if (focusedKey) _zBot(focusedKey); };
 
 /* ════════════════════════════════════════
    SELECIONAR / DESSELECIONAR ELEMENTO
@@ -372,18 +375,46 @@ function _createOverlay(key) {
     'position:fixed;z-index:49990;box-sizing:border-box;' +
     'outline:2px dashed #4fc3f7;pointer-events:none';
 
-  /* etiqueta + área de drag */
+  /* barra superior: drag + z-index controls */
+  const bar = document.createElement('div');
+  bar.style.cssText =
+    'position:absolute;top:-22px;left:0;right:0;height:22px;' +
+    'display:flex;align-items:stretch;pointer-events:all;user-select:none';
+
+  /* área de drag */
   const lbl = document.createElement('div');
   lbl.style.cssText =
-    'position:absolute;top:-22px;left:0;' +
-    'background:#4fc3f7;color:#000;font:bold 10px/1 monospace;' +
-    'padding:2px 6px;border-radius:3px 3px 0 0;' +
-    'pointer-events:all;cursor:move;white-space:nowrap;user-select:none';
+    'flex:1;background:#4fc3f7;color:#000;font:bold 10px/1 monospace;' +
+    'padding:2px 6px;border-radius:3px 0 0 0;' +
+    'cursor:move;white-space:nowrap;display:flex;align-items:center;overflow:hidden';
   lbl.textContent = key;
-  lbl.addEventListener('mousedown',  function (e) { _startDrag(e, key); });
+  lbl.addEventListener('mousedown',  function (e) { _startDrag(e, key); _focusElem(key); });
   lbl.addEventListener('touchstart', function (e) { _startDrag(e, key); }, { passive: false });
-  lbl.addEventListener('mousedown',  function ()  { _focusElem(key); });
-  ov.appendChild(lbl);
+  bar.appendChild(lbl);
+
+  /* botões de z-index */
+  const zbtnStyle =
+    'background:#1a0e04;border:none;border-left:1px solid rgba(201,168,76,.35);' +
+    'color:#c9a84c;font-size:11px;padding:0 6px;cursor:pointer;' +
+    'line-height:1;font-family:monospace;pointer-events:all;';
+
+  [
+    { t: '↑',  title: 'Trazer para frente (+1)',    fn: function () { _zStep(key, +1); } },
+    { t: '↓',  title: 'Enviar para trás (−1)',       fn: function () { _zStep(key, -1); } },
+    { t: '⤴', title: 'Trazer à frente de tudo',     fn: function () { _zTop(key); } },
+    { t: '⤵', title: 'Enviar ao fundo de tudo',     fn: function () { _zBot(key); } },
+  ].forEach(function (b, i) {
+    const btn = document.createElement('button');
+    btn.title = b.title;
+    btn.textContent = b.t;
+    btn.style.cssText = zbtnStyle + (i === 3 ? 'border-radius:0 3px 0 0' : '');
+    btn.addEventListener('mousedown',  function (e) { e.stopPropagation(); });
+    btn.addEventListener('touchstart', function (e) { e.stopPropagation(); });
+    btn.addEventListener('click',      function (e) { e.stopPropagation(); b.fn(); });
+    bar.appendChild(btn);
+  });
+
+  ov.appendChild(bar);
 
   /* 8 handles de resize */
   [
@@ -525,6 +556,42 @@ function _onResizeMove(e) {
   if (focusedKey === _resize.key) _updateValPanel(_resize.key, el);
 }
 
+/* ════════════════════════════════════════
+   Z-INDEX CONTROLS
+════════════════════════════════════════ */
+function _zCurrent(el) {
+  const v = parseInt(getComputedStyle(el).zIndex);
+  return isNaN(v) ? 0 : v;
+}
+
+function _zStep(key, delta) {
+  const state = activeItems.get(key);
+  if (!state) return;
+  const next = _zCurrent(state.el) + delta;
+  state.el.style.zIndex = next;
+  if (focusedKey === key) _updateValPanel(key, state.el);
+}
+
+function _zTop(key) {
+  /* encontra o z-index mais alto entre todos os elementos ativos + 1 */
+  let max = 0;
+  activeItems.forEach(function (s) { max = Math.max(max, _zCurrent(s.el)); });
+  const state = activeItems.get(key);
+  if (!state) return;
+  state.el.style.zIndex = Math.max(max + 1, 49900);
+  if (focusedKey === key) _updateValPanel(key, state.el);
+}
+
+function _zBot(key) {
+  let min = Infinity;
+  activeItems.forEach(function (s) { min = Math.min(min, _zCurrent(s.el)); });
+  const state = activeItems.get(key);
+  if (!state) return;
+  const next = isFinite(min) ? min - 1 : 0;
+  state.el.style.zIndex = Math.max(next, 0);
+  if (focusedKey === key) _updateValPanel(key, state.el);
+}
+
 /* ── Torna elemento posicionável livremente ── */
 function _makeFixed(el, rect) {
   const pos = getComputedStyle(el).position;
@@ -601,16 +668,18 @@ function _updateValPanel(key, el) {
   const bv  = vh - r.bottom;
   const wv  = r.width;
   const hv  = r.height;
+  const zv  = _zCurrent(el);
 
   /* ── CSS sugerido ── */
   const css = [
     '/* ' + inf + ' · ' + vw + '×' + vh + ' */',
-    'top:   ' + tv.toFixed(0) + 'px;  /* ' + p(tv, vh) + 'vh */',
-    'left:  ' + lv.toFixed(0) + 'px;  /* ' + p(lv, vw) + 'vw */',
-    'right: ' + rv.toFixed(0) + 'px;  /* ' + p(rv, vw) + 'vw */',
-    'bottom:' + bv.toFixed(0) + 'px;  /* ' + p(bv, vh) + 'vh */',
-    'width: ' + wv.toFixed(0) + 'px;  /* ' + p(wv, vw) + 'vw */',
-    'height:' + hv.toFixed(0) + 'px;  /* ' + p(hv, vh) + 'vh */',
+    'top:     ' + tv.toFixed(0) + 'px;  /* ' + p(tv, vh) + 'vh */',
+    'left:    ' + lv.toFixed(0) + 'px;  /* ' + p(lv, vw) + 'vw */',
+    'right:   ' + rv.toFixed(0) + 'px;  /* ' + p(rv, vw) + 'vw */',
+    'bottom:  ' + bv.toFixed(0) + 'px;  /* ' + p(bv, vh) + 'vh */',
+    'width:   ' + wv.toFixed(0) + 'px;  /* ' + p(wv, vw) + 'vw */',
+    'height:  ' + hv.toFixed(0) + 'px;  /* ' + p(hv, vh) + 'vh */',
+    'z-index: ' + zv + ';',
   ].join('\n');
 
   valPanel.innerHTML =
@@ -622,14 +691,33 @@ function _updateValPanel(key, el) {
     'font-size:9px;color:#f0d060">' + inf + ' · ' + vw + '×' + vh + 'px</span>' +
     '</div>' +
 
-    /* grade de métricas */
+    /* grade de métricas (7 itens: 2 linhas de 3 + z-index sozinho) */
     '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:6px">' +
-    _metricBox('top',    tv.toFixed(0)+'px', p(tv,vh)+'vh') +
-    _metricBox('left',   lv.toFixed(0)+'px', p(lv,vw)+'vw') +
-    _metricBox('right',  rv.toFixed(0)+'px', p(rv,vw)+'vw') +
-    _metricBox('bottom', bv.toFixed(0)+'px', p(bv,vh)+'vh') +
-    _metricBox('width',  wv.toFixed(0)+'px', p(wv,vw)+'vw') +
-    _metricBox('height', hv.toFixed(0)+'px', p(hv,vh)+'vh') +
+    _metricBox('top',     tv.toFixed(0)+'px', p(tv,vh)+'vh') +
+    _metricBox('left',    lv.toFixed(0)+'px', p(lv,vw)+'vw') +
+    _metricBox('right',   rv.toFixed(0)+'px', p(rv,vw)+'vw') +
+    _metricBox('bottom',  bv.toFixed(0)+'px', p(bv,vh)+'vh') +
+    _metricBox('width',   wv.toFixed(0)+'px', p(wv,vw)+'vw') +
+    _metricBox('height',  hv.toFixed(0)+'px', p(hv,vh)+'vh') +
+    /* z-index com botões inline */
+    '<div style="background:#111;padding:4px 6px;border-radius:3px;display:flex;' +
+    'flex-direction:column;gap:3px">' +
+    '<div style="color:#666;font-size:9px">z-index</div>' +
+    '<div style="display:flex;align-items:center;gap:4px">' +
+    '<span id="hud-z-val" style="color:#ff9800;font-size:11px;font-weight:bold;min-width:32px">' + zv + '</span>' +
+    '<button onclick="window._hudZFocusedStep(-1)" title="Enviar para trás" ' +
+    'style="background:#222;border:1px solid #444;color:#ff9800;font-size:10px;' +
+    'padding:1px 5px;cursor:pointer;border-radius:2px;line-height:1.4">↓</button>' +
+    '<button onclick="window._hudZFocusedStep(+1)" title="Trazer para frente" ' +
+    'style="background:#222;border:1px solid #444;color:#ff9800;font-size:10px;' +
+    'padding:1px 5px;cursor:pointer;border-radius:2px;line-height:1.4">↑</button>' +
+    '<button onclick="window._hudZFocusedBot()" title="Ao fundo" ' +
+    'style="background:#222;border:1px solid #444;color:#aaa;font-size:10px;' +
+    'padding:1px 5px;cursor:pointer;border-radius:2px;line-height:1.4">⤵</button>' +
+    '<button onclick="window._hudZFocusedTop()" title="À frente de tudo" ' +
+    'style="background:#222;border:1px solid #444;color:#aaa;font-size:10px;' +
+    'padding:1px 5px;cursor:pointer;border-radius:2px;line-height:1.4">⤴</button>' +
+    '</div></div>' +
     '</div>' +
 
     /* CSS para copiar */
