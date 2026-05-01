@@ -4,7 +4,10 @@
       "Bash(xargs ls *)",
       "Bash(awk '{print $NF}')",
       "Read(//c/c/Users/PAULO ROBERTO/biblioteca-digital-medieval-1/**)",
-      "Read(//c/c/Users/PAULO ROBERTO/biblioteca-digital-medieval-1/auth/**)"
+      "Read(//c/c/Users/PAULO ROBERTO/biblioteca-digital-medieval-1/auth/**)",
+      "Bash(findstr /i \"IPv4\")",
+      "PowerShell(Start-Process powershell -Verb RunAs -ArgumentList \"-Command `\"netsh advfirewall firewall add rule name='Live Server 5500' dir=in action=allow protocol=TCP localport=5500`\"\" -Wait)",
+      "PowerShell(netsh advfirewall firewall show rule name=\"Live Server 5500\")"
     ]
   },
   "hooks": {
