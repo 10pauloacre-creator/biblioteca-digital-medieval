@@ -21,11 +21,15 @@
         },
         {
           "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
+          "value": "max-age=63072000; includeSubDomains"
         },
         {
           "key": "Permissions-Policy",
-          "value": "display-capture=(), camera=(), microphone=(), payment=(), usb=(), geolocation=()"
+          "value": "display-capture=(), camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Feature-Policy",
+          "value": "display-capture 'none'; camera 'none'; microphone 'none'; geolocation 'none'"
         }
       ]
     },
@@ -38,7 +42,7 @@
         },
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=3600"
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     },
@@ -60,11 +64,11 @@
       ]
     },
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/icons/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=2592000, immutable"
+          "value": "public, max-age=604800"
         }
       ]
     }

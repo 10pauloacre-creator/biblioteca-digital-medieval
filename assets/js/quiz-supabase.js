@@ -597,15 +597,9 @@
       if (k === 'f12' || k === 'printscreen') e.preventDefault();
     }, true);
 
-    // Intercepta getDisplayMedia (compartilhamento de tela via API do browser)
-    // getUserMedia NÃO é interceptado — sobrescrever essa API ativa alarmes de segurança
-    // do Android. O bloqueio de display-capture é feito pelo header HTTP Permissions-Policy
-    if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
-      navigator.mediaDevices.getDisplayMedia = function() {
-        _secViolate('screen_record', true);
-        return Promise.reject(new DOMException('Not allowed', 'NotAllowedError'));
-      };
-    }
+    // Captura de tela: bloqueada pelo header HTTP Permissions-Policy: display-capture=()
+    // Não sobrescrevemos APIs nativas do browser — esse padrão ativa alarmes de segurança
+    // do Android (Play Protect, Samsung Knox) e impede a instalação do PWA
   })();
 
   /* ── Marca d'água com nome do aluno ── */
