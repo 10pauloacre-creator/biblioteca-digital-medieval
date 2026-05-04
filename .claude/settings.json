@@ -9,7 +9,8 @@
       "PowerShell(Start-Process powershell -Verb RunAs -ArgumentList \"-Command `\"netsh advfirewall firewall add rule name='Live Server 5500' dir=in action=allow protocol=TCP localport=5500`\"\" -Wait)",
       "PowerShell(netsh advfirewall firewall show rule name=\"Live Server 5500\")",
       "Bash(grep -v \"^\\\\s*//\")",
-      "Bash(grep -v \"^[0-9]*:[[:space:]]*//\")"
+      "Bash(grep -v \"^[0-9]*:[[:space:]]*//\")",
+      "Bash(node -e ' *)"
     ]
   },
   "hooks": {
