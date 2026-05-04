@@ -597,22 +597,13 @@
       if (k === 'f12' || k === 'printscreen') e.preventDefault();
     }, true);
 
-    // Intercepta getDisplayMedia (Chrome desktop + Chrome Android/iPad)
+    // Intercepta getDisplayMedia (compartilhamento de tela via API do browser)
+    // getUserMedia NÃO é interceptado — sobrescrever essa API ativa alarmes de segurança
+    // do Android. O bloqueio de display-capture é feito pelo header HTTP Permissions-Policy
     if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
       navigator.mediaDevices.getDisplayMedia = function() {
         _secViolate('screen_record', true);
         return Promise.reject(new DOMException('Not allowed', 'NotAllowedError'));
-      };
-    }
-    // Intercepta getUserMedia com mediaSource=screen (APIs mais antigas)
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      var _gumOrig = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
-      navigator.mediaDevices.getUserMedia = function(c) {
-        if (c && c.video && (c.video === true || c.video.mediaSource === 'screen')) {
-          _secViolate('screen_record', true);
-          return Promise.reject(new DOMException('Not allowed', 'NotAllowedError'));
-        }
-        return _gumOrig(c);
       };
     }
   })();

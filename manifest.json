@@ -1,15 +1,19 @@
 {
+  "id": "/",
   "name": "Biblioteca Digital Medieval",
   "short_name": "Biblioteca",
-  "description": "Acervo digital de materiais escolares com ambientação medieval",
-  "start_url": "./index.html",
-  "scope": "./",
+  "description": "Acervo digital de materiais escolares — E.E. Rural Pe. Carlos Casavechia",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#080300",
   "theme_color": "#080300",
   "lang": "pt-BR",
+  "dir": "ltr",
   "categories": ["education"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
@@ -58,15 +62,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "assets/images/splash-screen.png",
-      "sizes": "1920x1080",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Biblioteca Digital Medieval"
     }
   ]
 }
