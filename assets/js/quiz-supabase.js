@@ -12,7 +12,7 @@
 
   var SUPA_URL     = 'https://vgceathgwvtmjxbdpecr.supabase.co';
   var SUPA_ANON    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnY2VhdGhnd3Z0bWp4YmRwZWNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMzIzODgsImV4cCI6MjA5MTkwODM4OH0.RDNkFfHMv0URRiCvptZDtglyU8XUOf95BGB-qnrPlew';
-  var QUIZ_VERSION = '2';
+  var QUIZ_VERSION = '3';
 
   var bookPath = window.location.pathname;
   var LOCK_PRE = 'bdm-qdone::' + bookPath + '::';
