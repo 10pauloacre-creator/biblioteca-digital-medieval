@@ -218,6 +218,8 @@
     if (!container) return;
     container.querySelectorAll('.qmc-opt, .mc-opt, .ativ-mc-opt, .quiz-opt').forEach(function(b) {
       b.disabled = true;
+      b.style.pointerEvents = 'none';
+      b.style.cursor = 'default';
     });
     container.querySelectorAll(
       '.qrb-retry, .qr-retry, [onclick*="retryQuiz"], [onclick*="resetQuiz"],' +
@@ -250,6 +252,14 @@
           answers.push({ questionId: g.id || ('q' + i), correct: hasCorrect && !hasWrong });
           if (hasCorrect && !hasWrong) correct++;
         }
+      });
+    }
+
+    if (!answers.length) {
+      container.querySelectorAll('.ativ-q[id][data-answered]').forEach(function(q) {
+        var wasWrong = !!q.querySelector('.ativ-mc-opt.wrong');
+        answers.push({ questionId: q.id, correct: !wasWrong });
+        if (!wasWrong) correct++;
       });
     }
 
@@ -309,6 +319,20 @@
     if (!allDone) return;
     var secId = section.id;
     if (isLocked(secId)) return;
+    var data  = collectAnswers(section);
+    var label = getQuizLabel(section);
+    setLocked(secId, data.correct, data.total, label, data.answers);
+    addSendButton(section, secId, data.correct, data.total, label, data.answers);
+  }
+
+  function checkAtivComplete(section) {
+    var qs = section.querySelectorAll('.ativ-q[id]');
+    if (!qs.length) return;
+    var allDone = true;
+    qs.forEach(function(q) { if (!q.getAttribute('data-answered')) allDone = false; });
+    if (!allDone) return;
+    var secId = section.id;
+    if (!secId || isLocked(secId)) return;
     var data  = collectAnswers(section);
     var label = getQuizLabel(section);
     setLocked(secId, data.correct, data.total, label, data.answers);
@@ -460,6 +484,20 @@
       });
       mcGroups.forEach(function(g) {
         mcObs.observe(g, { subtree: true, attributes: true, attributeFilter: ['class','disabled'] });
+      });
+    }
+
+    /* MutationObserver: ativ-q (LP 3ª série, C-Humanas 2ª série) */
+    var ativQs = document.querySelectorAll('.ativ-q[id]');
+    if (ativQs.length) {
+      var ativObs = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mut) {
+          var section = mut.target.closest('section[id]');
+          if (section) checkAtivComplete(section);
+        });
+      });
+      ativQs.forEach(function(q) {
+        ativObs.observe(q, { attributes: true, attributeFilter: ['data-answered'] });
       });
     }
 
