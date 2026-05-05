@@ -10,7 +10,8 @@
       "PowerShell(netsh advfirewall firewall show rule name=\"Live Server 5500\")",
       "Bash(grep -v \"^\\\\s*//\")",
       "Bash(grep -v \"^[0-9]*:[[:space:]]*//\")",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Read(//c/Users/PAULO ROBERTO/biblioteca-digital-medieval-1/**)"
     ]
   },
   "hooks": {
